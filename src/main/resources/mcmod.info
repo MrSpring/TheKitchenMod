@@ -1,0 +1,16 @@
+[
+{
+  "modid": "kitchen",
+  "name": "The Kitchen Mod",
+  "description": "The Kitchen Mod allows you to make fully customizable modular sandwiches. With each layer you put in it, the more it heals your hunger. And you might be lucky to uncover on of the special cominations.",
+  "version": "1.2.3",
+  "mcversion": "1.7.10",
+  "url": "http://www.mrspring.dk/mods/kitchen/",
+  "updateUrl": "",
+  "authors": ["MrSpring"],
+  "credits": "Made by Mr. Spring during the 96 hour ModJam 4.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

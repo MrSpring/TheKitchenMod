@@ -1,0 +1,40 @@
+itemGroup.tabKitchen=Køkken
+
+tile.tiles.name=Gulv Fliser
+tile.board.name=Skære Bræt
+tile.tomato_crop.name=Tomat Plante
+tile.lettuce_crop.name=Salat Plante
+tile.oven.name=Oven
+tile.plate.name=Tallerken
+
+item.knife.name=Kniv
+item.bacon_raw.name=Rå Bacon
+item.bread_slice.name=Skive Brød
+item.sandwich.name=Sandwich
+item.tomato.name=Tomat
+item.lettuce.name=Salat
+item.lettuce_leaf.name=Salat-blade
+item.tomato_slice.name=Tomat Skive
+item.bacon_cooked.name=Stegt Bacon
+item.carrot_slice.name=Gulerods Skive
+item.potato_slice.name=Katofel Skive
+item.mortar.name=Morter
+item.pestle.name=Støder
+item.mortar_and_pestle.name=Morter og Støder
+item.flour.name=Mel
+item.toast.name=Toastbrød
+item.raw_roast_beef.name=Rå kød Skiver
+item.roast_beef.name=Roastbeef
+item.chicken_fillet_raw.name=Rå Kyllinge Fillet
+item.chicken_fillet_cooked.name=Stegt Kyllinge Fillet
+item.chicken_leg.name=Kyllinge Ben
+item.cheese.name=Ost
+item.cheese_slice.name=Oste Skive
+item.burnt_meat.name=Brændt Kød
+
+combo.big_mac.name=There is Only One!
+combo.blt.name=The Good ol' BLT
+combo.only_bread.name=Kinda Boring...
+combo.rrb.name=Retro Roastbeef
+combo.smart_chicken.name=7-Smart Chicken
+combo.veggie.name=Veggie Sandwich

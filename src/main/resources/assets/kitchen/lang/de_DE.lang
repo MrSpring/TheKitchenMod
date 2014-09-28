@@ -1,0 +1,39 @@
+itemGroup.tabKitchen=Küche
+
+tile.tiles.name=Kacheln
+tile.board.name=Schneidebrett
+tile.tomato_crop.name=Tomatenpflanze
+tile.lettuce_crop.name=Kopfsalat
+tile.oven.name=Ofen
+
+item.knife.name=Messer
+item.bacon_raw.name=Roher Speck
+item.bread_slice.name=Brotscheibe
+item.sandwich.name=Sandwich
+item.tomato.name=Tomate
+item.lettuce.name=Salat
+item.lettuce_leaf.name=Salatblätter
+item.tomato_slice.name=Tomatenscheibe
+item.bacon_cooked.name=Gebratener Speck
+item.carrot_slice.name=Karottenscheiben
+item.potato_slice.name=Kartoffelscheibe
+item.mortar.name=Mörser
+item.pestle.name=Stößel
+item.mortar_and_pestle.name=Mörser und Stößel
+item.flour.name=Mehl
+item.toast.name=Toastscheibe
+item.raw_roast_beef.name=Rohe Rindfleischscheibe
+item.roast_beef.name=Roastbeef
+item.chicken_fillet_raw.name=Rohes Hühnchenfilet
+item.chicken_fillet_cooked.name=Gebratenes Hühnchenfilet
+item.chicken_leg.name=Hühnerbein
+item.cheese.name=Käse
+item.cheese_slice.name=Käsescheibe
+item.burnt_meat.name=Verbranntes Fleisch
+
+combo.big_mac.name=Es gibt nur einen!
+combo.blt.name=Der gute alte BLT
+combo.only_bread.name=Etwas Langweilig...
+combo.rrb.name=Retro Roastbeef
+combo.smart_chicken.name=7-Smartes Hühnchen
+combo.veggie.name=Veggie Sandwich

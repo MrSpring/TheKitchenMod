@@ -1,0 +1,41 @@
+itemGroup.tabKitchen=Kitchen
+
+tile.tiles.name=Tiles
+tile.board.name=Cutting Board
+tile.tomato_crop.name=Tomato Plant
+tile.lettuce_crop.name=Lettuce Crop
+tile.oven.name=Oven
+tile.plate.name=Plate
+
+item.knife.name=Knife
+item.bacon_raw.name=Raw Bacon
+item.bread_slice.name=Slice of Bread
+item.sandwich.name=Sandwich
+item.tomato.name=Tomato
+item.lettuce.name=Lettuce
+item.lettuce_leaf.name=Lettuce Leaves
+item.tomato_slice.name=Tomato Slice
+item.bacon_cooked.name=Cooked Bacon
+item.carrot_slice.name=Carrot Slices
+item.potato_slice.name=Slice of Potato
+item.mortar.name=Mortar
+item.pestle.name=Pestle
+item.mortar_and_pestle.name=Mortar and Pestle
+item.flour.name=Flour
+item.toast.name=Piece of Toast
+item.raw_roast_beef.name=Raw Beef Slice
+item.roast_beef.name=Roastbeef
+item.chicken_fillet_raw.name=Raw Chicken Fillet
+item.chicken_fillet_cooked.name=Cooked Chicken Fillet
+item.chicken_leg.name=Chicken Leg
+item.cheese.name=Cheese
+item.cheese_slice.name=Cheese Slice
+item.burnt_meat.name=Burnt Meat
+item.sandwichable.sandwichable_msg=Sandwichable
+
+combo.big_mac.name=There is Only One!
+combo.blt.name=The Good ol' BLT
+combo.only_bread.name=Kinda Boring...
+combo.rrb.name=Retro Roastbeef
+combo.smart_chicken.name=7-Smart Chicken
+combo.veggie.name=Veggie Sandwich
