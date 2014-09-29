@@ -54,6 +54,14 @@ public class SandwichCombo
         return this;
     }
 
+    public static int getComboID(ItemStack sandwich)
+    {
+        for (int i = 0; i < combos.length;i++)
+            if (combos[i].matches(sandwich))
+                return i;
+        return 0;
+    }
+
     public String getUnlocalizedName()
     {
         return "combo." + this.name;
