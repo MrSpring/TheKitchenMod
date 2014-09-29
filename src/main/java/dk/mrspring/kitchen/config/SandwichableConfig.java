@@ -39,11 +39,13 @@ public class SandwichableConfig extends BaseConfig
     {
         String item_name = "minecraft:dirt";
         int heal_amount = 0;
+        boolean is_bread = false;
 
         public SandwichableEntry(String name, int healAmount, boolean isBread)
         {
             this.item_name = name;
             this.heal_amount = healAmount;
+            this.is_bread = isBread;
         }
 
         public SandwichableEntry(String name, int healAmount)

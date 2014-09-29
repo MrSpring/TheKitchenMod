@@ -21,7 +21,7 @@ public class ModConfig
 	public static void load(File baseFolder)
 	{
 		String base = baseFolder.getPath();
-		String[] names = new String[]{"Kitchen", "Knife", "Oven"};
+		String[] names = new String[]{"Kitchen", "Knife", "Oven", "Sandwichable"};
 		configs = new BaseConfig[names.length];
 
 		for (int i = 0; i < configs.length; i++)
