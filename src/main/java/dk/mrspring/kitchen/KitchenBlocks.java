@@ -1,6 +1,9 @@
 package dk.mrspring.kitchen;
 
 import dk.mrspring.kitchen.block.*;
+import dk.mrspring.kitchen.block.container.BlockBoard;
+import dk.mrspring.kitchen.block.container.BlockOven;
+import dk.mrspring.kitchen.block.container.BlockPlate;
 import dk.mrspring.kitchen.block.plant.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

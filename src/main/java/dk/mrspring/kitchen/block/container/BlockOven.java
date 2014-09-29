@@ -1,10 +1,7 @@
-package dk.mrspring.kitchen.block;
+package dk.mrspring.kitchen.block.container;
 
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,16 +14,11 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockOven extends BlockContainer
+public class BlockOven extends BlockContainerBase
 {
 	public BlockOven()
 	{
-		super(Material.iron);
-
-		this.setBlockName("oven");
-		this.setBlockTextureName(ModInfo.modid + ":oven");
-
-		this.setCreativeTab(Kitchen.instance.tab);
+		super(Material.iron, "oven");
 
 		this.setTickRandomly(true);
 		this.setHardness(4.0F);

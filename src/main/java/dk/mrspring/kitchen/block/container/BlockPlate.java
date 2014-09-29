@@ -1,9 +1,6 @@
-package dk.mrspring.kitchen.block;
+package dk.mrspring.kitchen.block.container;
 
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -16,20 +13,15 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class BlockPlate extends BlockContainer
+public class BlockPlate extends BlockContainerBase
 {
 	TileEntityPlate tileEntityPlate;
 
 	public BlockPlate()
 	{
-		super(Material.anvil);
-
-		this.setBlockName("plate");
-		this.setBlockTextureName(ModInfo.modid + ":plate");
+		super(Material.anvil, "plate");
 
 		this.setBlockBounds(0.0F + (2 * 0.0635F), 0.0F, 0.0F + (2 * 0.0635F), 1.0F - (2 * 0.0635F), (3 * 0.0625F), 1.0F - (2 * 0.0635F));
-
-		this.setCreativeTab(Kitchen.instance.tab);
 
 		this.setTickRandomly(true);
 		this.setHardness(4.0F);

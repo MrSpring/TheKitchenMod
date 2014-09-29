@@ -1,14 +1,11 @@
-package dk.mrspring.kitchen.block;
+package dk.mrspring.kitchen.block.container;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,16 +20,11 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockBoard extends BlockContainer
+public class BlockBoard extends BlockContainerBase
 {
 	public BlockBoard()
 	{
-		super(Material.wood);
-		
-		this.setBlockName("board");
-		this.setBlockTextureName("minecraft:planks_oak");
-		
-		this.setCreativeTab(Kitchen.instance.tab);
+		super("board", "minecraft:planks_oak");
 		
 		this.setStepSound(soundTypeWood);
 		this.setHardness(2.0F);
