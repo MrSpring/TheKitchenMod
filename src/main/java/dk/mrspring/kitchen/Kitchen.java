@@ -9,6 +9,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
+import dk.mrspring.kitchen.config.BaseConfig;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
@@ -25,6 +26,8 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static java.lang.Character.valueOf;
@@ -45,8 +48,10 @@ public class Kitchen
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+		ModConfig.load(new File("config"));
+
         // Loading the Config
-        ModConfig.load(new Configuration(event.getSuggestedConfigurationFile()));
+        //ModConfig.load(new Configuration(event.getSuggestedConfigurationFile()));
 
         // Initializing the Creative Tab
         instance.tab = new CreativeTabs("tabKitchen")
@@ -120,7 +125,7 @@ public class Kitchen
         GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar), "S S", " S ", valueOf('S'), Blocks.stone);
         GameRegistry.addRecipe(new ItemStack(KitchenItems.pestle), "S ", " S", valueOf('S'), Blocks.stone);
 
-        switch (ModConfig.knifeRecipe)
+        switch (ModConfig.getKnifeConfig().knife_recipe)
         {
             case 0:
                 GameRegistry.addRecipe(new ShapedOreRecipe(KitchenItems.knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), Items.iron_ingot));
@@ -137,7 +142,7 @@ public class Kitchen
 
                 ArrayList<String> lines = new ArrayList<String>();
 
-                for (String line : ModConfig.customKnifeRecipe)
+                for (String line : ModConfig.getKnifeConfig().custom_knife_recipe)
                 {
                     if (!line.equals("BBB"))
                         lines.add(line);

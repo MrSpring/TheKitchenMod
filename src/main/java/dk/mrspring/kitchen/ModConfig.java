@@ -1,41 +1,107 @@
 package dk.mrspring.kitchen;
 
-import net.minecraftforge.common.config.Configuration;
+import dk.mrspring.kitchen.config.BaseConfig;
+import dk.mrspring.kitchen.config.KitchenConfig;
+import dk.mrspring.kitchen.config.KnifeConfig;
+import dk.mrspring.kitchen.config.OvenConfig;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by MrSpring on 29-09-2014 for TheKitchenMod.
+ */
 public class ModConfig
 {
-    // Default Custom Oven recipe - Input
-    public static String[] defaultCustomOvenRecipes = new String[] { "kitchen:raw_roast_beef", "kitchen:chicken_fillet_raw", "kitchen:bacon_raw" };
-    // Default Custom Oven recipe - Output
-    public static String[] defaultCustomOvenRecipeResults = new String[] { "kitchen:roast_beef", "kitchen:chicken_fillet_cooked", "kitchen:bacon_cooked" };
+	private static BaseConfig[] configs;
 
-	// The lettuce spawn rate
-    public static int lettuceSpawnRate;
-	// Which knife recipe to use
-    public static int knifeRecipe;
-	// Custom Knife recipe array
-	public static String[] customKnifeRecipe;
-    // Oven custom recipes
-    public static String[] customOvenRecipes;
-    // Oven custom recipes Results
-    public static String[] customOvenRecipeResults;
-    // Whether to display debug info in the Console
-    public static boolean showDebug;
+	public static void load(File baseFolder)
+	{
+		String base = baseFolder.getPath();
+		String[] names = new String[]{"Kitchen", "Knife", "Oven"};
+		configs = new BaseConfig[names.length];
 
-	// Loads the config file and the variables
-    public static void load(Configuration config)
-    {
-		// Opens the config so it can be read
-        config.load();
+		for (int i = 0; i < configs.length; i++)
+		{
+			try
+			{
+				Class configClass = Class.forName("dk.mrspring.kitchen.config." + names[i] + "Config");
+				String locationForJson = base + "\\TheKitchenMod\\" + names[i] + ".json";
+				ModLogger.print(ModLogger.INFO, "Loading " + names[i] + " from JSON @ " + locationForJson);
+				BaseConfig config = (BaseConfig) configClass.getConstructor(File.class, String.class).newInstance(new File(locationForJson), names[i]);
+				configs[i] = config.readFromFile();
+			} catch (ClassNotFoundException e)
+			{
+				e.printStackTrace();
+			} catch (NoSuchMethodException e)
+			{
+				e.printStackTrace();
+			} catch (InvocationTargetException e)
+			{
+				e.printStackTrace();
+			} catch (InstantiationException e)
+			{
+				e.printStackTrace();
+			} catch (IllegalAccessException e)
+			{
+				e.printStackTrace();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	/*
+		String configFolder = baseFolder.toURI().toASCIIString();
+		config = new KitchenConfig(new File(configFolder + "\\TheKitchenMod.json"));
+		knifeConfig = new KnifeConfig(new File(configFolder + "\\KnifeRecipe.json"));
 
-        lettuceSpawnRate = config.get("WorldGen", "Lettuce Spawn percentage - How big a chance lettuce has to spawn per chunk, 0 to disable", 10).getInt();
-        knifeRecipe = config.get("Recipes", "Knife Recipes - 0: Default Recipe, 1: Iron Torch Recipe, 2: Stick next to Iron Recipe, 3: Custom Recipe", 0).getInt(0);
-		customKnifeRecipe = config.get("Recipes", "Custom Knife Recipe - I: Iron Ingot, S: Stick, Any other characters will be seen as blank spots. This is the exact layout in the crafting table!", new String[] { "BBI", "BIB", "SBB" }).getStringList();
-        customOvenRecipes = config.get("Recipes", "Custom Oven Recipes - The name of the Item to be able to cook in the Oven", defaultCustomOvenRecipes).getStringList();
-        customOvenRecipeResults = config.get("Recipes", "Custom Oven Recipes Results - The name of the result Item, when it's cooked in the Oven.", defaultCustomOvenRecipeResults).getStringList();
-        showDebug = config.get("Misc", "Show Debug info in Console", false).getBoolean(false);
+		File oldFile = config.getLocation();
+		try
+		{
+			config = config.readFromFile().setLocation(oldFile);
+		} catch (IOException e)
+		{
+			ModLogger.print(ModLogger.WARNING, "An error occured while loading Kitchen config file. Using default!", e);
+			config = new KitchenConfig(oldFile);
+		}
 
-		// Closes the config, and saves the changes made
-        config.save();
-    }
+		oldFile = knifeConfig.getLocation();
+		try
+		{
+			config = config.readFromFile().setLocation(oldFile);
+		} catch (IOException e)
+		{
+			ModLogger.print(ModLogger.WARNING, "An error occured while loading Knife config file. Using default!", e);
+			config = new KitchenConfig(oldFile);
+		}
+
+		oldFile = ovenConfig.getLocation();
+		try
+		{
+			config = config.readFromFile().setLocation(oldFile);
+		} catch (IOException e)
+		{
+			ModLogger.print(ModLogger.WARNING, "An error occured while loading Oven config file. Using default!", e);
+			config = new KitchenConfig(oldFile);
+		}
+	*/
+	}
+
+	public static KitchenConfig getKitchenConfig()
+	{
+		return (KitchenConfig) configs[0];
+	}
+
+	public static KnifeConfig getKnifeConfig()
+	{
+		return (KnifeConfig) configs[1];
+	}
+
+	public static OvenConfig getOvenConfig()
+	{
+		return (OvenConfig) configs[2];
+	}
 }

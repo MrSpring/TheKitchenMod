@@ -16,10 +16,10 @@ public class OvenRecipes
     {
         // TODO Use a custom JSON file instead of the Config
         // TODO Possible in-game recipe changer
-        if (ModConfig.customOvenRecipes.length == ModConfig.customOvenRecipeResults.length)
+        if (ModConfig.getOvenConfig().custom_oven_recipes_input.length == ModConfig.getOvenConfig().custom_oven_recipes_output.length)
         {
-            ArrayList<ItemStack> input = getArrayFromStringList(ModConfig.customOvenRecipes, "Custom Oven Recipes Input");
-            ArrayList<ItemStack> output = getArrayFromStringList(ModConfig.customOvenRecipeResults, "Custom Oven Recipes Output");
+            ArrayList<ItemStack> input = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_input, "Custom Oven Recipes Input");
+            ArrayList<ItemStack> output = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_output, "Custom Oven Recipes Output");
 
             if (input.size() == output.size())
             {
@@ -31,17 +31,17 @@ public class OvenRecipes
                 ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.");
                 ModLogger.print(ModLogger.DEBUG, "Some of the Items it was trying to load has wrong names. Correct this issue to load custom recipes!");
 
-                customOvenRecipes[0] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipes, "Default Oven Recipes Input");
-                customOvenRecipes[1] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipeResults, "Default Oven Recipes Output");
+                customOvenRecipes[0] = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_input, "Default Oven Recipes Input");
+                customOvenRecipes[1] = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_output, "Default Oven Recipes Output");
             }
         }
         else
         {
             ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.");
-            ModLogger.print(ModLogger.DEBUG, "One of the list were bigger than the other! Input length: " + ModConfig.customOvenRecipes.length + ", Output length: " + ModConfig.customOvenRecipeResults.length);
+            ModLogger.print(ModLogger.DEBUG, "One of the list were bigger than the other! Input length: " + ModConfig.getOvenConfig().custom_oven_recipes_input.length + ", Output length: " + ModConfig.getOvenConfig().custom_oven_recipes_output.length);
 
-            customOvenRecipes[0] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipes, "Default Oven Recipes Input");
-            customOvenRecipes[1] = getArrayFromStringList(ModConfig.defaultCustomOvenRecipeResults, "Default Oven Recipes Output");
+            customOvenRecipes[0] = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_input, "Default Oven Recipes Input");
+            customOvenRecipes[1] = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_output, "Default Oven Recipes Output");
         }
     }
 

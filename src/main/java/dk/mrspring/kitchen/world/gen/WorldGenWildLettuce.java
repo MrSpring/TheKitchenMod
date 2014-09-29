@@ -23,7 +23,7 @@ public class WorldGenWildLettuce implements IWorldGenerator
 			
 			int rand = random.nextInt(100);
 			
-			if (world.getBlock(x, y - 1, z) == Blocks.grass && world.getWorldInfo().getTerrainType() != WorldType.FLAT && rand < ModConfig.lettuceSpawnRate)
+			if (world.getBlock(x, y - 1, z) == Blocks.grass && world.getWorldInfo().getTerrainType() != WorldType.FLAT && rand < ModConfig.getKitchenConfig().lettuce_spawn_rate)
 				world.setBlock(x, y, z, KitchenBlocks.wild_lettuce);
 		}
 	}
