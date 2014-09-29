@@ -44,6 +44,7 @@ public class Kitchen
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+		// Test
         // Loading the Config
         ModConfig.load(new Configuration(event.getSuggestedConfigurationFile()));
 
