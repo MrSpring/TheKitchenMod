@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,7 +80,7 @@ public class ItemSandwich extends ItemFood
                     for (int i = 0; i < layersList.tagCount(); ++i)
                     {
                         NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-                        healAmount += ((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem()).getHealAmount();
+                        healAmount += ModConfig.getSandwichConfig().getHealAmount(ItemStack.loadItemStackFromNBT(layerCompound));
                     }
 
                     byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");
@@ -88,13 +89,15 @@ public class ItemSandwich extends ItemFood
                         healAmount += SandwichCombo.combos[(int) combo].getExtraHeal();
                 }
             }
+
+        System.out.println("Heal Amount: " + healAmount);
         return healAmount;
     }
 
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        if (par1ItemStack.getTagCompound()!=null)
+        if (par1ItemStack.getTagCompound() != null)
         {
             if (par1ItemStack.getTagCompound().hasKey("SandwichLayers"))
             {

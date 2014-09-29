@@ -4,9 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.combo.SandwichCombo;
-import dk.mrspring.kitchen.item.ItemSandwichable;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -38,9 +36,9 @@ public class TileEntityBoard extends TileEntity
 
     public ItemStack removeTopItem()
     {
-        if (this.layers.size()>0)
+        if (this.layers.size() > 0)
         {
-            return this.layers.remove(this.layers.size()-1);
+            return this.layers.remove(this.layers.size() - 1);
         } else return null;
     }
 
@@ -51,13 +49,13 @@ public class TileEntityBoard extends TileEntity
 
     public ItemStack finishSandwich()
     {
-        if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size()))) || this.layers.size() < 2)
+        if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
             return null;
 
         NBTTagList layersList = new NBTTagList();
         ItemStack sandwich = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
 
-        for (ItemStack layer:this.layers)
+        for (ItemStack layer : this.layers)
         {
             NBTTagCompound layerCompound = new NBTTagCompound();
             layer.writeToNBT(layerCompound);
@@ -71,7 +69,9 @@ public class TileEntityBoard extends TileEntity
         byte combo = (byte) SandwichCombo.getComboID(sandwich);
 
         comboCompound.setByte("Id", combo);
-        sandwich.setTagInfo("Combo",comboCompound);
+        sandwich.setTagInfo("Combo", comboCompound);
+
+        this.resetLayers();
 
         return sandwich;
     }

@@ -1,6 +1,5 @@
 package dk.mrspring.kitchen.combo;
 
-import dk.mrspring.kitchen.ModLogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -22,7 +21,7 @@ public class SandwichCombo
 
     public static SandwichCombo[] combos = new SandwichCombo[16];
 
-	public SandwichCombo(int id, String localizableName, EnumRarity enumRarity)
+    public SandwichCombo(int id, String localizableName, EnumRarity enumRarity)
     {
         if (combos[id] == null)
             combos[id] = this;
@@ -40,12 +39,12 @@ public class SandwichCombo
 
     public static void load()
     {
-        big_mac = new SandwichCombo(1, "big_mac", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "cheese_slice", "roast_beef", "lettuce_leaf", "bread_slice", "roast_beef", "lettuce_leaf", "bread_slice" }).setExtraHeal(1);
-        blt = new SandwichCombo(2, "blt", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "bacon_cooked", "lettuce_leaf", "tomato_slice", "toast" }).setExtraHeal(1);
-        only_bread = new SandwichCombo(3, "only_bread", EnumRarity.common).setComboLayers(new String[] { "bread_slice", "bread_slice" });
-        retro_roast_beef = new SandwichCombo(4, "rrb", EnumRarity.uncommon).setComboLayers(new String[] { "bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice" }).setExtraHeal(3);
-        smart_chicken = new SandwichCombo(5, "smart_chicken", EnumRarity.uncommon).setComboLayers(new String[] { "toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast" });
-        veggie = new SandwichCombo(6, "veggie", EnumRarity.rare).setComboLayers(new String[] { "bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice" });
+        big_mac = new SandwichCombo(1, "big_mac", EnumRarity.rare).setComboLayers(new String[]{"bread_slice", "cheese_slice", "roast_beef", "lettuce_leaf", "bread_slice", "roast_beef", "lettuce_leaf", "bread_slice"}).setExtraHeal(1);
+        blt = new SandwichCombo(2, "blt", EnumRarity.uncommon).setComboLayers(new String[]{"toast", "bacon_cooked", "lettuce_leaf", "tomato_slice", "toast"}).setExtraHeal(1);
+        only_bread = new SandwichCombo(3, "only_bread", EnumRarity.common).setComboLayers(new String[]{"bread_slice", "bread_slice"});
+        retro_roast_beef = new SandwichCombo(4, "rrb", EnumRarity.uncommon).setComboLayers(new String[]{"bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice"}).setExtraHeal(3);
+        smart_chicken = new SandwichCombo(5, "smart_chicken", EnumRarity.uncommon).setComboLayers(new String[]{"toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast"});
+        veggie = new SandwichCombo(6, "veggie", EnumRarity.rare).setComboLayers(new String[]{"bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice"});
     }
 
     public SandwichCombo setName(String name)
@@ -56,7 +55,7 @@ public class SandwichCombo
 
     public static int getComboID(ItemStack sandwich)
     {
-        for (int i = 0; i < combos.length;i++)
+        for (int i = 1; i < combos.length && combos[i] != null; i++)
             if (combos[i].matches(sandwich))
                 return i;
         return 0;
