@@ -12,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
+public class TileEntityOvenRenderer extends TileEntitySpecialRenderer
 {
     protected ModelOven model;
 	protected ResourceLocation inactiveTexture;
@@ -20,7 +20,7 @@ public class TileEntityOvenSpecialRenderer extends TileEntitySpecialRenderer
 
 	ItemStack[] itemStacks;
 
-    public TileEntityOvenSpecialRenderer()
+    public TileEntityOvenRenderer()
     {
         super();
 

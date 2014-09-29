@@ -37,5 +37,6 @@ public class BlockBase extends Block
 		registerBlock(KitchenBlocks.wild_lettuce);
 		registerBlock(KitchenBlocks.oven);
 		registerBlock(KitchenBlocks.plate, ItemBlockPlate.class, "plate");
+		registerBlock(KitchenBlocks.kitchen_cabinet);
 	}
 }

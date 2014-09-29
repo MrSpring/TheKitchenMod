@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.ItemSandwichable;
 
 @SideOnly(Side.CLIENT)
-public class TileEntityBoardSpecialRenderer extends TileEntitySpecialRenderer
+public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
 {
 	private ItemStack[] layers;
 	private double yItemOffset = 0.0D;

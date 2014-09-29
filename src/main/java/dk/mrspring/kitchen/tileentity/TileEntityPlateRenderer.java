@@ -16,13 +16,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class TileEntityPlateSpecialRenderer extends TileEntitySpecialRenderer
+public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 {
 	ModelPlate modelPlate;
 	ResourceLocation texture;
 	private double yItemOffset = 0.0D;
 
-	public TileEntityPlateSpecialRenderer()
+	public TileEntityPlateRenderer()
 	{
 		this.modelPlate = new ModelPlate();
 		this.texture = new ResourceLocation(ModInfo.modid + ":textures/models/plate.png");
