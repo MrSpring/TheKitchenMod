@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemSandwich;
-import dk.mrspring.kitchen.item.ItemSandwichable;
 import dk.mrspring.kitchen.item.render.SandwichRender;
 import dk.mrspring.kitchen.model.ModelPlate;
 import net.minecraft.client.Minecraft;
@@ -11,8 +10,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -21,7 +18,6 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 {
 	ModelPlate modelPlate;
 	ResourceLocation texture;
-	private double yItemOffset = 0.0D;
 
 	public TileEntityPlateRenderer()
 	{
@@ -50,7 +46,7 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 
 		GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
 
-		this.yItemOffset = 0;
+		double yItemOffset = 0;
 
 		for(ItemStack itemStack : ((TileEntityPlate) var1).getItemsAsArray())
 		{
@@ -59,7 +55,7 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 				if (itemStack.getItem() instanceof ItemSandwich)
 					this.renderSadwich(itemStack);
 				else
-				{ this.renderItem(itemStack, 0, this.yItemOffset + 1.4, -0.225F); this.yItemOffset -= 0.03; }
+				{ this.renderItem(itemStack, 0, yItemOffset + 1.4, -0.225F); yItemOffset -= 0.03; }
 			}
 		}
 
