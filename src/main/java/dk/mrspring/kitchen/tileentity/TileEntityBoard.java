@@ -3,6 +3,10 @@ package dk.mrspring.kitchen.tileentity;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.api.event.BoardEventRegistry;
+import dk.mrspring.kitchen.api.event.IOnAddedToBoardEvent;
+import dk.mrspring.kitchen.api.event.IOnBoardRightClickedEvent;
+import dk.mrspring.kitchen.api.event.ITopItemEvent;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,20 +22,58 @@ import java.util.List;
 public class TileEntityBoard extends TileEntity
 {
     private List<ItemStack> layers = new ArrayList<ItemStack>();
+    private NBTTagCompound specialInfo = new NBTTagCompound();
 
-    public boolean addLayer(ItemStack toAdd)
+    /***
+     * @param toAdd The ItemStack trying to get added to the Board.
+     * @return Returns true if the ItemStack was added, and should therefore decrement it's stackSize, false if not.
+     */
+    public boolean rightClicked(ItemStack toAdd)
     {
         if (toAdd != null)
         {
+            System.out.println("To Add is not null!");
+
+            IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
+            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(toAdd.getItem());
+
+            NBTTagCompound compoundCopy = this.getSpecialInfo();
+            if (!topItemEvent.canAddItemOnTop(this.getLayers(), toAdd, this.getSpecialInfo()) || onAddedToBoardEvent.canAdd(this.getLayers(), toAdd, compoundCopy))
+            {
+                this.setSpecialInfo(compoundCopy);
+                return false;
+            }
+
             if (ModConfig.getSandwichConfig().canAdd(toAdd))
             {
                 ItemStack temp = toAdd.copy();
                 temp.stackSize = 1;
                 this.layers.add(temp);
+                this.setSpecialInfo(new NBTTagCompound());
                 return true;
+            } else
+            {
+                IOnBoardRightClickedEvent onBoardRightClickedEvent = (IOnBoardRightClickedEvent) BoardEventRegistry.getOnBoardRightClickedEventFor(toAdd.getItem());
+                compoundCopy = this.getSpecialInfo();
+                onBoardRightClickedEvent.onRightClicked(this.getLayers(),toAdd,compoundCopy);
+                this.setSpecialInfo(compoundCopy);
+                return false;
             }
         }
         return false;
+    }
+
+    public NBTTagCompound getSpecialInfo()
+    {
+        if (specialInfo == null)
+            this.specialInfo = new NBTTagCompound();
+
+        return specialInfo;
+    }
+
+    public void setSpecialInfo(NBTTagCompound specialInfo)
+    {
+        this.specialInfo = specialInfo;
     }
 
     public ItemStack removeTopItem()
@@ -93,8 +135,10 @@ public class TileEntityBoard extends TileEntity
         {
             NBTTagCompound layerCompound = list.getCompoundTagAt(i);
 
-            this.addLayer(ItemStack.loadItemStackFromNBT(layerCompound));
+            this.rightClicked(ItemStack.loadItemStackFromNBT(layerCompound));
         }
+
+        this.setSpecialInfo(compound.getCompoundTag("SpecialInfo"));
     }
 
     @Override
@@ -115,6 +159,7 @@ public class TileEntityBoard extends TileEntity
         }
 
         compound.setTag("Items", list);
+        compound.setTag("SpecialInfo", this.getSpecialInfo());
     }
 
     @Override
@@ -142,7 +187,7 @@ public class TileEntityBoard extends TileEntity
 		this.layerIndex = 0;
 	}
 	
-	public boolean addLayer(ItemSandwichable par1)
+	public boolean rightClicked(ItemSandwichable par1)
 	{
 		if (this.layerIndex + 1 <= 10)
 		{
@@ -202,7 +247,7 @@ public class TileEntityBoard extends TileEntity
 		{
 			NBTTagCompound layerCompound = list.getCompoundTagAt(i);
 			
-			this.addLayer((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem());
+			this.rightClicked((ItemSandwichable) ItemStack.loadItemStackFromNBT(layerCompound).getItem());
 		}
 	}
 	

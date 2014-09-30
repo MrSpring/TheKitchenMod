@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,13 +29,13 @@ public class SandwichableRenderingRegistry
 		else return new ISandwichableRenderingHandler()
 		{
 			@Override
-			public ModelBase getModel(List<ItemStack> itemStackList, int indexInList)
+			public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
 			{
 				return null;
 			}
 
 			@Override
-			public int getModelHeight(List<ItemStack> itemStackList, int indexInList)
+			public int getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
 			{
 				return 1;
 			}

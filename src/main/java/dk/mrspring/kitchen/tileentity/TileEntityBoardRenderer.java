@@ -31,7 +31,7 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
         }
 
 		List<ItemStack> layers = tileEntity.getLayers();
-		SandwichRender.renderSandwich(layers);
+		SandwichRender.renderSandwich(layers, tileEntity.getSpecialInfo());
 		
 		GL11.glPopMatrix();
 	}

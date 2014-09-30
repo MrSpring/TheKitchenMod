@@ -36,7 +36,7 @@ public class BlockBoard extends BlockContainerBase
             {
                 if (activator.getCurrentEquippedItem() != null)
                 {
-                    if (entity.addLayer(activator.getCurrentEquippedItem()))
+                    if (entity.rightClicked(activator.getCurrentEquippedItem()))
                     {
                         --activator.getCurrentEquippedItem().stackSize;
                         world.markBlockForUpdate(x, y, z);
@@ -77,7 +77,7 @@ public class BlockBoard extends BlockContainerBase
 				{
 					if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
 					{
-						if (entity.addLayer((ItemSandwichable) activator.getCurrentEquippedItem().getItem()))
+						if (entity.rightClicked((ItemSandwichable) activator.getCurrentEquippedItem().getItem()))
 						{
 							--activator.getCurrentEquippedItem().stackSize;
 							world.markBlockForUpdate(x, y, z);

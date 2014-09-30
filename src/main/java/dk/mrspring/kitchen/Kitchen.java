@@ -7,6 +7,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.item.ItemBase;
@@ -72,6 +73,8 @@ public class Kitchen
 
         // Registering renderers
         proxy.registerRenderers();
+        // Registers the default Board events
+        BoardEventRegistry.registerDefaultEvents();
     }
 
     @EventHandler
