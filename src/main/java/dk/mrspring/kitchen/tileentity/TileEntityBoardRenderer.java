@@ -23,9 +23,8 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
 		GL11.glTranslated(x, y, z);
         int metadata = tileEntity.getBlockMetadata();
         if (metadata == 0)
-        {
             GL11.glTranslated(.5, .11, .3);
-        } else
+        else
         {
             GL11.glRotatef(90,0,1,0);
             GL11.glTranslated(-.5, .11, .3);
