@@ -28,6 +28,7 @@ public class ItemRenderSandwich implements IItemRenderer
 		{
 		case EQUIPPED: return true;
 		case EQUIPPED_FIRST_PERSON: return true;
+			case ENTITY: return true;
 		default: return false;
 		}
 	}
@@ -41,7 +42,55 @@ public class ItemRenderSandwich implements IItemRenderer
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data)
 	{
-		this.yItemOffset = 0.0D;
+		switch (type)
+		{
+			case EQUIPPED:
+			{
+				GL11.glPushMatrix();
+
+				GL11.glRotatef(-60,1,0,0);
+				GL11.glRotatef(20,0,0,1);
+				GL11.glTranslated(.4,-.1,0);
+				float f = 1.5F;
+				GL11.glScalef(f,f,f);
+
+				SandwichRender.renderSandwich(item);
+
+				GL11.glPopMatrix();
+
+				break;
+			}
+			case EQUIPPED_FIRST_PERSON:
+			{
+				GL11.glPushMatrix();
+
+				GL11.glTranslatef(.4F,.3F,-.1F);
+				GL11.glRotatef(90,0,1,0);
+				GL11.glRotatef(-10,1,0,0);
+
+				SandwichRender.renderSandwich(item);
+
+				GL11.glPopMatrix();
+
+				break;
+			}
+			case ENTITY:
+			{
+				GL11.glPushMatrix();
+
+				GL11.glTranslatef(.00F,-0.15F,-.35F);
+				float f = 2F;
+				GL11.glScalef(f,f,f);
+
+				SandwichRender.renderSandwich(item);
+
+				GL11.glPopMatrix();
+
+				break;
+			}
+		}
+
+		/*this.yItemOffset = 0.0D;
 		
 		switch(type)
 		{
@@ -129,7 +178,7 @@ public class ItemRenderSandwich implements IItemRenderer
 			}
 		}
 		default: break;
-		}
+		}*/
 	}
 	
 	private void renderItemEntity(ItemStack item, double xOffset, double yOffset, double zOffset, int i)

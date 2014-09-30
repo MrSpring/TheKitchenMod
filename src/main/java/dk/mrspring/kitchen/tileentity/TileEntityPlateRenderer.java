@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.tileentity;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import dk.mrspring.kitchen.item.ItemSandwichable;
+import dk.mrspring.kitchen.item.render.SandwichRender;
 import dk.mrspring.kitchen.model.ModelPlate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -90,61 +91,12 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 
 	private void renderSadwich(ItemStack item)
 	{
-		this.yItemOffset = 0.0;
-
-		NBTTagList layersList = item.stackTagCompound.getTagList("SandwichLayers", 10);
-
-		if (layersList != null)
-		{
-			ItemStack[] items = new ItemStack[layersList.tagCount()];
-
-			for (int i = 0; i < layersList.tagCount(); ++i)
-			{
-				NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-				items[i] = ItemStack.loadItemStackFromNBT(layerCompound);
-			}
-
-			GL11.glPushMatrix();
-
-			GL11.glRotatef(180, 1.0F, 0.0F, 0.0F);
-			GL11.glTranslatef(0.0F, -1.375F, -0.225F);
-			GL11.glScalef(1.2F, 1.2F, 1.2F);
-
-			for (int i = 0; i < items.length; ++i)
-			{
-				boolean isTopOfStack = false;
-				if (i + 1 < items.length)
-					if (items[i + 1] != null)
-						isTopOfStack = true;
-
-				this.renderItemEntity(items[i], 0.0D, (i * 0.0311D + yItemOffset), 0.0D, isTopOfStack);
-			}
-
-			GL11.glPopMatrix();
-		}
-	}
-
-	private void renderItemEntity(ItemStack item, double xOffset, double yOffset, double zOffset, boolean isTop)
-	{
 		GL11.glPushMatrix();
-
-		GL11.glTranslated(xOffset, yOffset, zOffset);
-
-		if (((ItemSandwichable) item.getItem()).hasCustomModel)
-			if (isTop)
-				{ ((ItemSandwichable) item.getItem()).getBottomModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) item.getItem()).modelBottomHeight * 0.033D); }
-			else
-				{ ((ItemSandwichable) item.getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) item.getItem()).modelTopHeight * 0.033D); }
-		else
-		{
-			EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
-			itemEntity.hoverStart = 0.0F;
-			RenderItem.renderInFrame = true;
-			GL11.glRotatef(180, 0, 1, 1);
-			RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-			RenderItem.renderInFrame = false;
-		}
-
+		float scale = 1.25F;
+		GL11.glScalef(scale,scale,scale);
+		GL11.glRotatef(180,0,0,1);
+		GL11.glTranslatef(0,-1.15F,-.15F);
+		SandwichRender.renderSandwich(item);
 		GL11.glPopMatrix();
 	}
 }
