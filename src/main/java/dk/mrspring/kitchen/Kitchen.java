@@ -9,25 +9,22 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
-import dk.mrspring.kitchen.config.BaseConfig;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
-import dk.mrspring.kitchen.world.gen.WorldGenWildLettuce;
+import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static java.lang.Character.valueOf;
@@ -91,6 +88,7 @@ public class Kitchen
         // Adding Tomatoes to the grass drop list
         MinecraftForge.addGrassSeed(new ItemStack(KitchenItems.tomato), 10);
         // Registering the Lettuce world generator
+        GameRegistry.registerWorldGenerator(new WorldGenWildPlants(), 1);
         GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 
         /**
