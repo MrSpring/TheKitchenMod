@@ -1,9 +1,6 @@
 package dk.mrspring.kitchen;
 
-import dk.mrspring.kitchen.config.BaseConfig;
-import dk.mrspring.kitchen.config.KitchenConfig;
-import dk.mrspring.kitchen.config.KnifeConfig;
-import dk.mrspring.kitchen.config.OvenConfig;
+import dk.mrspring.kitchen.config.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +18,7 @@ public class ModConfig
 	public static void load(File baseFolder)
 	{
 		String base = baseFolder.getPath();
-		String[] names = new String[]{"Kitchen", "Knife", "Oven"};
+		String[] names = new String[]{"Kitchen", "Knife", "Oven", "Sandwichable"};
 		configs = new BaseConfig[names.length];
 
 		for (int i = 0; i < configs.length; i++)
@@ -104,4 +101,9 @@ public class ModConfig
 	{
 		return (OvenConfig) configs[2];
 	}
+
+    public static SandwichableConfig getSandwichConfig()
+    {
+        return (SandwichableConfig) configs[3];
+    }
 }

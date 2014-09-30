@@ -1,11 +1,9 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.item.ItemSandwichBread;
-import dk.mrspring.kitchen.item.ItemSandwichable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
+import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.combo.SandwichCombo;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -13,12 +11,128 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityBoard extends TileEntity
 {
-	private ItemStack[] layers = new ItemStack[10];
-	private ItemStack lastRemoved;
+    private List<ItemStack> layers = new ArrayList<ItemStack>();
+
+    public boolean addLayer(ItemStack toAdd)
+    {
+        if (toAdd != null)
+        {
+            if (ModConfig.getSandwichConfig().canAdd(toAdd))
+            {
+                ItemStack temp = toAdd.copy();
+                temp.stackSize = 1;
+                this.layers.add(temp);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ItemStack removeTopItem()
+    {
+        if (this.layers.size() > 0)
+        {
+            return this.layers.remove(this.layers.size() - 1);
+        } else return null;
+    }
+
+    public List<ItemStack> getLayers()
+    {
+        return layers;
+    }
+
+    public ItemStack finishSandwich()
+    {
+        if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
+            return null;
+
+        NBTTagList layersList = new NBTTagList();
+        ItemStack sandwich = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
+
+        for (ItemStack layer : this.layers)
+        {
+            NBTTagCompound layerCompound = new NBTTagCompound();
+            layer.writeToNBT(layerCompound);
+            layersList.appendTag(layerCompound);
+        }
+
+        sandwich.setTagInfo("SandwichLayers", layersList);
+
+
+        NBTTagCompound comboCompound = new NBTTagCompound();
+        byte combo = (byte) SandwichCombo.getComboID(sandwich);
+
+        comboCompound.setByte("Id", combo);
+        sandwich.setTagInfo("Combo", comboCompound);
+
+        this.resetLayers();
+
+        return sandwich;
+    }
+
+    public void resetLayers()
+    {
+        this.layers = new ArrayList<ItemStack>();
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+
+        this.resetLayers();
+        NBTTagList list = compound.getTagList("Items", 10);
+
+        for (int i = 0; i < list.tagCount(); ++i)
+        {
+            NBTTagCompound layerCompound = list.getCompoundTagAt(i);
+
+            this.addLayer(ItemStack.loadItemStackFromNBT(layerCompound));
+        }
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+
+        NBTTagList list = new NBTTagList();
+
+        for (ItemStack layer : this.layers)
+        {
+            if (layer != null)
+            {
+                NBTTagCompound layerCompound = new NBTTagCompound();
+                layer.writeToNBT(layerCompound);
+                list.appendTag(layerCompound);
+            }
+        }
+
+        compound.setTag("Items", list);
+    }
+
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound compound = new NBTTagCompound();
+        this.writeToNBT(compound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+        this.readFromNBT(pkt.func_148857_g());
+    }
+
+	/*private ItemStack[] layers = new ItemStack[10];
+    private ItemStack lastRemoved;
 	int layerIndex = 0;
 	
 	public void resetLayers()
@@ -124,5 +238,5 @@ public class TileEntityBoard extends TileEntity
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
 	{
 		this.readFromNBT(pkt.func_148857_g());
-	}
+	}*/
 }
