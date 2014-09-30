@@ -85,11 +85,8 @@ public class Kitchen
         // Loading Custom Oven recipes
         OvenRecipes.load();
 
-        // Adding Tomatoes to the grass drop list
-        MinecraftForge.addGrassSeed(new ItemStack(KitchenItems.tomato), 10);
         // Registering the Lettuce world generator
         GameRegistry.registerWorldGenerator(new WorldGenWildPlants(), 1);
-        GameRegistry.registerWorldGenerator(new WorldGenWildLettuce(), 1);
 
         /**
          * RECIPES
