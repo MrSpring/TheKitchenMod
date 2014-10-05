@@ -21,185 +21,186 @@ import java.util.List;
 
 public class TileEntityBoard extends TileEntity
 {
-	private List<ItemStack> layers = new ArrayList<ItemStack>();
-	private NBTTagCompound specialInfo = new NBTTagCompound();
+    private List<ItemStack> layers = new ArrayList<ItemStack>();
+    private NBTTagCompound specialInfo = new NBTTagCompound();
 
-	/**
-	 * @param toAdd The ItemStack trying to get added to the Board.
-	 * @return Returns true if the ItemStack was added, and should therefore decrement it's stackSize, false if not.
-	 */
-	public boolean rightClicked(ItemStack toAdd, boolean callEvents)
-	{
-		if (toAdd != null)
-		{
-			//System.out.println("To Add is not null! Ir is: " + toAdd.getDisplayName());
+    /**
+     * @param toAdd The ItemStack trying to get added to the Board.
+     * @return Returns true if the ItemStack was added, and should therefore decrement it's stackSize, false if not.
+     */
+    public boolean rightClicked(ItemStack toAdd, boolean callEvents)
+    {
+        if (toAdd != null)
+        {
+            //System.out.println("To Add is not null! Ir is: " + toAdd.getDisplayName());
 
-			IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
-			ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTopItem());
+            IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
+            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTopItem());
 
-			//System.out.println(callEvents);
-			if (!callEvents)
-			{
-				//System.out.println("Getting default events because callEvents is false!");
-				onAddedToBoardEvent = BoardEventRegistry.getDefaultOnAddedToBoardEvent();
-				topItemEvent = BoardEventRegistry.getDefaultTopItemEvent();
-			}
+            //System.out.println(callEvents);
+            if (!callEvents)
+            {
+                //System.out.println("Getting default events because callEvents is false!");
+                onAddedToBoardEvent = BoardEventRegistry.getDefaultOnAddedToBoardEvent();
+                topItemEvent = BoardEventRegistry.getDefaultTopItemEvent();
+            }
 
-			NBTTagCompound compoundCopy = this.getSpecialInfo();
+            NBTTagCompound compoundCopy = this.getSpecialInfo();
 
-			if (ModConfig.getSandwichConfig().canAdd(toAdd) && topItemEvent.canAddItemOnTop(this.getLayers(), toAdd, compoundCopy) && onAddedToBoardEvent.canAdd(this.getLayers(), toAdd, compoundCopy))
-			{
-				ItemStack temp = toAdd.copy();
-				temp.stackSize = 1;
-				this.layers.add(temp);
-				this.setSpecialInfo(new NBTTagCompound());
-				compoundCopy = this.getSpecialInfo();
-				onAddedToBoardEvent.onAdded(this.getLayers(), temp, compoundCopy);
-				this.setSpecialInfo(compoundCopy);
-				return true;
-			} else
-			{
-				IOnBoardRightClickedEvent onBoardRightClickedEvent = (IOnBoardRightClickedEvent) BoardEventRegistry.getOnBoardRightClickedEventFor(toAdd.getItem());
-				if (!callEvents)
-					onBoardRightClickedEvent = BoardEventRegistry.getDefaultOnBoardRightClickedEvent();
-				compoundCopy = this.getSpecialInfo();
-				onBoardRightClickedEvent.onRightClicked(this.getLayers(), toAdd, compoundCopy);
-				this.setSpecialInfo(compoundCopy);
-				return false;
-			}
-		}
-		return false;
-	}
+            if (ModConfig.getSandwichConfig().canAdd(toAdd) && topItemEvent.canAddItemOnTop(this.getLayers(), toAdd, compoundCopy) && onAddedToBoardEvent.canAdd(this.getLayers(), toAdd, compoundCopy))
+            {
+                ItemStack temp = toAdd.copy();
+                temp.stackSize = 1;
+                this.layers.add(temp);
+                this.setSpecialInfo(new NBTTagCompound());
+                compoundCopy = this.getSpecialInfo();
+                onAddedToBoardEvent.onAdded(this.getLayers(), temp, compoundCopy);
+                this.setSpecialInfo(compoundCopy);
+                return true;
+            } else
+            {
+                IOnBoardRightClickedEvent onBoardRightClickedEvent = (IOnBoardRightClickedEvent) BoardEventRegistry.getOnBoardRightClickedEventFor(toAdd.getItem());
+                if (!callEvents)
+                    onBoardRightClickedEvent = BoardEventRegistry.getDefaultOnBoardRightClickedEvent();
+                compoundCopy = this.getSpecialInfo();
+                onBoardRightClickedEvent.onRightClicked(this.getLayers(), toAdd, compoundCopy);
+                this.setSpecialInfo(compoundCopy);
+                return false;
+            }
+        }
+        return false;
+    }
 
-	public ItemStack getTopItem()
-	{
-		if (this.getLayers().size() > 0)
-			return this.getLayers().get(this.getLayers().size() - 1);
-		else return null;
-	}
+    public ItemStack getTopItem()
+    {
+        if (this.getLayers().size() > 0)
+            return this.getLayers().get(this.getLayers().size() - 1);
+        else return null;
+    }
 
-	public NBTTagCompound getSpecialInfo()
-	{
-		if (specialInfo == null)
-			this.specialInfo = new NBTTagCompound();
+    public NBTTagCompound getSpecialInfo()
+    {
+        if (specialInfo == null)
+            this.specialInfo = new NBTTagCompound();
 
-		return specialInfo;
-	}
+        return specialInfo;
+    }
 
-	public void setSpecialInfo(NBTTagCompound specialInfo)
-	{
-		this.specialInfo = specialInfo;
-	}
+    public void setSpecialInfo(NBTTagCompound specialInfo)
+    {
+        this.specialInfo = specialInfo;
+    }
 
-	public ItemStack removeTopItem()
-	{
-		if (this.layers.size() > 0)
-		{
-			return this.layers.remove(this.layers.size() - 1);
-		} else return null;
-	}
+    public ItemStack removeTopItem()
+    {
+        if (this.layers.size() > 0)
+        {
+            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.layers.get(this.layers.size() - 1));
+            return topItemEvent.getDroppeditem(this.layers, this.layers.get(this.layers.size()-1), this.getSpecialInfo());
+        } else return null;
+    }
 
-	public List<ItemStack> getLayers()
-	{
-		return layers;
-	}
+    public List<ItemStack> getLayers()
+    {
+        return layers;
+    }
 
-	public ItemStack finishSandwich()
-	{
-		if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
-			return null;
+    public ItemStack finishSandwich()
+    {
+        if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
+            return null;
 
-		NBTTagList layersList = new NBTTagList();
-		ItemStack sandwich = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
+        NBTTagList layersList = new NBTTagList();
+        ItemStack sandwich = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
 
-		for (ItemStack layer : this.layers)
-		{
-			NBTTagCompound layerCompound = new NBTTagCompound();
-			layer.writeToNBT(layerCompound);
-			layersList.appendTag(layerCompound);
-		}
+        for (ItemStack layer : this.layers)
+        {
+            NBTTagCompound layerCompound = new NBTTagCompound();
+            layer.writeToNBT(layerCompound);
+            layersList.appendTag(layerCompound);
+        }
 
-		sandwich.setTagInfo("SandwichLayers", layersList);
+        sandwich.setTagInfo("SandwichLayers", layersList);
 
 
-		NBTTagCompound comboCompound = new NBTTagCompound();
-		byte combo = (byte) SandwichCombo.getComboID(sandwich);
+        NBTTagCompound comboCompound = new NBTTagCompound();
+        byte combo = (byte) SandwichCombo.getComboID(sandwich);
 
-		comboCompound.setByte("Id", combo);
-		sandwich.setTagInfo("Combo", comboCompound);
+        comboCompound.setByte("Id", combo);
+        sandwich.setTagInfo("Combo", comboCompound);
 
-		this.resetLayers();
+        this.resetLayers();
 
-		return sandwich;
-	}
+        return sandwich;
+    }
 
-	public void resetLayers()
-	{
-		this.layers = new ArrayList<ItemStack>();
-	}
+    public void resetLayers()
+    {
+        this.layers = new ArrayList<ItemStack>();
+    }
 
-	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
-		super.readFromNBT(compound);
+    @Override
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
 
-		this.resetLayers();
-		NBTTagList list = compound.getTagList("Items", 10);
+        this.resetLayers();
+        NBTTagList list = compound.getTagList("Items", 10);
 
-		System.out.println("Reading from NBT");
+        System.out.println("Reading from NBT");
 
-		for (int i = 0; i < list.tagCount(); ++i)
-		{
-			NBTTagCompound layerCompound = list.getCompoundTagAt(i);
-			ItemStack layer = ItemStack.loadItemStackFromNBT(layerCompound);
+        for (int i = 0; i < list.tagCount(); ++i)
+        {
+            NBTTagCompound layerCompound = list.getCompoundTagAt(i);
+            ItemStack layer = ItemStack.loadItemStackFromNBT(layerCompound);
 
-			System.out.println("Reading " + layer.getDisplayName() + " from NBT");
+            System.out.println("Reading " + layer.getDisplayName() + " from NBT");
 
-			this.rightClicked(layer, false);
-		}
+            this.rightClicked(layer, false);
+        }
 
-		this.setSpecialInfo(compound.getCompoundTag("SpecialInfo"));
-	}
+        this.setSpecialInfo(compound.getCompoundTag("SpecialInfo"));
+    }
 
-	@Override
-	public void writeToNBT(NBTTagCompound compound)
-	{
-		super.writeToNBT(compound);
+    @Override
+    public void writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
 
-		NBTTagList list = new NBTTagList();
-		System.out.println("Writing to NBT");
+        NBTTagList list = new NBTTagList();
+        System.out.println("Writing to NBT");
 
-		for (ItemStack layer : this.layers)
-		{
-			if (layer != null)
-			{
-				System.out.println("Writing " + layer.getDisplayName() + " to NBT");
-				NBTTagCompound layerCompound = new NBTTagCompound();
-				layer.writeToNBT(layerCompound);
-				list.appendTag(layerCompound);
-			}
-		}
+        for (ItemStack layer : this.layers)
+        {
+            if (layer != null)
+            {
+                System.out.println("Writing " + layer.getDisplayName() + " to NBT");
+                NBTTagCompound layerCompound = new NBTTagCompound();
+                layer.writeToNBT(layerCompound);
+                list.appendTag(layerCompound);
+            }
+        }
 
-		compound.setTag("Items", list);
-		compound.setTag("SpecialInfo", this.getSpecialInfo());
-	}
+        compound.setTag("Items", list);
+        compound.setTag("SpecialInfo", this.getSpecialInfo());
+    }
 
-	@Override
-	public Packet getDescriptionPacket()
-	{
-		NBTTagCompound compound = new NBTTagCompound();
-		this.writeToNBT(compound);
-		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
-	}
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound compound = new NBTTagCompound();
+        this.writeToNBT(compound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+    }
 
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-	{
-		this.readFromNBT(pkt.func_148857_g());
-	}
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+        this.readFromNBT(pkt.func_148857_g());
+    }
 
 	/*private ItemStack[] layers = new ItemStack[10];
-	private ItemStack lastRemoved;
+    private ItemStack lastRemoved;
 	int layerIndex = 0;
 	
 	public void resetLayers()

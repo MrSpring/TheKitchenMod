@@ -31,6 +31,8 @@ item.chicken_leg.name=Kyllinge Ben
 item.cheese.name=Ost
 item.cheese_slice.name=Oste Skive
 item.burnt_meat.name=Brændt Kød
+item.butter.name=Smør
+item.butter_knife.name=Smørkniv
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
