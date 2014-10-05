@@ -50,7 +50,7 @@ public class BlockBoard extends BlockContainerBase
                         world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, removedItemStack));
                         world.markBlockForUpdate(x, y, z);
                         return true;
-                    }
+                    } else world.markBlockForUpdate(x, y, z);
                 }
             } else
             {
