@@ -41,3 +41,13 @@ combo.only_bread.name=Kinda Boring...
 combo.rrb.name=Retro Roastbeef
 combo.smart_chicken.name=7-Smart Chicken
 combo.veggie.name=Veggie Sandwich
+
+option.show_is_sandwich_ready=Show Sandwich Status on Board
+option.show_oven_contents=Show Oven Contents
+option.show_oven_status=Show Oven Status
+
+waila.is_sandwich_ready=Is Sandwich Ready
+waila.oven_items=Oven Items
+waila.oven_has_coal=Has Coal
+waila.true=True
+waila.false=False

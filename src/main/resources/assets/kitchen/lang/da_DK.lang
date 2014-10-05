@@ -40,3 +40,7 @@ combo.only_bread.name=Kinda Boring...
 combo.rrb.name=Retro Roastbeef
 combo.smart_chicken.name=7-Smart Chicken
 combo.veggie.name=Veggie Sandwich
+
+waila.is_sandwich_ready=Er Sandwich Klar
+waila.true=Sandt
+waila.false=Falsk

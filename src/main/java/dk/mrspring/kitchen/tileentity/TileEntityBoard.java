@@ -95,8 +95,9 @@ public class TileEntityBoard extends TileEntity
     {
         if (this.layers.size() > 0)
         {
-            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.layers.get(this.layers.size() - 1));
-            return topItemEvent.getDroppeditem(this.layers, this.layers.get(this.layers.size()-1), this.getSpecialInfo());
+            ItemStack removed = this.layers.remove(this.layers.size()-1);
+            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(removed);
+            return topItemEvent.getDroppeditem(this.layers, removed, this.getSpecialInfo());
         } else return null;
     }
 
