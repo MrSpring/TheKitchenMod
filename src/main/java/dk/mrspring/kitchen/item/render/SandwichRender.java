@@ -82,10 +82,10 @@ public class SandwichRender
             public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound specialTagInfo)
             {
                 if (specialTagInfo != null)
-                    if (specialTagInfo.hasKey("Spreadness"))
+                    if (specialTagInfo.hasKey("ClickAmount"))
                     {
-                        int spreadness = specialTagInfo.getInteger("Spreadness");
-                        switch (spreadness)
+                        int clickAmount = specialTagInfo.getInteger("ClickAmount");
+                        switch (clickAmount)
                         {
                             case 0:
                                 return new ModelButter0();

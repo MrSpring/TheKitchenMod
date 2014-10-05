@@ -36,7 +36,7 @@ public class BlockBoard extends BlockContainerBase
             {
                 if (activator.getCurrentEquippedItem() != null)
                 {
-                    if (entity.rightClicked(activator.getCurrentEquippedItem()))
+                    if (entity.rightClicked(activator.getCurrentEquippedItem(), true))
                     {
                         --activator.getCurrentEquippedItem().stackSize;
                         world.markBlockForUpdate(x, y, z);
