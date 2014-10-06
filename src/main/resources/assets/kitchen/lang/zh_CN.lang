@@ -34,6 +34,7 @@ item.cheese_slice.name=乳酪片
 item.burnt_meat.name=烤焦肉
 item.creeper_slice.name=爬行者肉片
 item.butter.name=黄油
+item.sandwichable.sandwichable_msg=可用作三明治的食材
 
 combo.big_mac.name=独一无二!
 combo.blt.name=美味的三明治
@@ -43,6 +44,5 @@ combo.smart_chicken.name=7只聪明的小鸡
 combo.veggie.name=素食三明治
 combo.creeper.name=SssSSSssssSSs...
 
-item_info.sandwichable=可用作三明治的食材
 item_info.heal_amount=补充饥饿值
 item_info.has_model=3D模型哦

@@ -31,6 +31,8 @@ item.chicken_leg.name=Kyllinge Ben
 item.cheese.name=Ost
 item.cheese_slice.name=Oste Skive
 item.burnt_meat.name=Brændt Kød
+item.butter.name=Smør
+item.butter_knife.name=Smørkniv
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
@@ -38,3 +40,7 @@ combo.only_bread.name=Kinda Boring...
 combo.rrb.name=Retro Roastbeef
 combo.smart_chicken.name=7-Smart Chicken
 combo.veggie.name=Veggie Sandwich
+
+waila.is_sandwich_ready=Er Sandwich Klar
+waila.true=Sandt
+waila.false=Falsk
