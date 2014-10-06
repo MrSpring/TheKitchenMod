@@ -41,14 +41,14 @@ public class BlockOven extends BlockContainerBase
                     Random random = new Random();
 
                     float xRandPos = random.nextFloat() * 0.8F + 0.1F;
-                    float yRandPos = random.nextFloat() * 0.8F + 0.1F;
+                    float yRandPos = 1.2F;
                     float zRandPos = random.nextFloat() * 0.8F + 0.1F;
 
-                    EntityItem entityItem = new EntityItem(world, x + xRandPos, y + yRandPos, z + zRandPos, item);
+                    EntityItem entityItem = new EntityItem(world, x + xRandPos, y + 1, z + zRandPos, item);
 
-                    entityItem.motionX = random.nextGaussian() * 0.05F;
-                    entityItem.motionY = random.nextGaussian() * 0.05F + 0.2F;
-                    entityItem.motionZ = random.nextGaussian() * 0.05F;
+                    entityItem.motionX = random.nextGaussian() * 0.005F;
+                    entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
+                    entityItem.motionZ = random.nextGaussian() * 0.005F;
 
                     world.spawnEntityInWorld(entityItem);
                 }
@@ -78,7 +78,19 @@ public class BlockOven extends BlockContainerBase
 						if (removed != null)
 							if (removed.getItem() != null)
 							{
-								world.spawnEntityInWorld(new EntityItem(world, x, y, z, removed));
+                                Random random = new Random();
+
+                                float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+                                float yRandPos = 1.2F;
+                                float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+
+                                EntityItem entityItem = new EntityItem(world, x + xRandPos, y + 1, z + zRandPos, removed);
+
+                                entityItem.motionX = random.nextGaussian() * 0.005F;
+                                entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
+                                entityItem.motionZ = random.nextGaussian() * 0.005F;
+
+                                world.spawnEntityInWorld(entityItem);
 								return true;
 							}
 							else

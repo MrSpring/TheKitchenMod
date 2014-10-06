@@ -16,7 +16,7 @@ public class KitchenBlocks
 	 */
 
 	// Decorative Blocks
-	public static final Block tiles = new BlockBase(Material.iron, "tiles", true);
+	public static final Block tiles = new BlockBase(Material.rock, "tiles", true).setHardness(1.5F).setResistance(10.0F);
 	public static final Block kitchen_cabinet = new BlockKitchenCabinet();
 
 	public static final Block tomato_crop = new BlockCropBase("tomato", KitchenItems.tomato);
