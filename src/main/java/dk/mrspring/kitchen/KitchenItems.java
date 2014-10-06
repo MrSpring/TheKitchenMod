@@ -24,8 +24,8 @@ public class KitchenItems
 	public static final Item bread_slice = new ItemBase("bread_slice", true);
 	public static final Item toast = new ItemBase("toast", true);
 
-	public static final Item tomato = new ItemTomato();
-	public static final Item lettuce = new ItemLettuce();
+	public static final Item tomato = new ItemSeedBase("tomato", KitchenBlocks.tomato_crop,true);
+	public static final Item lettuce = new ItemSeedBase("lettuce",KitchenBlocks.lettuce_crop,true);
 	public static final Item tomato_slice = new ItemBase("tomato_slice", true);
 	public static final Item lettuce_leaf = new ItemBase("lettuce_leaf", true);
 
