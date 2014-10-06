@@ -35,6 +35,18 @@ public class BoardEventRegistry
 		}
 
 		@Override
+		public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+		{
+			return added.copy();
+		}
+
+		@Override
+		public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+		{
+			return true;
+		}
+
+		@Override
 		public String getEventName()
 		{
 			return "on_added-default";
@@ -58,7 +70,6 @@ public class BoardEventRegistry
 		@Override
 		public boolean canAddItemOnTop(List<ItemStack> layers, ItemStack tryingToAdd, NBTTagCompound specialTagInfo)
 		{
-			System.out.println("Returning true in canAddItemOnTop()");
 			return true;
 		}
 
@@ -130,7 +141,6 @@ public class BoardEventRegistry
 	{
 		if (onAddedToBoardEvents.containsKey(itemName))
 		{
-			System.out.println("Returning an onAddedToBoardEvent for " + itemName);
 			return onAddedToBoardEvents.get(itemName);
 		} else return getDefaultOnAddedToBoardEvent();
 	}
@@ -195,7 +205,6 @@ public class BoardEventRegistry
 			@Override
 			public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
 			{
-				System.out.println("Setting ClickAmount to 2!");
 				specialTagInfo.setInteger("ClickAmount", 2);
 			}
 
@@ -204,14 +213,24 @@ public class BoardEventRegistry
 			{
 				if (currentLayers.size() > 0)
 				{
-					System.out.println("There are more than 0 layers!");
 					if (currentLayers.get(currentLayers.size() - 1).getItem() == KitchenItems.bread_slice)
 					{
-						System.out.println("The tio layer is a slice of bread!");
 						return true;
 					}
 				}
 				return false;
+			}
+
+			@Override
+			public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+			{
+				return added.copy();
+			}
+
+			@Override
+			public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+			{
+				return true;
 			}
 
 			@Override

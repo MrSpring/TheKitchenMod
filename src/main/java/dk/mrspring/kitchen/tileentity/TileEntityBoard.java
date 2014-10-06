@@ -32,15 +32,11 @@ public class TileEntityBoard extends TileEntity
     {
         if (toAdd != null)
         {
-            //System.out.println("To Add is not null! Ir is: " + toAdd.getDisplayName());
-
             IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
             ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTopItem());
 
-            //System.out.println(callEvents);
             if (!callEvents)
             {
-                //System.out.println("Getting default events because callEvents is false!");
                 onAddedToBoardEvent = BoardEventRegistry.getDefaultOnAddedToBoardEvent();
                 topItemEvent = BoardEventRegistry.getDefaultTopItemEvent();
             }
@@ -49,14 +45,14 @@ public class TileEntityBoard extends TileEntity
 
             if (ModConfig.getSandwichConfig().canAdd(toAdd) && topItemEvent.canAddItemOnTop(this.getLayers(), toAdd, compoundCopy) && onAddedToBoardEvent.canAdd(this.getLayers(), toAdd, compoundCopy))
             {
-                ItemStack temp = toAdd.copy();
-                temp.stackSize = 1;
+                ItemStack temp = onAddedToBoardEvent.addedToBoard(this.getLayers(), toAdd,this.getSpecialInfo());
+				temp.stackSize=1;
                 this.layers.add(temp);
                 this.setSpecialInfo(new NBTTagCompound());
                 compoundCopy = this.getSpecialInfo();
                 onAddedToBoardEvent.onAdded(this.getLayers(), temp, compoundCopy);
                 this.setSpecialInfo(compoundCopy);
-                return true;
+                return onAddedToBoardEvent.decrementStackSize(this.getLayers(),toAdd,this.getSpecialInfo());
             } else
             {
                 IOnBoardRightClickedEvent onBoardRightClickedEvent = (IOnBoardRightClickedEvent) BoardEventRegistry.getOnBoardRightClickedEventFor(toAdd.getItem());
@@ -148,14 +144,10 @@ public class TileEntityBoard extends TileEntity
         this.resetLayers();
         NBTTagList list = compound.getTagList("Items", 10);
 
-        System.out.println("Reading from NBT");
-
         for (int i = 0; i < list.tagCount(); ++i)
         {
             NBTTagCompound layerCompound = list.getCompoundTagAt(i);
             ItemStack layer = ItemStack.loadItemStackFromNBT(layerCompound);
-
-            System.out.println("Reading " + layer.getDisplayName() + " from NBT");
 
             this.rightClicked(layer, false);
         }
@@ -169,13 +161,10 @@ public class TileEntityBoard extends TileEntity
         super.writeToNBT(compound);
 
         NBTTagList list = new NBTTagList();
-        System.out.println("Writing to NBT");
-
         for (ItemStack layer : this.layers)
         {
             if (layer != null)
             {
-                System.out.println("Writing " + layer.getDisplayName() + " to NBT");
                 NBTTagCompound layerCompound = new NBTTagCompound();
                 layer.writeToNBT(layerCompound);
                 list.appendTag(layerCompound);

@@ -12,4 +12,6 @@ public interface IOnAddedToBoardEvent extends IBoardEvent
 {
     public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo);
     public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo);
+	public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo);
+	public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo);
 }
