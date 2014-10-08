@@ -1,6 +1,7 @@
-package dk.mrspring.kitchen;
+package dk.mrspring.kitchen.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
