@@ -2,6 +2,7 @@ package dk.mrspring.kitchen;
 
 import dk.mrspring.kitchen.block.*;
 import dk.mrspring.kitchen.block.container.BlockBoard;
+import dk.mrspring.kitchen.block.container.BlockJamJar;
 import dk.mrspring.kitchen.block.decorative.BlockKitchenCabinet;
 import dk.mrspring.kitchen.block.container.BlockOven;
 import dk.mrspring.kitchen.block.container.BlockPlate;
@@ -28,4 +29,6 @@ public class KitchenBlocks
 	public static final Block board = new BlockBoard();
 	public static final Block oven = new BlockOven();
 	public static final Block plate = new BlockPlate();
+
+	public static final Block jam_jar = new BlockJamJar("jam_jar_block");
 }

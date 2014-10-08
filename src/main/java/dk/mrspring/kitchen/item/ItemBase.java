@@ -1,11 +1,14 @@
 package dk.mrspring.kitchen.item;
 
-import static dk.mrspring.kitchen.GameRegisterer.registerItem;
-import net.minecraft.item.Item;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.item.Item;
+
+import static dk.mrspring.kitchen.GameRegisterer.registerBlock;
+import static dk.mrspring.kitchen.GameRegisterer.registerItem;
 
 public class ItemBase extends Item
 {
@@ -53,5 +56,8 @@ public class ItemBase extends Item
 		registerItem(KitchenItems.burnt_meat);
         registerItem(KitchenItems.butter);
         registerItem(KitchenItems.butter_knife);
+		registerBlock(KitchenBlocks.jam_jar,ItemBlockJam.class,"jam_jar");
+		registerItem(KitchenItems.jam_strawberry);
+		registerItem(KitchenItems.jam_apple);
 	}
 }

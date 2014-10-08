@@ -37,6 +37,11 @@ public class SandwichableConfig extends BaseConfig
 
         this.sandwichable_items.add(new SandwichableEntry("kitchen:cheese_slice", 3));
         this.sandwichable_items.add(new SandwichableEntry("kitchen:butter", 1));
+
+		this.sandwichable_items.add(new SandwichableEntry("kitchen:strawberry_jam",2));
+		this.sandwichable_items.add(new SandwichableEntry("kitchen:apple_jam",2));
+
+		this.sandwichable_items.add(new SandwichableEntry("kitchen:jam_jar",0));
     }
 
     public boolean canAdd(ItemStack stack)

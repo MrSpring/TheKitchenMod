@@ -1,7 +1,9 @@
 package dk.mrspring.kitchen.api.event;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.jam.Jam;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -178,7 +180,7 @@ public class BoardEventRegistry
 
 	public static IBoardEvent getTopItemEventFor(ItemStack stack)
 	{
-		if (stack!=null)
+		if (stack != null)
 			return getTopItemEventFor(stack.getItem());
 		else return getDefaultTopItemEvent();
 	}
@@ -250,7 +252,7 @@ public class BoardEventRegistry
 			@Override
 			public ItemStack getDroppeditem(List<ItemStack> layers, ItemStack removed, NBTTagCompound specialTagInfo)
 			{
-				if (specialTagInfo.getInteger("ClickAmount")==2)
+				if (specialTagInfo.getInteger("ClickAmount") == 2)
 					return removed;
 				else return null;
 			}
@@ -277,6 +279,75 @@ public class BoardEventRegistry
 			public String getEventName()
 			{
 				return "on_right_clicked-kitchen:butter_knife";
+			}
+		});
+
+		registerOnAddedEvent(KitchenBlocks.jam_jar, new IOnAddedToBoardEvent()
+		{
+			@Override
+			public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
+			{
+				System.out.println("Calling onAdded for Jam Jar");
+				if (added.getTagCompound()!=null)
+				{
+					System.out.println("added's stackCompound is not null");
+					NBTTagCompound jamInfo=added.getTagCompound().getCompoundTag("JamInfo");
+					if (jamInfo!=null)
+					{
+						System.out.println("JamInfo is not null");
+						int usesLeft=jamInfo.getInteger("UsesLeft");
+						usesLeft--;
+						jamInfo.setInteger("UsesLeft",usesLeft);
+						System.out.println("Setting added's usesLeft is "+usesLeft);
+						added.setTagInfo("JamInfo",jamInfo);
+					}
+				}
+			}
+
+			@Override
+			public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
+			{
+				if (toAdd.getTagCompound() != null)
+				{
+					NBTTagCompound jamInfo = toAdd.getTagCompound().getCompoundTag("JamInfo");
+					if (jamInfo != null)
+					{
+						int usesLeft = jamInfo.getInteger("UsesLeft");
+						Jam jam = Jam.valueOf(jamInfo.getString("JamType"));
+
+						return jam != Jam.EMPTY && usesLeft != 0;
+					} else return false;
+				} else return false;
+			}
+
+			@Override
+			public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+			{
+				if (added.getTagCompound()!=null)
+				{
+					NBTTagCompound jamInfo =added.getTagCompound().getCompoundTag("JamInfo");
+					if (jamInfo!=null)
+					{
+						Jam jam=Jam.valueOf(jamInfo.getString("JamType"));
+						if (jam!=Jam.EMPTY)
+						{
+							return new ItemStack(KitchenItems.valueOf(jam), 1);
+						}
+					}
+				}
+				return null;
+			}
+
+			@Override
+			public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+			{
+				return false;
+			}
+
+			@Override
+			public String getEventName()
+			{
+				return "on_added-kitchen:jam_jar";
 			}
 		});
 	}

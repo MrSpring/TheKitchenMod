@@ -30,7 +30,8 @@ public class TileEntityBoard extends TileEntity
      */
     public boolean rightClicked(ItemStack toAdd, boolean callEvents)
     {
-        if (toAdd != null)
+		System.out.println("Right");
+		if (toAdd != null)
         {
             IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
             ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTopItem());
@@ -50,7 +51,7 @@ public class TileEntityBoard extends TileEntity
                 this.layers.add(temp);
                 this.setSpecialInfo(new NBTTagCompound());
                 compoundCopy = this.getSpecialInfo();
-                onAddedToBoardEvent.onAdded(this.getLayers(), temp, compoundCopy);
+                onAddedToBoardEvent.onAdded(this.getLayers(), toAdd, compoundCopy);
                 this.setSpecialInfo(compoundCopy);
                 return onAddedToBoardEvent.decrementStackSize(this.getLayers(),toAdd,this.getSpecialInfo());
             } else

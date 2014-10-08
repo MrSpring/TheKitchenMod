@@ -41,7 +41,7 @@ public class BlockBoard extends BlockContainerBase
                         --activator.getCurrentEquippedItem().stackSize;
                         world.markBlockForUpdate(x, y, z);
                         return true;
-                    }
+                    } else world.markBlockForUpdate(x,y,z);
                 } else
                 {
                     ItemStack removedItemStack = entity.removeTopItem();
@@ -66,83 +66,6 @@ public class BlockBoard extends BlockContainerBase
 
         return false;
     }
-
-
-
-		/*if (!world.isRemote)
-        {
-			if (!activator.isSneaking())
-			{
-				if (activator.getCurrentEquippedItem() != null)
-				{
-					if (activator.getCurrentEquippedItem().getItem() instanceof ItemSandwichable)
-					{
-						if (entity.rightClicked((ItemSandwichable) activator.getCurrentEquippedItem().getItem()))
-						{
-							--activator.getCurrentEquippedItem().stackSize;
-							world.markBlockForUpdate(x, y, z);
-							return true;
-						}
-						else return false;
-					}
-					else return false;
-				}
-				else
-				{
-					if (entity.removeTopLayer())
-					{
-						world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, entity.getLastRemoved()));
-						world.markBlockForUpdate(x, y, z);
-						return true;
-					}
-					else return false;
-				}
-			}
-			else
-			{
-				if (activator.getCurrentEquippedItem() == null)
-				{
-					if (entity.isAcceptableSandwich())
-					{
-						ItemStack[] itemsFromEntity = entity.getLayers();
-						
-						ItemStack item = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
-						
-						NBTTagList layersList = new NBTTagList();
-						
-						for (int i = 0; i < itemsFromEntity.length && itemsFromEntity[i] != null; ++i)
-						{
-							NBTTagCompound layerCompound = new NBTTagCompound();
-							itemsFromEntity[i].writeToNBT(layerCompound);
-							layersList.appendTag(layerCompound);
-						}
-						
-						item.setTagInfo("SandwichLayers", layersList);
-						
-						
-						NBTTagCompound comboCompound = new NBTTagCompound();
-						byte combo = 0;
-
-						for (int i = 1; i < SandwichCombo.combos.length && SandwichCombo.combos[i] != null; ++i)
-							if (SandwichCombo.combos[i].matches(item))
-								combo = (byte) i;
-						
-						comboCompound.setByte("Id", combo);
-						item.setTagInfo("Combo", comboCompound);
-						
-						world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, item));
-						entity.resetLayers();
-						
-						world.markBlockForUpdate(x, y, z);
-						
-						return true;
-					}
-					else return false;
-				}
-				else return false;
-			}
-		}
-		else return true;*/
 
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
