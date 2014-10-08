@@ -46,8 +46,17 @@ public class WailaDataProvider implements IWailaDataProvider
         registrar.addConfig(mod, "show_is_sandwich_ready", true);
         registrar.addConfig(mod, "show_oven_contents", true);
         registrar.addConfig(mod, "show_oven_status", true);
+		registrar.addConfig(mod, "show_sandwichable",true);
 
         registrar.registerBodyProvider(new WailaBoardDataProvider(), BlockBoard.class);
         registrar.registerBodyProvider(new WailaOvenProvider(), BlockOven.class);
+/*
+		for (SandwichableConfig.SandwichableEntry entry : ModConfig.getSandwichConfig().getSandwichableItems())
+		{
+			String[] name = entry.getItemName().split(":");
+			System.out.println("Registering for:"+name[0]+ " "+name[1]);
+			Class itemClass = GameRegistry.findItem(name[0],name[1]).getClass();
+			registrar.registerBodyProvider(new WailaSandwichableDataProvider(), itemClass);
+		}*/
     }
 }

@@ -38,10 +38,10 @@ public class SandwichableConfig extends BaseConfig
         this.sandwichable_items.add(new SandwichableEntry("kitchen:cheese_slice", 3));
         this.sandwichable_items.add(new SandwichableEntry("kitchen:butter", 1));
 
-		this.sandwichable_items.add(new SandwichableEntry("kitchen:strawberry_jam",2));
-		this.sandwichable_items.add(new SandwichableEntry("kitchen:apple_jam",2));
+		this.sandwichable_items.add(new SandwichableEntry("kitchen:strawberry_jam",2).hideInformation());
+		this.sandwichable_items.add(new SandwichableEntry("kitchen:apple_jam",2).hideInformation());
 
-		this.sandwichable_items.add(new SandwichableEntry("kitchen:jam_jar",0));
+		this.sandwichable_items.add(new SandwichableEntry("kitchen:jam_jar",0).hideInformation());
     }
 
     public boolean canAdd(ItemStack stack)
@@ -83,6 +83,7 @@ public class SandwichableConfig extends BaseConfig
         String item_name = "minecraft:dirt";
         int heal_amount = 0;
         boolean is_bread = false;
+		boolean hide_information = false;
 
         public SandwichableEntry(String name, int healAmount, boolean isBread)
         {
@@ -100,6 +101,17 @@ public class SandwichableConfig extends BaseConfig
         {
             return name.equals(this.item_name);
         }
+
+		public SandwichableEntry hideInformation()
+		{
+			this.hide_information = true;
+			return this;
+		}
+
+		public boolean showInformation()
+		{
+			return !this.hide_information;
+		}
 
 		public String getItemName()
 		{
