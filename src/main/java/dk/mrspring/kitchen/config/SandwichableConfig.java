@@ -100,5 +100,10 @@ public class SandwichableConfig extends BaseConfig
         {
             return name.equals(this.item_name);
         }
+
+		public String getItemName()
+		{
+			return this.item_name;
+		}
     }
 }
