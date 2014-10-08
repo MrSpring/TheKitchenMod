@@ -78,7 +78,7 @@ public class SandwichableConfig extends BaseConfig
 		return sandwichable_items;
 	}
 
-	private class SandwichableEntry
+	public class SandwichableEntry
     {
         String item_name = "minecraft:dirt";
         int heal_amount = 0;
