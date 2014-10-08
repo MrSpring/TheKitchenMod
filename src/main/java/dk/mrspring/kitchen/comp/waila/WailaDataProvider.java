@@ -46,7 +46,6 @@ public class WailaDataProvider implements IWailaDataProvider
         registrar.addConfig(mod, "show_is_sandwich_ready", true);
         registrar.addConfig(mod, "show_oven_contents", true);
         registrar.addConfig(mod, "show_oven_status", true);
-		registrar.addConfig(mod, "show_sandwichable",true);
 
         registrar.registerBodyProvider(new WailaBoardDataProvider(), BlockBoard.class);
         registrar.registerBodyProvider(new WailaOvenProvider(), BlockOven.class);
