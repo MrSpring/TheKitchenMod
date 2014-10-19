@@ -2,7 +2,7 @@ package dk.mrspring.kitchen.item;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.jam.Jam;
+import dk.mrspring.kitchen.pot.Jam;
 import dk.mrspring.kitchen.tileentity.TileEntityJamJar;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;

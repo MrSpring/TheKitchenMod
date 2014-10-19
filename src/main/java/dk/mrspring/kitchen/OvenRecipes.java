@@ -14,7 +14,6 @@ public class OvenRecipes
 
     public static void load()
     {
-        // TODO Use a custom JSON file instead of the Config
         // TODO Possible in-game recipe changer
         if (ModConfig.getOvenConfig().custom_oven_recipes_input.length == ModConfig.getOvenConfig().custom_oven_recipes_output.length)
         {

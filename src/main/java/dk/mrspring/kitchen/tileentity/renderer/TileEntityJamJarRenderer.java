@@ -1,7 +1,8 @@
-package dk.mrspring.kitchen.tileentity;
+package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelJamJar;
+import dk.mrspring.kitchen.tileentity.TileEntityJamJar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

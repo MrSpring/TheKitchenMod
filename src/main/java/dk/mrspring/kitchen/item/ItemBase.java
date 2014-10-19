@@ -59,5 +59,6 @@ public class ItemBase extends Item
 		registerBlock(KitchenBlocks.jam_jar,ItemBlockJam.class,"jam_jar");
 		registerItem(KitchenItems.jam_strawberry);
 		registerItem(KitchenItems.jam_apple);
+		registerItem(KitchenItems.strawberry);
 	}
 }

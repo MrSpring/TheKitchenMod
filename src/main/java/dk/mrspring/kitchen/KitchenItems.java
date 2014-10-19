@@ -2,7 +2,7 @@ package dk.mrspring.kitchen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
-import dk.mrspring.kitchen.jam.Jam;
+import dk.mrspring.kitchen.pot.Jam;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -52,8 +52,14 @@ public class KitchenItems
 
 	public static final Item butter = new ItemBase("butter", true);
 
+	// Jam variables, only used on the Board. Should not be called any other way!
 	public static final Item jam_strawberry = new ItemBase("strawberry_jam", false);
 	public static final Item jam_apple = new ItemBase("apple_jam", false);
+
+	public static final Item strawberry = new ItemFood(2,false).setTextureName(ModInfo.modid+":strawberry").setUnlocalizedName("strawberry");
+
+	public static final Item cut_strawberry = new ItemFood(1,false).setTextureName(ModInfo.toTexture("strawberry_slices")).setUnlocalizedName("strawberry_slices").setCreativeTab(Kitchen.instance.tab);
+	public static final Item cut_apple = new ItemFood(1,false).setTextureName(ModInfo.toTexture("apple_slice")).setUnlocalizedName("apple_slice").setCreativeTab(Kitchen.instance.tab);
 
 	// Pre-loads the sandwich ItemStack with some NBT-Data.
 	private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)

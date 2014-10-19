@@ -1,7 +1,8 @@
-package dk.mrspring.kitchen.tileentity;
+package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelOven;
+import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -39,7 +40,7 @@ public class TileEntityOvenRenderer extends TileEntitySpecialRenderer
 
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 
-		if (tileEntityOven.burnTime > 0)
+		if (tileEntityOven.getBurnTime() > 0)
         	Minecraft.getMinecraft().renderEngine.bindTexture(activeTexture);
 		else
 			Minecraft.getMinecraft().renderEngine.bindTexture(inactiveTexture);

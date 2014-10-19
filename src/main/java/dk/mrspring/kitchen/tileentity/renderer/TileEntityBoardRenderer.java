@@ -1,8 +1,9 @@
-package dk.mrspring.kitchen.tileentity;
+package dk.mrspring.kitchen.tileentity.renderer;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.render.SandwichRender;
+import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

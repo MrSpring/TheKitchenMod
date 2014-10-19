@@ -1,6 +1,6 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.jam.Jam;
+import dk.mrspring.kitchen.pot.Jam;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;

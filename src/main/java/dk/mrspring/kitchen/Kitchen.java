@@ -10,10 +10,13 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
+import dk.mrspring.kitchen.block.container.Ingredient;
+import dk.mrspring.kitchen.block.container.IngredientStack;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.jam.Jam;
+import dk.mrspring.kitchen.pot.Jam;
+import dk.mrspring.kitchen.recipe.JamRecipeRegistry;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
@@ -34,8 +37,6 @@ import static java.lang.Character.valueOf;
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
 public class Kitchen
 {
-    public static ArrayList[] customOvenRecipes = new ArrayList[2];
-
     @Instance(ModInfo.modid)
     public static Kitchen instance;
 
@@ -68,6 +69,7 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
 		GameRegistry.registerTileEntity(TileEntityJamJar.class, "tileEntityJamJar");
+		GameRegistry.registerTileEntity(TileEntityCookingPot.class, "tileEntityCookingPot");
 
 
         // Loading Blocks and Items
@@ -188,6 +190,9 @@ public class Kitchen
         FMLInterModComms.sendMessage("Waila", "register", "dk.mrspring.kitchen.comp.waila.WailaDataProvider.callbackRegister");
 
 		MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
+
+		JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
+		JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);
     }
 
 	public static ItemStack getJamItemStack(Jam jam, int usesLeft)

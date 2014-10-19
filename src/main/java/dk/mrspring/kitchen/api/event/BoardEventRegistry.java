@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.api.event;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.jam.Jam;
+import dk.mrspring.kitchen.pot.Jam;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

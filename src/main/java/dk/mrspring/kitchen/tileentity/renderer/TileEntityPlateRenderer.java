@@ -1,9 +1,10 @@
-package dk.mrspring.kitchen.tileentity;
+package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import dk.mrspring.kitchen.item.render.SandwichRender;
 import dk.mrspring.kitchen.model.ModelPlate;
+import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;

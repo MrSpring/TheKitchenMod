@@ -258,7 +258,12 @@ public class TileEntityOven extends TileEntity
         }
     }
 
-    @Override
+	public int getBurnTime()
+	{
+		return burnTime;
+	}
+
+	@Override
     public Packet getDescriptionPacket()
     {
         NBTTagCompound compound = new NBTTagCompound();
