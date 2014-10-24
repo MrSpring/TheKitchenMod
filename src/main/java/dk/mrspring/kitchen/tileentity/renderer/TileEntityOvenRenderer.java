@@ -83,8 +83,6 @@ public class TileEntityOvenRenderer extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
 
         GL11.glPopMatrix();
-
-		tileEntityOven = null;
     }
 
 	private void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)
