@@ -85,10 +85,10 @@ public class ModelJamJar extends ModelBase
 		top.render(f5);
 		if (!isEmpty && jamHeight != 0)
 		{
-			jam = new ModelRenderer(this, 30, 17);
+			jam = new ModelRenderer(this, 0, 0);
 			jam.addBox(-0F, 0F, 0F, 6, jamHeight, 6);
 			jam.setRotationPoint(-3F, 23 - jamHeight, -3F);
-			jam.setTextureSize(64, 32);
+			jam.setTextureSize(16, 16);
 			jam.mirror = true;
 			setRotation(jam, 0F, 0F, 0F);
 			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid, "textures/models/jam.png"));

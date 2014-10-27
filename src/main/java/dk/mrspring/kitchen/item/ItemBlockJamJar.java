@@ -19,11 +19,11 @@ import java.util.List;
 /**
  * Created by MrSpring on 25-09-2014 for ModJam4.
  */
-public class ItemBlockJam extends ItemBlock
+public class ItemBlockJamJar extends ItemBlock
 {
 	IIcon[] jamIcon = new IIcon[6];
 
-	public ItemBlockJam(Block name)
+	public ItemBlockJamJar(Block name)
 	{
 		super(name);
 		this.setCreativeTab(Kitchen.instance.tab);

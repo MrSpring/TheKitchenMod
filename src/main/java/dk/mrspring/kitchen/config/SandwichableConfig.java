@@ -38,10 +38,10 @@ public class SandwichableConfig extends BaseConfig
         this.sandwichable_items.add(new SandwichableEntry("kitchen:cheese_slice", 3));
         this.sandwichable_items.add(new SandwichableEntry("kitchen:butter", 1));
 
-		this.sandwichable_items.add(new SandwichableEntry("kitchen:strawberry_jam",2).hideInformation());
-		this.sandwichable_items.add(new SandwichableEntry("kitchen:apple_jam",2).hideInformation());
+        this.sandwichable_items.add(new SandwichableEntry("kitchen:strawberry_jam", 2).hideInformation());
+        this.sandwichable_items.add(new SandwichableEntry("kitchen:apple_jam", 2).hideInformation());
 
-		this.sandwichable_items.add(new SandwichableEntry("kitchen:jam_jar",0).hideInformation());
+        this.sandwichable_items.add(new SandwichableEntry("kitchen:jam_jar", 0).hideInformation());
     }
 
     public boolean canAdd(ItemStack stack)
@@ -65,25 +65,32 @@ public class SandwichableConfig extends BaseConfig
 
     public SandwichableEntry findEntry(ItemStack stack)
     {
-        String itemName = GameRegistry.findUniqueIdentifierFor(stack.getItem()).toString();
+        if (stack != null)
+        {
+            GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(stack.getItem());
+            if (identifier != null)
+            {
+                String itemName = identifier.toString();
 
-        for (SandwichableEntry entry : this.sandwichable_items)
-            if (entry.matches(itemName))
-                return entry;
+                for (SandwichableEntry entry : this.sandwichable_items)
+                    if (entry.matches(itemName))
+                        return entry;
+            }
+        }
         return null;
     }
 
-	public List<SandwichableEntry> getSandwichableItems()
-	{
-		return sandwichable_items;
-	}
+    public List<SandwichableEntry> getSandwichableItems()
+    {
+        return sandwichable_items;
+    }
 
-	public class SandwichableEntry
+    public class SandwichableEntry
     {
         String item_name = "minecraft:dirt";
         int heal_amount = 0;
         boolean is_bread = false;
-		boolean hide_information = false;
+        boolean hide_information = false;
 
         public SandwichableEntry(String name, int healAmount, boolean isBread)
         {
@@ -102,20 +109,20 @@ public class SandwichableConfig extends BaseConfig
             return name.equals(this.item_name);
         }
 
-		public SandwichableEntry hideInformation()
-		{
-			this.hide_information = true;
-			return this;
-		}
+        public SandwichableEntry hideInformation()
+        {
+            this.hide_information = true;
+            return this;
+        }
 
-		public boolean showInformation()
-		{
-			return !this.hide_information;
-		}
+        public boolean showInformation()
+        {
+            return !this.hide_information;
+        }
 
-		public String getItemName()
-		{
-			return this.item_name;
-		}
+        public String getItemName()
+        {
+            return this.item_name;
+        }
     }
 }

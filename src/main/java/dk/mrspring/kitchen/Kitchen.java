@@ -6,17 +6,16 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
-import dk.mrspring.kitchen.block.container.Ingredient;
-import dk.mrspring.kitchen.block.container.IngredientStack;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.pot.Ingredient;
 import dk.mrspring.kitchen.pot.Jam;
-import dk.mrspring.kitchen.recipe.JamRecipeRegistry;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
@@ -68,8 +67,8 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityOven.class, "tileEntityOven");
         GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
-		GameRegistry.registerTileEntity(TileEntityJamJar.class, "tileEntityJamJar");
-		GameRegistry.registerTileEntity(TileEntityCookingPot.class, "tileEntityCookingPot");
+        GameRegistry.registerTileEntity(TileEntityJamJar.class, "tileEntityJamJar");
+        GameRegistry.registerTileEntity(TileEntityPan.class, "tileEntityCookingPot");
 
 
         // Loading Blocks and Items
@@ -121,12 +120,12 @@ public class Kitchen
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.chicken_leg, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.cooked_chicken));
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.cheese));
 
-		GameRegistry.addShapelessRecipe(getJamItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.cheese_slice), new ItemStack(Items.sugar), new ItemStack(KitchenBlocks.jam_jar, 1, 0));
-        //
+        GameRegistry.addShapelessRecipe(getJamJarItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.cheese_slice), new ItemStack(Items.sugar), new ItemStack(KitchenBlocks.jam_jar, 1, 0));
+
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.milk_bucket));
-        //
+
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.mortar_and_pestle, 1), new ItemStack(KitchenItems.mortar), new ItemStack(KitchenItems.pestle));
-        //
+
         GameRegistry.addRecipe(new ItemStack(KitchenItems.mortar), "S S", " S ", valueOf('S'), Blocks.stone);
         GameRegistry.addRecipe(new ItemStack(KitchenItems.pestle), "S ", " S", valueOf('S'), Blocks.stone);
 
@@ -189,29 +188,33 @@ public class Kitchen
 
         FMLInterModComms.sendMessage("Waila", "register", "dk.mrspring.kitchen.comp.waila.WailaDataProvider.callbackRegister");
 
-		MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
+        MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
 
-		JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
-		JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);
+        KitchenItems.linkToJam(KitchenItems.cut_strawberry, Ingredient.STRAWBERRY);
+        KitchenItems.linkToJam(KitchenItems.cut_apple, Ingredient.APPLE);
+
+		/*JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
+        JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);*/
+
     }
 
-	public static ItemStack getJamItemStack(Jam jam, int usesLeft)
-	{
-		ItemStack jamStack = new ItemStack(KitchenBlocks.jam_jar, 1, 1);
+    public static ItemStack getJamJarItemStack(Jam jam, int usesLeft)
+    {
+        ItemStack jamStack = new ItemStack(KitchenBlocks.jam_jar, 1, 1);
 
-		if (jam == Jam.EMPTY)
-		{
-			jamStack.setItemDamage(0);
-			return jamStack;
-		} else
-		{
-			String jamName = jam.name();
-			NBTTagCompound compound = new NBTTagCompound();
-			compound.setString("JamType", jamName);
-			compound.setInteger("UsesLeft", usesLeft);
+        if (jam == Jam.EMPTY)
+        {
+            jamStack.setItemDamage(0);
+            return jamStack;
+        } else
+        {
+            String jamName = jam.name();
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setString("JamType", jamName);
+            compound.setInteger("UsesLeft", usesLeft);
 
-			jamStack.setTagInfo("JamInfo", compound);
-			return jamStack;
-		}
-	}
+            jamStack.setTagInfo("JamInfo", compound);
+            return jamStack;
+        }
+    }
 }

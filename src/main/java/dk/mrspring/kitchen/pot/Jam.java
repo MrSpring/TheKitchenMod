@@ -7,7 +7,8 @@ public enum Jam
 {
 	EMPTY(000000),
 	STRAWBERRY(16196364),
-	APPLE(14415786);
+	APPLE(14415786),
+    PEANUT(9659689);
 
 	final int color;
 
@@ -20,5 +21,4 @@ public enum Jam
 	{
 		this.color = color;
 	}
-
 }

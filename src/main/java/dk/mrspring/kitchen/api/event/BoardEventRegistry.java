@@ -331,7 +331,7 @@ public class BoardEventRegistry
 						Jam jam=Jam.valueOf(jamInfo.getString("JamType"));
 						if (jam!=Jam.EMPTY)
 						{
-							return new ItemStack(KitchenItems.valueOf(jam), 1);
+							return new ItemStack(KitchenItems.jam_strawberry, 1);
 						}
 					}
 				}

@@ -43,7 +43,7 @@ public class BlockJamJar extends BlockContainer
 		ItemStack stack = new ItemStack(KitchenBlocks.jam_jar, 1, 1);
 		if (tileEntity.getJam() != Jam.EMPTY)
 		{
-			stack = Kitchen.getJamItemStack(tileEntity.getJam(), tileEntity.getUsesLeft());
+			stack = Kitchen.getJamJarItemStack(tileEntity.getJam(), tileEntity.getUsesLeft());
 			world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, stack));
 			System.out.println("Spawning Entity from Kitchen");
 		} else
