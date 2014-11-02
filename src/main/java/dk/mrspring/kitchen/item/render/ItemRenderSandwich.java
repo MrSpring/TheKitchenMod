@@ -10,82 +10,91 @@ import org.lwjgl.opengl.GL11;
 
 public class ItemRenderSandwich implements IItemRenderer
 {
-    protected ItemStack[] items;
-    protected boolean acquiredItems = false;
-    private double yItemOffset = 0.0D;
+	protected ItemStack[] items;
+	protected boolean readData = true;
 
-    @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type)
-    {
-        switch (type)
-        {
-            case EQUIPPED:
-                return true;
-            case EQUIPPED_FIRST_PERSON:
-                return true;
-            case ENTITY:
-                return true;
-            default:
-                return false;
-        }
-    }
+	@Override
+	public boolean handleRenderType(ItemStack item, ItemRenderType type)
+	{
+		switch (type)
+		{
+			case EQUIPPED:
+				return true;
+			case EQUIPPED_FIRST_PERSON:
+				return true;
+			case ENTITY:
+				return true;
+			default:
+				return false;
+		}
+	}
 
-    @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
-    {
-        return false;
-    }
+	@Override
+	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
+	{
+		switch (helper)
+		{
+			case ENTITY_BOBBING:
+				return true;
+			case ENTITY_ROTATION:
+				return true;
+			default:
+				return false;
+		}
+	}
 
-    @Override
-    public void renderItem(ItemRenderType type, ItemStack item, Object... data)
-    {
-        switch (type)
-        {
-            case EQUIPPED:
-            {
-                GL11.glPushMatrix();
 
-                GL11.glRotatef(-60, 1, 0, 0);
-                GL11.glRotatef(20, 0, 0, 1);
-                GL11.glTranslated(.4, -.1, 0);
-                float f = 1.5F;
-                GL11.glScalef(f, f, f);
+	@Override
+	public void renderItem(ItemRenderType type, ItemStack item, Object... data)
+	{
+		switch (type)
+		{
+			case EQUIPPED:
+			{
+				GL11.glPushMatrix();
 
-                SandwichRender.renderSandwich(item, null);
+				GL11.glRotatef(-60, 1, 0, 0);
+				GL11.glRotatef(20, 0, 0, 1);
+				GL11.glTranslated(.4, -.1, 0);
+				float f = 1.5F;
+				GL11.glScalef(f, f, f);
 
-                GL11.glPopMatrix();
+				SandwichRender.renderSandwich(item, null);
 
-                break;
-            }
-            case EQUIPPED_FIRST_PERSON:
-            {
-                GL11.glPushMatrix();
+				GL11.glPopMatrix();
 
-                GL11.glTranslatef(.4F, .3F, -.1F);
-                GL11.glRotatef(90, 0, 1, 0);
-                GL11.glRotatef(-10, 1, 0, 0);
+				break;
+			}
+			case EQUIPPED_FIRST_PERSON:
+			{
+				GL11.glPushMatrix();
 
-                SandwichRender.renderSandwich(item, null);
+				GL11.glTranslatef(.4F, .3F, -.1F);
+				GL11.glRotatef(90, 0, 1, 0);
+				GL11.glRotatef(-10, 1, 0, 0);
 
-                GL11.glPopMatrix();
+				SandwichRender.renderSandwich(item, null);
 
-                break;
-            }
-            case ENTITY:
-            {
-                GL11.glPushMatrix();
+				GL11.glPopMatrix();
 
-                GL11.glTranslatef(.00F, -0.15F, -.35F);
-                float f = 2F;
-                GL11.glScalef(f, f, f);
+				break;
+			}
+			case ENTITY:
+			{
+				GL11.glPushMatrix();
 
-                SandwichRender.renderSandwich(item, null);
+				GL11.glTranslatef(.00F, -0.15F, -.35F);
+				float f = 2F;
+				GL11.glScalef(f, f, f);
 
-                GL11.glPopMatrix();
 
-                break;
-            }
-        }
+				SandwichRender.renderSandwich(item, null);
+
+				GL11.glPopMatrix();
+
+				break;
+			}
+		}
 
 		/*this.yItemOffset = 0.0D;
 
@@ -176,13 +185,13 @@ public class ItemRenderSandwich implements IItemRenderer
 		}
 		default: break;
 		}*/
-    }
+	}
 
-    private void renderItemEntity(ItemStack item, double xOffset, double yOffset, double zOffset, int i)
-    {
-        GL11.glPushMatrix();
+	private void renderItemEntity(ItemStack item, double xOffset, double yOffset, double zOffset, int i)
+	{
+		GL11.glPushMatrix();
 
-        GL11.glTranslated(xOffset, yOffset, zOffset);
+		GL11.glTranslated(xOffset, yOffset, zOffset);
 			
 			/*if (((ItemSandwichable) this.items[i].getItem()).hasCustomModel)
 				if (i + 1 < this.items.length)
@@ -194,14 +203,14 @@ public class ItemRenderSandwich implements IItemRenderer
 					{ ((ItemSandwichable) this.items[i].getItem()).getTopModel().render(Minecraft.getMinecraft().renderViewEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F); this.yItemOffset += (((ItemSandwichable) this.items[i].getItem()).modelTopHeight * 0.033D); }
 			else
 			{*/
-        EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
-        itemEntity.hoverStart = 0.0F;
-        RenderItem.renderInFrame = true;
-        GL11.glRotatef(180, 0, 1, 1);
-        RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-        RenderItem.renderInFrame = false;
-        //}
+		EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
+		itemEntity.hoverStart = 0.0F;
+		RenderItem.renderInFrame = true;
+		GL11.glRotatef(180, 0, 1, 1);
+		RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+		RenderItem.renderInFrame = false;
+		//}
 
-        GL11.glPopMatrix();
-    }
+		GL11.glPopMatrix();
+	}
 }

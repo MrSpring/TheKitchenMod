@@ -104,9 +104,8 @@ public class ItemJamJar extends ItemBase
 	public void registerIcons(IIconRegister par1IconRegister)
 	{
 		super.registerIcons(par1IconRegister);
-		for (int i = 1; i < this.jamIcon.length; i++)
+		for (int i = 0; i < this.jamIcon.length; i++)
 			this.jamIcon[i] = par1IconRegister.registerIcon(ModInfo.modid + ":jam_jar_filling_" + (i + 1));
-		this.jamIcon[0] = this.itemIcon;
 	}
 
 	@Override
