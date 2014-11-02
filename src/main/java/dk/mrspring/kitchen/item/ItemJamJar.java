@@ -1,13 +1,9 @@
 package dk.mrspring.kitchen.item;
 
-import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.pot.Jam;
-import dk.mrspring.kitchen.tileentity.TileEntityJamJar;
-import net.minecraft.block.Block;
+import dk.mrspring.kitchen.pan.Jam;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -19,16 +15,13 @@ import java.util.List;
 /**
  * Created by MrSpring on 25-09-2014 for ModJam4.
  */
-public class ItemBlockJamJar extends ItemBlock
+public class ItemJamJar extends ItemBase
 {
 	IIcon[] jamIcon = new IIcon[6];
 
-	public ItemBlockJamJar(Block name)
+	public ItemJamJar(String name)
 	{
-		super(name);
-		this.setCreativeTab(Kitchen.instance.tab);
-		this.setUnlocalizedName("jam_jar");
-		this.setTextureName(ModInfo.modid + ":jam_jar");
+		super(name,true);
 		this.setMaxStackSize(1);
 	}
 
@@ -61,7 +54,7 @@ public class ItemBlockJamJar extends ItemBlock
 					int usesLeft = jamInfo.getInteger("UsesLeft");
 					if (usesLeft != 0)
 					{
-						return this.jamIcon[usesLeft-1];
+						return this.jamIcon[usesLeft - 1];
 					}
 				}
 			}
@@ -79,7 +72,7 @@ public class ItemBlockJamJar extends ItemBlock
 			if (jamInfo != null)
 			{
 				int usesLeft = jamInfo.getInteger("UsesLeft");
-				if (usesLeft!=0)
+				if (usesLeft != 0)
 				{
 					par3List.add(StatCollector.translateToLocal("item.jam_jar.uses_left_msg" + ": " + usesLeft));
 				}
@@ -112,7 +105,7 @@ public class ItemBlockJamJar extends ItemBlock
 	{
 		super.registerIcons(par1IconRegister);
 		for (int i = 1; i < this.jamIcon.length; i++)
-			this.jamIcon[i] = par1IconRegister.registerIcon(ModInfo.modid + ":jam_jar_filling_" + (i+1));
+			this.jamIcon[i] = par1IconRegister.registerIcon(ModInfo.modid + ":jam_jar_filling_" + (i + 1));
 		this.jamIcon[0] = this.itemIcon;
 	}
 
@@ -136,15 +129,8 @@ public class ItemBlockJamJar extends ItemBlock
 	}
 
 	@Override
-	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
+	public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
 	{
-		if (player.isSneaking())
-		{
-			super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
-			world.setBlockMetadataWithNotify(x, y, z, 2, stack.getItemDamage());
-			TileEntityJamJar tileEntity = TileEntityJamJar.create(stack);
-			world.setTileEntity(x, y, z, tileEntity);
-			return true;
-		} else return false;
+		return false;
 	}
 }

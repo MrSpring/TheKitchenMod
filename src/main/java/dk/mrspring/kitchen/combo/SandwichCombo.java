@@ -14,10 +14,14 @@ import java.util.List;
 
 public class SandwichCombo
 {
+	// TODO: Rewrite Combo system, make them configurable.
+
     protected ArrayList<String> comboLayers = new ArrayList<String>();
     protected String name = "default";
     protected EnumRarity rarity = EnumRarity.common;
     protected int extraHeal = 0;
+
+	private static final String BREAD_WILDCARD = "some_bread";
 
     public static SandwichCombo[] combos = new SandwichCombo[16];
 
@@ -40,11 +44,11 @@ public class SandwichCombo
     public static void load()
     {
         big_mac = new SandwichCombo(1, "big_mac", EnumRarity.rare).setComboLayers(new String[]{"bread_slice", "cheese_slice", "roast_beef", "lettuce_leaf", "bread_slice", "roast_beef", "lettuce_leaf", "bread_slice"}).setExtraHeal(1);
-        blt = new SandwichCombo(2, "blt", EnumRarity.uncommon).setComboLayers(new String[]{"toast", "bacon_cooked", "lettuce_leaf", "tomato_slice", "toast"}).setExtraHeal(1);
-        only_bread = new SandwichCombo(3, "only_bread", EnumRarity.common).setComboLayers(new String[]{"bread_slice", "bread_slice"});
-        retro_roast_beef = new SandwichCombo(4, "rrb", EnumRarity.uncommon).setComboLayers(new String[]{"bread_slice", "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", "bread_slice"}).setExtraHeal(3);
+        blt = new SandwichCombo(2, "blt", EnumRarity.uncommon).setComboLayers(new String[]{BREAD_WILDCARD, "bacon_cooked", "lettuce_leaf", "tomato_slice", BREAD_WILDCARD}).setExtraHeal(1);
+        only_bread = new SandwichCombo(3, "only_bread", EnumRarity.common).setComboLayers(new String[]{BREAD_WILDCARD, BREAD_WILDCARD});
+        retro_roast_beef = new SandwichCombo(4, "rrb", EnumRarity.uncommon).setComboLayers(new String[]{BREAD_WILDCARD, "roast_beef", "roast_beef", "tomato_slice", "lettuce_leaf", BREAD_WILDCARD}).setExtraHeal(3);
         smart_chicken = new SandwichCombo(5, "smart_chicken", EnumRarity.uncommon).setComboLayers(new String[]{"toast", "chicken_fillet_cooked", "tomato_slice", "lettuce_leaf", "toast"});
-        veggie = new SandwichCombo(6, "veggie", EnumRarity.rare).setComboLayers(new String[]{"bread_slice", "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", "bread_slice"});
+        veggie = new SandwichCombo(6, "veggie", EnumRarity.rare).setComboLayers(new String[]{BREAD_WILDCARD, "carrot_slice", "lettuce_leaf", "tomato_slice", "cheese_slice", BREAD_WILDCARD});
     }
 
     public SandwichCombo setName(String name)

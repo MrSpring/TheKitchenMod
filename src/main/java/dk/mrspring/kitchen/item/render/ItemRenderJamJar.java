@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.item.render;
 
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.pot.Jam;
+import dk.mrspring.kitchen.pan.Jam;
 import dk.mrspring.kitchen.model.ModelJamJar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

@@ -30,6 +30,4 @@ public class KitchenBlocks
     public static final Block oven = new BlockOven();
     public static final Block plate = new BlockPlate();
     public static final Block cooking_pot = new BlockFryingPan();
-
-    public static final Block jam_jar = new BlockJamJar("jam_jar_block");
 }

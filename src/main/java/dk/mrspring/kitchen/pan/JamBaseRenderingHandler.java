@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.pot;
+package dk.mrspring.kitchen.pan;
 
 import dk.mrspring.kitchen.model.jam.ModelJam0;
 import dk.mrspring.kitchen.model.jam.ModelJam1;
@@ -50,4 +50,10 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
     {
         return baseColor;
     }
+
+	@Override
+	public boolean scaleOnPan(int boilTime, Ingredient ingredient)
+	{
+		return false;
+	}
 }

@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.pot;
+package dk.mrspring.kitchen.pan;
 
 /**
  * Created by MrSpring on 25-09-2014 for ModJam4.

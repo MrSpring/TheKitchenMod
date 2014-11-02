@@ -14,14 +14,13 @@ public class ClientProxy extends CommonProxy
 	public void registerRenderers()
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBoard.class, new TileEntityBoardRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOven.class, new TileEntityOvenRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOven.class, new TileEntityOvenRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, new TileEntityPlateRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityKitchenCabinet.class, new TileEntityKitchenCabinetRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityJamJar.class, new TileEntityJamJarRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPan.class,new TileEntityPanRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPan.class, new TileEntityPanRenderer());
 
 		MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("sandwich"), new ItemRenderSandwich());
-		MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("jam_jar"),new ItemRenderJamJar());
+		MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("jam_jar"), new ItemRenderJamJar());
 
 		SandwichRender.loadRenderingHandlers();
 	}

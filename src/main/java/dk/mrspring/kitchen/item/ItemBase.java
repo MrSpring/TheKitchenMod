@@ -2,16 +2,21 @@ package dk.mrspring.kitchen.item;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
-import static dk.mrspring.kitchen.GameRegisterer.registerBlock;
+import java.util.Collections;
+import java.util.List;
+
 import static dk.mrspring.kitchen.GameRegisterer.registerItem;
 
 public class ItemBase extends Item
 {
+	private String[] informationLines = new String[0];
+
     public ItemBase(String name, String textureName, boolean useCreativeTab)
     {
         super();
@@ -28,7 +33,20 @@ public class ItemBase extends Item
         this(name, ModInfo.modid + ":" + name, useCreativeTab);
     }
 
-    public static void load()
+	public ItemBase setInformationLines(String[] informationLines)
+	{
+		this.informationLines = informationLines;
+		return this;
+	}
+
+	@Override
+	public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List information, boolean p_77624_4_)
+	{
+		if (this.informationLines.length!=0)
+			Collections.addAll(information, this.informationLines);
+	}
+
+	public static void load()
     {
         registerItem(KitchenItems.knife);
         registerItem(KitchenItems.mortar_and_pestle);
@@ -56,7 +74,7 @@ public class ItemBase extends Item
         registerItem(KitchenItems.burnt_meat);
         registerItem(KitchenItems.butter);
         registerItem(KitchenItems.butter_knife);
-        registerBlock(KitchenBlocks.jam_jar, ItemBlockJamJar.class, "jam_jar");
+        registerItem(KitchenItems.jam_jar);
         registerItem(KitchenItems.jam_strawberry);
         registerItem(KitchenItems.jam_apple);
         registerItem(KitchenItems.strawberry);

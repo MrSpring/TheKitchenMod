@@ -2,7 +2,7 @@ package dk.mrspring.kitchen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
-import dk.mrspring.kitchen.pot.Ingredient;
+import dk.mrspring.kitchen.pan.Ingredient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -57,6 +57,8 @@ public class KitchenItems
 
     public static final Item butter = new ItemBase("butter", true);
 
+	public static final Item jam_jar = new ItemJamJar("jam_jar");
+
     // Jam variables, only used on the Board. Should not be called any other way!
     public static final Item jam_strawberry = new ItemBase("strawberry_jam", false);
     public static final Item jam_apple = new ItemBase("apple_jam", false);
@@ -91,7 +93,7 @@ public class KitchenItems
         return basicSandwich;
     }
 
-    public static void linkToJam(Item item, Ingredient ingredient)
+    public static void linkToIngredient(Item item, Ingredient ingredient)
     {
         if (item != null)
         {

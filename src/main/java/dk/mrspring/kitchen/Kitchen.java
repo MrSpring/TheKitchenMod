@@ -6,7 +6,6 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
@@ -14,8 +13,8 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.pot.Ingredient;
-import dk.mrspring.kitchen.pot.Jam;
+import dk.mrspring.kitchen.pan.Ingredient;
+import dk.mrspring.kitchen.pan.Jam;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
@@ -47,10 +46,8 @@ public class Kitchen
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+		// Loading the config files
         ModConfig.load(new File("config"));
-
-        // Loading the Config
-        //ModConfig.load(new Configuration(event.getSuggestedConfigurationFile()));
 
         // Initializing the Creative Tab
         instance.tab = new CreativeTabs("tabKitchen")
@@ -67,8 +64,7 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityOven.class, "tileEntityOven");
         GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
-        GameRegistry.registerTileEntity(TileEntityJamJar.class, "tileEntityJamJar");
-        GameRegistry.registerTileEntity(TileEntityPan.class, "tileEntityCookingPot");
+        GameRegistry.registerTileEntity(TileEntityPan.class, "tileEntityFryingPan");
 
 
         // Loading Blocks and Items
@@ -120,7 +116,7 @@ public class Kitchen
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.chicken_leg, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.cooked_chicken));
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.cheese));
 
-        GameRegistry.addShapelessRecipe(getJamJarItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.cheese_slice), new ItemStack(Items.sugar), new ItemStack(KitchenBlocks.jam_jar, 1, 0));
+        GameRegistry.addShapelessRecipe(getJamJarItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.cheese_slice), new ItemStack(Items.sugar), new ItemStack(KitchenItems.jam_jar, 1, 0));
 
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.milk_bucket));
 
@@ -190,8 +186,10 @@ public class Kitchen
 
         MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
 
-        KitchenItems.linkToJam(KitchenItems.cut_strawberry, Ingredient.STRAWBERRY);
-        KitchenItems.linkToJam(KitchenItems.cut_apple, Ingredient.APPLE);
+        KitchenItems.linkToIngredient(KitchenItems.cut_strawberry, Ingredient.STRAWBERRY);
+        KitchenItems.linkToIngredient(KitchenItems.cut_apple, Ingredient.APPLE);
+		KitchenItems.linkToIngredient(KitchenItems.raw_bacon,Ingredient.BACON);
+		KitchenItems.linkToIngredient(KitchenItems.peanut,Ingredient.PEANUT);
 
 		/*JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
         JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);*/
@@ -200,7 +198,7 @@ public class Kitchen
 
     public static ItemStack getJamJarItemStack(Jam jam, int usesLeft)
     {
-        ItemStack jamStack = new ItemStack(KitchenBlocks.jam_jar, 1, 1);
+        ItemStack jamStack = new ItemStack(KitchenItems.jam_jar, 1, 1);
 
         if (jam == Jam.EMPTY)
         {

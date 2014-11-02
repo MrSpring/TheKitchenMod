@@ -14,7 +14,7 @@ public class OvenRecipes
 
     public static void load()
     {
-        // TODO Possible in-game recipe changer
+        // TODO Possible in-game recipe changer. Per world?
         if (ModConfig.getOvenConfig().custom_oven_recipes_input.length == ModConfig.getOvenConfig().custom_oven_recipes_output.length)
         {
             ArrayList<ItemStack> input = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_input, "Custom Oven Recipes Input");

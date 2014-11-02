@@ -1,9 +1,8 @@
 package dk.mrspring.kitchen.api.event;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.pot.Jam;
+import dk.mrspring.kitchen.pan.Jam;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -282,7 +281,7 @@ public class BoardEventRegistry
 			}
 		});
 
-		registerOnAddedEvent(KitchenBlocks.jam_jar, new IOnAddedToBoardEvent()
+		registerOnAddedEvent(KitchenItems.jam_jar, new IOnAddedToBoardEvent()
 		{
 			@Override
 			public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
@@ -297,9 +296,12 @@ public class BoardEventRegistry
 						System.out.println("JamInfo is not null");
 						int usesLeft=jamInfo.getInteger("UsesLeft");
 						usesLeft--;
-						jamInfo.setInteger("UsesLeft",usesLeft);
-						System.out.println("Setting added's usesLeft is "+usesLeft);
-						added.setTagInfo("JamInfo",jamInfo);
+						if (usesLeft==0)
+							added.setItemDamage(0);
+
+						jamInfo.setInteger("UsesLeft", usesLeft);
+						System.out.println("Setting added's usesLeft to " + usesLeft);
+						added.setTagInfo("JamInfo", jamInfo);
 					}
 				}
 			}
