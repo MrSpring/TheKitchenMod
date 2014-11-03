@@ -21,10 +21,12 @@ public class KitchenBlocks
     public static final Block tomato_crop = new BlockCropBase("tomato", KitchenItems.tomato);
     public static final Block lettuce_crop = new BlockCropBase("lettuce", KitchenItems.lettuce);
     public static final Block peanut_crop = new BlockCropBase("peanut", KitchenItems.peanuts_in_shell);
+	public static final Block strawberry_crop = new BlockCropBase("strawberry", KitchenItems.strawberry);
 
     public static final Block wild_tomato = new BlockWildBase("tomato", KitchenItems.tomato);
     public static final Block wild_lettuce = new BlockWildBase("lettuce", KitchenItems.lettuce);
     public static final Block wild_peanut = new BlockWildBase("peanut", KitchenItems.peanuts_in_shell);
+	public static final Block wild_strawberry = new BlockWildBase("strawberry",KitchenItems.strawberry);
 
     public static final Block board = new BlockBoard();
     public static final Block oven = new BlockOven();
