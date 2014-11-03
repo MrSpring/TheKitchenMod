@@ -133,6 +133,7 @@ public class SandwichRender
 	public static void renderSandwich(List<ItemStack> list, NBTTagCompound specialTagInfo)
 	{
 		GL11.glPushMatrix();
+		//GL11.glRotatef(180,0,0,1);
 
 		for (int i = 0; i < list.size(); i++)
 		{
@@ -153,13 +154,17 @@ public class SandwichRender
 			GL11.glPushMatrix();
 
 			if (model != null)
+			{
+				GL11.glRotatef(180,0,0,1);
 				model.render(null, 0, 0, 0, 0, 0, 0.0625F);
+			}
 			else
 			{
 				EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
 				itemEntity.hoverStart = 0.0F;
 				RenderItem.renderInFrame = true;
 				GL11.glRotatef(180, 0, 1, 1);
+				GL11.glTranslatef(.0F,-.2F,-1.395F);
 				RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
 				RenderItem.renderInFrame = false;
 			}

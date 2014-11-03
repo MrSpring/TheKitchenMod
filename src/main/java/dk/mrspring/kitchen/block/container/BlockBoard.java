@@ -12,7 +12,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.Random;
 
 public class BlockBoard extends BlockContainerBase
@@ -80,10 +79,10 @@ public class BlockBoard extends BlockContainerBase
 
         if (tileEntityBoard != null)
         {
-            List<ItemStack> stacks = tileEntityBoard.getLayers();
-
-            for (ItemStack item : stacks)
+            for (int i = 0; i < tileEntityBoard.getLayers().size(); i++)
             {
+				ItemStack item = tileEntityBoard.removeTopItem();
+
                 if (item != null)
                 {
                     Random random = new Random();
