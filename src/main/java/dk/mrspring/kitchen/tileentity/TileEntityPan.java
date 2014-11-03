@@ -18,7 +18,7 @@ import net.minecraft.tileentity.TileEntity;
  */
 public class TileEntityPan extends TileEntity
 {
-	Ingredient ingredient = Ingredient.EMPTY;
+	Ingredient ingredient = Ingredient.getIngredient("empty");
 	int cookTime = 0;
 
 	public boolean rightClicked(ItemStack clicked)
@@ -33,7 +33,7 @@ public class TileEntityPan extends TileEntity
 					Jam result = this.ingredient.getJamResult();
 					ItemStack jar = Kitchen.getJamJarItemStack(result, 6);
 					worldObj.spawnEntityInWorld(new EntityItem(worldObj, this.xCoord, this.yCoord, this.zCoord, jar));
-					this.ingredient = Ingredient.EMPTY;
+					this.ingredient = Ingredient.getIngredient("empty");
 					this.cookTime = 0;
 					worldObj.markBlockForUpdate(this.xCoord,this.yCoord,this.zCoord);
 					return true;
@@ -42,7 +42,7 @@ public class TileEntityPan extends TileEntity
 			{
 				ItemStack result = this.ingredient.getItemResult();
 				worldObj.spawnEntityInWorld(new EntityItem(worldObj, this.xCoord, this.yCoord, this.zCoord, result));
-				this.ingredient = Ingredient.EMPTY;
+				this.ingredient = Ingredient.getIngredient("empty");
 				this.cookTime = 0;
 				worldObj.markBlockForUpdate(this.xCoord,this.yCoord,this.zCoord);
 				return false;
@@ -63,7 +63,7 @@ public class TileEntityPan extends TileEntity
 	public void updateEntity()
 	{
 		if (this.getIngredient() != null)
-			if (this.getIngredient() != Ingredient.EMPTY)
+			if (this.getIngredient() != Ingredient.getIngredient("empty"))
 				if (this.cookTime < 410)
 					this.cookTime++;
 	}
@@ -83,7 +83,7 @@ public class TileEntityPan extends TileEntity
 	{
 		super.writeToNBT(compound);
 
-		compound.setString("Ingredient", this.getIngredient().name());
+		compound.setString("Ingredient", this.getIngredient().getName());
 		compound.setInteger("CookTime", this.getCookTime());
 	}
 
@@ -95,7 +95,7 @@ public class TileEntityPan extends TileEntity
 		String string = compound.getString("Ingredient");
 		try
 		{
-			this.ingredient = Ingredient.valueOf(string);
+			this.ingredient = Ingredient.getIngredient(string);
 		} catch (IllegalArgumentException e)
 		{
 			ModLogger.print(ModLogger.WARNING, "There was a problem loading pan @ X:" + this.xCoord + ", Y:" + this.yCoord + ", Z:" + this.zCoord + ", the ingredient " + string + " could not be found!");

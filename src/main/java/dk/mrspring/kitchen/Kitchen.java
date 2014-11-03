@@ -13,10 +13,15 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.combo.SandwichCombo;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
+import dk.mrspring.kitchen.model.ModelBaconCooked;
+import dk.mrspring.kitchen.model.ModelBaconRaw;
+import dk.mrspring.kitchen.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.pan.Ingredient;
 import dk.mrspring.kitchen.pan.Jam;
+import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -46,7 +51,7 @@ public class Kitchen
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
-		// Loading the config files
+        // Loading the config files
         ModConfig.load(new File("config"));
 
         // Initializing the Creative Tab
@@ -183,14 +188,49 @@ public class Kitchen
         GameRegistry.addSmelting(KitchenItems.raw_roast_beef, new ItemStack(KitchenItems.roast_beef, 1, 0), 3.0F);
 
         FMLInterModComms.sendMessage("Waila", "register", "dk.mrspring.kitchen.comp.waila.WailaDataProvider.callbackRegister");
-		FMLInterModComms.sendRuntimeMessage(ModInfo.modid, "VersionChecker", "addVersionCheck", "http://www.mrspring.dk/mods/kitchen/vchecker.json");
+        FMLInterModComms.sendRuntimeMessage(ModInfo.modid, "VersionChecker", "addVersionCheck", "http://www.mrspring.dk/mods/kitchen/vchecker.json");
 
         MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
 
-        KitchenItems.linkToIngredient(KitchenItems.cut_strawberry, Ingredient.STRAWBERRY);
-        KitchenItems.linkToIngredient(KitchenItems.cut_apple, Ingredient.APPLE);
-		KitchenItems.linkToIngredient(KitchenItems.raw_bacon,Ingredient.BACON);
-		KitchenItems.linkToIngredient(KitchenItems.peanut,Ingredient.PEANUT);
+        Ingredient.registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
+        Ingredient.registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
+        Ingredient.registerIngredient(new Ingredient("apple", new JamBaseRenderingHandler(new float[]{224, 255, 163}), "apple"));
+        Ingredient.registerIngredient(new Ingredient("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}), "peanut"));
+        Ingredient.registerIngredient(new Ingredient("bacon", new IIngredientRenderingHandler() {
+            ModelBase rawBaconModel = new ModelBaconRaw();
+            ModelBase cookedBaconModel = new ModelBaconCooked();
+
+            @Override
+            public ModelBase getModel(int boilTime, Ingredient ingredient)
+            {
+                if (boilTime >= 400)
+                    return cookedBaconModel;
+                else return rawBaconModel;
+            }
+
+            @Override
+            public boolean useColorModifier(int boilTime, Ingredient ingredient)
+            {
+                return false;
+            }
+
+            @Override
+            public float[] getColorModifier(int boilTime, Ingredient ingredient)
+            {
+                return new float[0];
+            }
+
+            @Override
+            public boolean scaleOnPan(int boilTime, Ingredient ingredient)
+            {
+                return true;
+            }
+        }, new ItemStack(KitchenItems.bacon, 1)));
+
+        KitchenItems.linkToIngredient(KitchenItems.cut_strawberry, "strawberry");
+        KitchenItems.linkToIngredient(KitchenItems.cut_apple, "apple");
+        KitchenItems.linkToIngredient(KitchenItems.raw_bacon, "bacon");
+        KitchenItems.linkToIngredient(KitchenItems.peanut, "peanut");
 
 		/*JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
         JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);*/

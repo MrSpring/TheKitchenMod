@@ -1,18 +1,19 @@
 package dk.mrspring.kitchen.pan;
 
-import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.model.ModelBaconCooked;
-import dk.mrspring.kitchen.model.ModelBaconRaw;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by MrSpring on 19-10-2014 for TheKitchenMod.
  */
-public enum Ingredient
+public class Ingredient
 {
-	EMPTY(new JamBaseRenderingHandler(new float[]{0, 0, 0}), Jam.EMPTY),
-	STRAWBERRY(new JamBaseRenderingHandler(new float[]{255F, 60, 53}), Jam.STRAWBERRY),
+    public static Map<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
+
+    /*EMPTY(new JamBaseRenderingHandler(new float[]{0, 0, 0}), Jam.EMPTY),
+    STRAWBERRY(new JamBaseRenderingHandler(new float[]{255F, 60, 53}), Jam.STRAWBERRY),
 	APPLE(new JamBaseRenderingHandler(new float[]{224, 255, 163}), Jam.APPLE),
 	PEANUT(new JamBaseRenderingHandler(new float[]{147, 101, 41}), Jam.PEANUT),
 	BACON(new IIngredientRenderingHandler(){
@@ -44,48 +45,70 @@ public enum Ingredient
 		{
 			return true;
 		}
-	}, new ItemStack(KitchenItems.bacon, 1));
+	}, new ItemStack(KitchenItems.bacon, 1));*/
 
-	final IIngredientRenderingHandler renderingHandler;
-	final boolean isJam;
-	final Jam jResult;
-	final ItemStack iResult;
+    final String name;
+    final IIngredientRenderingHandler renderingHandler;
+    final boolean isJam;
+    final String jResult;
+    final ItemStack iResult;
 
-	private Ingredient(IIngredientRenderingHandler handler, boolean jam, Jam jamResult, ItemStack itemResult)
-	{
-		this.renderingHandler = handler;
-		this.isJam = jam;
-		this.jResult = jamResult;
-		this.iResult = itemResult;
-	}
+    public Ingredient(String name, IIngredientRenderingHandler handler, boolean jam, String jamResult, ItemStack itemResult)
+    {
+        this.name = name;
+        this.renderingHandler = handler;
+        this.isJam = jam;
+        this.jResult = jamResult;
+        this.iResult = itemResult;
+    }
 
-	private Ingredient(IIngredientRenderingHandler handler, ItemStack iResult)
-	{
-		this(handler, false, Jam.EMPTY, iResult);
-	}
+    public Ingredient(String name, IIngredientRenderingHandler handler, ItemStack iResult)
+    {
+        this(name, handler, false, "empty", iResult);
+    }
 
-	private Ingredient(IIngredientRenderingHandler handler, Jam jResult)
-	{
-		this(handler, true, jResult, null);
-	}
+    public Ingredient(String name, IIngredientRenderingHandler handler, String jResult)
+    {
+        this(name, handler, true, jResult, null);
+    }
 
-	public IIngredientRenderingHandler getRenderingHandler()
-	{
-		return this.renderingHandler;
-	}
+    public static void registerIngredient(Ingredient ingredient)
+    {
+        if (ingredient != null)
+            if (!ingredients.containsKey(ingredient.getName()))
+                ingredients.put(ingredient.getName(), ingredient);
+    }
 
-	public boolean isJam()
-	{
-		return isJam;
-	}
+    public static Ingredient getIngredient(String name)
+    {
+        if (name != null)
+            if (ingredients.containsKey(name))
+                return ingredients.get(name);
+        return ingredients.get("empty");
+    }
 
-	public Jam getJamResult()
-	{
-		return jResult;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public ItemStack getItemResult()
-	{
-		return iResult.copy();
-	}
+    public IIngredientRenderingHandler getRenderingHandler()
+    {
+        return this.renderingHandler;
+    }
+
+    public boolean isJam()
+    {
+        return isJam;
+    }
+
+    public Jam getJamResult()
+    {
+        return Jam.getJam(this.jResult);
+    }
+
+    public ItemStack getItemResult()
+    {
+        return iResult.copy();
+    }
 }

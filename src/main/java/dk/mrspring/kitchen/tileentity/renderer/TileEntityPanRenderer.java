@@ -68,7 +68,7 @@ public class TileEntityPanRenderer extends TileEntitySpecialRenderer
 
 		Ingredient ingredient = pan.getIngredient();
 		if (ingredient != null)
-			if (ingredient != Ingredient.EMPTY)
+			if (ingredient != Ingredient.getIngredient("empty"))
 			{
 				IIngredientRenderingHandler renderingHandler = ingredient.getRenderingHandler();
 				ModelBase ingredientModel = renderingHandler.getModel(pan.getCookTime(), ingredient);

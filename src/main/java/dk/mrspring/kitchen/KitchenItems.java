@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class KitchenItems
 {
-    private static Map<String, Ingredient> ingredientRelations = new HashMap<String, Ingredient>();
+    private static Map<String, String> ingredientRelations = new HashMap<String, String>();
 
     // All the Item variables
     public static final Item knife = new ItemKnife().setMaxStackSize(1);
@@ -94,29 +94,35 @@ public class KitchenItems
         return basicSandwich;
     }
 
-    public static void linkToIngredient(Item item, Ingredient ingredient)
+    public static void linkToIngredient(Item item, String ingredientName)
     {
         if (item != null)
         {
-            System.out.println("Registering " + item.getItemStackDisplayName(new ItemStack(item)));
             GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(item);
             if (identifier != null)
-                linkToJam(identifier.toString(), ingredient);
+                linkToJam(identifier.toString(), ingredientName);
         }
     }
 
-    public static void linkToJam(String itemName, Ingredient ingredient)
+    public static void linkToJam(String itemName, String ingredientName)
     {
         if (!ingredientRelations.containsKey(itemName))
-            ingredientRelations.put(itemName, ingredient);
+        {
+            ModLogger.print(ModLogger.DEBUG, "Registering: " + itemName + " to ingredient: " + ingredientName);
+            ingredientRelations.put(itemName, ingredientName);
+        } else
+            ModLogger.print(ModLogger.DEBUG, "Tried to register: " + itemName + ", but it is already bound to: " + ingredientRelations.get(itemName));
+    }
+
+    public static Ingredient valueOf(String itemName)
+    {
+        if (ingredientRelations.containsKey(itemName))
+            return Ingredient.getIngredient(ingredientRelations.get(itemName));
+        else return Ingredient.getIngredient("empty");
     }
 
     public static Ingredient valueOf(Item item)
     {
-        if (item != null)
-        {
-            String name = GameRegistry.findUniqueIdentifierFor(item).toString();
-            return ingredientRelations.get(name);
-        } else return null;
+        return valueOf(GameRegistry.findUniqueIdentifierFor(item).toString());
     }
 }
