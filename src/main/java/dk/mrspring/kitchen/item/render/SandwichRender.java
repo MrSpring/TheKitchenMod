@@ -1,8 +1,8 @@
 package dk.mrspring.kitchen.item.render;
 
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.api.ISandwichableRenderingHandler;
-import dk.mrspring.kitchen.api.SandwichableRenderingRegistry;
+import dk.mrspring.kitchen.api.sandwichable.ISandwichableRenderingHandler;
+import dk.mrspring.kitchen.api.sandwichable.SandwichableRenderingRegistry;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
 import dk.mrspring.kitchen.model.ModelBreadSliceBottom;

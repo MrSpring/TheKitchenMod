@@ -17,340 +17,340 @@ import java.util.Map;
  */
 public class BoardEventRegistry
 {
-	static Map<String, IBoardEvent> onAddedToBoardEvents = new HashMap<String, IBoardEvent>();
-	static Map<String, IBoardEvent> onBoardRightClickedEvents = new HashMap<String, IBoardEvent>();
-	static Map<String, IBoardEvent> topItemEvents = new HashMap<String, IBoardEvent>();
+    static Map<String, IBoardEvent> onAddedToBoardEvents = new HashMap<String, IBoardEvent>();
+    static Map<String, IBoardEvent> onBoardRightClickedEvents = new HashMap<String, IBoardEvent>();
+    static Map<String, IBoardEvent> topItemEvents = new HashMap<String, IBoardEvent>();
 
-	static IOnAddedToBoardEvent defaultOnAddedToBoardEvent = new IOnAddedToBoardEvent()
-	{
-		@Override
-		public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
-		{
+    static IOnAddedToBoardEvent defaultOnAddedToBoardEvent = new IOnAddedToBoardEvent()
+    {
+        @Override
+        public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
+        {
 
-		}
+        }
 
-		@Override
-		public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
-		{
-			return true;
-		}
+        @Override
+        public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
+        {
+            return true;
+        }
 
-		@Override
-		public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
-		{
-			return added.copy();
-		}
+        @Override
+        public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+        {
+            return added.copy();
+        }
 
-		@Override
-		public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
-		{
-			return true;
-		}
+        @Override
+        public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+        {
+            return true;
+        }
 
-		@Override
-		public String getEventName()
-		{
-			return "on_added-default";
-		}
-	};
-	static IOnBoardRightClickedEvent defaultOnBoardRightClickedEvent = new IOnBoardRightClickedEvent()
-	{
-		@Override
-		public void onRightClicked(List<ItemStack> layers, ItemStack rightClicked, NBTTagCompound specialTagInfo)
-		{
-		}
+        @Override
+        public String getEventName()
+        {
+            return "on_added-default";
+        }
+    };
+    static IOnBoardRightClickedEvent defaultOnBoardRightClickedEvent = new IOnBoardRightClickedEvent()
+    {
+        @Override
+        public void onRightClicked(List<ItemStack> layers, ItemStack rightClicked, NBTTagCompound specialTagInfo)
+        {
+        }
 
-		@Override
-		public String getEventName()
-		{
-			return "on_right_click-default";
-		}
-	};
-	static ITopItemEvent defaultTopItemEvent = new ITopItemEvent()
-	{
-		@Override
-		public boolean canAddItemOnTop(List<ItemStack> layers, ItemStack tryingToAdd, NBTTagCompound specialTagInfo)
-		{
-			return true;
-		}
+        @Override
+        public String getEventName()
+        {
+            return "on_right_click-default";
+        }
+    };
+    static ITopItemEvent defaultTopItemEvent = new ITopItemEvent()
+    {
+        @Override
+        public boolean canAddItemOnTop(List<ItemStack> layers, ItemStack tryingToAdd, NBTTagCompound specialTagInfo)
+        {
+            return true;
+        }
 
-		@Override
-		public ItemStack getDroppeditem(List<ItemStack> layers, ItemStack removed, NBTTagCompound specialTagInfo)
-		{
-			return removed;
-		}
+        @Override
+        public ItemStack getDroppeditem(List<ItemStack> layers, ItemStack removed, NBTTagCompound specialTagInfo)
+        {
+            return removed;
+        }
 
-		@Override
-		public String getEventName()
-		{
-			return "top_item-default";
-		}
-	};
+        @Override
+        public String getEventName()
+        {
+            return "top_item-default";
+        }
+    };
 
-	public static void registerTopItemEvent(String itemName, IBoardEvent event)
-	{
-		if (itemName != null && !topItemEvents.containsKey(itemName))
-			topItemEvents.put(itemName, event);
-	}
+    public static void registerTopItemEvent(String itemName, IBoardEvent event)
+    {
+        if (itemName != null && !topItemEvents.containsKey(itemName))
+            topItemEvents.put(itemName, event);
+    }
 
-	public static void registerTopItemEvent(Item item, IBoardEvent event)
-	{
-		registerTopItemEvent(GameRegistry.findUniqueIdentifierFor(item).toString(), event);
-	}
+    public static void registerTopItemEvent(Item item, IBoardEvent event)
+    {
+        registerTopItemEvent(GameRegistry.findUniqueIdentifierFor(item).toString(), event);
+    }
 
-	public static void registerTopItemEvent(Block block, IBoardEvent event)
-	{
-		registerTopItemEvent(GameRegistry.findUniqueIdentifierFor(block).toString(), event);
-	}
-
-
-	public static void registerOnRightClickedEvent(String itemName, IBoardEvent event)
-	{
-		if (itemName != null && !onBoardRightClickedEvents.containsKey(itemName))
-			onBoardRightClickedEvents.put(itemName, event);
-	}
-
-	public static void registerOnRightClickedEvent(Item item, IBoardEvent event)
-	{
-		registerOnRightClickedEvent(GameRegistry.findUniqueIdentifierFor(item).toString(), event);
-	}
-
-	public static void registerOnRightClickedEvent(Block block, IBoardEvent event)
-	{
-		registerOnRightClickedEvent(GameRegistry.findUniqueIdentifierFor(block).toString(), event);
-	}
+    public static void registerTopItemEvent(Block block, IBoardEvent event)
+    {
+        registerTopItemEvent(GameRegistry.findUniqueIdentifierFor(block).toString(), event);
+    }
 
 
-	public static void registerOnAddedEvent(String itemName, IBoardEvent event)
-	{
-		if (itemName != null && !onAddedToBoardEvents.containsKey(itemName))
-			onAddedToBoardEvents.put(itemName, event);
-	}
+    public static void registerOnRightClickedEvent(String itemName, IBoardEvent event)
+    {
+        if (itemName != null && !onBoardRightClickedEvents.containsKey(itemName))
+            onBoardRightClickedEvents.put(itemName, event);
+    }
 
-	public static void registerOnAddedEvent(Item item, IBoardEvent event)
-	{
-		registerOnAddedEvent(GameRegistry.findUniqueIdentifierFor(item).toString(), event);
-	}
+    public static void registerOnRightClickedEvent(Item item, IBoardEvent event)
+    {
+        registerOnRightClickedEvent(GameRegistry.findUniqueIdentifierFor(item).toString(), event);
+    }
 
-	public static void registerOnAddedEvent(Block block, IBoardEvent event)
-	{
-		registerOnAddedEvent(GameRegistry.findUniqueIdentifierFor(block).toString(), event);
-	}
-
-
-	public static IBoardEvent getOnAddedToBoardEventFor(String itemName)
-	{
-		if (onAddedToBoardEvents.containsKey(itemName))
-		{
-			return onAddedToBoardEvents.get(itemName);
-		} else return getDefaultOnAddedToBoardEvent();
-	}
-
-	public static IBoardEvent getOnAddedToBoardEventFor(Item item)
-	{
-		return getOnAddedToBoardEventFor(GameRegistry.findUniqueIdentifierFor(item).toString());
-	}
+    public static void registerOnRightClickedEvent(Block block, IBoardEvent event)
+    {
+        registerOnRightClickedEvent(GameRegistry.findUniqueIdentifierFor(block).toString(), event);
+    }
 
 
-	public static IBoardEvent getOnBoardRightClickedEventFor(String itemName)
-	{
-		if (onBoardRightClickedEvents.containsKey(itemName))
-			return onBoardRightClickedEvents.get(itemName);
-		else return getDefaultOnBoardRightClickedEvent();
-	}
+    public static void registerOnAddedEvent(String itemName, IBoardEvent event)
+    {
+        if (itemName != null && !onAddedToBoardEvents.containsKey(itemName))
+            onAddedToBoardEvents.put(itemName, event);
+    }
 
-	public static IBoardEvent getOnBoardRightClickedEventFor(Item item)
-	{
-		return getOnBoardRightClickedEventFor(GameRegistry.findUniqueIdentifierFor(item).toString());
-	}
+    public static void registerOnAddedEvent(Item item, IBoardEvent event)
+    {
+        registerOnAddedEvent(GameRegistry.findUniqueIdentifierFor(item).toString(), event);
+    }
+
+    public static void registerOnAddedEvent(Block block, IBoardEvent event)
+    {
+        registerOnAddedEvent(GameRegistry.findUniqueIdentifierFor(block).toString(), event);
+    }
 
 
-	public static IBoardEvent getTopItemEventFor(String itemName)
-	{
-		if (topItemEvents.containsKey(itemName))
-			return topItemEvents.get(itemName);
-		else return getDefaultTopItemEvent();
-	}
+    public static IBoardEvent getOnAddedToBoardEventFor(String itemName)
+    {
+        if (onAddedToBoardEvents.containsKey(itemName))
+        {
+            return onAddedToBoardEvents.get(itemName);
+        } else return getDefaultOnAddedToBoardEvent();
+    }
 
-	public static IBoardEvent getTopItemEventFor(Item item)
-	{
-		return getTopItemEventFor(GameRegistry.findUniqueIdentifierFor(item).toString());
-	}
+    public static IBoardEvent getOnAddedToBoardEventFor(Item item)
+    {
+        return getOnAddedToBoardEventFor(GameRegistry.findUniqueIdentifierFor(item).toString());
+    }
 
-	public static IBoardEvent getTopItemEventFor(ItemStack stack)
-	{
-		if (stack != null)
-			return getTopItemEventFor(stack.getItem());
-		else return getDefaultTopItemEvent();
-	}
 
-	public static IOnAddedToBoardEvent getDefaultOnAddedToBoardEvent()
-	{
-		return defaultOnAddedToBoardEvent;
-	}
+    public static IBoardEvent getOnBoardRightClickedEventFor(String itemName)
+    {
+        if (onBoardRightClickedEvents.containsKey(itemName))
+            return onBoardRightClickedEvents.get(itemName);
+        else return getDefaultOnBoardRightClickedEvent();
+    }
 
-	public static IOnBoardRightClickedEvent getDefaultOnBoardRightClickedEvent()
-	{
-		return defaultOnBoardRightClickedEvent;
-	}
+    public static IBoardEvent getOnBoardRightClickedEventFor(Item item)
+    {
+        return getOnBoardRightClickedEventFor(GameRegistry.findUniqueIdentifierFor(item).toString());
+    }
 
-	public static ITopItemEvent getDefaultTopItemEvent()
-	{
-		return defaultTopItemEvent;
-	}
 
-	public static void registerDefaultEvents()
-	{
-		registerOnAddedEvent(KitchenItems.butter, new IOnAddedToBoardEvent()
-		{
-			@Override
-			public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
-			{
-				specialTagInfo.setInteger("ClickAmount", 2);
-			}
+    public static IBoardEvent getTopItemEventFor(String itemName)
+    {
+        if (topItemEvents.containsKey(itemName))
+            return topItemEvents.get(itemName);
+        else return getDefaultTopItemEvent();
+    }
 
-			@Override
-			public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
-			{
-				if (currentLayers.size() > 0)
-				{
-					if (currentLayers.get(currentLayers.size() - 1).getItem() == KitchenItems.bread_slice)
-					{
-						return true;
-					}
-				}
-				return false;
-			}
+    public static IBoardEvent getTopItemEventFor(Item item)
+    {
+        return getTopItemEventFor(GameRegistry.findUniqueIdentifierFor(item).toString());
+    }
 
-			@Override
-			public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
-			{
-				return added.copy();
-			}
+    public static IBoardEvent getTopItemEventFor(ItemStack stack)
+    {
+        if (stack != null)
+            return getTopItemEventFor(stack.getItem());
+        else return getDefaultTopItemEvent();
+    }
 
-			@Override
-			public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
-			{
-				return true;
-			}
+    public static IOnAddedToBoardEvent getDefaultOnAddedToBoardEvent()
+    {
+        return defaultOnAddedToBoardEvent;
+    }
 
-			@Override
-			public String getEventName()
-			{
-				return "on_added-kitchen:butter";
-			}
-		});
-		registerTopItemEvent(KitchenItems.butter, new ITopItemEvent()
-		{
-			@Override
-			public boolean canAddItemOnTop(List<ItemStack> layers, ItemStack tryingToAdd, NBTTagCompound specialTagInfo)
-			{
-				return specialTagInfo.getInteger("ClickAmount") <= 0;
-			}
+    public static IOnBoardRightClickedEvent getDefaultOnBoardRightClickedEvent()
+    {
+        return defaultOnBoardRightClickedEvent;
+    }
 
-			@Override
-			public ItemStack getDroppeditem(List<ItemStack> layers, ItemStack removed, NBTTagCompound specialTagInfo)
-			{
-				if (specialTagInfo.getInteger("ClickAmount") == 2)
-					return removed;
-				else return null;
-			}
+    public static ITopItemEvent getDefaultTopItemEvent()
+    {
+        return defaultTopItemEvent;
+    }
 
-			@Override
-			public String getEventName()
-			{
-				return "top_item-kitchen:butter";
-			}
-		});
+    public static void registerDefaultEvents()
+    {
+        registerOnAddedEvent(KitchenItems.butter, new IOnAddedToBoardEvent()
+        {
+            @Override
+            public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
+            {
+                specialTagInfo.setInteger("ClickAmount", 2);
+            }
 
-		registerOnRightClickedEvent(KitchenItems.butter_knife, new IOnBoardRightClickedEvent()
-		{
-			@Override
-			public void onRightClicked(List<ItemStack> layers, ItemStack rightClicked, NBTTagCompound specialTagInfo)
-			{
-				if (layers.size() > 0)
-					if (layers.get(layers.size() - 1).getItem() == KitchenItems.butter)
-						if (specialTagInfo.hasKey("ClickAmount"))
-							specialTagInfo.setInteger("ClickAmount", specialTagInfo.getInteger("ClickAmount") - 1);
-			}
+            @Override
+            public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
+            {
+                if (currentLayers.size() > 0)
+                {
+                    if (currentLayers.get(currentLayers.size() - 1).getItem() == KitchenItems.bread_slice)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
 
-			@Override
-			public String getEventName()
-			{
-				return "on_right_clicked-kitchen:butter_knife";
-			}
-		});
+            @Override
+            public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+            {
+                return added.copy();
+            }
 
-		registerOnAddedEvent(KitchenItems.jam_jar, new IOnAddedToBoardEvent()
-		{
-			@Override
-			public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
-			{
-				System.out.println("Calling onAdded for Jam Jar");
-				if (added.getTagCompound()!=null)
-				{
-					System.out.println("added's stackCompound is not null");
-					NBTTagCompound jamInfo=added.getTagCompound().getCompoundTag("JamInfo");
-					if (jamInfo!=null)
-					{
-						System.out.println("JamInfo is not null");
-						int usesLeft=jamInfo.getInteger("UsesLeft");
-						usesLeft--;
-						if (usesLeft==0)
-							added.setItemDamage(0);
+            @Override
+            public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+            {
+                return true;
+            }
 
-						jamInfo.setInteger("UsesLeft", usesLeft);
-						System.out.println("Setting added's usesLeft to " + usesLeft);
-						added.setTagInfo("JamInfo", jamInfo);
-					}
-				}
-			}
+            @Override
+            public String getEventName()
+            {
+                return "on_added-kitchen:butter";
+            }
+        });
+        registerTopItemEvent(KitchenItems.butter, new ITopItemEvent()
+        {
+            @Override
+            public boolean canAddItemOnTop(List<ItemStack> layers, ItemStack tryingToAdd, NBTTagCompound specialTagInfo)
+            {
+                return specialTagInfo.getInteger("ClickAmount") <= 0;
+            }
 
-			@Override
-			public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
-			{
-				if (toAdd.getTagCompound() != null)
-				{
-					NBTTagCompound jamInfo = toAdd.getTagCompound().getCompoundTag("JamInfo");
-					if (jamInfo != null)
-					{
-						int usesLeft = jamInfo.getInteger("UsesLeft");
-						Jam jam = Jam.valueOf(jamInfo.getString("JamType"));
+            @Override
+            public ItemStack getDroppeditem(List<ItemStack> layers, ItemStack removed, NBTTagCompound specialTagInfo)
+            {
+                if (specialTagInfo.getInteger("ClickAmount") == 2)
+                    return removed;
+                else return null;
+            }
 
-						return jam != Jam.EMPTY && usesLeft != 0;
-					} else return false;
-				} else return false;
-			}
+            @Override
+            public String getEventName()
+            {
+                return "top_item-kitchen:butter";
+            }
+        });
 
-			@Override
-			public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
-			{
-				if (added.getTagCompound()!=null)
-				{
-					NBTTagCompound jamInfo =added.getTagCompound().getCompoundTag("JamInfo");
-					if (jamInfo!=null)
-					{
-						Jam jam=Jam.valueOf(jamInfo.getString("JamType"));
-						if (jam!=Jam.EMPTY)
-						{
-							return new ItemStack(KitchenItems.jam_strawberry, 1);
-						}
-					}
-				}
-				return null;
-			}
+        registerOnRightClickedEvent(KitchenItems.butter_knife, new IOnBoardRightClickedEvent()
+        {
+            @Override
+            public void onRightClicked(List<ItemStack> layers, ItemStack rightClicked, NBTTagCompound specialTagInfo)
+            {
+                if (layers.size() > 0)
+                    if (layers.get(layers.size() - 1).getItem() == KitchenItems.butter)
+                        if (specialTagInfo.hasKey("ClickAmount"))
+                            specialTagInfo.setInteger("ClickAmount", specialTagInfo.getInteger("ClickAmount") - 1);
+            }
 
-			@Override
-			public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
-			{
-				return false;
-			}
+            @Override
+            public String getEventName()
+            {
+                return "on_right_clicked-kitchen:butter_knife";
+            }
+        });
 
-			@Override
-			public String getEventName()
-			{
-				return "on_added-kitchen:jam_jar";
-			}
-		});
-	}
+        registerOnAddedEvent(KitchenItems.jam_jar, new IOnAddedToBoardEvent()
+        {
+            @Override
+            public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
+            {
+                System.out.println("Calling onAdded for Jam Jar");
+                if (added.getTagCompound() != null)
+                {
+                    System.out.println("added's stackCompound is not null");
+                    NBTTagCompound jamInfo = added.getTagCompound().getCompoundTag("JamInfo");
+                    if (jamInfo != null)
+                    {
+                        System.out.println("JamInfo is not null");
+                        int usesLeft = jamInfo.getInteger("UsesLeft");
+                        usesLeft--;
+                        if (usesLeft == 0)
+                            added.setItemDamage(0);
+
+                        jamInfo.setInteger("UsesLeft", usesLeft);
+                        System.out.println("Setting added's usesLeft to " + usesLeft);
+                        added.setTagInfo("JamInfo", jamInfo);
+                    }
+                }
+            }
+
+            @Override
+            public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
+            {
+                if (toAdd.getTagCompound() != null)
+                {
+                    NBTTagCompound jamInfo = toAdd.getTagCompound().getCompoundTag("JamInfo");
+                    if (jamInfo != null)
+                    {
+                        int usesLeft = jamInfo.getInteger("UsesLeft");
+                        Jam jam = Jam.valueOf(jamInfo.getString("JamType"));
+
+                        return jam != Jam.EMPTY && usesLeft != 0;
+                    } else return false;
+                } else return false;
+            }
+
+            @Override
+            public ItemStack addedToBoard(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+            {
+                if (added.getTagCompound() != null)
+                {
+                    NBTTagCompound jamInfo = added.getTagCompound().getCompoundTag("JamInfo");
+                    if (jamInfo != null)
+                    {
+                        Jam jam = Jam.valueOf(jamInfo.getString("JamType"));
+                        if (jam != Jam.EMPTY)
+                        {
+                            return new ItemStack(jam.getItem(), 1);
+                        }
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            public boolean decrementStackSize(List<ItemStack> currentLayers, ItemStack added, NBTTagCompound specialTagInfo)
+            {
+                return false;
+            }
+
+            @Override
+            public String getEventName()
+            {
+                return "on_added-kitchen:jam_jar";
+            }
+        });
+    }
 }

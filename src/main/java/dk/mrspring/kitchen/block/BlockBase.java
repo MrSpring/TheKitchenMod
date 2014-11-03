@@ -41,5 +41,7 @@ public class BlockBase extends Block
         registerBlock(KitchenBlocks.cooking_pot);
         registerBlock(KitchenBlocks.peanut_crop);
         registerBlock(KitchenBlocks.wild_peanut);
+        registerBlock(KitchenBlocks.strawberry_crop);
+        registerBlock(KitchenBlocks.wild_strawberry);
     }
 }

@@ -82,5 +82,6 @@ public class ItemBase extends Item
         registerItem(KitchenItems.cut_strawberry);
         registerItem(KitchenItems.peanut);
         registerItem(KitchenItems.peanuts_in_shell);
+        registerItem(KitchenItems.jam_peanut);
     }
 }

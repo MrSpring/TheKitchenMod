@@ -18,30 +18,36 @@ public class SandwichableConfig extends BaseConfig
     {
         super(location, name);
 
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:bread_slice", 0, true));
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:toast", 0, true));
+        this.makeSandwichable(new SandwichableEntry("kitchen:bread_slice", 0, true));
+        this.makeSandwichable(new SandwichableEntry("kitchen:toast", 0, true));
 
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:bacon_cooked", 2));
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:bacon_raw", 1));
+        this.makeSandwichable(new SandwichableEntry("kitchen:bacon_cooked", 2));
+        this.makeSandwichable(new SandwichableEntry("kitchen:bacon_raw", 1));
 
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:tomato_slice", 1));
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:lettuce_leaf", 2));
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:potato_slice", 2));
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:carrot_slice", 2));
+        this.makeSandwichable(new SandwichableEntry("kitchen:tomato_slice", 1));
+        this.makeSandwichable(new SandwichableEntry("kitchen:lettuce_leaf", 2));
+        this.makeSandwichable(new SandwichableEntry("kitchen:potato_slice", 2));
+        this.makeSandwichable(new SandwichableEntry("kitchen:carrot_slice", 2));
 
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:raw_roast_beef", 1));
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:roast_beef", 4));
+        this.makeSandwichable(new SandwichableEntry("kitchen:raw_roast_beef", 1));
+        this.makeSandwichable(new SandwichableEntry("kitchen:roast_beef", 4));
 
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:chicken_fillet_raw", 1));
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:chicken_fillet_cooked", 4));
+        this.makeSandwichable(new SandwichableEntry("kitchen:chicken_fillet_raw", 1));
+        this.makeSandwichable(new SandwichableEntry("kitchen:chicken_fillet_cooked", 4));
 
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:cheese_slice", 3));
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:butter", 1));
+        this.makeSandwichable(new SandwichableEntry("kitchen:cheese_slice", 3));
+        this.makeSandwichable(new SandwichableEntry("kitchen:butter", 1));
 
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:strawberry_jam", 2).hideInformation());
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:apple_jam", 2).hideInformation());
+        this.makeSandwichable(new SandwichableEntry("kitchen:strawberry_jam", 2).hideInformation());
+        this.makeSandwichable(new SandwichableEntry("kitchen:apple_jam", 2).hideInformation());
 
-        this.sandwichable_items.add(new SandwichableEntry("kitchen:jam_jar", 0).hideInformation());
+        this.makeSandwichable(new SandwichableEntry("kitchen:jam_jar", 0).hideInformation());
+    }
+
+    public void makeSandwichable(SandwichableEntry entry)
+    {
+        if (entry != null)
+            this.sandwichable_items.add(entry);
     }
 
     public boolean canAdd(ItemStack stack)
@@ -85,7 +91,7 @@ public class SandwichableConfig extends BaseConfig
         return sandwichable_items;
     }
 
-    public class SandwichableEntry
+    public static class SandwichableEntry
     {
         String item_name = "minecraft:dirt";
         int heal_amount = 0;

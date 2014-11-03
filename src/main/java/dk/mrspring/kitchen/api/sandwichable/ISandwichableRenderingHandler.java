@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.api;
+package dk.mrspring.kitchen.api.sandwichable;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
