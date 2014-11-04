@@ -60,7 +60,7 @@ public class ItemRenderJamJar implements IItemRenderer
 				Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid, "textures/models/jar.png"));
 
 				NBTTagCompound compound = item.getTagCompound();
-				Jam jam = Jam.EMPTY;
+				Jam jam = Jam.getJam("empty");
 				int jamHeight = 0;
 				int metadata = item.getItemDamage();
 				if (compound != null)
@@ -68,7 +68,7 @@ public class ItemRenderJamJar implements IItemRenderer
 					NBTTagCompound jamInfo = compound.getCompoundTag("JamInfo");
 					if (jamInfo != null)
 					{
-						jam = Jam.valueOf(jamInfo.getString("JamType"));
+						jam = Jam.getJam(jamInfo.getString("JamType"));
 						jamHeight = jamInfo.getInteger("UsesLeft");
 					}
 				}
@@ -91,7 +91,7 @@ public class ItemRenderJamJar implements IItemRenderer
 				GL11.glScalef(1, scale, scale);
 
 				NBTTagCompound compound = item.getTagCompound();
-				Jam jam = Jam.EMPTY;
+				Jam jam = Jam.getJam("empty");
 				int jamHeight = 0;
 				int metadata = item.getItemDamage();
 				if (compound != null)
@@ -99,7 +99,7 @@ public class ItemRenderJamJar implements IItemRenderer
 					NBTTagCompound jamInfo = compound.getCompoundTag("JamInfo");
 					if (jamInfo != null)
 					{
-						jam = Jam.valueOf(jamInfo.getString("JamType"));
+						jam = Jam.getJam(jamInfo.getString("JamType"));
 						jamHeight = jamInfo.getInteger("UsesLeft");
 					}
 				}

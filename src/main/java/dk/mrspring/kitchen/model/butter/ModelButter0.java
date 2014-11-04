@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 public class ModelButter0 extends ModelBase
 {
     //fields
-    ModelRenderer butterbase;
+    ModelRenderer butterBase;
     ModelRenderer butter01;
     ModelRenderer butter02;
     ModelRenderer butter03;
@@ -30,12 +30,12 @@ public class ModelButter0 extends ModelBase
         textureWidth = 32;
         textureHeight = 32;
 
-        butterbase = new ModelRenderer(this, 0, 0);
-        butterbase.addBox(0F, 0F, 0F, 3, 1, 6);
-        butterbase.setRotationPoint(-2F, 23F, -3F);
-        butterbase.setTextureSize(32, 32);
-        butterbase.mirror = true;
-        setRotation(butterbase, 0F, 0F, 0F);
+        butterBase = new ModelRenderer(this, 0, 0);
+        butterBase.addBox(0F, 0F, 0F, 3, 1, 6);
+        butterBase.setRotationPoint(-2F, 23F, -3F);
+        butterBase.setTextureSize(32, 32);
+        butterBase.mirror = true;
+        setRotation(butterBase, 0F, 0F, 0F);
         butter01 = new ModelRenderer(this, 0, 0);
         butter01.addBox(0F, 0F, 0F, 2, 1, 2);
         butter01.setRotationPoint(-3F, 23F, 3F);
@@ -121,7 +121,7 @@ public class ModelButter0 extends ModelBase
         GL11.glTranslatef(0.0F, -1.475F, 0.215F);
 
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        butterbase.render(f5);
+        butterBase.render(f5);
         butter01.render(f5);
         butter02.render(f5);
         butter03.render(f5);

@@ -85,14 +85,14 @@ public class ItemJamJar extends ItemBase
 	{
 		if (par2 == 0 && par1ItemStack.getItemDamage() != 0)
 		{
-			Jam jam = Jam.EMPTY;
+			Jam jam = Jam.getJam("empty");
 
 			if (par1ItemStack.stackTagCompound != null)
 			{
 				NBTTagCompound jamInfo = par1ItemStack.stackTagCompound.getCompoundTag("JamInfo");
 				if (jamInfo != null)
 				{
-					jam = Jam.valueOf(jamInfo.getString("JamType"));
+					jam = Jam.getJam(jamInfo.getString("JamType"));
 				}
 			}
 
@@ -119,8 +119,8 @@ public class ItemJamJar extends ItemBase
 				NBTTagCompound jamInfo = compound.getCompoundTag("JamInfo");
 				if (jamInfo != null)
 				{
-					Jam jam = Jam.valueOf(jamInfo.getString("JamType"));
-					return StatCollector.translateToLocal("jam." + jam.name().toLowerCase() + ".name") + " " + StatCollector.translateToLocal("item.jam_jar.filled.name");
+					Jam jam = Jam.getJam(jamInfo.getString("JamType"));
+					return StatCollector.translateToLocal("jam." + jam.getName().toLowerCase() + ".name") + " " + StatCollector.translateToLocal("item.jam_jar.filled.name");
 				}
 			}
 		}

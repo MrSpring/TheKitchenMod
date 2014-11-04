@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.api;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.api.event.IBoardEvent;
@@ -53,7 +54,7 @@ public class KitchenRegistry
 
     public static void makeSandwichable(Item item, int healAmount, boolean isBread, boolean hideInformation)
     {
-        SandwichableConfig.SandwichableEntry entry = new SandwichableConfig.SandwichableEntry(GameRegistry.findUniqueIdentifierFor(item).toString(),healAmount,isBread);
+        SandwichableConfig.SandwichableEntry entry = new SandwichableConfig.SandwichableEntry(GameRegistry.findUniqueIdentifierFor(item).toString(), healAmount, isBread);
         if (hideInformation)
             entry.hideInformation();
         makeSandwichable(entry);
@@ -66,6 +67,17 @@ public class KitchenRegistry
 
     public static void makeSandwichable(Item item, int healAmount)
     {
-        makeSandwichable(item,healAmount,false);
+        makeSandwichable(item, healAmount, false);
+    }
+
+
+    public static void linkItemToIngredient(Item item, String ingredientName)
+    {
+        KitchenItems.linkToIngredient(item, ingredientName);
+    }
+
+    public static void linkItemToIngredient(String itemName, String ingredientName)
+    {
+        KitchenItems.linkToIngredient(itemName, ingredientName);
     }
 }

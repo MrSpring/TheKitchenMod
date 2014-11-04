@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class OvenRecipes
 {
+    // An array with to ArrayLists. ArrayList#0 is input, #1 is output.
     static ArrayList<ItemStack>[] customOvenRecipes = new ArrayList[2];
 
     public static void load()
@@ -88,5 +89,14 @@ public class OvenRecipes
         }
 
         return itemStackArrayList;
+    }
+
+    public static void addRecipe(ItemStack input, ItemStack output)
+    {
+        if (input!=null&&output!=null)
+        {
+            customOvenRecipes[0].add(input);
+            customOvenRecipes[1].add(output);
+        }
     }
 }

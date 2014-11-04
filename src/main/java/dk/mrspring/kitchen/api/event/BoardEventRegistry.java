@@ -315,9 +315,9 @@ public class BoardEventRegistry
                     if (jamInfo != null)
                     {
                         int usesLeft = jamInfo.getInteger("UsesLeft");
-                        Jam jam = Jam.valueOf(jamInfo.getString("JamType"));
+                        Jam jam = Jam.getJam(jamInfo.getString("JamType"));
 
-                        return jam != Jam.EMPTY && usesLeft != 0;
+                        return jam != Jam.getJam("empty") && usesLeft != 0;
                     } else return false;
                 } else return false;
             }
@@ -330,8 +330,8 @@ public class BoardEventRegistry
                     NBTTagCompound jamInfo = added.getTagCompound().getCompoundTag("JamInfo");
                     if (jamInfo != null)
                     {
-                        Jam jam = Jam.valueOf(jamInfo.getString("JamType"));
-                        if (jam != Jam.EMPTY)
+                        Jam jam = Jam.getJam(jamInfo.getString("JamType"));
+                        if (jam != Jam.getJam("empty"))
                         {
                             return new ItemStack(jam.getItem(), 1);
                         }

@@ -24,6 +24,6 @@ public class ItemSeedBase extends ItemSeedFood
 
 	public ItemSeedBase(String name, Block placedCrop, boolean useCreativeTab)
 	{
-		this(name, ModInfo.modid+name,placedCrop,useCreativeTab);
+		this(name, ModInfo.toTexture(name),placedCrop,useCreativeTab);
 	}
 }

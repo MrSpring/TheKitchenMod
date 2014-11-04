@@ -100,11 +100,11 @@ public class KitchenItems
         {
             GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(item);
             if (identifier != null)
-                linkToJam(identifier.toString(), ingredientName);
+                linkToIngredient(identifier.toString(), ingredientName);
         }
     }
 
-    public static void linkToJam(String itemName, String ingredientName)
+    public static void linkToIngredient(String itemName, String ingredientName)
     {
         if (!ingredientRelations.containsKey(itemName))
         {

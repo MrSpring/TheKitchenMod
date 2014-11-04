@@ -15,10 +15,7 @@ import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
-import dk.mrspring.kitchen.pan.IIngredientRenderingHandler;
-import dk.mrspring.kitchen.pan.Ingredient;
-import dk.mrspring.kitchen.pan.Jam;
-import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
+import dk.mrspring.kitchen.pan.*;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.client.model.ModelBase;
@@ -121,7 +118,7 @@ public class Kitchen
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.chicken_leg, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.cooked_chicken));
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese_slice, 2), new ItemStack(KitchenItems.knife), new ItemStack(KitchenItems.cheese));
 
-        GameRegistry.addShapelessRecipe(getJamJarItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.cheese_slice), new ItemStack(Items.sugar), new ItemStack(KitchenItems.jam_jar, 1, 0));
+        //GameRegistry.addShapelessRecipe(getJamJarItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.cheese_slice), new ItemStack(Items.sugar), new ItemStack(KitchenItems.jam_jar, 1, 0));
 
         GameRegistry.addShapelessRecipe(new ItemStack(KitchenItems.cheese, 2), new ItemStack(KitchenItems.knife), new ItemStack(Items.milk_bucket));
 
@@ -192,11 +189,17 @@ public class Kitchen
 
         MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
 
+        Jam.registerJam(new Jam("empty", 000000, "null"));
+        Jam.registerJam(new Jam("strawberry", 16196364, "kitchen:strawberry_jam"));
+        Jam.registerJam(new Jam("apple", 14415786, "kitchen:apple_jam"));
+        Jam.registerJam(new Jam("peanut", 9659689, "kitchen:peanut_jam"));
+
         Ingredient.registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
         Ingredient.registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
         Ingredient.registerIngredient(new Ingredient("apple", new JamBaseRenderingHandler(new float[]{224, 255, 163}), "apple"));
         Ingredient.registerIngredient(new Ingredient("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}), "peanut"));
-        Ingredient.registerIngredient(new Ingredient("bacon", new IIngredientRenderingHandler() {
+        Ingredient.registerIngredient(new Ingredient("bacon", new IIngredientRenderingHandler()
+        {
             ModelBase rawBaconModel = new ModelBaconRaw();
             ModelBase cookedBaconModel = new ModelBaconCooked();
 
@@ -226,28 +229,50 @@ public class Kitchen
                 return true;
             }
         }, new ItemStack(KitchenItems.bacon, 1)));
+        Ingredient.registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
 
         KitchenItems.linkToIngredient(KitchenItems.cut_strawberry, "strawberry");
         KitchenItems.linkToIngredient(KitchenItems.cut_apple, "apple");
         KitchenItems.linkToIngredient(KitchenItems.raw_bacon, "bacon");
         KitchenItems.linkToIngredient(KitchenItems.peanut, "peanut");
+        KitchenItems.linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
 
 		/*JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
         JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);*/
 
     }
 
+    @EventHandler
+    public void interCommHandler(FMLInterModComms.IMCEvent event)
+    {
+        for (FMLInterModComms.IMCMessage message : event.getMessages())
+        {
+            if (message.key.equalsIgnoreCase("linkItemAndIngredient"))
+                IMCHandler.handleLinkMessage(message);
+            else if (message.key.equalsIgnoreCase("makeItemSandwichable"))
+                IMCHandler.handleMakeSandwichableMessage(message);
+            else if (message.key.equalsIgnoreCase("addOvenRecipe"))
+                IMCHandler.handleOvenRecipeMessage(message);
+            else if (message.key.equalsIgnoreCase("addPanRecipe"))
+                IMCHandler.handlePanRecipeMessage(message);
+            else if (message.key.equalsIgnoreCase("addJam"))
+                IMCHandler.handleJamMessage(message);
+        }
+    }
+
+
+
     public static ItemStack getJamJarItemStack(Jam jam, int usesLeft)
     {
         ItemStack jamStack = new ItemStack(KitchenItems.jam_jar, 1, 1);
 
-        if (jam == Jam.EMPTY)
+        if (jam == Jam.getJam("empty"))
         {
             jamStack.setItemDamage(0);
             return jamStack;
         } else
         {
-            String jamName = jam.name();
+            String jamName = jam.getName();
             NBTTagCompound compound = new NBTTagCompound();
             compound.setString("JamType", jamName);
             compound.setInteger("UsesLeft", usesLeft);
