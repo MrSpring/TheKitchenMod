@@ -2,7 +2,7 @@ package dk.mrspring.kitchen.item;
 
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.combo.SandwichCombo;
+import dk.mrspring.kitchen.config.ComboConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -35,34 +34,17 @@ public class ItemSandwich extends ItemFood
             NBTTagCompound comboCompound = par1ItemStack.getTagCompound().getCompoundTag("Combo");
             if (comboCompound != null)
             {
-                byte combo = comboCompound.getByte("Id");
+                String comboName = comboCompound.getString("ComboName");
 
-                if (combo != 0)
-                    if (SandwichCombo.combos[(int) combo] != null)
-                        return SandwichCombo.combos[(int) combo].getRarity();
-                    else
-                        return EnumRarity.common;
-                else
-                    return EnumRarity.common;
-            } else
-                return EnumRarity.common;
-        } else
-            return EnumRarity.common;
-    }
-
-    @Override
-    protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (par1ItemStack.getTagCompound() != null)
-        {
-            byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
-
-            if (combo != 0)
-                if (SandwichCombo.combos[(int) combo] != null)
-                    SandwichCombo.combos[(int) combo].onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
-                else
-                    super.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+                if (!comboName.equals("none"))
+                {
+                    ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getCombo(comboName);
+                    if (combo != null)
+                        return combo.getRarity();
+                }
+            }
         }
+        return EnumRarity.common;
     }
 
     @Override
@@ -83,10 +65,14 @@ public class ItemSandwich extends ItemFood
                         healAmount += ModConfig.getSandwichConfig().getHealAmount(ItemStack.loadItemStackFromNBT(layerCompound));
                     }
 
-                    byte combo = item.getTagCompound().getCompoundTag("Combo").getByte("Id");
+                    String comboName = item.getTagCompound().getCompoundTag("Combo").getString("ComboName");
 
-                    if (SandwichCombo.combos[(int) combo] != null)
-                        healAmount += SandwichCombo.combos[(int) combo].getExtraHeal();
+                    if (!comboName.equals("none"))
+                    {
+                        ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getCombo(comboName);
+                        if (combo != null)
+                            healAmount += combo.getExtraHealth();
+                    }
                 }
             }
 
@@ -111,11 +97,17 @@ public class ItemSandwich extends ItemFood
                         par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
                     }
 
-                    byte combo = par1ItemStack.getTagCompound().getCompoundTag("Combo").getByte("Id");
+                    String comboName = par1ItemStack.getTagCompound().getCompoundTag("Combo").getString("ComboName");
 
-                    if (combo != 0)
-                        if (SandwichCombo.combos[(int) combo] != null)
-                            SandwichCombo.combos[(int) combo].addCustomInfo(par3List);
+                    if (!comboName.equals("none"))
+                    {
+                        ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getCombo(comboName);
+                        if (combo != null)
+                        {
+                            par3List.add("");
+                            par3List.add(combo.getLocalizedName());
+                        }
+                    }
                 }
             } else
                 super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);

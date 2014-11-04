@@ -18,7 +18,6 @@ public class KitchenItems
 
     // All the Item variables
     public static final Item knife = new ItemKnife().setMaxStackSize(1);
-    public static final Item butter_knife = new ItemBase("butter_knife", true);
     public static final Item mortar_and_pestle = new ItemMandP().setMaxStackSize(1);
 
     public static final Item mortar = new ItemBase("mortar", true);
@@ -60,13 +59,14 @@ public class KitchenItems
     public static final Item jam_jar = new ItemJamJar("jam_jar");
 
     // Jam variables, only used on the Board. Should not be called any other way!
-    public static final Item jam_strawberry = new ItemBase("strawberry_jam", false);
-    public static final Item jam_apple = new ItemBase("apple_jam", false);
-    public static final Item jam_peanut = new ItemBase("peanut_jam", false);
+    public static final Item jam_strawberry = new ItemBase("strawberry_jam", false).setLocalizableName("jam.strawberry.name");
+    public static final Item jam_apple = new ItemBase("apple_jam", false).setLocalizableName("jam.apple.name");
+    public static final Item jam_peanut = new ItemBase("peanut_jam", false).setLocalizableName("jam.peanut.name");
 
     public static final Item strawberry = new ItemSeedBase("strawberry", KitchenBlocks.strawberry_crop, true);
 
     public static final Item cut_strawberry = new ItemFood(1, false).setTextureName(ModInfo.toTexture("strawberry_slices")).setUnlocalizedName("strawberry_slices").setCreativeTab(Kitchen.instance.tab);
+    public static final Item jammable_strawberry = new ItemFood(1, false).setTextureName(ModInfo.toTexture("strawberry_slices_sugared")).setUnlocalizedName("sugared_strawberry_slices").setCreativeTab(Kitchen.instance.tab);
     public static final Item cut_apple = new ItemFood(1, false).setTextureName(ModInfo.toTexture("apple_slice")).setUnlocalizedName("apple_slice").setCreativeTab(Kitchen.instance.tab);
 
     public static final Item peanuts_in_shell = new ItemBase("peanuts_in_shell", ModInfo.toTexture("peanuts"), true);

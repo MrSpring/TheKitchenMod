@@ -7,7 +7,8 @@ import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.api.event.IOnAddedToBoardEvent;
 import dk.mrspring.kitchen.api.event.IOnBoardRightClickedEvent;
 import dk.mrspring.kitchen.api.event.ITopItemEvent;
-import dk.mrspring.kitchen.combo.SandwichCombo;
+import dk.mrspring.kitchen.config.ComboConfig;
+import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -30,7 +31,7 @@ public class TileEntityBoard extends TileEntity
      */
     public boolean rightClicked(ItemStack toAdd, boolean callEvents)
     {
-		if (toAdd != null)
+        if (toAdd != null)
         {
             IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
             ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTopItem());
@@ -45,14 +46,14 @@ public class TileEntityBoard extends TileEntity
 
             if (ModConfig.getSandwichConfig().canAdd(toAdd) && topItemEvent.canAddItemOnTop(this.getLayers(), toAdd, compoundCopy) && onAddedToBoardEvent.canAdd(this.getLayers(), toAdd, compoundCopy))
             {
-                ItemStack temp = onAddedToBoardEvent.addedToBoard(this.getLayers(), toAdd,this.getSpecialInfo());
-				temp.stackSize=1;
+                ItemStack temp = onAddedToBoardEvent.addedToBoard(this.getLayers(), toAdd, this.getSpecialInfo());
+                temp.stackSize = 1;
                 this.layers.add(temp);
                 this.setSpecialInfo(new NBTTagCompound());
                 compoundCopy = this.getSpecialInfo();
                 onAddedToBoardEvent.onAdded(this.getLayers(), toAdd, compoundCopy);
                 this.setSpecialInfo(compoundCopy);
-                return onAddedToBoardEvent.decrementStackSize(this.getLayers(),toAdd,this.getSpecialInfo());
+                return onAddedToBoardEvent.decrementStackSize(this.getLayers(), toAdd, this.getSpecialInfo());
             } else
             {
                 IOnBoardRightClickedEvent onBoardRightClickedEvent = (IOnBoardRightClickedEvent) BoardEventRegistry.getOnBoardRightClickedEventFor(toAdd.getItem());
@@ -91,10 +92,13 @@ public class TileEntityBoard extends TileEntity
     {
         if (this.layers.size() > 0)
         {
-            ItemStack removed = this.layers.remove(this.layers.size()-1);
+            ItemStack removed = this.layers.remove(this.layers.size() - 1);
             ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(removed);
-            return topItemEvent.getDroppeditem(this.layers, removed, this.getSpecialInfo());
-        } else return null;
+            SandwichableConfig.SandwichableEntry itemEntry = ModConfig.getSandwichConfig().findEntry(removed);
+            if (itemEntry.dropItem())
+                return topItemEvent.getDroppeditem(this.layers, removed, this.getSpecialInfo());
+        }
+        return null;
     }
 
     public List<ItemStack> getLayers()
@@ -121,9 +125,13 @@ public class TileEntityBoard extends TileEntity
 
 
         NBTTagCompound comboCompound = new NBTTagCompound();
-        byte combo = (byte) SandwichCombo.getComboID(sandwich);
+        ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getComboMatching(sandwich);
+        String comboName="none";
 
-        comboCompound.setByte("Id", combo);
+        if (combo!=null)
+            comboName=combo.getUnlocalizedName();
+
+        comboCompound.setString("ComboName", comboName);
         sandwich.setTagInfo("Combo", comboCompound);
 
         this.resetLayers();

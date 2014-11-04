@@ -4,19 +4,53 @@ import com.google.gson.Gson;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.KitchenRegistry;
+import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import dk.mrspring.kitchen.pan.Ingredient;
 import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
 import dk.mrspring.kitchen.pan.Jam;
 import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
+import dk.mrspring.kitchen.recipe.OvenRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by MrSpring on 04-11-2014.
  */
 public class IMCHandler
 {
+    public static void handleMessage(FMLInterModComms.IMCMessage message)
+    {
+        if (message.key.equalsIgnoreCase("linkItemAndIngredient"))
+            handleLinkMessage(message);
+        else if (message.key.equalsIgnoreCase("makeItemSandwichable"))
+            handleMakeSandwichableMessage(message);
+        else if (message.key.equalsIgnoreCase("addOvenRecipe"))
+            handleOvenRecipeMessage(message);
+        else if (message.key.equalsIgnoreCase("addPanRecipe"))
+            handlePanRecipeMessage(message);
+        else if (message.key.equalsIgnoreCase("addJam"))
+            handleJamMessage(message);
+        else if (message.key.equalsIgnoreCase("addSandwichCombo"))
+            handleComboMessage(message);
+    }
+
+    public static void handleComboMessage(FMLInterModComms.IMCMessage message)
+    {
+        if (message.isStringMessage())
+        {
+            String jsonCode = message.getStringValue();
+
+            Gson gson = new Gson();
+            ComboConfig.SandwichCombo combo = gson.fromJson(jsonCode, ComboConfig.SandwichCombo.class);
+
+            if (combo != null)
+                ModConfig.getComboConfig().registerCombo(combo);
+        }
+    }
+
     public static void handleLinkMessage(FMLInterModComms.IMCMessage message)
     {
         if (message.isStringMessage())
@@ -143,7 +177,7 @@ public class IMCHandler
                 ItemStack input = new ItemStack(GameRegistry.findItem(inputName.split(":")[0], inputName.split(":")[1]));
                 ItemStack output = new ItemStack(GameRegistry.findItem(outputName.split(":")[0], outputName.split(":")[1]));
 
-                OvenRecipes.addRecipe(input,output);
+                OvenRecipes.addRecipe(input, output);
             }
         }
     }

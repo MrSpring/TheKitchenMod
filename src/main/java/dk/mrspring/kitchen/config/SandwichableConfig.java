@@ -38,8 +38,9 @@ public class SandwichableConfig extends BaseConfig
         this.makeSandwichable(new SandwichableEntry("kitchen:cheese_slice", 3));
         this.makeSandwichable(new SandwichableEntry("kitchen:butter", 1));
 
-        this.makeSandwichable(new SandwichableEntry("kitchen:strawberry_jam", 2).hideInformation());
-        this.makeSandwichable(new SandwichableEntry("kitchen:apple_jam", 2).hideInformation());
+        this.makeSandwichable(new SandwichableEntry("kitchen:strawberry_jam", 2).hideInformation().dontDropItem());
+        this.makeSandwichable(new SandwichableEntry("kitchen:apple_jam", 2).hideInformation().dontDropItem());
+        this.makeSandwichable(new SandwichableEntry("kitchen:peanut_jam", 2).hideInformation().dontDropItem());
 
         this.makeSandwichable(new SandwichableEntry("kitchen:jam_jar", 0).hideInformation());
     }
@@ -69,21 +70,20 @@ public class SandwichableConfig extends BaseConfig
         return entry != null && entry.is_bread;
     }
 
+    public SandwichableEntry findEntry(String stack)
+    {
+        for (SandwichableEntry entry : this.sandwichable_items)
+            if (entry.matches(stack))
+                return entry;
+        return null;
+    }
+
     public SandwichableEntry findEntry(ItemStack stack)
     {
-        if (stack != null)
+        if (stack!=null)
         {
-            GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(stack.getItem());
-            if (identifier != null)
-            {
-                String itemName = identifier.toString();
-
-                for (SandwichableEntry entry : this.sandwichable_items)
-                    if (entry.matches(itemName))
-                        return entry;
-            }
-        }
-        return null;
+            return this.findEntry(GameRegistry.findUniqueIdentifierFor(stack.getItem()).toString());
+        } else return null;
     }
 
     public List<SandwichableEntry> getSandwichableItems()
@@ -97,6 +97,7 @@ public class SandwichableConfig extends BaseConfig
         int heal_amount = 0;
         boolean is_bread = false;
         boolean hide_information = false;
+        boolean drop_item = true;
 
         public SandwichableEntry(String name, int healAmount, boolean isBread)
         {
@@ -119,6 +120,17 @@ public class SandwichableConfig extends BaseConfig
         {
             this.hide_information = true;
             return this;
+        }
+
+        public SandwichableEntry dontDropItem()
+        {
+            this.drop_item = false;
+            return this;
+        }
+
+        public boolean dropItem()
+        {
+            return this.drop_item;
         }
 
         public boolean showInformation()

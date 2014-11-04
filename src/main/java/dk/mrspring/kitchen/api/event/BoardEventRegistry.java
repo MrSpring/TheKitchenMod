@@ -140,10 +140,15 @@ public class BoardEventRegistry
 
     public static IBoardEvent getOnAddedToBoardEventFor(String itemName)
     {
+        System.out.println("Getting onAddedToBoard Event for: "+itemName);
         if (onAddedToBoardEvents.containsKey(itemName))
         {
+            System.out.println("Returning an event, which is not default.");
             return onAddedToBoardEvents.get(itemName);
-        } else return getDefaultOnAddedToBoardEvent();
+        } else {
+            System.out.println("Returning default event.");
+            return getDefaultOnAddedToBoardEvent();
+        }
     }
 
     public static IBoardEvent getOnAddedToBoardEventFor(Item item)
@@ -212,6 +217,7 @@ public class BoardEventRegistry
             @Override
             public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
             {
+                System.out.println("Calling canAdd for Butter");
                 if (currentLayers.size() > 0)
                 {
                     if (currentLayers.get(currentLayers.size() - 1).getItem() == KitchenItems.bread_slice)
@@ -263,7 +269,7 @@ public class BoardEventRegistry
             }
         });
 
-        registerOnRightClickedEvent(KitchenItems.butter_knife, new IOnBoardRightClickedEvent()
+        registerOnRightClickedEvent(KitchenItems.knife, new IOnBoardRightClickedEvent()
         {
             @Override
             public void onRightClicked(List<ItemStack> layers, ItemStack rightClicked, NBTTagCompound specialTagInfo)
@@ -309,6 +315,7 @@ public class BoardEventRegistry
             @Override
             public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
             {
+                System.out.println("Calling canAdd for Jam Jar");
                 if (toAdd.getTagCompound() != null)
                 {
                     NBTTagCompound jamInfo = toAdd.getTagCompound().getCompoundTag("JamInfo");

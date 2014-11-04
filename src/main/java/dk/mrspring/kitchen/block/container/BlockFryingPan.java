@@ -16,7 +16,7 @@ public class BlockFryingPan extends BlockContainerBase
 {
     public BlockFryingPan()
     {
-        super("cooking_pot");
+        super("frying_pan");
     }
 
     @Override

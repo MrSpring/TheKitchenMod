@@ -38,7 +38,7 @@ public class BlockBase extends Block
         registerBlock(KitchenBlocks.oven);
         registerBlock(KitchenBlocks.plate, ItemBlockPlate.class, "plate");
         registerBlock(KitchenBlocks.kitchen_cabinet);
-        registerBlock(KitchenBlocks.cooking_pot);
+        registerBlock(KitchenBlocks.frying_pan);
         registerBlock(KitchenBlocks.peanut_crop);
         registerBlock(KitchenBlocks.wild_peanut);
         registerBlock(KitchenBlocks.strawberry_crop);

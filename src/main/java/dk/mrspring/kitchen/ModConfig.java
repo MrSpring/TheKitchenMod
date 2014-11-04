@@ -18,7 +18,7 @@ public class ModConfig
 	public static void load(File baseFolder)
 	{
 		String base = baseFolder.getPath();
-		String[] names = new String[]{"Kitchen", "Knife", "Oven", "Sandwichable"};
+		String[] names = new String[]{"Kitchen", "Knife", "Oven", "Sandwichable","Combo"};
 		configs = new BaseConfig[names.length];
 
 		for (int i = 0; i < configs.length; i++)
@@ -105,5 +105,10 @@ public class ModConfig
     public static SandwichableConfig getSandwichConfig()
     {
         return (SandwichableConfig) configs[3];
+    }
+
+    public static ComboConfig getComboConfig()
+    {
+        return (ComboConfig) configs[4];
     }
 }

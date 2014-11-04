@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +19,7 @@ public class BlockBoard extends BlockContainerBase
 {
     public BlockBoard()
     {
-        super("board", "minecraft:planks_oak");
+        super(Material.wood,"board", "minecraft:planks_oak");
 
         this.setStepSound(soundTypeWood);
         this.setHardness(2.0F);

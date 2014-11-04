@@ -1,6 +1,8 @@
-package dk.mrspring.kitchen;
+package dk.mrspring.kitchen.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.ModLogger;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;

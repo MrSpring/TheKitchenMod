@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.OvenRecipes;
+import dk.mrspring.kitchen.recipe.OvenRecipes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
