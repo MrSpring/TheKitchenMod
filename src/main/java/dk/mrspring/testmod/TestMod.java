@@ -14,7 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 /**
  * Created by MrSpring on 04-11-2014.
  */
-//@Mod(modid = "TM", name = "Test Mod", version = "1.0.0")
+@Mod(modid = "TM", name = "Test Mod", version = "1.0.0")
 public class TestMod
 {
     public static Item testSandwichableItem;
@@ -24,6 +24,7 @@ public class TestMod
     public static Item testOvenOutputItem;
     public static Item testStrawberryItem;
     public static Item testOrangeItem;
+    public static Item testOrangeJam;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
@@ -37,6 +38,7 @@ public class TestMod
         testOvenOutputItem = new ItemBase("oven_output_item", false).setCreativeTab(CreativeTabs.tabFood);
         testStrawberryItem = new ItemBase("strawberry_imposter", false).setCreativeTab(CreativeTabs.tabFood);
         testOrangeItem = new ItemBase("orange",false).setCreativeTab(CreativeTabs.tabFood);
+        testOrangeJam = new ItemBase("orange_jam",false);
 
         GameRegisterer.registerItem(testSandwichableItem);
         GameRegisterer.registerItem(testPanInput);
@@ -81,12 +83,13 @@ public class TestMod
         FMLInterModComms.sendMessage("kitchen","addPanRecipe",inputName+","+outputName);
 
 
-//        NBTTagCompound jamInfo = new NBTTagCompound();
-//
-//        jamInfo.setString("JamName","orange");
-//        jamInfo.setInteger("Color",16751116);
-//        jamInfo.setString("Item",GameRegistry.findUniqueIdentifierFor(testOrangeItem).toString());
-//
-//        FMLInterModComms.sendMessage("kitchen","addJam",jamInfo);
+        NBTTagCompound jamInfo = new NBTTagCompound();
+
+        jamInfo.setString("JamName","orange");
+        jamInfo.setInteger("Color",16751116);
+        jamInfo.setString("InputItem",GameRegistry.findUniqueIdentifierFor(testOrangeItem).toString());
+        jamInfo.setString("JamItem",GameRegistry.findUniqueIdentifierFor(testOrangeJam).toString());
+
+        FMLInterModComms.sendMessage("kitchen","addJam",jamInfo);
     }
 }

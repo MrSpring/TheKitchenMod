@@ -14,8 +14,6 @@ import dk.mrspring.kitchen.recipe.OvenRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import java.lang.reflect.Method;
-
 /**
  * Created by MrSpring on 04-11-2014.
  */
@@ -237,7 +235,8 @@ public class IMCHandler
 
             String jamName;
             int color;
-            String itemName;
+            String inputItemName;
+            String jamItemName;
 
             if (messageCompound.hasKey("JamName", 8))
                 jamName = messageCompound.getString("JamName");
@@ -245,27 +244,35 @@ public class IMCHandler
             if (messageCompound.hasKey("Color", 3))
                 color = messageCompound.getInteger("Color");
             else return;
-            if (messageCompound.hasKey("Item", 8))
-                itemName = messageCompound.getString("Item");
-            else if (messageCompound.hasKey("Item", 10))
+            if (messageCompound.hasKey("InputItem", 8))
+                inputItemName = messageCompound.getString("Item");
+            else if (messageCompound.hasKey("InputItem", 10))
+            {
+                NBTTagCompound itemCompound = messageCompound.getCompoundTag("InputItem");
+                ItemStack stackFromCompound = ItemStack.loadItemStackFromNBT(itemCompound);
+                inputItemName = GameRegistry.findUniqueIdentifierFor(stackFromCompound.getItem()).toString();
+            } else return;
+            if (messageCompound.hasKey("JamItem", 8))
+                jamItemName = messageCompound.getString("JamItem");
+            else if (messageCompound.hasKey("JamItem", 10))
             {
                 NBTTagCompound itemCompound = messageCompound.getCompoundTag("ItemName");
                 ItemStack stackFromCompound = ItemStack.loadItemStackFromNBT(itemCompound);
-                itemName = GameRegistry.findUniqueIdentifierFor(stackFromCompound.getItem()).toString();
+                jamItemName = GameRegistry.findUniqueIdentifierFor(stackFromCompound.getItem()).toString();
             } else return;
 
             float red = ((color >> 16) & 0xFF);
             float green = ((color >> 8) & 0xFF);
             float blue = (color & 0xFF);
 
-            Jam jam = new Jam(jamName, color, itemName);
+            Jam jam = new Jam(jamName,color,jamItemName);
             Jam.registerJam(jam);
 
-            String ingredientName = itemName + "-" + "jam_" + jamName;
+            String ingredientName = inputItemName + "-" + "jam_" + jamName;
             Ingredient ingredient = new Ingredient(ingredientName, new JamBaseRenderingHandler(new float[]{(red * 255), (green * 255), (blue * 255)}), jamName);
             Ingredient.registerIngredient(ingredient);
 
-            KitchenItems.linkToIngredient(itemName, ingredientName);
+            KitchenItems.linkToIngredient(inputItemName, ingredientName);
         }
     }
 }
