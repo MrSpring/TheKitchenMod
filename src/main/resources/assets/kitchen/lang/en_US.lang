@@ -68,5 +68,7 @@ option.show_oven_status=Show Oven Status
 waila.is_sandwich_ready=Is Sandwich Ready
 waila.oven_items=Oven Items
 waila.oven_has_coal=Has Coal
+waila.pan_making=Making
+waila.pan_done=Done!
 waila.true=True
 waila.false=False

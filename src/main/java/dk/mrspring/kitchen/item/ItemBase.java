@@ -30,6 +30,12 @@ public class ItemBase extends Item
             this.setCreativeTab(Kitchen.instance.tab);
     }
 
+    public ItemBase setSelfAsContainerItem()
+    {
+        this.setContainerItem(this);
+        return this;
+    }
+
     public ItemBase setLocalizableName(String localizableName)
     {
         this.localizableName = localizableName;

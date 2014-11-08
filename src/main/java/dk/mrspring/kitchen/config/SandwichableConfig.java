@@ -80,9 +80,12 @@ public class SandwichableConfig extends BaseConfig
 
     public SandwichableEntry findEntry(ItemStack stack)
     {
-        if (stack!=null)
+        if (stack != null)
         {
-            return this.findEntry(GameRegistry.findUniqueIdentifierFor(stack.getItem()).toString());
+            GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(stack.getItem());
+            if (identifier != null)
+                return this.findEntry(identifier.toString());
+            else return null;
         } else return null;
     }
 

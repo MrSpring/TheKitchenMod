@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.pan;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,41 +12,6 @@ import java.util.Map;
 public class Ingredient
 {
     public static Map<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
-
-    /*EMPTY(new JamBaseRenderingHandler(new float[]{0, 0, 0}), Jam.EMPTY),
-    STRAWBERRY(new JamBaseRenderingHandler(new float[]{255F, 60, 53}), Jam.STRAWBERRY),
-	APPLE(new JamBaseRenderingHandler(new float[]{224, 255, 163}), Jam.APPLE),
-	PEANUT(new JamBaseRenderingHandler(new float[]{147, 101, 41}), Jam.PEANUT),
-	BACON(new IIngredientRenderingHandler(){
-		ModelBase rawBaconModel = new ModelBaconRaw();
-		ModelBase cookedBaconModel = new ModelBaconCooked();
-
-		@Override
-		public ModelBase getModel(int boilTime, Ingredient ingredient)
-		{
-			if (boilTime >= 400)
-				return cookedBaconModel;
-			else return rawBaconModel;
-		}
-
-		@Override
-		public boolean useColorModifier(int boilTime, Ingredient ingredient)
-		{
-			return false;
-		}
-
-		@Override
-		public float[] getColorModifier(int boilTime, Ingredient ingredient)
-		{
-			return new float[0];
-		}
-
-		@Override
-		public boolean scaleOnPan(int boilTime, Ingredient ingredient)
-		{
-			return true;
-		}
-	}, new ItemStack(KitchenItems.bacon, 1));*/
 
     final String name;
     final IIngredientRenderingHandler renderingHandler;
@@ -70,6 +36,17 @@ public class Ingredient
     public Ingredient(String name, IIngredientRenderingHandler handler, String jResult)
     {
         this(name, handler, true, jResult, null);
+    }
+
+    public String getLocalizedName()
+    {
+        if (this.isJam())
+        {
+            if (StatCollector.canTranslate("jam." + this.getJamResult().getName() + ".name"))
+                return StatCollector.translateToLocal("jam." + this.getJamResult().getName() + ".name");
+            else return this.getJamResult().getName();
+        } else
+            return this.getItemResult().getDisplayName();
     }
 
     public static void registerIngredient(Ingredient ingredient)

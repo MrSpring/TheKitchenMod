@@ -14,7 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 /**
  * Created by MrSpring on 04-11-2014.
  */
-@Mod(modid = "TM", name = "Test Mod", version = "1.0.0")
+//@Mod(modid = "TM", name = "Test Mod", version = "1.0.0")
 public class TestMod
 {
     public static Item testSandwichableItem;

@@ -11,19 +11,19 @@ import net.minecraft.item.ItemSeedFood;
  */
 public class ItemSeedBase extends ItemSeedFood
 {
-	public ItemSeedBase(String name, String textureName, Block placedCrop, boolean useCreativeTab)
-	{
-		super(2, 0.3F, placedCrop, Blocks.farmland);
+    public ItemSeedBase(String name, String textureName, Block placedCrop, boolean useCreativeTab)
+    {
+        super(2, 0.3F, placedCrop, Blocks.farmland);
 
-		this.setUnlocalizedName(name);
-		this.setTextureName(textureName);
+        this.setUnlocalizedName(name);
+        this.setTextureName(textureName);
 
-		if (useCreativeTab)
-			this.setCreativeTab(Kitchen.instance.tab);
-	}
+        if (useCreativeTab)
+            this.setCreativeTab(Kitchen.instance.tab);
+    }
 
-	public ItemSeedBase(String name, Block placedCrop, boolean useCreativeTab)
-	{
-		this(name, ModInfo.toTexture(name),placedCrop,useCreativeTab);
-	}
+    public ItemSeedBase(String name, Block placedCrop, boolean useCreativeTab)
+    {
+        this(name, ModInfo.toTexture(name), placedCrop, useCreativeTab);
+    }
 }

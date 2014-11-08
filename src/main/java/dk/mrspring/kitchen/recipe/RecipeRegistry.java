@@ -11,7 +11,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,6 +30,13 @@ public class RecipeRegistry
         GameRegistry.addRecipe(new ItemStack(KitchenBlocks.oven, 1, 0), "III", "ICI", "IFI", valueOf('I'), new ItemStack(Items.iron_ingot), valueOf('C'), new ItemStack(Items.coal), valueOf('F'), new ItemStack(Items.flint_and_steel));
         // Tile recipe
         GameRegistry.addRecipe(new ItemStack(KitchenBlocks.tiles, 2), "IB", "CC", "CC", valueOf('I'), new ItemStack(Items.dye, 1, 0), valueOf('B'), new ItemStack(Items.dye, 1, 15), valueOf('C'), Items.clay_ball);
+        // Frying Pan recipe
+        GameRegistry.addRecipe(new ItemStack(KitchenBlocks.frying_pan, 1), "III", "II ", valueOf('I'), new ItemStack(Items.iron_ingot));
+        // Cabinet recipe
+        GameRegistry.addRecipe(new ItemStack(KitchenBlocks.kitchen_cabinet, 1), "QQQ", "PPP", "PPP", valueOf('Q'), Items.quartz, valueOf('P'), new ItemStack(Blocks.planks, OreDictionary.WILDCARD_VALUE));
+
+        // Jam Jar recipe
+        GameRegistry.addRecipe(new ItemStack(jam_jar, 1), " I ", "G G", "GGG", valueOf('I'), Items.iron_ingot, valueOf('G'), Blocks.glass);
 
         /**
          * Knife recipes
@@ -45,18 +51,21 @@ public class RecipeRegistry
         addKnifeRecipe(new ItemStack(raw_chicken_fillet), new ItemStack(Items.chicken));
         addKnifeRecipe(new ItemStack(chicken_leg), new ItemStack(Items.cooked_chicken));
         addKnifeRecipe(new ItemStack(cheese_slice), new ItemStack(cheese));
-        addKnifeRecipe(new ItemStack(cut_strawberry),new ItemStack(strawberry));
+        addKnifeRecipe(new ItemStack(cut_strawberry), new ItemStack(strawberry));
         addKnifeRecipe(new ItemStack(jammable_strawberry), new ItemStack(strawberry), new ItemStack(Items.sugar));
+        addKnifeRecipe(new ItemStack(cut_apple), new ItemStack(Items.apple));
 
         /**
          * Mortar and Pestle recipes
          */
         GameRegistry.addShapelessRecipe(new ItemStack(flour, 1), new ItemStack(mortar_and_pestle, 1), new ItemStack(Items.wheat, 1, OreDictionary.WILDCARD_VALUE));
         GameRegistry.addShapelessRecipe(new ItemStack(flour, 3), new ItemStack(mortar_and_pestle, 1), new ItemStack(Items.bread, 1, OreDictionary.WILDCARD_VALUE));
+        GameRegistry.addShapelessRecipe(new ItemStack(butter, 1), new ItemStack(mortar_and_pestle, 1), new ItemStack(Items.milk_bucket, 1, OreDictionary.WILDCARD_VALUE));
+        GameRegistry.addShapelessRecipe(new ItemStack(peanut, 2), new ItemStack(mortar_and_pestle, 1), new ItemStack(peanuts_in_shell, 1));
         //GameRegistry.addShapelessRecipe(getJamJarItemStack(Jam.STRAWBERRY, 6), new ItemStack(KitchenItems.cheese_slice), new ItemStack(Items.sugar), new ItemStack(KitchenItems.jam_jar, 1, 0));
 
         GameRegistry.addShapelessRecipe(new ItemStack(cheese, 2), new ItemStack(Items.milk_bucket));
-        GameRegistry.addShapelessRecipe(new ItemStack(jammable_strawberry),new ItemStack(cut_strawberry),new ItemStack(Items.sugar));
+        GameRegistry.addShapelessRecipe(new ItemStack(jammable_strawberry), new ItemStack(cut_strawberry), new ItemStack(Items.sugar));
 
         GameRegistry.addShapelessRecipe(new ItemStack(mortar_and_pestle, 1), new ItemStack(mortar), new ItemStack(pestle));
 
