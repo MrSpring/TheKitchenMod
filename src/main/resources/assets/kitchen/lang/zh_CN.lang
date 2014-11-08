@@ -34,6 +34,7 @@ item.cheese_slice.name=乳酪片
 item.burnt_meat.name=烤焦肉
 item.creeper_slice.name=爬行者肉片
 item.butter.name=黄油
+item.sandwichable.sandwichable_msg=可用作三明治的食材
 
 combo.big_mac.name=独一无二!
 combo.blt.name=美味的三明治
@@ -41,8 +42,13 @@ combo.only_bread.name=有点单调...
 combo.rrb.name=复古的烤牛肉
 combo.smart_chicken.name=7只聪明的小鸡
 combo.veggie.name=素食三明治
-combo.creeper.name=SssSSSssssSSs...
 
-item_info.sandwichable=可用作三明治的食材
-item_info.heal_amount=补充饥饿值
-item_info.has_model=3D模型哦
+option.show_is_sandwich_ready=显示三明治状态
+option.show_oven_contents=显示烤箱物品
+option.show_oven_status=显示烤箱状态
+
+waila.is_sandwich_ready=三明治已完成
+waila.oven_items=烤制物品
+waila.oven_has_coal=有燃料
+waila.true=是
+waila.false=否

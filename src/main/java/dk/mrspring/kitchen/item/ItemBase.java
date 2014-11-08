@@ -1,55 +1,117 @@
 package dk.mrspring.kitchen.item;
 
-import static dk.mrspring.kitchen.GameRegisterer.registerItem;
-import net.minecraft.item.Item;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
+
+import java.util.Collections;
+import java.util.List;
+
+import static dk.mrspring.kitchen.GameRegisterer.registerItem;
+import static dk.mrspring.kitchen.KitchenItems.*;
 
 public class ItemBase extends Item
 {
-	public ItemBase(String name, String textureName, boolean useCreativeTab)
-	{
-		super();
-		
-		this.setUnlocalizedName(name);
-		this.setTextureName(textureName);
-		
-		if (useCreativeTab)
-			this.setCreativeTab(Kitchen.instance.tab);
-	}
-	
-	public ItemBase(String name, boolean useCreativeTab) 
-	{
-		this(name, ModInfo.modid + ":" + name, useCreativeTab);
-	}
-	
-	public static void load()
-	{
-		registerItem(KitchenItems.knife);
-		registerItem(KitchenItems.mortar_and_pestle);
-		registerItem(KitchenItems.mortar);
-		registerItem(KitchenItems.pestle);
-		registerItem(KitchenItems.raw_bacon);
-		registerItem(KitchenItems.bread_slice);
-		GameRegistry.registerCustomItemStack("sandwich_itemstack", KitchenItems.basic_sandwich);
-		registerItem(KitchenItems.tomato);
-		registerItem(KitchenItems.lettuce);
-		registerItem(KitchenItems.tomato_slice);
-		registerItem(KitchenItems.lettuce_leaf);
-		registerItem(KitchenItems.bacon);
-		registerItem(KitchenItems.potato_slice);
-		registerItem(KitchenItems.carrot_slice);
-		registerItem(KitchenItems.flour);
-		registerItem(KitchenItems.toast);
-		registerItem(KitchenItems.raw_roast_beef);
-		registerItem(KitchenItems.roast_beef);
-		registerItem(KitchenItems.raw_chicken_fillet);
-		registerItem(KitchenItems.chicken_fillet);
-		registerItem(KitchenItems.chicken_leg);
-		registerItem(KitchenItems.cheese);
-		registerItem(KitchenItems.cheese_slice);
-		registerItem(KitchenItems.burnt_meat);
-	}
+    private String[] informationLines = new String[0];
+    private String localizableName = "super";
+
+    public ItemBase(String name, String textureName, boolean useCreativeTab)
+    {
+        super();
+
+        this.setUnlocalizedName(name);
+        this.setTextureName(textureName);
+
+        if (useCreativeTab)
+            this.setCreativeTab(Kitchen.instance.tab);
+    }
+
+    public ItemBase setSelfAsContainerItem()
+    {
+        this.setContainerItem(this);
+        return this;
+    }
+
+    public ItemBase setLocalizableName(String localizableName)
+    {
+        this.localizableName = localizableName;
+        return this;
+    }
+
+   /* @Override
+    public String getUnlocalizedName()
+    {
+        if (this.localizableName.equals("super"))
+            return super.getUnlocalizedName();
+        else return localizableName;
+    }*/
+
+    @Override
+    public String getItemStackDisplayName(ItemStack p_77653_1_)
+    {
+        if (this.localizableName.equals("super"))
+            return super.getItemStackDisplayName(p_77653_1_);
+        else return StatCollector.translateToLocal(this.localizableName);
+    }
+
+    public ItemBase(String name, boolean useCreativeTab)
+    {
+        this(name, ModInfo.modid + ":" + name, useCreativeTab);
+    }
+
+    public ItemBase setInformationLines(String[] informationLines)
+    {
+        this.informationLines = informationLines;
+        return this;
+    }
+
+    @Override
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List information, boolean p_77624_4_)
+    {
+        if (this.informationLines.length != 0)
+            Collections.addAll(information, this.informationLines);
+    }
+
+    public static void load()
+    {
+        registerItem(knife);
+        registerItem(mortar_and_pestle);
+        registerItem(mortar);
+        registerItem(pestle);
+        registerItem(raw_bacon);
+        registerItem(bread_slice);
+        GameRegistry.registerCustomItemStack("sandwich_itemstack", basic_sandwich);
+        registerItem(tomato);
+        registerItem(lettuce);
+        registerItem(tomato_slice);
+        registerItem(lettuce_leaf);
+        registerItem(bacon);
+        registerItem(potato_slice);
+        registerItem(carrot_slice);
+        registerItem(flour);
+        registerItem(toast);
+        registerItem(raw_roast_beef);
+        registerItem(roast_beef);
+        registerItem(raw_chicken_fillet);
+        registerItem(chicken_fillet);
+        registerItem(chicken_leg);
+        registerItem(cheese);
+        registerItem(cheese_slice);
+        registerItem(burnt_meat);
+        registerItem(butter);
+        registerItem(jam_jar);
+        registerItem(jam_strawberry);
+        registerItem(jam_apple);
+        registerItem(strawberry);
+        registerItem(cut_apple);
+        registerItem(cut_strawberry);
+        registerItem(peanut);
+        registerItem(peanuts_in_shell);
+        registerItem(jam_peanut);
+        registerItem(jammable_strawberry);
+    }
 }

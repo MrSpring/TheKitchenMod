@@ -1,0 +1,41 @@
+itemGroup.tabKitchen=Cucina
+
+tile.tiles.name=Piastrelle
+tile.board.name=Tagliere
+tile.tomato_crop.name=Semi di Pomodoro
+tile.lettuce_crop.name=Semi di Insalata
+tile.oven.name=Forno
+tile.plate.name=Piatto
+
+item.knife.name=Coltello
+item.bacon_raw.name=Pancetta Cruda
+item.bread_slice.name=Fetta di Pane
+item.sandwich.name=Panino
+item.tomato.name=Pomodoro
+item.lettuce.name=Insalata
+item.lettuce_leaf.name=Foglie di Insalata
+item.tomato_slice.name=Fette di Pomodoro
+item.bacon_cooked.name=Pancetta Cotta
+item.carrot_slice.name=Fette di Carota
+item.potato_slice.name=Fette di Patata
+item.mortar.name=Mortaio
+item.pestle.name=Pestello
+item.mortar_and_pestle.name=Mortaio e Pestello
+item.flour.name=Farina
+item.toast.name=Pane per Toast
+item.raw_roast_beef.name=Fette di Carne Cruda
+item.roast_beef.name=Fette di Carne Cotta
+item.chicken_fillet_raw.name=Filetto di Pollo Crudo
+item.chicken_fillet_cooked.name=Filetto di Pollo Cotto
+item.chicken_leg.name=Coscia di Pollo
+item.cheese.name=Formaggio
+item.cheese_slice.name=Fetta di Formaggio
+item.burnt_meat.name=Carne Bruciata
+item.sandwichable.sandwichable_msg=Per Panini
+
+combo.big_mac.name=C'è n'è solo uno!
+combo.blt.name=Il Buon Vecchio BLT
+combo.only_bread.name=Un Po' Noioso...
+combo.rrb.name=Retro Roastbeef
+combo.smart_chicken.name=7-Smart Chicken
+combo.veggie.name=Panino Vegetariano
