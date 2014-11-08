@@ -21,6 +21,7 @@ public class TileEntityPan extends TileEntity
 {
     Ingredient ingredient = Ingredient.getIngredient("empty");
     int cookTime = 0;
+    boolean isFunctional = true, firstRun = true;
 
     public boolean rightClicked(ItemStack clicked)
     {
@@ -63,10 +64,28 @@ public class TileEntityPan extends TileEntity
     @Override
     public void updateEntity()
     {
-        if (this.getIngredient() != null && this.worldObj.getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven)
+        if (this.firstRun)
+        {
+            if (worldObj.getBlock(xCoord, yCoord, zCoord) == KitchenBlocks.oven)
+                this.makeFunctional();
+            else this.makeNonFunctional();
+            this.firstRun=false;
+        }
+
+        if (this.getIngredient() != null && isFunctional/* && this.worldObj.getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven*/)
             if (this.getIngredient() != Ingredient.getIngredient("empty"))
                 if (this.cookTime < 410)
                     this.cookTime++;
+    }
+
+    public void makeNonFunctional()
+    {
+        this.isFunctional = false;
+    }
+
+    public void makeFunctional()
+    {
+        this.isFunctional = true;
     }
 
     public int getCookTime()
