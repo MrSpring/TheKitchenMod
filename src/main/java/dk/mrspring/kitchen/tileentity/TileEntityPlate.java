@@ -30,7 +30,6 @@ public class TileEntityPlate extends TileEntity
 
 						this.items.add(item);
 						this.isFull = true;
-						itemStack = null;
 						return true;
 					} else
 						return false;
