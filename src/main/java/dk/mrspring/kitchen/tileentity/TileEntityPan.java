@@ -66,16 +66,29 @@ public class TileEntityPan extends TileEntity
     {
         if (this.firstRun)
         {
-            if (worldObj.getBlock(xCoord, yCoord, zCoord) == KitchenBlocks.oven)
-                this.makeFunctional();
-            else this.makeNonFunctional();
+            this.checkIsFunctional();
             this.firstRun=false;
         }
+
+        System.out.println("Is the pan functional? "+this.isFunctional+". Is the world remote? "+worldObj.isRemote);
 
         if (this.getIngredient() != null && isFunctional/* && this.worldObj.getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven*/)
             if (this.getIngredient() != Ingredient.getIngredient("empty"))
                 if (this.cookTime < 410)
                     this.cookTime++;
+    }
+
+    public void checkIsFunctional()
+    {
+        if (this.worldObj.getBlock(xCoord,yCoord-1,zCoord)==KitchenBlocks.oven)
+        {
+            System.out.println("Making pan functional!");
+            this.makeFunctional();
+        }else
+        {
+            System.out.println("Making pan non-functional!");
+            this.makeNonFunctional();
+        }
     }
 
     public void makeNonFunctional()

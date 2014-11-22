@@ -59,9 +59,7 @@ public class BlockFryingPan extends BlockContainerBase
     public void onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ)
     {
         TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
-        if (world.getBlock(x, y - 1, z) != KitchenBlocks.oven)
-            tileEntityPan.makeNonFunctional();
-        else tileEntityPan.makeFunctional();
+        tileEntityPan.checkIsFunctional();
     }
 
     @Override
@@ -76,6 +74,7 @@ public class BlockFryingPan extends BlockContainerBase
             {
                 System.out.println("Subtracting stackSize!");
                 player.getCurrentEquippedItem().stackSize--;
+                tileEntityPan.checkIsFunctional();
                 world.markBlockForUpdate(x, y, z);
                 return true;
             }
