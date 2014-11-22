@@ -64,7 +64,6 @@ public class Kitchen
 
 
         // Loading Blocks and Items
-        KitchenItems.createPostBlockConstructors();
         BlockBase.load();
         ItemBase.load();
 

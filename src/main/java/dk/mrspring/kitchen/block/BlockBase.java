@@ -31,17 +31,20 @@ public class BlockBase extends Block
     {
         registerBlock(KitchenBlocks.tiles);
         registerBlock(KitchenBlocks.board);
+
         registerBlock(KitchenBlocks.tomato_crop);
         registerBlock(KitchenBlocks.lettuce_crop);
+        registerBlock(KitchenBlocks.peanut_crop);
+        registerBlock(KitchenBlocks.strawberry_crop);
+
         registerBlock(KitchenBlocks.wild_tomato);
         registerBlock(KitchenBlocks.wild_lettuce);
+        registerBlock(KitchenBlocks.wild_peanut);
+        registerBlock(KitchenBlocks.wild_strawberry);
+
         registerBlock(KitchenBlocks.oven);
         registerBlock(KitchenBlocks.plate, ItemBlockPlate.class, "plate");
         registerBlock(KitchenBlocks.kitchen_cabinet);
         registerBlock(KitchenBlocks.frying_pan);
-        registerBlock(KitchenBlocks.peanut_crop);
-        registerBlock(KitchenBlocks.wild_peanut);
-        registerBlock(KitchenBlocks.strawberry_crop);
-        registerBlock(KitchenBlocks.wild_strawberry);
     }
 }
