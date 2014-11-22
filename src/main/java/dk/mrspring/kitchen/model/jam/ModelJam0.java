@@ -4,13 +4,18 @@ package dk.mrspring.kitchen.model.jam;
  * Created by MrSpring on 27-10-2014 for TheKitchenMod.
  */
 
+import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 
 public class ModelJam0 extends ModelBase
 {
     //fields
+    ResourceLocation texture=new ResourceLocation(ModInfo.toTexture("textures/models/jam.png"));
+
     ModelRenderer jam1;
     ModelRenderer jam2;
     ModelRenderer jam3;
@@ -79,6 +84,9 @@ public class ModelJam0 extends ModelBase
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(entity, f, f1, f2, f3, f4, f5);
+
+        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+
         jam1.render(f5);
         jam2.render(f5);
         jam3.render(f5);
