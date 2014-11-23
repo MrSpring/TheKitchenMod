@@ -64,8 +64,8 @@ public class Kitchen
 
 
         // Loading Blocks and Items
-        BlockBase.load();
         ItemBase.load();
+        BlockBase.load();
 
         // Registering renderers
         proxy.registerRenderers();

@@ -29,8 +29,12 @@ public class KitchenItems
     public static final Item bread_slice = new ItemBase("bread_slice", true);
     public static final Item toast = new ItemBase("toast", true);
 
-    public static Item tomato = new ItemSeedBase("tomato", KitchenBlocks.tomato_crop, true);
-    public static Item lettuce = new ItemSeedBase("lettuce", KitchenBlocks.lettuce_crop, true);
+    public static final Item tomato = new ItemSeedBase("tomato", KitchenBlocks.tomato_crop, true);
+    public static final Item lettuce = new ItemSeedBase("lettuce", KitchenBlocks.lettuce_crop, true);
+    public static final Item strawberry = new ItemSeedBase("strawberry", KitchenBlocks.strawberry_crop, true);
+    public static final Item peanut = new ItemSeedBase("peanut", KitchenBlocks.peanut_crop, true);
+    public static final Item peanuts_in_shell = new ItemBase("peanuts_in_shell", ModInfo.toTexture("peanuts"), true);
+
     public static final Item tomato_slice = new ItemBase("tomato_slice", true);
     public static final Item lettuce_leaf = new ItemBase("lettuce_leaf", true);
 
@@ -63,14 +67,9 @@ public class KitchenItems
     public static final Item jam_apple = new ItemBase("apple_jam", false).setLocalizableName("jam.apple.name");
     public static final Item jam_peanut = new ItemBase("peanut_jam", false).setLocalizableName("jam.peanut.name");
 
-    public static Item strawberry = new ItemSeedBase("strawberry", KitchenBlocks.strawberry_crop, true);
-
     public static final Item cut_strawberry = new ItemFood(1, false).setTextureName(ModInfo.toTexture("strawberry_slices")).setUnlocalizedName("strawberry_slices").setCreativeTab(Kitchen.instance.tab);
     public static final Item jammable_strawberry = new ItemFood(1, false).setTextureName(ModInfo.toTexture("strawberry_slices_sugared")).setUnlocalizedName("sugared_strawberry_slices").setCreativeTab(Kitchen.instance.tab);
     public static final Item cut_apple = new ItemFood(1, false).setTextureName(ModInfo.toTexture("apple_slice")).setUnlocalizedName("apple_slice").setCreativeTab(Kitchen.instance.tab);
-
-    public static final Item peanuts_in_shell = new ItemBase("peanuts_in_shell", ModInfo.toTexture("peanuts"), true);
-    public static Item peanut = new ItemSeedBase("peanut", KitchenBlocks.peanut_crop, true);
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)

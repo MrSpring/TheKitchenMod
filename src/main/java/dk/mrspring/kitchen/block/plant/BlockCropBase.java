@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.block.plant;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -9,9 +10,10 @@ import net.minecraft.util.IIcon;
 public class BlockCropBase extends BlockCrops
 {
     private IIcon[] icons;
-    Item drops;
+    //    Item drops;
+    String drops;
 
-    public BlockCropBase(String namePrefix, Item dropped)
+    public BlockCropBase(String namePrefix, String dropped)
     {
         super();
 
@@ -42,14 +44,19 @@ public class BlockCropBase extends BlockCrops
             return this.icons[3];
     }
 
+    protected Item getDroppedItem()
+    {
+        return GameRegistry.findItem(drops.split(":")[0], drops.split(":")[1]);
+    }
+
     protected Item func_149866_i()
     {
-        return this.drops;
+        return this.getDroppedItem();
     }
 
     protected Item func_149865_P()
     {
-        return this.drops;
+        return this.getDroppedItem();
     }
 
     @Override
