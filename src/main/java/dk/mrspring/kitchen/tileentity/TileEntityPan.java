@@ -50,7 +50,7 @@ public class TileEntityPan extends TileEntity
             System.out.println("... is null!");
             if (this.cookTime >= 400)
             {
-                this.finishItem(clicked);
+                this.finishItem(null);
                 return false;
             }
         }
