@@ -42,8 +42,11 @@ public class Kitchen
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+        // Loads the mods logger
+        ModLogger.initializeLogger(event);
+
         // Loading the config files
-        ModConfig.load(new File("config"));
+        ModConfig.load(event.getModConfigurationDirectory());
 
         // Initializing the Creative Tab
         instance.tab = new CreativeTabs("tabKitchen")

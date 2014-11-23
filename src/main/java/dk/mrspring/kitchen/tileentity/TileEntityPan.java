@@ -23,10 +23,41 @@ public class TileEntityPan extends TileEntity
     int cookTime = 0;
     boolean isFunctional = true, firstRun = true;
 
+    /**
+     * Handles the block being right-clicked. Adds the item if the pan is
+     * empty, finishes the current ingredient if it's ready and clicked
+     * is null.
+     *
+     * @param clicked The ItemStack the block is being right-clicked with.
+     * @return Returns true if clicked's stack-size should be subtracted.
+     */
     public boolean rightClicked(ItemStack clicked)
     {
-        System.out.println(this.getCookTime());
-        if (this.getCookTime() >= 400 && this.ingredient != null)
+        System.out.println("Clicked!");
+        if (clicked != null)
+        {
+            System.out.println("... is not null!");
+            if (this.cookTime >= 400 && clicked.getItem() == KitchenItems.jam_jar)
+            {
+                this.finishItem(clicked);
+                return true;
+            } else if (this.ingredient == Ingredient.getIngredient("empty"))
+            {
+                return this.setIngredient(clicked);
+            }
+        } else
+        {
+            System.out.println("... is null!");
+            if (this.cookTime >= 400)
+            {
+                this.finishItem(clicked);
+                return false;
+            }
+        }
+
+        return false;
+
+        /*if (this.getCookTime() >= 400 && this.ingredient != null)
         {
             if (clicked != null)
             {
@@ -56,9 +87,54 @@ public class TileEntityPan extends TileEntity
             {
                 this.ingredient = ingredientFromItem;
                 return true;
-            }
+            }else return false;
         }
-        return false;
+        return false;*/
+    }
+
+    private void finishItem(ItemStack clicked)
+    {
+        System.out.println("Trying to finish item...");
+        if (this.cookTime >= 400)
+        {
+            ItemStack result;
+            if (clicked != null && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam())
+            {
+                Jam resultJam = this.ingredient.getJamResult();
+                result = Kitchen.getJamJarItemStack(resultJam, 6);
+            } else
+            {
+                result = this.ingredient.getItemResult();
+            }
+
+            System.out.println("Cook Time is above 400, result is: "+result.getDisplayName());
+
+            this.cookTime = 0;
+            this.ingredient = Ingredient.getIngredient("empty");
+
+            worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, result));
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        }
+    }
+
+    /***
+     * Sets the pan's ingredient to whatever the item links to.
+     * @param clicked The item the pan is being clicked with.
+     * @return Returns true if the ingredient was set successfully.
+     */
+    private boolean setIngredient(ItemStack clicked)
+    {
+        System.out.println("Setting ingredient");
+        if (this.ingredient == Ingredient.getIngredient("empty") && this.cookTime == 0)
+        {
+            Ingredient ingredientFromItem = KitchenItems.valueOf(clicked.getItem());
+            if (ingredientFromItem != null)
+            {
+                System.out.println("Setting ingredient to: "+ingredientFromItem.getName());
+                this.ingredient = ingredientFromItem;
+                return true;
+            } else return false;
+        } else return false;
     }
 
     @Override
@@ -67,28 +143,22 @@ public class TileEntityPan extends TileEntity
         if (this.firstRun)
         {
             this.checkIsFunctional();
-            this.firstRun=false;
+            this.firstRun = false;
         }
 
-        System.out.println("Is the pan functional? "+this.isFunctional+". Is the world remote? "+worldObj.isRemote);
-
-        if (this.getIngredient() != null && isFunctional/* && this.worldObj.getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven*/)
-            if (this.getIngredient() != Ingredient.getIngredient("empty"))
-                if (this.cookTime < 410)
-                    this.cookTime++;
+        if (this.getIngredient() != Ingredient.getIngredient("empty") && isFunctional/* && this.worldObj.getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven*/)
+        {
+            if (this.cookTime < 410)
+                this.cookTime++;
+        } else this.cookTime = 0;
     }
 
     public void checkIsFunctional()
     {
-        if (this.worldObj.getBlock(xCoord,yCoord-1,zCoord)==KitchenBlocks.oven)
-        {
-            System.out.println("Making pan functional!");
+        if (this.worldObj.getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven)
             this.makeFunctional();
-        }else
-        {
-            System.out.println("Making pan non-functional!");
+        else
             this.makeNonFunctional();
-        }
     }
 
     public void makeNonFunctional()

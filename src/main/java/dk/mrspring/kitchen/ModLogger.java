@@ -1,9 +1,7 @@
 package dk.mrspring.kitchen;
 
-import dk.mrspring.kitchen.config.BaseConfig;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.Logger;
 
 public class ModLogger
 {
@@ -13,30 +11,33 @@ public class ModLogger
 	public static final int ERROR = 2;
 	public static final int DEBUG = 3;
 
-	// Prints a message to the console, obj used if the message is an error and an exception has to be logged
-	public static void print(int type, String message, Object... obj)
-	{
-		String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+	private static Logger logger;
 
+	public static void initializeLogger(FMLPreInitializationEvent event)
+	{
+		logger = event.getModLog();
+	}
+
+	public static void print(int type, String message)
+	{
+		print(type, message, null);
+	}
+
+	public static void print(int type, String message, Throwable error)
+	{
 		switch (type)
 		{
 			case INFO:
-				System.out.println("[" + time + "] [TheKitchenMod/INFO]: " + message);
+				logger.info(message);
 				break;
 			case WARNING:
-				System.out.println("[" + time + "] [TheKitchenMod/WARNING]: " + message);
-				if (obj[0] != null && obj[0] instanceof Exception) ((Exception) obj[0]).printStackTrace();
+				logger.warn(message, error);
 				break;
 			case ERROR:
-				System.err.println("[" + time + "] [TheKitchenMod/ERROR]: " + message);
-				if (obj[0] != null && obj[0] instanceof Exception) ((Exception) obj[0]).printStackTrace();
+				logger.error(message, error);
 				break;
 			case DEBUG:
-				if (ModConfig.getKitchenConfig().show_console_debug)
-					System.out.println("[" + time + "] [TheKitchenMod/DEBUG]: " + message);
-				break;
-			default:
-				System.out.println("[" + time + "] [TheKitchenMod/INFO]: " + message);
+				logger.debug(message, error);
 				break;
 		}
 	}
