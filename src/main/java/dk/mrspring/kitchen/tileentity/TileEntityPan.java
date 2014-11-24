@@ -33,10 +33,8 @@ public class TileEntityPan extends TileEntity
      */
     public boolean rightClicked(ItemStack clicked)
     {
-        System.out.println("Clicked!");
         if (clicked != null)
         {
-            System.out.println("... is not null!");
             if (this.cookTime >= 400 && clicked.getItem() == KitchenItems.jam_jar)
             {
                 this.finishItem(clicked);
@@ -47,7 +45,6 @@ public class TileEntityPan extends TileEntity
             }
         } else
         {
-            System.out.println("... is null!");
             if (this.cookTime >= 400)
             {
                 this.finishItem(null);
@@ -94,7 +91,6 @@ public class TileEntityPan extends TileEntity
 
     private void finishItem(ItemStack clicked)
     {
-        System.out.println("Trying to finish item...");
         if (this.cookTime >= 400)
         {
             ItemStack result;
@@ -106,9 +102,6 @@ public class TileEntityPan extends TileEntity
             {
                 result = this.ingredient.getItemResult();
             }
-
-            System.out.println("Cook Time is above 400, result is: "+result.getDisplayName());
-
             this.cookTime = 0;
             this.ingredient = Ingredient.getIngredient("empty");
 
@@ -124,13 +117,11 @@ public class TileEntityPan extends TileEntity
      */
     private boolean setIngredient(ItemStack clicked)
     {
-        System.out.println("Setting ingredient");
         if (this.ingredient == Ingredient.getIngredient("empty") && this.cookTime == 0)
         {
             Ingredient ingredientFromItem = KitchenItems.valueOf(clicked.getItem());
             if (ingredientFromItem != null)
             {
-                System.out.println("Setting ingredient to: "+ingredientFromItem.getName());
                 this.ingredient = ingredientFromItem;
                 return true;
             } else return false;
