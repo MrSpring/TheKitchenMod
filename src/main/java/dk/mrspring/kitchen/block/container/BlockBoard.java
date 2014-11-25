@@ -19,7 +19,7 @@ public class BlockBoard extends BlockContainerBase
 {
     public BlockBoard()
     {
-        super(Material.wood,"board", "minecraft:planks_oak");
+        super(Material.wood,"board", "minecraft:planks_oak", TileEntityBoard.class);
 
         this.setStepSound(soundTypeWood);
         this.setHardness(2.0F);
@@ -147,11 +147,5 @@ public class BlockBoard extends BlockContainerBase
     public boolean renderAsNormalBlock()
     {
         return false;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World var1, int var2)
-    {
-        return new TileEntityBoard();
     }
 }

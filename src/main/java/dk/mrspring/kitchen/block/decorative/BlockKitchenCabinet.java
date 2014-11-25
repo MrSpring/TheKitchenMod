@@ -17,7 +17,7 @@ public class BlockKitchenCabinet extends BlockContainerBase
 {
 	public BlockKitchenCabinet()
 	{
-		super(Material.wood, "kitchen_cabinet");
+		super(Material.wood, "kitchen_cabinet", TileEntityKitchenCabinet.class);
 
 		this.setStepSound(Block.soundTypeWood);
 		this.setHardness(2.0F);
@@ -49,11 +49,5 @@ public class BlockKitchenCabinet extends BlockContainerBase
 	public int getRenderType()
 	{
 		return -1;
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world, int metadata)
-	{
-		return new TileEntityKitchenCabinet();
 	}
 }

@@ -18,13 +18,7 @@ public class BlockFryingPan extends BlockContainerBase
 {
     public BlockFryingPan()
     {
-        super("frying_pan");
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World world, int metadata)
-    {
-        return new TileEntityPan();
+        super("frying_pan", TileEntityPan.class);
     }
 
     @Override

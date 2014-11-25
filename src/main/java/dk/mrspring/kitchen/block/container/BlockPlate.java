@@ -19,7 +19,7 @@ public class BlockPlate extends BlockContainerBase
 
 	public BlockPlate()
 	{
-		super(Material.anvil, "plate");
+		super(Material.anvil, "plate", TileEntityPlate.class);
 
 		this.setBlockBounds(0.0F + (2 * 0.0635F), 0.0F, 0.0F + (2 * 0.0635F), 1.0F - (2 * 0.0635F), (3 * 0.0625F), 1.0F - (2 * 0.0635F));
 
@@ -127,11 +127,5 @@ public class BlockPlate extends BlockContainerBase
 	public int getRenderType()
 	{
 		return -1;
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2)
-	{
-		return new TileEntityPlate();
 	}
 }
