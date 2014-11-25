@@ -14,7 +14,8 @@ import java.util.Map;
 
 public class KitchenItems
 {
-    private static Map<String, String> ingredientRelations = new HashMap<String, String>();
+    // A HashMap storing the name if the item (key) and the name of the associated ingredient (value).
+    private static HashMap<String, String> ingredientRelations = new HashMap<String, String>();
 
     // All the Item variables
     public static final Item knife = new ItemKnife().setMaxStackSize(1);
@@ -123,5 +124,10 @@ public class KitchenItems
     public static Ingredient valueOf(Item item)
     {
         return valueOf(GameRegistry.findUniqueIdentifierFor(item).toString());
+    }
+
+    public static HashMap<String, String> getIngredientRelations()
+    {
+        return ingredientRelations;
     }
 }

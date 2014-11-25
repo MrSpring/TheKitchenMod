@@ -15,6 +15,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.comp.nei.OvenRecipeHandler;
+import dk.mrspring.kitchen.comp.nei.PanRecipeHandler;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
@@ -155,6 +156,9 @@ public class Kitchen
             {
                 API.registerRecipeHandler(new OvenRecipeHandler());
                 API.registerUsageHandler(new OvenRecipeHandler());
+
+                API.registerRecipeHandler(new PanRecipeHandler());
+                API.registerUsageHandler(new PanRecipeHandler());
             } catch (Exception e)
             {
                 ModLogger.print(ModLogger.DEBUG, "Failed to load compatibility with NEI.");
