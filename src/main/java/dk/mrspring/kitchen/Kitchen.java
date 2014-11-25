@@ -1,15 +1,20 @@
 package dk.mrspring.kitchen;
 
+import codechicken.nei.api.API;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.ModClassLoader;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
+import dk.mrspring.kitchen.comp.nei.OvenRecipeHandler;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
@@ -144,9 +149,27 @@ public class Kitchen
         KitchenItems.linkToIngredient(KitchenItems.peanut, "peanut");
         KitchenItems.linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
 
+        if (Loader.isModLoaded("NotEnoughItems"))
+        {
+            try
+            {
+                API.registerRecipeHandler(new OvenRecipeHandler());
+                API.registerUsageHandler(new OvenRecipeHandler());
+            } catch (Exception e)
+            {
+                ModLogger.print(ModLogger.DEBUG, "Failed to load compatibility with NEI.");
+            }
+        }
+
 		/*JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
         JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);*/
 
+    }
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event)
+    {
+        OvenRecipes.addFoodRecipes();
     }
 
     @EventHandler

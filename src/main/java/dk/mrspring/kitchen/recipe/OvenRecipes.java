@@ -3,17 +3,24 @@ package dk.mrspring.kitchen.recipe;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModLogger;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Konrad on 01-07-2014.
  */
 public class OvenRecipes
 {
-    // An array with to ArrayLists. ArrayList#0 is input, #1 is output.
-    static ArrayList<ItemStack>[] customOvenRecipes = new ArrayList[2];
+    public static String[] defaultInput = new String[]{"kitchen:raw_roast_beef", "kitchen:chicken_fillet_raw", "kitchen:bacon_raw"};
+    public static String[] defaultOutput = new String[]{"kitchen:roast_beef", "kitchen:chicken_fillet_cooked", "kitchen:bacon_cooked"};
+
+    // A HashMap storing all the recipes. Keys are input, values are output.
+    static Map<ItemStack, ItemStack> customOvenRecipes = new HashMap<ItemStack, ItemStack>();
 
     public static void load()
     {
@@ -25,41 +32,73 @@ public class OvenRecipes
 
             if (input.size() == output.size())
             {
-                customOvenRecipes[0] = input;
-                customOvenRecipes[1] = output;
-            }
-            else
+                setCustomOvenRecipes(input, output);
+            } else
             {
                 ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.");
                 ModLogger.print(ModLogger.DEBUG, "Some of the Items it was trying to load has wrong names. Correct this issue to load custom recipes!");
 
-                customOvenRecipes[0] = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_input, "Default Oven Recipes Input");
-                customOvenRecipes[1] = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_output, "Default Oven Recipes Output");
+                setCustomOvenRecipes(input, output);
             }
-        }
-        else
+        } else
         {
             ModLogger.print(ModLogger.INFO, "Unable to load Custom oven recipes! Loading defaults.");
             ModLogger.print(ModLogger.DEBUG, "One of the list were bigger than the other! Input length: " + ModConfig.getOvenConfig().custom_oven_recipes_input.length + ", Output length: " + ModConfig.getOvenConfig().custom_oven_recipes_output.length);
 
-            customOvenRecipes[0] = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_input, "Default Oven Recipes Input");
-            customOvenRecipes[1] = getArrayFromStringList(ModConfig.getOvenConfig().custom_oven_recipes_output, "Default Oven Recipes Output");
+            setCustomOvenRecipes(getArrayFromStringList(defaultInput, "Default Oven Input"), getArrayFromStringList(defaultOutput, "Default Oven Output"));
         }
     }
 
-    /***
-     *
-     * @param itemStack The ItemStack to get result of.
+    public static void addFoodRecipes()
+    {
+        System.out.println("Adding food recipes!");
+        Map<ItemStack, ItemStack> smeltingRecipes = FurnaceRecipes.smelting().getSmeltingList();
+
+        for (Map.Entry<ItemStack, ItemStack> entry : smeltingRecipes.entrySet())
+            if (entry.getValue().getItem() instanceof ItemFood)
+            {
+                ItemStack input=entry.getKey();
+                if (input.getItemDamage()>1000)
+                    input.setItemDamage(0);
+                System.out.println("Found recipe! Input: " + entry.getKey() + ", Output: " + entry.getValue());
+                customOvenRecipes.put(input, entry.getValue());
+            }
+    }
+
+    public static Map<ItemStack, ItemStack> getCustomOvenRecipes()
+    {
+        return customOvenRecipes;
+    }
+
+    private static void setCustomOvenRecipes(ArrayList<ItemStack> input, ArrayList<ItemStack> output)
+    {
+        for (int i = 0; i < input.size(); i++)
+        {
+            ItemStack inputStack = input.get(i), outputStack = output.get(i);
+            customOvenRecipes.put(inputStack, outputStack);
+        }
+    }
+
+    /**
+     * @param input1 The ItemStack to get result of.
      * @return Returns the result of the item stack when cooked in the Oven. Returns null when nothing was found
      */
-    public static ItemStack getCookingResult(ItemStack itemStack)
+    public static ItemStack getCookingResult(ItemStack input1)
     {
-        for (int i = 0; i < customOvenRecipes[0].size(); i++)
+        for (Map.Entry<ItemStack, ItemStack> entry : customOvenRecipes.entrySet())
+        {
+            ItemStack input2 = entry.getKey();
+            System.out.println("Checking if Input: " + input1.getDisplayName() + " matches Input: " + input2.getDisplayName());
+            if (input1.isItemEqual(input2))
+                return entry.getValue();
+        }
+
+        /*for (int i = 0; i < customOvenRecipes[0].size(); i++)
         {
             ItemStack stack = customOvenRecipes[0].get(i);
             if (itemStack.isItemEqual(stack))
                 return customOvenRecipes[1].get(i);
-        }
+        }*/
 
         return null;
     }
@@ -85,8 +124,7 @@ public class OvenRecipes
             {
                 ModLogger.print(ModLogger.DEBUG, "Adding " + stack.getDisplayName() + " to '" + type + "'.");
                 itemStackArrayList.add(stack);
-            }
-            else
+            } else
                 ModLogger.print(ModLogger.DEBUG, "Unable to add ItemStack to '" + type + "', it returned null. ModID: " + modId + ", name: " + itemName + ".");
         }
 
@@ -95,10 +133,9 @@ public class OvenRecipes
 
     public static void addRecipe(ItemStack input, ItemStack output)
     {
-        if (input!=null&&output!=null)
+        if (input != null && output != null)
         {
-            customOvenRecipes[0].add(input);
-            customOvenRecipes[1].add(output);
+            customOvenRecipes.put(input, output);
         }
     }
 }

@@ -169,12 +169,16 @@ public class TileEntityOven extends TileEntity
         {
             if (item != null)
             {
-                if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
+                /*if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
                     if (FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood)
-                        foundCompatible = true;
+                        foundCompatible = true;*/
+                System.out.println("Looking for a recipe for: " + item.getDisplayName());
 
                 if (OvenRecipes.getCookingResult(item) != null)
+                {
+                    System.out.println("Found a recipe for: " + item.getDisplayName() + ", result is: " + OvenRecipes.getCookingResult(item).getDisplayName());
                     foundCompatible = true;
+                }
             }
         }
 
@@ -202,12 +206,12 @@ public class TileEntityOven extends TileEntity
             {
                 if (this.ovenItems[i].getItem() != null)
                 {
-                    if (FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]) != null)
+                    /*if (FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]) != null)
                     {
                         int stackSize = this.ovenItems[i].stackSize;
                         this.ovenItems[i] = FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]);
                         this.ovenItems[i].stackSize = stackSize;
-                    }
+                    }*/
 
                     if (OvenRecipes.getCookingResult(this.ovenItems[i]) != null)
                     {
@@ -258,12 +262,12 @@ public class TileEntityOven extends TileEntity
         }
     }
 
-	public int getBurnTime()
-	{
-		return burnTime;
-	}
+    public int getBurnTime()
+    {
+        return burnTime;
+    }
 
-	@Override
+    @Override
     public Packet getDescriptionPacket()
     {
         NBTTagCompound compound = new NBTTagCompound();
