@@ -44,16 +44,16 @@ public class RecipeRegistry
         addKnifeRecipe(new ItemStack(raw_bacon, 3), new ItemStack(Items.porkchop));
         addKnifeRecipe(new ItemStack(tomato_slice, 4), new ItemStack(tomato));
         addKnifeRecipe(new ItemStack(lettuce_leaf, 2), new ItemStack(lettuce));
-        addKnifeRecipe(new ItemStack(carrot_slice), new ItemStack(Items.carrot));
-        addKnifeRecipe(new ItemStack(potato_slice), new ItemStack(Items.potato));
-        addKnifeRecipe(new ItemStack(bread_slice), new ItemStack(Items.bread));
-        addKnifeRecipe(new ItemStack(raw_roast_beef), new ItemStack(Items.beef));
-        addKnifeRecipe(new ItemStack(raw_chicken_fillet), new ItemStack(Items.chicken));
-        addKnifeRecipe(new ItemStack(chicken_leg), new ItemStack(Items.cooked_chicken));
-        addKnifeRecipe(new ItemStack(cheese_slice), new ItemStack(cheese));
-        addKnifeRecipe(new ItemStack(cut_strawberry), new ItemStack(strawberry));
-        addKnifeRecipe(new ItemStack(jammable_strawberry), new ItemStack(strawberry), new ItemStack(Items.sugar));
-        addKnifeRecipe(new ItemStack(cut_apple), new ItemStack(Items.apple));
+        addKnifeRecipe(new ItemStack(carrot_slice, 2), new ItemStack(Items.carrot));
+        addKnifeRecipe(new ItemStack(potato_slice, 3), new ItemStack(Items.potato));
+        addKnifeRecipe(new ItemStack(bread_slice, 2), new ItemStack(Items.bread));
+        addKnifeRecipe(new ItemStack(raw_roast_beef, 2), new ItemStack(Items.beef));
+        addKnifeRecipe(new ItemStack(raw_chicken_fillet, 3), new ItemStack(Items.chicken));
+        addKnifeRecipe(new ItemStack(chicken_leg, 2), new ItemStack(Items.cooked_chicken));
+        addKnifeRecipe(new ItemStack(cheese_slice, 2), new ItemStack(cheese));
+        addKnifeRecipe(new ItemStack(cut_strawberry, 2), new ItemStack(strawberry));
+        addKnifeRecipe(new ItemStack(jammable_strawberry, 2), new ItemStack(strawberry), new ItemStack(Items.sugar));
+        addKnifeRecipe(new ItemStack(cut_apple, 2), new ItemStack(Items.apple));
 
         /**
          * Mortar and Pestle recipes
