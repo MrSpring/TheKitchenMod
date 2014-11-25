@@ -5,11 +5,12 @@ import dk.mrspring.kitchen.tileentity.TileEntityPan;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 /**
  * Created by MrSpring on 09-10-2014 for TheKitchenMod.
@@ -19,6 +20,8 @@ public class BlockFryingPan extends BlockContainerBase
     public BlockFryingPan()
     {
         super("frying_pan", TileEntityPan.class);
+
+        this.setTickRandomly(true);
     }
 
     @Override
@@ -41,6 +44,45 @@ public class BlockFryingPan extends BlockContainerBase
                 this.setBlockBounds(2 * pixel, 0, 0.5F, 0.5F + (2 * pixel), height, 1);
                 break;
         }
+    }
+
+    @Override
+    public void randomDisplayTick(World world, int x, int y, int z, Random random)
+    {
+        super.randomDisplayTick(world, x, y, z, random);
+
+        int metadata = world.getBlockMetadata(x, y, z);
+        float pixel = 0.06125F;
+        TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
+
+        if (tileEntityPan.getCookTime() >= 400)
+            switch (metadata)
+            {
+                case 0:
+                    world.spawnParticle("smoke",
+                            x + 2 * pixel + (random.nextDouble() * (8 * pixel)),
+                            y + 2 * pixel,
+                            z + 0 + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+                    break;
+                case 1:
+                    world.spawnParticle("smoke",
+                            x + 0.5F + pixel + (random.nextDouble() * (8 * pixel)),
+                            y + 2 * pixel,
+                            z + 0.5F - (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+                    break;
+                case 2:
+                    world.spawnParticle("smoke",
+                            x + 0.5F + pixel + (random.nextDouble() * (8 * pixel)),
+                            y + 2 * pixel,
+                            z + 0.5F + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+                    break;
+                case 3:
+                    world.spawnParticle("smoke",
+                            x + 2 * pixel + (random.nextDouble() * (8 * pixel)),
+                            y + 2 * pixel,
+                            z + 0.5F + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+                    break;
+            }
     }
 
     @Override
