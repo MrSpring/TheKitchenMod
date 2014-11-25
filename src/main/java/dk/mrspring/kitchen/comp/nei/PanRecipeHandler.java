@@ -114,9 +114,11 @@ public class PanRecipeHandler extends TemplateRecipeHandler
                 Ingredient ingredient = Ingredient.getIngredient(entry.getValue());
                 if (!ingredient.isJam())
                 {
-                    String[] splieItemName=itemName.split(":");
+
+
+                    /*String[] splieItemName=itemName.split(":");
                     if (GameRegistry.findUniqueIdentifierFor(Ingredient.getIngredient(entry.getValue()).getItemResult().getItem()).toString().equals(itemName))
-                        arecipes.add(new PanPair(GameRegistry.findItemStack(entry.getKey().split(":")[0], entry.getKey().split(":")[0], 1), outputResult));
+                        arecipes.add(new PanPair(GameRegistry.findItemStack(entry.getKey().split(":")[0], entry.getKey().split(":")[0], 1), outputResult));*/
                 }
             }
         }
