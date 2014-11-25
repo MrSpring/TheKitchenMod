@@ -51,7 +51,7 @@ public class ItemRenderSandwich implements IItemRenderer
 
 				GL11.glRotatef(-60, 1, 0, 0);
 				GL11.glRotatef(20, 0, 0, 1);
-				GL11.glTranslatef(.4F, 1.2F, 0F);
+				GL11.glTranslatef(.4F, 1.2F, .125F);
 				float f = 1.1F;
 				GL11.glScalef(f, f, f);
 

@@ -35,9 +35,9 @@ public class SandwichableRenderingRegistry
 			}
 
 			@Override
-			public int getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
+			public double getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
 			{
-				return 1;
+				return 0.0325;
 			}
 		};
 	}

@@ -23,12 +23,13 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
 		TileEntityBoard tileEntity = (TileEntityBoard) var1;
 		GL11.glTranslated(x, y + 1.56, z);
 		int metadata = tileEntity.getBlockMetadata();
+		double sandwichHeight=0.0625;
 		if (metadata == 0)
-			GL11.glTranslated(.5, 0, .5);
+			GL11.glTranslated(.5, sandwichHeight, .5);
 		else
 		{
 			GL11.glRotatef(90, 0, 1, 0);
-			GL11.glTranslated(-.5, 0, .5);
+			GL11.glTranslated(-.5, sandwichHeight, .5);
 		}
 
 		List<ItemStack> layers = tileEntity.getLayers();

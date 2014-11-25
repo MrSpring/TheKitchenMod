@@ -23,5 +23,5 @@ public interface ISandwichableRenderingHandler
 	 * @param indexInList The index of the item the model is coming from. Used by Bread Slice, to get separate top and bottom model heights.
 	 * @return Returns the height of the model.
 	 */
-	public int getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound specialTagInfo);
+	public double getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound specialTagInfo);
 }

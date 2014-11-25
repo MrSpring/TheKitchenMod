@@ -116,9 +116,9 @@ public class ModelButter1 extends ModelBase
 
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid + ":textures/models/butter.png"));
 
-        GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
-        GL11.glScalef(0.7F, 0.7F, 0.7F);
-        GL11.glTranslatef(0.0F, -1.475F, 0.215F);
+//        GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+//        GL11.glScalef(0.7F, 0.7F, 0.7F);
+//        GL11.glTranslatef(0.0F, -1.475F, 0.215F);
 
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
         butterbase.render(f5);
