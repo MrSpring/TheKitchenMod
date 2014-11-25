@@ -93,25 +93,30 @@ public class TileEntityPan extends TileEntity
     {
         if (this.cookTime >= 400)
         {
-            ItemStack result;
+            ItemStack result = null;
             if (clicked != null && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam())
             {
                 Jam resultJam = this.ingredient.getJamResult();
                 result = Kitchen.getJamJarItemStack(resultJam, 6);
-            } else
+            } else if (!this.ingredient.isJam())
             {
                 result = this.ingredient.getItemResult();
             }
-            this.cookTime = 0;
-            this.ingredient = Ingredient.getIngredient("empty");
+            if (result != null)
+            {
+                this.cookTime = 0;
+                this.ingredient = Ingredient.getIngredient("empty");
 
-            worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, result));
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+
+                worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, result));
+                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            }
         }
     }
 
-    /***
+    /**
      * Sets the pan's ingredient to whatever the item links to.
+     *
      * @param clicked The item the pan is being clicked with.
      * @return Returns true if the ingredient was set successfully.
      */
