@@ -25,6 +25,8 @@ public class BlockContainerBase extends BlockContainer
         this.setBlockName(name);
         this.setBlockTextureName(textureName);
 
+        this.setHardness(4.0F);
+
         this.tileEntityClass = tileEntityClass;
 
         if (useCreativeTab)
