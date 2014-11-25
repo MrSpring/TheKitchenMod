@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import com.google.common.collect.Lists;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.config.ComboConfig;
@@ -11,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemSandwich extends ItemFood
@@ -83,6 +85,7 @@ public class ItemSandwich extends ItemFood
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
+        List information = new ArrayList();
         if (par1ItemStack.getTagCompound() != null)
         {
             if (par1ItemStack.getTagCompound().hasKey("SandwichLayers"))
@@ -94,8 +97,11 @@ public class ItemSandwich extends ItemFood
                     for (int i = 0; i < layersList.tagCount(); ++i)
                     {
                         NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
-                        par3List.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
+                        information.add(StatCollector.translateToLocal(ItemStack.loadItemStackFromNBT(layerCompound).getDisplayName()));
                     }
+
+                    information = Lists.reverse(information);
+                    par3List.addAll(information);
 
                     String comboName = par1ItemStack.getTagCompound().getCompoundTag("Combo").getString("ComboName");
 
