@@ -166,21 +166,9 @@ public class TileEntityOven extends TileEntity
         boolean foundCompatible = false;
 
         for (ItemStack item : this.ovenItems)
-        {
             if (item != null)
-            {
-                /*if (FurnaceRecipes.smelting().getSmeltingResult(item) != null)
-                    if (FurnaceRecipes.smelting().getSmeltingResult(item).getItem() instanceof ItemFood)
-                        foundCompatible = true;*/
-                System.out.println("Looking for a recipe for: " + item.getDisplayName());
-
                 if (OvenRecipes.getCookingResult(item) != null)
-                {
-                    System.out.println("Found a recipe for: " + item.getDisplayName() + ", result is: " + OvenRecipes.getCookingResult(item).getDisplayName());
                     foundCompatible = true;
-                }
-            }
-        }
 
         return foundCompatible;
     }

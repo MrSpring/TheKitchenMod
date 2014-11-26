@@ -58,7 +58,6 @@ public class ItemJamJar extends ItemBase
                     }
                 }
             }
-            System.out.println("");
             return super.getIcon(stack, pass);
         }
     }

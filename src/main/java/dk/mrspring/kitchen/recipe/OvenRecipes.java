@@ -51,7 +51,6 @@ public class OvenRecipes
 
     public static void addFoodRecipes()
     {
-        System.out.println("Adding food recipes!");
         Map<ItemStack, ItemStack> smeltingRecipes = FurnaceRecipes.smelting().getSmeltingList();
 
         for (Map.Entry<ItemStack, ItemStack> entry : smeltingRecipes.entrySet())
@@ -60,7 +59,6 @@ public class OvenRecipes
                 ItemStack input=entry.getKey();
                 if (input.getItemDamage()>1000)
                     input.setItemDamage(0);
-                System.out.println("Found recipe! Input: " + entry.getKey() + ", Output: " + entry.getValue());
                 customOvenRecipes.put(input, entry.getValue());
             }
     }
@@ -88,7 +86,6 @@ public class OvenRecipes
         for (Map.Entry<ItemStack, ItemStack> entry : customOvenRecipes.entrySet())
         {
             ItemStack input2 = entry.getKey();
-            System.out.println("Checking if Input: " + input1.getDisplayName() + " matches Input: " + input2.getDisplayName());
             if (input1.isItemEqual(input2))
                 return entry.getValue();
         }

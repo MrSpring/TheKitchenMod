@@ -140,15 +140,9 @@ public class BoardEventRegistry
 
     public static IBoardEvent getOnAddedToBoardEventFor(String itemName)
     {
-        System.out.println("Getting onAddedToBoard Event for: "+itemName);
         if (onAddedToBoardEvents.containsKey(itemName))
-        {
-            System.out.println("Returning an event, which is not default.");
             return onAddedToBoardEvents.get(itemName);
-        } else {
-            System.out.println("Returning default event.");
-            return getDefaultOnAddedToBoardEvent();
-        }
+        else return getDefaultOnAddedToBoardEvent();
     }
 
     public static IBoardEvent getOnAddedToBoardEventFor(Item item)

@@ -78,7 +78,6 @@ public class ItemSandwich extends ItemFood
                 }
             }
 
-        System.out.println("Heal Amount: " + healAmount);
         return healAmount;
     }
 
