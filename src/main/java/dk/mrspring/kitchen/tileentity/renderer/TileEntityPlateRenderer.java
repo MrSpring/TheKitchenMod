@@ -54,7 +54,10 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
             if (itemStack != null)
             {
                 if (itemStack.getItem() instanceof ItemSandwich)
+                {
+                    GL11.glTranslatef(0.0F,-0.1F,0.0F);
                     this.renderSadwich(itemStack);
+                }
                 else
                 {
                     this.renderItem(itemStack, 0, yItemOffset + 1.4, -0.225F);
