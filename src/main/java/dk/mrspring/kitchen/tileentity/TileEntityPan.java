@@ -122,7 +122,6 @@ public class TileEntityPan extends TileEntity
      */
     private boolean setIngredient(ItemStack clicked)
     {
-        System.out.println("Setting ingredient!");
         if (this.ingredient == Ingredient.getIngredient("empty") && this.cookTime == 0)
         {
             Ingredient ingredientFromItem = KitchenItems.valueOf(clicked.getItem());
