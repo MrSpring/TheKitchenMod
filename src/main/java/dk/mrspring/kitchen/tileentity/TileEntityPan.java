@@ -35,7 +35,7 @@ public class TileEntityPan extends TileEntity
     {
         if (clicked != null)
         {
-            if (this.cookTime >= 400 && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam())
+            if (this.cookTime >= 400 && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam() && clicked.getItemDamage() == 0)
             {
                 this.finishItem(clicked);
                 return true;
