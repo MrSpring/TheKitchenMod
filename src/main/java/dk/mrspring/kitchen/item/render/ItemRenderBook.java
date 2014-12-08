@@ -24,6 +24,10 @@ public class ItemRenderBook implements IItemRenderer
         {
             case EQUIPPED_FIRST_PERSON:
                 return true;
+            case EQUIPPED:
+                return true;
+            case ENTITY:
+                return true;
             default:
                 return false;
         }
@@ -42,28 +46,35 @@ public class ItemRenderBook implements IItemRenderer
 
         EntityClientPlayerMP entity = (EntityClientPlayerMP) data[1];
 
-        float rotation = entity.rotationPitch;
 
-        GL11.glRotatef(35, 0F, 0F, 1F);
+//        GL11.glRotatef(35, 0F, 0F, 1F);
         GL11.glTranslatef(.6F, .8F, -.5F);
 
-        float scale = 1.5F;
+        float scale = 10F;
 
-        GL11.glScalef(1, scale, scale);
+        GL11.glScalef(scale, scale, scale);
 
 
         GL11.glTranslatef(.5F, .5F, .5F);
 
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 
-        float maxRotation = 70, minRotation = 0;
+        float rotation = entity.rotationPitch;
+        float maxRotation = 70, minRotation = 35;
 
         if (rotation > maxRotation)
+        {
             rotation = maxRotation;
-        else if (rotation < minRotation)
+        } else if (rotation < minRotation)
+        {
             rotation = minRotation;
+        }
 
         GL11.glRotatef(rotation, 0, 0, 1);
+        GL11.glRotatef(-90, 0, 1, 0);
+
+        GL11.glRotatef(20, 0.3F, 0, 0);
+        GL11.glTranslatef(-0.25F, -.5F, -0.2F);
 
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid, "textures/models/hand_book.png"));
 
