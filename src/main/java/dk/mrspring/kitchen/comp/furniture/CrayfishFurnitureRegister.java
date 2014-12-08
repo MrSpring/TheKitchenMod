@@ -65,5 +65,13 @@ public class CrayfishFurnitureRegister
         variables.addValue("input", new ItemStack(KitchenItems.strawberry));
         variables.addValue("output", new ItemStack(KitchenItems.cut_strawberry));
         registryComm.registerRecipe("choppingboard", variables);
+
+
+        variables = new RecipeVariables();
+        variables.addValue("name", "Strawberry");
+        variables.addValue("heal", 6);
+        variables.addValue("ingredients", new ItemStack[]{ new ItemStack(KitchenItems.cut_strawberry, 8), new ItemStack(Items.sugar, 4) });
+        variables.addValue("colour", new int[]{255, 0, 0});
+        registryComm.registerRecipe("blender", variables);
     }
 }
