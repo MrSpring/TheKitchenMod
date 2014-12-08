@@ -48,41 +48,6 @@ public class ModConfig
                 e.printStackTrace();
             }
         }
-    /*
-        String configFolder = baseFolder.toURI().toASCIIString();
-		config = new KitchenConfig(new File(configFolder + "\\TheKitchenMod.json"));
-		knifeConfig = new KnifeConfig(new File(configFolder + "\\KnifeRecipe.json"));
-
-		File oldFile = config.getLocation();
-		try
-		{
-			config = config.readFromFile().setLocation(oldFile);
-		} catch (IOException e)
-		{
-			ModLogger.print(ModLogger.WARNING, "An error occured while loading Kitchen config file. Using default!", e);
-			config = new KitchenConfig(oldFile);
-		}
-
-		oldFile = knifeConfig.getLocation();
-		try
-		{
-			config = config.readFromFile().setLocation(oldFile);
-		} catch (IOException e)
-		{
-			ModLogger.print(ModLogger.WARNING, "An error occured while loading Knife config file. Using default!", e);
-			config = new KitchenConfig(oldFile);
-		}
-
-		oldFile = ovenConfig.getLocation();
-		try
-		{
-			config = config.readFromFile().setLocation(oldFile);
-		} catch (IOException e)
-		{
-			ModLogger.print(ModLogger.WARNING, "An error occured while loading Oven config file. Using default!", e);
-			config = new KitchenConfig(oldFile);
-		}
-	*/
     }
 
     public static KitchenConfig getKitchenConfig()
