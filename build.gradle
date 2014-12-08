@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.3.4-1.7.2-10"
+version = "1.3.5-1.7.2-10"
 group= "dk.mrspring.kitchen" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TheKitchenMod"
 
