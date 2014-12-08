@@ -4,6 +4,7 @@ import com.mrcrayfish.furniture.api.IRecipeRegistry;
 import com.mrcrayfish.furniture.api.RecipeVariables;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModLogger;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -68,9 +69,9 @@ public class CrayfishFurnitureRegister
 
 
         variables = new RecipeVariables();
-        variables.addValue("name", "Strawberry");
+        variables.addValue("name", "Strawberry Smoothie");
         variables.addValue("heal", 6);
-        variables.addValue("ingredients", new ItemStack[]{ new ItemStack(KitchenItems.cut_strawberry, 8), new ItemStack(Items.sugar, 4) });
+        variables.addValue("ingredients", new ItemStack[]{new ItemStack(KitchenItems.cut_strawberry, 8), new ItemStack(Items.sugar, 4), new ItemStack(Blocks.ice, 1)});
         variables.addValue("colour", new int[]{255, 0, 0});
         registryComm.registerRecipe("blender", variables);
     }
