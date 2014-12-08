@@ -43,7 +43,7 @@ public class SandwichRender
             @Override
             public double getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
             {
-                return 2*0.0625;
+                return 2 * 0.0625;
             }
         });
         SandwichableRenderingRegistry.registerRenderingHandler(KitchenItems.bacon, new ISandwichableRenderingHandler()
@@ -57,7 +57,7 @@ public class SandwichRender
             @Override
             public double getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
             {
-                return 2*0.0625;
+                return 2 * 0.0625;
             }
         });
         SandwichableRenderingRegistry.registerRenderingHandler(KitchenItems.raw_bacon, new ISandwichableRenderingHandler()
@@ -155,6 +155,9 @@ public class SandwichRender
                 model.render(null, 0, 0, 0, 0, 0, 0.0625F);
             } else
             {
+                float scale = 1.3F;
+                GL11.glScalef(scale, scale, scale);
+                GL11.glTranslatef(0, 0.35F, 0);
                 EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
                 itemEntity.hoverStart = 0.0F;
                 RenderItem.renderInFrame = true;
