@@ -38,7 +38,6 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 
         Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 
-        // TODO Coffee Color - GL11.glColor4f(0.247F, 0.168F, 0.062F, 1.0F);
         int metadata = var1.getBlockMetadata();
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
         this.modelPlate.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F);

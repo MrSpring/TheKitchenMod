@@ -20,6 +20,8 @@ public class BlockWaffleIron extends BlockContainerBase
         super("waffle_iron", TileEntityWaffleIron.class);
         float pixel = 0.0625F;
         this.setBlockBounds(2 * pixel, 0, 2 * pixel, 1 - 2 * pixel, 0.5F, 1 - 2 * pixel);
+
+        // TODO: Add item texture or add ItemRenderer
     }
 
     @Override

@@ -60,7 +60,7 @@ public class TileEntityOven extends TileEntity
 
     private boolean forceAddItemStack(ItemStack itemStack)
     {
-        // TODO OreDictionary support
+        // TODO OreDictionary support?
 
         ItemStack temp = itemStack.copy();
         temp.stackSize = 1;
