@@ -10,7 +10,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class KitchenItems
 {
@@ -71,6 +70,8 @@ public class KitchenItems
     public static final Item cut_strawberry = new ItemFood(1, false).setTextureName(ModInfo.toTexture("strawberry_slices")).setUnlocalizedName("strawberry_slices").setCreativeTab(Kitchen.instance.tab);
     public static final Item jammable_strawberry = new ItemFood(1, false).setTextureName(ModInfo.toTexture("strawberry_slices_sugared")).setUnlocalizedName("sugared_strawberry_slices").setCreativeTab(Kitchen.instance.tab);
     public static final Item cut_apple = new ItemFood(1, false).setTextureName(ModInfo.toTexture("apple_slice")).setUnlocalizedName("apple_slice").setCreativeTab(Kitchen.instance.tab);
+
+    public static final Item mixing_bowl = new ItemMixingBowl("mixing_bowl");
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)

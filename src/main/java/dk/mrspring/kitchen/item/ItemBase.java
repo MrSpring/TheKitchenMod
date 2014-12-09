@@ -113,5 +113,6 @@ public class ItemBase extends Item
         registerItem(peanuts_in_shell);
         registerItem(jam_peanut);
         registerItem(jammable_strawberry);
+        registerItem(mixing_bowl);
     }
 }
