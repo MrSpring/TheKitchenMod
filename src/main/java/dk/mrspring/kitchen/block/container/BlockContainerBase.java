@@ -1,15 +1,11 @@
 package dk.mrspring.kitchen.block.container;
 
-import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by MrSpring on 29-09-2014 for TheKitchenMod.
@@ -73,14 +69,7 @@ public class BlockContainerBase extends BlockContainer
     {
         try
         {
-            Constructor constructor = tileEntityClass.getConstructor();
-            return (TileEntity) constructor.newInstance();
-        } catch (NoSuchMethodException e)
-        {
-            e.printStackTrace();
-        } catch (InvocationTargetException e)
-        {
-            e.printStackTrace();
+            return (TileEntity) tileEntityClass.newInstance();
         } catch (InstantiationException e)
         {
             e.printStackTrace();

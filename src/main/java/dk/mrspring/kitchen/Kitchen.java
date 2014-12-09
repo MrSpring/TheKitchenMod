@@ -63,6 +63,7 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
         GameRegistry.registerTileEntity(TileEntityPan.class, "tileEntityFryingPan");
+        GameRegistry.registerTileEntity(TileEntityWaffleIron.class, "tileEntityWaffleIron");
 
 
         // Loading Blocks and Items
@@ -92,7 +93,7 @@ public class Kitchen
 
         FMLInterModComms.sendMessage("Waila", "register", "dk.mrspring.kitchen.comp.waila.WailaDataProvider.callbackRegister");
         FMLInterModComms.sendRuntimeMessage(ModInfo.modid, "VersionChecker", "addVersionCheck", "http://www.mrspring.dk/mods/kitchen/vchecker.json");
-        FMLInterModComms.sendMessage("cfm","register","dk.mrspring.kitchen.comp.furniture.CrayfishFurnitureRegister.registerRecipes");
+        FMLInterModComms.sendMessage("cfm", "register", "dk.mrspring.kitchen.comp.furniture.CrayfishFurnitureRegister.registerRecipes");
 
         MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
 

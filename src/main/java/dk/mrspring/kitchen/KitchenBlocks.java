@@ -1,10 +1,7 @@
 package dk.mrspring.kitchen;
 
 import dk.mrspring.kitchen.block.BlockBase;
-import dk.mrspring.kitchen.block.container.BlockBoard;
-import dk.mrspring.kitchen.block.container.BlockFryingPan;
-import dk.mrspring.kitchen.block.container.BlockOven;
-import dk.mrspring.kitchen.block.container.BlockPlate;
+import dk.mrspring.kitchen.block.container.*;
 import dk.mrspring.kitchen.block.decorative.BlockKitchenCabinet;
 import dk.mrspring.kitchen.block.plant.BlockCropBase;
 import dk.mrspring.kitchen.block.plant.BlockWildBase;
@@ -38,4 +35,5 @@ public class KitchenBlocks
     public static final Block oven = new BlockOven();
     public static final Block plate = new BlockPlate();
     public static final Block frying_pan = new BlockFryingPan();
+    public static final Block waffle_iron = new BlockWaffleIron();
 }
