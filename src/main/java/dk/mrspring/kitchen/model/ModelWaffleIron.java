@@ -1,8 +1,11 @@
 package dk.mrspring.kitchen.model;
 
+import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 
 public class ModelWaffleIron extends ModelBase
 {
@@ -25,6 +28,7 @@ public class ModelWaffleIron extends ModelBase
     ModelRenderer bottomBase11;
     ModelRenderer topBase6;
     ModelRenderer topBase7;
+    ModelRenderer waffleMesh;
 
     public ModelWaffleIron()
     {
@@ -139,30 +143,59 @@ public class ModelWaffleIron extends ModelBase
         topBase7.setTextureSize(64, 32);
         topBase7.mirror = true;
         setRotation(topBase7, 0F, 0F, 0F);
+        waffleMesh = new ModelRenderer(this, 0, 0);
+        waffleMesh.addBox(0F, 0F, 0F, 10, 1, 6);
+        waffleMesh.setRotationPoint(-5.0F, 19.75F, -3F);
+        waffleMesh.setTextureSize(16, 16);
+        waffleMesh.mirror = true;
+        setRotation(waffleMesh, 0F, 0F, 0F);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float lidAngle, int waffleState)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        topBase1.render(f5);
         bottomBase1.render(f5);
         bottomBase2.render(f5);
         bottomBase3.render(f5);
         bottomBase4.render(f5);
-        topBase2.render(f5);
         bottomBase5.render(f5);
-        topBase3.render(f5);
-        topBase4.render(f5);
         bottomBase6.render(f5);
-        topBase5.render(f5);
         bottomBase7.render(f5);
         bottomBase8.render(f5);
         bottomBase9.render(f5);
         bottomBase10.render(f5);
         bottomBase11.render(f5);
+
+        float rotation = 2F;
+        topBase1.rotateAngleX = (-lidAngle * rotation);
+        topBase1.render(f5);
+
+        topBase2.rotateAngleX = (-lidAngle * rotation);
+        topBase2.render(f5);
+
+        topBase3.rotateAngleX = (-lidAngle * rotation);
+        topBase3.render(f5);
+
+        topBase4.rotateAngleX = (-lidAngle * rotation);
+        topBase4.render(f5);
+
+        topBase5.rotateAngleX = (-lidAngle * rotation);
+        topBase5.render(f5);
+
+        topBase6.rotateAngleX = (-lidAngle * rotation);
         topBase6.render(f5);
+
+        topBase7.rotateAngleX = (-lidAngle * rotation);
         topBase7.render(f5);
+
+        if (waffleState>0)
+        {
+            if (waffleState==1)
+                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/raw_waffle.png")));
+            else Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/cooked_waffle.png")));
+            waffleMesh.render(f5);
+        }
     }
 
     private void setRotation(ModelRenderer model, float x, float y, float z)

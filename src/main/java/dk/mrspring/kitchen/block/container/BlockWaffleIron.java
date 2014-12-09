@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.block.container;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityWaffleIron;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
@@ -18,6 +19,23 @@ public class BlockWaffleIron extends BlockContainerBase
         super("waffle_iron", TileEntityWaffleIron.class);
         float pixel = 0.0625F;
         this.setBlockBounds(2 * pixel, 0, 2 * pixel, 1 - 2 * pixel, 0.5F, 1 - 2 * pixel);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    {
+        if (!world.isRemote)
+        {
+            if (activator.isSneaking())
+            {
+                TileEntityWaffleIron tileEntity = (TileEntityWaffleIron) world.getTileEntity(x, y, z);
+                tileEntity.toggleOpen();
+                world.markBlockForUpdate(x, y, z);
+                return true;
+            } else return false;
+        } else world.markBlockForUpdate(x, y, z);
+
+        return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);
     }
 
     @Override
