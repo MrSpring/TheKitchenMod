@@ -31,7 +31,7 @@ public class TileEntityWaffleIronRenderer extends TileEntitySpecialRenderer
 
         int metadata = var1.getBlockMetadata();
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F, ((TileEntityWaffleIron) var1).getLidAngle(), 1);
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F, ((TileEntityWaffleIron) var1).getLidAngle(), ((TileEntityWaffleIron) var1).getWaffleState());
 
         GL11.glPopMatrix();
 

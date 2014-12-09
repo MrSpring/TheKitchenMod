@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.block.container;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityWaffleIron;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,11 +29,35 @@ public class BlockWaffleIron extends BlockContainerBase
         {
             if (activator.isSneaking())
             {
-                TileEntityWaffleIron tileEntity = (TileEntityWaffleIron) world.getTileEntity(x, y, z);
-                tileEntity.toggleOpen();
-                world.markBlockForUpdate(x, y, z);
-                return true;
-            } else return false;
+                if (activator.getCurrentEquippedItem() == null)
+                {
+                    TileEntityWaffleIron tileEntity = (TileEntityWaffleIron) world.getTileEntity(x, y, z);
+                    tileEntity.toggleOpen();
+                    world.markBlockForUpdate(x, y, z);
+                    return true;
+                }
+            } else
+            {
+                if (activator.getCurrentEquippedItem() != null)
+                {
+                    System.out.println("Equipped item is not null!");
+                    if (activator.getCurrentEquippedItem().getItem() == KitchenItems.mixing_bowl)
+                    {
+                        System.out.println("Equipped item is Mixing Bowl!");
+                        TileEntityWaffleIron tileEntity = (TileEntityWaffleIron) world.getTileEntity(x, y, z);
+                        if (tileEntity.addWaffleDough())
+                        {
+                            System.out.println("Adding dough!");
+                            world.markBlockForUpdate(x, y, z);
+                            // TODO: Empty Mixing Bowl
+                        } else return false;
+                    }
+                } else
+                {
+                    TileEntityWaffleIron tileEntity = (TileEntityWaffleIron) world.getTileEntity(x, y, z);
+                    return tileEntity.finishWaffle();
+                }
+            }
         } else world.markBlockForUpdate(x, y, z);
 
         return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);

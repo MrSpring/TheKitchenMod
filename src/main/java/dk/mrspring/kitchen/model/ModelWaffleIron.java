@@ -189,11 +189,14 @@ public class ModelWaffleIron extends ModelBase
         topBase7.rotateAngleX = (-lidAngle * rotation);
         topBase7.render(f5);
 
-        if (waffleState>0)
+        if (waffleState > 0)
         {
-            if (waffleState==1)
+            if (waffleState == 1)
                 Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/raw_waffle.png")));
-            else Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/cooked_waffle.png")));
+            else if (waffleState == 2)
+                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/cooked_waffle.png")));
+            else
+                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/burnt_waffle.png")));
             waffleMesh.render(f5);
         }
     }

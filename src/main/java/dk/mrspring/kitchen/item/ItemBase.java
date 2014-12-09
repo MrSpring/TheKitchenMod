@@ -114,5 +114,7 @@ public class ItemBase extends Item
         registerItem(jam_peanut);
         registerItem(jammable_strawberry);
         registerItem(mixing_bowl);
+        registerItem(waffle);
+        registerItem(burnt_waffle);
     }
 }
