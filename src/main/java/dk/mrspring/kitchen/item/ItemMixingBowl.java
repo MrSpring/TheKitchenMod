@@ -18,6 +18,6 @@ public class ItemMixingBowl extends ItemBase
     {
         if (itemStack.getItemDamage() == 0)
             return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
-        else return StatCollector.translateToLocal("item.mixing_bowl.fill.name");
+        else return StatCollector.translateToLocal("item.mixing_bowl.full.name");
     }
 }
