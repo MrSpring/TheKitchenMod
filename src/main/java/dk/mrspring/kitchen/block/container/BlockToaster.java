@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.block.container;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityToaster;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,12 +43,18 @@ public class BlockToaster extends BlockContainerBase
                         world.markBlockForUpdate(x, y, z);
                         return true;
                     } else return false;
-                else if (tileEntity.removeItem())
+                else
                 {
-                    System.out.println("Updating!");
-                    world.markBlockForUpdate(x, y, z);
+                    ItemStack removedItem = tileEntity.removeItem();
+                    if (removedItem != null)
+                    {
+                        if (removedItem.stackSize < 1)
+                            removedItem.stackSize = 1;
+                        world.spawnEntityInWorld(new EntityItem(world, x, y, z, removedItem));
+                        world.markBlockForUpdate(x, y, z);
+                    }
                     return true;
-                } else return false;
+                }
             }
         }
         world.markBlockForUpdate(x, y, z);

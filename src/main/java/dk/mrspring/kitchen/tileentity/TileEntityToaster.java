@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.recipe.ToasterRecipes;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -20,12 +19,10 @@ public class TileEntityToaster extends TileEntity
 
     public boolean addItem(ItemStack clicked)
     {
-        System.out.println("Adding item");
         ItemStack stack = clicked.copy();
         stack.stackSize = 1;
         if (ToasterRecipes.getToastingResult(stack) != null && !isCooking)
         {
-            System.out.println("Input is not null!");
             if (this.stack1 == null)
             {
                 this.stack1 = stack;
@@ -60,6 +57,7 @@ public class TileEntityToaster extends TileEntity
                 }
                 this.cookTime = 0;
                 this.isCooking = false;
+                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
                 return;
             }
 
@@ -83,25 +81,23 @@ public class TileEntityToaster extends TileEntity
         return false;
     }
 
-    public boolean removeItem()
+    public ItemStack removeItem()
     {
+        ItemStack toReturn = null;
+
         if (!this.isCooking)
         {
             if (this.stack1 != null)
             {
-                worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord, yCoord, zCoord, stack1));
+                toReturn = this.stack1;
                 this.stack1 = null;
-                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                return true;
             } else if (this.stack2 != null)
             {
-                worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord, yCoord, zCoord, stack2));
+                toReturn = this.stack2;
                 this.stack2 = null;
-                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-                return true;
             }
         }
-        return false;
+        return toReturn;
     }
 
     public boolean startCooking()

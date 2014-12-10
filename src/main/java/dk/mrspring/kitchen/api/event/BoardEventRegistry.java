@@ -211,7 +211,6 @@ public class BoardEventRegistry
             @Override
             public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
             {
-                System.out.println("Calling canAdd for Butter");
                 if (currentLayers.size() > 0)
                 {
                     if (currentLayers.get(currentLayers.size() - 1).getItem() == KitchenItems.bread_slice)
@@ -286,21 +285,17 @@ public class BoardEventRegistry
             @Override
             public void onAdded(List<ItemStack> layers, ItemStack added, NBTTagCompound specialTagInfo)
             {
-                System.out.println("Calling onAdded for Jam Jar");
                 if (added.getTagCompound() != null)
                 {
-                    System.out.println("added's stackCompound is not null");
                     NBTTagCompound jamInfo = added.getTagCompound().getCompoundTag("JamInfo");
                     if (jamInfo != null)
                     {
-                        System.out.println("JamInfo is not null");
                         int usesLeft = jamInfo.getInteger("UsesLeft");
                         usesLeft--;
                         if (usesLeft == 0)
                             added.setItemDamage(0);
 
                         jamInfo.setInteger("UsesLeft", usesLeft);
-                        System.out.println("Setting added's usesLeft to " + usesLeft);
                         added.setTagInfo("JamInfo", jamInfo);
                     }
                 }
@@ -309,7 +304,6 @@ public class BoardEventRegistry
             @Override
             public boolean canAdd(List<ItemStack> currentLayers, ItemStack toAdd, NBTTagCompound specialTagInfo)
             {
-                System.out.println("Calling canAdd for Jam Jar");
                 if (toAdd.getTagCompound() != null)
                 {
                     NBTTagCompound jamInfo = toAdd.getTagCompound().getCompoundTag("JamInfo");

@@ -13,6 +13,7 @@ tile.wild_peanut.name=Wild Peanut
 tile.strawberry_crop.name=Strawberry Crop
 tile.wild_strawberry.name=Wild Strawberry
 tile.waffle_iron.name=Waffle Iron
+tile.toaster.name=Toaster
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
@@ -73,5 +74,8 @@ waila.oven_items=Oven Items
 waila.oven_has_coal=Has Coal
 waila.pan_making=Making
 waila.pan_done=Done!
+waila.toaster_can_cook=Can Start Cooking
+waila.toaster_cant_cook=Can't Start Cooking
+waila.toaster_cooking=Toasting
 waila.true=True
 waila.false=False
