@@ -170,45 +170,6 @@ public class SandwichRender
             GL11.glPopMatrix();
 
             GL11.glTranslated(0, modelHeight, 0);
-
-			/*NBTTagCompound infoCompound = null;
-            if (i == list.size() - 1)
-				infoCompound = specialTagInfo;
-
-			ItemStack item = list.get(i);
-
-			ISandwichableRenderingHandler renderingHandler = SandwichableRenderingRegistry.getRenderingHandlerFor(item);
-			ModelBase model = null;
-			if (renderingHandler != null)
-				model = renderingHandler.getModel(list, i, infoCompound);
-
-			double yOffsetPerPixel = .04;
-
-
-			GL11.glPushMatrix();
-
-			if (model != null)
-			{
-				GL11.glRotatef(180,0,0,1);
-				model.render(null, 0, 0, 0, 0, 0, 0.0625F);
-                yOffsetPerPixel=0.02;
-			}
-			else
-			{
-				EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
-				itemEntity.hoverStart = 0.0F;
-				RenderItem.renderInFrame = true;
-				GL11.glRotatef(180, 0, 1, 1);
-				GL11.glTranslatef(.0F,-.2F,-1.395F);
-				RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-				RenderItem.renderInFrame = false;
-			}
-
-            double yOffset = yOffsetPerPixel * renderingHandler.getModelHeight(list, i, infoCompound);
-
-			GL11.glPopMatrix();
-
-            GL11.glTranslated(0,yOffset,0);*/
         }
 
         GL11.glPopMatrix();

@@ -74,7 +74,7 @@ public class BlockWaffleIron extends BlockContainerBase
             }
         } else world.markBlockForUpdate(x, y, z);
 
-        return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);
+        return true;
     }
 
     @Override

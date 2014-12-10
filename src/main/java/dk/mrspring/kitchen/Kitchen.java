@@ -18,6 +18,7 @@ import dk.mrspring.kitchen.model.ModelBaconRaw;
 import dk.mrspring.kitchen.pan.*;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.recipe.RecipeRegistry;
+import dk.mrspring.kitchen.recipe.ToasterRecipes;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.client.model.ModelBase;
@@ -64,6 +65,7 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
         GameRegistry.registerTileEntity(TileEntityPan.class, "tileEntityFryingPan");
         GameRegistry.registerTileEntity(TileEntityWaffleIron.class, "tileEntityWaffleIron");
+        GameRegistry.registerTileEntity(TileEntityToaster.class, "tileEntityToaster");
 
 
         // Loading Blocks and Items
@@ -80,8 +82,9 @@ public class Kitchen
     public static void init(FMLInitializationEvent event)
     {
         ModLogger.print(ModLogger.INFO, "Loading Custom Oven recipes...");
-        // Loading Custom Oven recipes
+        // Loading Custom recipes
         OvenRecipes.load();
+        ToasterRecipes.load();
 
         // Registering the Lettuce world generator
         GameRegistry.registerWorldGenerator(new WorldGenWildPlants(), 1);

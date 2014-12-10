@@ -42,14 +42,6 @@ public class ItemBase extends Item
         return this;
     }
 
-   /* @Override
-    public String getUnlocalizedName()
-    {
-        if (this.localizableName.equals("super"))
-            return super.getUnlocalizedName();
-        else return localizableName;
-    }*/
-
     @Override
     public String getItemStackDisplayName(ItemStack p_77653_1_)
     {
@@ -116,5 +108,6 @@ public class ItemBase extends Item
         registerItem(mixing_bowl);
         registerItem(waffle);
         registerItem(burnt_waffle);
+        registerItem(toasted_toast);
     }
 }
