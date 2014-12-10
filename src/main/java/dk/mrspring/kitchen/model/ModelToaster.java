@@ -81,13 +81,13 @@ public class ModelToaster extends ModelBase
         setRotation(base8, 0F, 0F, 0F);
         base9 = new ModelRenderer(this, 0, 0);
         base9.addBox(0F, 0F, 0F, 1, 1, 1);
-        base9.setRotationPoint(2.5F, 23F, -2.5F);
+        base9.setRotationPoint(3.5F, 23F, -2.5F);
         base9.setTextureSize(64, 32);
         base9.mirror = true;
         setRotation(base9, 0F, 0F, 0F);
         base10 = new ModelRenderer(this, 0, 0);
         base10.addBox(0F, 0F, 0F, 1, 1, 1);
-        base10.setRotationPoint(2.5F, 23F, 1.5F);
+        base10.setRotationPoint(3.5F, 23F, 1.5F);
         base10.setTextureSize(64, 32);
         base10.mirror = true;
         setRotation(base10, 0F, 0F, 0F);
@@ -99,7 +99,7 @@ public class ModelToaster extends ModelBase
         setRotation(button, 0F, 0F, 0F);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean isCooking)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
@@ -113,6 +113,9 @@ public class ModelToaster extends ModelBase
         base8.render(f5);
         base9.render(f5);
         base10.render(f5);
+        if (isCooking)
+            button.rotationPointY = 20F;
+        else button.rotationPointY = 19F;
         button.render(f5);
     }
 

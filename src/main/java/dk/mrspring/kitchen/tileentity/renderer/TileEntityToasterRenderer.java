@@ -38,7 +38,7 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer
 
         int metadata = var1.getBlockMetadata();
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F);
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F, ((TileEntityToaster) var1).isCooking());
 
         float yOffset = 0;
 
