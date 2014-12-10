@@ -36,6 +36,11 @@ public class TileEntityWaffleIron extends TileEntity
         System.out.println("lidAngle = " + lidAngle);
     }
 
+    public int getCookTime()
+    {
+        return cookTime;
+    }
+
     public boolean addWaffleDough()
     {
         if (this.isOpen() && !this.hasDough)
@@ -112,6 +117,7 @@ public class TileEntityWaffleIron extends TileEntity
     {
         super.readFromNBT(compound);
 
+        this.cookTime = compound.getInteger("CookTime");
         this.isOpen = compound.getBoolean("IsOpen");
         this.hasDough = compound.getBoolean("HasDough");
     }
@@ -121,6 +127,7 @@ public class TileEntityWaffleIron extends TileEntity
     {
         super.writeToNBT(compound);
 
+        compound.setInteger("CookTime", this.cookTime);
         compound.setBoolean("IsOpen", this.isOpen);
         compound.setBoolean("HasDough", this.hasDough);
     }
