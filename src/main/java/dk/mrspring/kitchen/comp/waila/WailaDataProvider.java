@@ -1,9 +1,6 @@
 package dk.mrspring.kitchen.comp.waila;
 
-import dk.mrspring.kitchen.block.container.BlockBoard;
-import dk.mrspring.kitchen.block.container.BlockFryingPan;
-import dk.mrspring.kitchen.block.container.BlockOven;
-import dk.mrspring.kitchen.block.container.BlockToaster;
+import dk.mrspring.kitchen.block.container.*;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -51,10 +48,12 @@ public class WailaDataProvider implements IWailaDataProvider
         registrar.addConfig(mod, "show_pan_status", true);
         registrar.addConfig(mod, "show_toaster_contents", true);
         registrar.addConfig(mod, "show_toaster_status", true);
+        registrar.addConfig(mod, "show_waffle_iron_status", true);
 
         registrar.registerBodyProvider(new WailaBoardDataProvider(), BlockBoard.class);
         registrar.registerBodyProvider(new WailaOvenProvider(), BlockOven.class);
         registrar.registerBodyProvider(new WailaPanProvider(), BlockFryingPan.class);
         registrar.registerBodyProvider(new WailaToasterProvider(), BlockToaster.class);
+        registrar.registerBodyProvider(new WailaWaffleIronProvider(), BlockWaffleIron.class);
     }
 }

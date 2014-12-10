@@ -17,7 +17,7 @@ public class TileEntityWaffleIron extends TileEntity
     boolean isOpen = false;
     float lidAngle = 0;
     int cookTime = 0;
-    boolean hasDough = false;
+    public boolean hasDough = false;
 
     public float getLidAngle()
     {
