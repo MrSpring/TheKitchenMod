@@ -40,7 +40,7 @@ public class WailaPanProvider implements IWailaDataProvider
                 line+=making;
                 strings.add(line);
             } else if (cookTime>=410)
-                strings.add(StatCollector.translateToLocal("waila.pan_done"));
+                strings.add(StatCollector.translateToLocal("waila.done"));
 
         return strings;
     }
