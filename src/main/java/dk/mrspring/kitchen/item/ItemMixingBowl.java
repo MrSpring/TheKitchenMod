@@ -15,7 +15,6 @@ public class ItemMixingBowl extends ItemBase
     public ItemMixingBowl(String name)
     {
         super(name, true);
-        this.setMaxDamage(3);
         this.setMaxStackSize(1);
     }
 
