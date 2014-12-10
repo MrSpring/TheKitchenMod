@@ -17,6 +17,7 @@ public class BlockToaster extends BlockContainerBase
 {
     public BlockToaster()
     {
+        // TODO: Set Hardness, Resistance
         super("toaster", TileEntityToaster.class);
     }
 
