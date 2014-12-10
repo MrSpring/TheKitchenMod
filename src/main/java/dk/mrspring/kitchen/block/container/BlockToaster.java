@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityToaster;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +18,11 @@ public class BlockToaster extends BlockContainerBase
 {
     public BlockToaster()
     {
-        // TODO: Set Hardness, Resistance
         super("toaster", TileEntityToaster.class);
+        float pixel = 0.0625F;
+        this.setBlockBounds(3 * pixel, 0, 3 * pixel, 1 - 3 * pixel, 0.5F-pixel, 1 - 3 * pixel);
+        this.setHardness(4.0F);
+        this.setStepSound(Block.soundTypePiston);
     }
 
     @Override

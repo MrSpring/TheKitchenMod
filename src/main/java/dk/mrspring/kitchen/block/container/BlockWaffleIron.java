@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.block.container;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityWaffleIron;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,8 @@ public class BlockWaffleIron extends BlockContainerBase
         super("waffle_iron", TileEntityWaffleIron.class);
         float pixel = 0.0625F;
         this.setBlockBounds(2 * pixel, 0, 2 * pixel, 1 - 2 * pixel, 0.5F, 1 - 2 * pixel);
-        // TODO: Set Hardness, Resistance
+        this.setHardness(4.0F);
+        this.setStepSound(Block.soundTypePiston);
     }
 
     @Override
