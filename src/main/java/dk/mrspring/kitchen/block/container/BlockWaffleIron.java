@@ -10,6 +10,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 /**
  * Created by MrSpring on 09-12-2014 for TheKitchenMod.
  */
@@ -20,6 +22,18 @@ public class BlockWaffleIron extends BlockContainerBase
         super("waffle_iron", TileEntityWaffleIron.class);
         float pixel = 0.0625F;
         this.setBlockBounds(2 * pixel, 0, 2 * pixel, 1 - 2 * pixel, 0.5F, 1 - 2 * pixel);
+    }
+
+    @Override
+    public void randomDisplayTick(World world, int x, int y, int z, Random random)
+    {
+        double pixel = 0.0625;
+        TileEntityWaffleIron tileEntityWaffleIron = (TileEntityWaffleIron) world.getTileEntity(x, y, z);
+        int cookTime = tileEntityWaffleIron.getCookTime();
+        if (cookTime > 400 && !tileEntityWaffleIron.isOpen())
+            world.spawnParticle("smoke", x + 4 * pixel + (random.nextDouble() * (8 * pixel)), y + 0.4, z + 4 * pixel + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+        if (cookTime > 600 && !tileEntityWaffleIron.isOpen())
+            world.spawnParticle("flame", x + 4 * pixel + (random.nextDouble() * (8 * pixel)), y + 0.5, z + 4 * pixel + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
     }
 
     @Override
