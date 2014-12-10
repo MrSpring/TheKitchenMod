@@ -53,10 +53,6 @@ public class TileEntityWaffleIron extends TileEntity
     @Override
     public void updateEntity()
     {
-//        System.out.println("isOpen = " + isOpen);
-//        System.out.println("cookTime = " + cookTime);
-//        System.out.println("hasDough = " + hasDough);
-
         if (this.isOpen())
         {
             if (this.lidAngle + 0.1F < 1.0)
@@ -86,15 +82,6 @@ public class TileEntityWaffleIron extends TileEntity
                 return 3;
             else return 0;
         } else return 0;
-
-//        if ()
-//        if (this.cookTime < 400)
-//            return 0;
-//        else if (this.cookTime > 400 && this.cookTime < 600)
-//            return 1;
-//        else if (this.cookTime > 600)
-//            return 2;
-//        else return 0;
     }
 
     public boolean isOpen()
@@ -153,8 +140,8 @@ public class TileEntityWaffleIron extends TileEntity
             ItemStack result;
 
             if (this.cookTime > 600)
-                result = new ItemStack(KitchenItems.burnt_waffle);
-            else result = new ItemStack(KitchenItems.waffle);
+                result = new ItemStack(KitchenItems.burnt_waffle, 2);
+            else result = new ItemStack(KitchenItems.waffle, 2);
 
             this.hasDough = false;
             this.cookTime = 0;

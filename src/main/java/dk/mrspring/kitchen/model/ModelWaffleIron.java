@@ -11,23 +11,25 @@ public class ModelWaffleIron extends ModelBase
 {
     //fields
     ModelRenderer topBase1;
+    ModelRenderer topBase2;
+    ModelRenderer topBase3;
+    ModelRenderer topBase4;
+    ModelRenderer topBase5;
+    ModelRenderer topBase6;
+    ModelRenderer topBase7;
+    ModelRenderer topBase8;
     ModelRenderer bottomBase1;
     ModelRenderer bottomBase2;
     ModelRenderer bottomBase3;
     ModelRenderer bottomBase4;
-    ModelRenderer topBase2;
     ModelRenderer bottomBase5;
-    ModelRenderer topBase3;
-    ModelRenderer topBase4;
     ModelRenderer bottomBase6;
-    ModelRenderer topBase5;
     ModelRenderer bottomBase7;
     ModelRenderer bottomBase8;
     ModelRenderer bottomBase9;
     ModelRenderer bottomBase10;
     ModelRenderer bottomBase11;
-    ModelRenderer topBase6;
-    ModelRenderer topBase7;
+    ModelRenderer bottomBase12;
     ModelRenderer waffleMesh;
 
     public ModelWaffleIron()
@@ -143,12 +145,24 @@ public class ModelWaffleIron extends ModelBase
         topBase7.setTextureSize(64, 32);
         topBase7.mirror = true;
         setRotation(topBase7, 0F, 0F, 0F);
+        topBase8 = new ModelRenderer(this, 2, 20);
+        topBase8.addBox(0F, -0.5F, -7.5F, 1, 1, 5);
+        topBase8.setRotationPoint(-0.5F, 19F, 5F);
+        topBase8.setTextureSize(64, 32);
+        topBase8.mirror = true;
+        setRotation(topBase8, 0F, 0F, 0F);
         waffleMesh = new ModelRenderer(this, 0, 0);
         waffleMesh.addBox(0F, 0F, 0F, 10, 1, 6);
         waffleMesh.setRotationPoint(-5.0F, 19.75F, -3F);
         waffleMesh.setTextureSize(16, 16);
         waffleMesh.mirror = true;
         setRotation(waffleMesh, 0F, 0F, 0F);
+        bottomBase12 = new ModelRenderer(this, 2, 20);
+        bottomBase12.addBox(0F, 0F, 0F, 1, 1, 5);
+        bottomBase12.setRotationPoint(-0.5F, 19.5F, -2.5F);
+        bottomBase12.setTextureSize(64, 32);
+        bottomBase12.mirror = true;
+        setRotation(bottomBase12, 0F, 0F, 0F);
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float lidAngle, int waffleState)
@@ -166,6 +180,7 @@ public class ModelWaffleIron extends ModelBase
         bottomBase9.render(f5);
         bottomBase10.render(f5);
         bottomBase11.render(f5);
+        bottomBase12.render(f5);
 
         float rotation = 2F;
         topBase1.rotateAngleX = (-lidAngle * rotation);
@@ -188,6 +203,9 @@ public class ModelWaffleIron extends ModelBase
 
         topBase7.rotateAngleX = (-lidAngle * rotation);
         topBase7.render(f5);
+
+        topBase8.rotateAngleX = (-lidAngle * rotation);
+        topBase8.render(f5);
 
         if (waffleState > 0)
         {
