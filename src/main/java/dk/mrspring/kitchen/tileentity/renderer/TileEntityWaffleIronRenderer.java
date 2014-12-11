@@ -14,7 +14,8 @@ import org.lwjgl.opengl.GL11;
  */
 public class TileEntityWaffleIronRenderer extends TileEntitySpecialRenderer
 {
-    ResourceLocation texture = new ResourceLocation(ModInfo.toTexture("textures/models/waffle_iron.png"));
+    ResourceLocation offTexture = new ResourceLocation(ModInfo.toTexture("textures/models/waffle_iron.png"));
+    ResourceLocation onTexture = new ResourceLocation(ModInfo.toTexture("textures/models/waffle_iron_on.png"));
     ModelWaffleIron model = new ModelWaffleIron();
 
     @Override
@@ -27,7 +28,9 @@ public class TileEntityWaffleIronRenderer extends TileEntitySpecialRenderer
 
         GL11.glPushMatrix();
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+        if (((TileEntityWaffleIron) var1).getCookTime() > 0 && !((TileEntityWaffleIron) var1).isOpen())
+            Minecraft.getMinecraft().renderEngine.bindTexture(onTexture);
+        else Minecraft.getMinecraft().renderEngine.bindTexture(offTexture);
 
         int metadata = var1.getBlockMetadata();
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
