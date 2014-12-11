@@ -12,12 +12,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Created by MrSpring on 09-10-2014 for TheKitchenMod.
  */
-public class TileEntityPan extends TileEntity
+public class TileEntityPan extends TileEntityTimeable
 {
     Ingredient ingredient = Ingredient.getIngredient("empty");
     int cookTime = 0;
@@ -103,13 +102,15 @@ public class TileEntityPan extends TileEntity
     @Override
     public void updateEntity()
     {
+        super.updateEntity();
+
         if (this.firstRun)
         {
             this.checkIsFunctional();
             this.firstRun = false;
         }
 
-        if (this.getIngredient() != Ingredient.getIngredient("empty") && isFunctional/* && this.worldObj.getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven*/)
+        if (this.getIngredient() != Ingredient.getIngredient("empty") && isFunctional)
         {
             if (this.cookTime < 410)
                 this.cookTime++;
@@ -182,5 +183,17 @@ public class TileEntityPan extends TileEntity
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
         this.readFromNBT(pkt.func_148857_g());
+    }
+
+    @Override
+    public int getTime()
+    {
+        return this.cookTime;
+    }
+
+    @Override
+    public int getDoneTime()
+    {
+        return 400;
     }
 }
