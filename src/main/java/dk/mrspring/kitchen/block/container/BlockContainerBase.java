@@ -85,7 +85,7 @@ public class BlockContainerBase extends BlockContainer
 
     public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer clicker, int side, float clickX, float clickY, float clickZ)
     {
-        return super.onBlockActivated(world, x, y, z, clicker, side, clickX, clickY, clickZ);
+        return false;
     }
 
     @Override

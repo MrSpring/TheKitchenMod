@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * Created by MrSpring on 10-12-2014 for TheKitchenMod.
  */
-public class TileEntityToaster extends TileEntity
+public class TileEntityToaster extends TileEntityTimeable
 {
     ItemStack stack1 = null, stack2 = null;
     int cookTime = 0;
@@ -165,5 +165,17 @@ public class TileEntityToaster extends TileEntity
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
         this.readFromNBT(pkt.func_148857_g());
+    }
+
+    @Override
+    public int getTime()
+    {
+        return this.cookTime;
+    }
+
+    @Override
+    public int getDoneTime()
+    {
+        return 380;
     }
 }

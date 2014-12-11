@@ -90,12 +90,12 @@ public class BlockOven extends BlockContainerBase
                                 world.spawnEntityInWorld(entityItem);
                                 return true;
                             } else
-                                return super.onBlockActivated(world, x, y, z, activator, side, clickX, clickY, clickZ);
+                                return false;
                         else
-                            return super.onBlockActivated(world, x, y, z, activator, side, clickX, clickY, clickZ);
+                            return false;
                     }
                 else
-                    return super.onBlockActivated(world, x, y, z, activator, side, clickX, clickY, clickZ);
+                    return false;
             else
             {
                 this.updateBlockState(world, x, y, z);
