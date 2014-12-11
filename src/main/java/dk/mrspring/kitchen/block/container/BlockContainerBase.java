@@ -1,9 +1,12 @@
 package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.tileentity.TileEntityTimeable;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -62,6 +65,27 @@ public class BlockContainerBase extends BlockContainer
     protected BlockContainerBase(String name, Class<? extends TileEntity> tileEntityClass)
     {
         this(name, true, tileEntityClass);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int side, float clickX, float clickY, float clickZ)
+    {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity instanceof TileEntityTimeable && !world.isRemote)
+            if (!activator.isSneaking())
+                if (activator.getCurrentEquippedItem() != null)
+                    if (activator.getCurrentEquippedItem().getItem() == KitchenItems.timer && !((TileEntityTimeable) tileEntity).getHasTimer())
+                    {
+                        ((TileEntityTimeable) tileEntity).setHasTimer(true);
+                        activator.getCurrentEquippedItem().stackSize--;
+                        return true;
+                    }
+        return onRightClicked(world, x, y, z, activator, side, clickX, clickY, clickZ);
+    }
+
+    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer clicker, int side, float clickX, float clickY, float clickZ)
+    {
+        return super.onBlockActivated(world, x, y, z, clicker, side, clickX, clickY, clickZ);
     }
 
     @Override

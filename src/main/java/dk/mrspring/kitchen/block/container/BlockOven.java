@@ -57,7 +57,7 @@ public class BlockOven extends BlockContainerBase
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer activator, int side, float clickX, float clickY, float clickZ)
     {
         world.markBlockForUpdate(x, y, z);
 
@@ -90,12 +90,12 @@ public class BlockOven extends BlockContainerBase
                                 world.spawnEntityInWorld(entityItem);
                                 return true;
                             } else
-                                return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);
+                                return super.onBlockActivated(world, x, y, z, activator, side, clickX, clickY, clickZ);
                         else
-                            return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);
+                            return super.onBlockActivated(world, x, y, z, activator, side, clickX, clickY, clickZ);
                     }
                 else
-                    return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);
+                    return super.onBlockActivated(world, x, y, z, activator, side, clickX, clickY, clickZ);
             else
             {
                 this.updateBlockState(world, x, y, z);

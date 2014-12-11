@@ -113,5 +113,6 @@ public class ItemBase extends Item
         registerItem(vanilla_fruit);
         registerItem(vanilla_seeds);
         registerItem(dried_vanilla);
+        registerItem(timer);
     }
 }

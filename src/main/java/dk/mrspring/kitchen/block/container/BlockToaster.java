@@ -26,7 +26,7 @@ public class BlockToaster extends BlockContainerBase
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer activator, int side, float clickX, float clickY, float clickZ)
     {
         if (!world.isRemote)
         {

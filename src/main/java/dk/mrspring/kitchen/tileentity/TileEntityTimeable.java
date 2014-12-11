@@ -40,4 +40,14 @@ public abstract class TileEntityTimeable extends TileEntity implements ITimeable
         super.writeToNBT(compound);
         compound.setBoolean("HasTimer", this.hasTimer);
     }
+
+    public void setHasTimer(boolean hasTimer)
+    {
+        this.hasTimer = hasTimer;
+    }
+
+    public boolean getHasTimer()
+    {
+        return hasTimer;
+    }
 }

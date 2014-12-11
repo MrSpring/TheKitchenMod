@@ -84,6 +84,8 @@ public class KitchenItems
     public static final Item vanilla_seeds = new ItemSeedBase("vanilla_seeds", KitchenBlocks.vanilla_crop, 0, true);
     public static final Item dried_vanilla = new ItemFoodBase("dried_vanilla", 4, false);
 
+    public static final Item timer = new ItemBase("timer", true);
+
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
     {

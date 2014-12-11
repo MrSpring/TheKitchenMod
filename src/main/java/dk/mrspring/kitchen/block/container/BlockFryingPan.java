@@ -99,7 +99,7 @@ public class BlockFryingPan extends BlockContainerBase
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float clickX, float clickY, float clickZ)
     {
         TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
 
