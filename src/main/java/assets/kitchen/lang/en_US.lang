@@ -52,7 +52,7 @@ item.peanut.name=Peanut
 item.peanuts_in_shell.name=Shelled Peanuts
 item.sugared_strawberry_slices.name=Sugared Strawberry Slices
 item.mixing_bowl.empty.name=Empty Mixing Bowl
-item.mixing_bowl.full.name=Filled Mixing Bowl
+item.mixing_bowl.full.name=filled Mixing Bowl
 item.waffle.name=Waffle
 item.burnt_waffle.name=Burnt Waffle
 
@@ -66,6 +66,8 @@ combo.veggie.name=Veggie Sandwich
 jam.peanut.name=Peanut Butter
 jam.apple.name=Apple Jam
 jam.strawberry.name=Strawberry Jam
+
+mix.waffle_dough.name=Waffle Mix
 
 option.show_is_sandwich_ready=Show Sandwich Status on Board
 option.show_oven_contents=Show Oven Contents

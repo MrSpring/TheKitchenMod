@@ -38,7 +38,10 @@ public class ItemMixingBowl extends ItemBase
     {
         if (itemStack.getItemDamage() == 0)
             return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
-        else return StatCollector.translateToLocal("item.mixing_bowl.full.name");
+        else if (itemStack.getTagCompound() != null)
+            if (itemStack.getTagCompound().hasKey("MixType"))
+                return StatCollector.translateToLocal("mix." + ItemMixingBowlRenderer.getMixType(itemStack) + ".name") + " " + StatCollector.translateToLocal("item.mixing_bowl.full.name");
+        return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
     }
 
     @Override
