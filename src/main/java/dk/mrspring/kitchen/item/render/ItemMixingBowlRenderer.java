@@ -41,7 +41,7 @@ public class ItemMixingBowlRenderer
         return new float[]{1, 1, 1};
     }
 
-    private static String getMixType(ItemStack mixingBowlStack)
+    public static String getMixType(ItemStack mixingBowlStack)
     {
         if (mixingBowlStack.getTagCompound() != null)
             return mixingBowlStack.getTagCompound().getString("MixType");
