@@ -53,40 +53,6 @@ public class TileEntityPan extends TileEntity
         }
 
         return false;
-
-        /*if (this.getCookTime() >= 400 && this.ingredient != null)
-        {
-            if (clicked != null)
-            {
-                if (clicked.getItem() == KitchenItems.jam_jar && clicked.getItemDamage() == 0 && this.ingredient.isJam())
-                {
-                    Jam result = this.ingredient.getJamResult();
-                    ItemStack jar = Kitchen.getJamJarItemStack(result, 6);
-                    worldObj.spawnEntityInWorld(new EntityItem(worldObj, this.xCoord, this.yCoord, this.zCoord, jar));
-                    this.ingredient = Ingredient.getIngredient("empty");
-                    this.cookTime = 0;
-                    worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-                    return true;
-                }
-            } else if (!this.ingredient.isJam())
-            {
-                ItemStack result = this.ingredient.getItemResult();
-                worldObj.spawnEntityInWorld(new EntityItem(worldObj, this.xCoord, this.yCoord, this.zCoord, result));
-                this.ingredient = Ingredient.getIngredient("empty");
-                this.cookTime = 0;
-                worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-                return false;
-            }
-        } else if (this.getCookTime() == 0 && clicked != null)
-        {
-            Ingredient ingredientFromItem = KitchenItems.valueOf(clicked.getItem());
-            if (ingredientFromItem != null)
-            {
-                this.ingredient = ingredientFromItem;
-                return true;
-            }else return false;
-        }
-        return false;*/
     }
 
     private void finishItem(ItemStack clicked)
@@ -125,9 +91,10 @@ public class TileEntityPan extends TileEntity
         if (this.ingredient == Ingredient.getIngredient("empty") && this.cookTime == 0)
         {
             Ingredient ingredientFromItem = KitchenItems.valueOf(clicked.getItem());
-            if (ingredientFromItem != Ingredient.getIngredient("empty"))
+            if (ingredientFromItem != Ingredient.getIngredient("empty") && ingredientFromItem.canAdd(clicked))
             {
                 this.ingredient = ingredientFromItem;
+                ingredientFromItem.onAdded(clicked);
                 return true;
             } else return false;
         } else return false;

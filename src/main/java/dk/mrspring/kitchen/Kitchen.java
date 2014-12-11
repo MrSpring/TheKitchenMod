@@ -15,6 +15,8 @@ import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
+import dk.mrspring.kitchen.model.ModelPancakeCooked;
+import dk.mrspring.kitchen.model.ModelPancakeUncooked;
 import dk.mrspring.kitchen.pan.*;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.recipe.RecipeRegistry;
@@ -141,12 +143,63 @@ public class Kitchen
             }
         }, new ItemStack(KitchenItems.bacon, 1)));
         Ingredient.registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
+        Ingredient.registerIngredient(new Ingredient("pancake_dough", new IIngredientRenderingHandler()
+        {
+            ModelBase uncookedModel = new ModelPancakeUncooked();
+            ModelBase cookedModel = new ModelPancakeCooked();
+
+            @Override
+            public ModelBase getModel(int boilTime, Ingredient ingredient)
+            {
+                if (boilTime > 400)
+                    return cookedModel;
+                else return uncookedModel;
+            }
+
+            @Override
+            public boolean useColorModifier(int boilTime, Ingredient ingredient)
+            {
+                return false;
+            }
+
+            @Override
+            public float[] getColorModifier(int boilTime, Ingredient ingredient)
+            {
+                return new float[0];
+            }
+
+            @Override
+            public boolean scaleOnPan(int boilTime, Ingredient ingredient)
+            {
+                return false;
+            }
+        }, new ItemStack(KitchenItems.pancake))
+        {
+            @Override
+            public boolean canAdd(ItemStack stack)
+            {
+                if (stack.getTagCompound() != null && stack.getItemDamage() > 0)
+                {
+                    String mixType = stack.getTagCompound().getString("MixType");
+                    if (mixType != null)
+                        return mixType.equals("pancake_dough");
+                }
+                return false;
+            }
+
+            @Override
+            public void onAdded(ItemStack clickedStack)
+            {
+                clickedStack.setItemDamage(clickedStack.getItemDamage() - 1);
+            }
+        });
 
         KitchenItems.linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         KitchenItems.linkToIngredient(KitchenItems.cut_apple, "apple");
         KitchenItems.linkToIngredient(KitchenItems.raw_bacon, "bacon");
         KitchenItems.linkToIngredient(KitchenItems.peanut, "peanut");
         KitchenItems.linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
+        KitchenItems.linkToIngredient(KitchenItems.mixing_bowl, "pancake_dough");
 
 		/*JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
         JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);*/

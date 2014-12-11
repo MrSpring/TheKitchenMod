@@ -78,6 +78,8 @@ public class KitchenItems
 
     public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false); // TODO: Add burnt waffle texture and language entry
 
+    public static final Item pancake = new ItemFoodBase("pancake", 4, false);
+
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
     {

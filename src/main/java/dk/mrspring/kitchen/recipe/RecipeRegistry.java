@@ -41,7 +41,8 @@ public class RecipeRegistry
         GameRegistry.addRecipe(new ItemStack(jam_jar, 1), " I ", "G G", "GGG", valueOf('I'), Items.iron_ingot, valueOf('G'), Blocks.glass);
 
         // Mixing Bowl recipes
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("waffle_dough", 3), getMixingBowlStack(null, 0), Items.egg, KitchenItems.flour, Items.milk_bucket);
+        GameRegistry.addShapelessRecipe(getMixingBowlStack("waffle_dough", 3), getMixingBowlStack(null, 0), Items.egg, Items.wheat, Items.milk_bucket, Items.sugar);
+        GameRegistry.addShapelessRecipe(getMixingBowlStack("pancake_dough", 3), getMixingBowlStack(null, 0), Items.egg, KitchenItems.flour, Items.milk_bucket, Items.sugar, KitchenItems.butter);
 
         /**
          * Knife recipes

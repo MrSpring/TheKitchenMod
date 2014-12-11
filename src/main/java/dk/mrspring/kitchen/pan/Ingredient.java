@@ -88,4 +88,14 @@ public class Ingredient
     {
         return iResult.copy();
     }
+
+    public boolean canAdd(ItemStack stack)
+    {
+        return true;
+    }
+
+    public void onAdded(ItemStack clickedStack)
+    {
+        clickedStack.stackSize--;
+    }
 }

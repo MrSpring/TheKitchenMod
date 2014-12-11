@@ -109,5 +109,6 @@ public class ItemBase extends Item
         registerItem(waffle);
         registerItem(burnt_waffle);
         registerItem(toasted_toast);
+        registerItem(pancake);
     }
 }
