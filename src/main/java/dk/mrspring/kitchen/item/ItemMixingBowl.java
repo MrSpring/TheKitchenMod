@@ -30,7 +30,7 @@ public class ItemMixingBowl extends ItemBase
     {
         if (metadata == 0)
             return 1;
-        else return 3;
+        else return 2;
     }
 
     @Override
@@ -64,8 +64,6 @@ public class ItemMixingBowl extends ItemBase
     {
         if (renderPass == 0)
             return this.itemIcon;
-        else if (renderPass == 2)
-            return icons[0];
         else if (damage > 0 && damage < 4)
             return icons[damage];
         else return icons[0];
