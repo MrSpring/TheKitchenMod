@@ -74,11 +74,11 @@ public class KitchenItems
     public static final Item cut_apple = new ItemFood(1, false).setTextureName(ModInfo.toTexture("apple_slice")).setUnlocalizedName("apple_slice").setCreativeTab(Kitchen.instance.tab);
 
     public static final Item mixing_bowl = new ItemMixingBowl("mixing_bowl");
-    public static final Item waffle = new ItemFoodBase("waffle", 5, false); // TODO: Add waffle texture and language entry
+    public static final Item waffle = new ItemFoodBase("waffle", 5, false); // TODO: Custom ItemRenderer? With modular ice cream? (iScream)
 
-    public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false); // TODO: Add burnt waffle texture and language entry
+    public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false);
 
-    public static final Item pancake = new ItemFoodBase("pancake", 4, false);
+    public static final Item pancake = new ItemFoodBase("pancake", 4, false); //TODO: Custom ItemRenderer? With modular ice cream? (iScream)
 
     public static final Item vanilla_fruit = new ItemFoodBase("vanilla_fruit", 2, false);
     public static final Item vanilla_seeds = new ItemSeedBase("vanilla_seeds", KitchenBlocks.vanilla_crop, 0, true);
