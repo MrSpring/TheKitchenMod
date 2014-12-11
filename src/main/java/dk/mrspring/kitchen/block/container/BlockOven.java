@@ -79,7 +79,6 @@ public class BlockOven extends BlockContainerBase
                                 Random random = new Random();
 
                                 float xRandPos = random.nextFloat() * 0.8F + 0.1F;
-                                float yRandPos = 1.2F;
                                 float zRandPos = random.nextFloat() * 0.8F + 0.1F;
 
                                 EntityItem entityItem = new EntityItem(world, x + xRandPos, y + 1, z + zRandPos, removed);
@@ -91,12 +90,12 @@ public class BlockOven extends BlockContainerBase
                                 world.spawnEntityInWorld(entityItem);
                                 return true;
                             } else
-                                return false;
+                                return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);
                         else
-                            return false;
+                            return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);
                     }
                 else
-                    return false;
+                    return super.onBlockActivated(world, x, y, z, activator, side, p_149727_7_, p_149727_8_, p_149727_9_);
             else
             {
                 this.updateBlockState(world, x, y, z);

@@ -13,7 +13,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityOven extends TileEntity
+public class TileEntityOven extends TileEntityTimeable
 {
     protected ItemStack[] ovenItems = new ItemStack[4];
     protected int burnTime = 0;
@@ -93,6 +93,8 @@ public class TileEntityOven extends TileEntity
     @Override
     public void updateEntity()
     {
+        super.updateEntity();
+
         if (this.isOpen())
         {
             if (this.lidAngle + 0.1F < 1.0)
@@ -319,5 +321,17 @@ public class TileEntityOven extends TileEntity
             if (slot >= 0 && slot < this.ovenItems.length)
                 this.ovenItems[slot] = ItemStack.loadItemStackFromNBT(itemCompound);
         }
+    }
+
+    @Override
+    public int getTime()
+    {
+        return this.getBurnTime();
+    }
+
+    @Override
+    public int getDoneTime()
+    {
+        return 400;
     }
 }
