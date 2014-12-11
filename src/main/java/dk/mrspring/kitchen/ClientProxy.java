@@ -24,8 +24,8 @@ public class ClientProxy extends CommonProxy
 
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("sandwich"), new ItemRenderSandwich());
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("jam_jar"), new ItemRenderJamJar());
-        MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("mixing_bowl"), new ItemMixingBowlRenderer());
 
         SandwichRender.loadRenderingHandlers();
+        ItemMixingBowlRenderer.initColors();
     }
 }

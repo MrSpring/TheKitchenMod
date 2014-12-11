@@ -2,11 +2,13 @@ package dk.mrspring.kitchen.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenBlocks;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModLogger;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
@@ -37,6 +39,9 @@ public class RecipeRegistry
 
         // Jam Jar recipe
         GameRegistry.addRecipe(new ItemStack(jam_jar, 1), " I ", "G G", "GGG", valueOf('I'), Items.iron_ingot, valueOf('G'), Blocks.glass);
+
+        // Mixing Bowl recipes
+        GameRegistry.addShapelessRecipe(getMixingBowlStack("waffle_dough", 3), getMixingBowlStack(null, 0), Items.egg, KitchenItems.flour, Items.milk_bucket);
 
         /**
          * Knife recipes
@@ -126,7 +131,7 @@ public class RecipeRegistry
         GameRegistry.addSmelting(raw_roast_beef, new ItemStack(roast_beef, 1, 0), 3.0F);
     }
 
-    public static void addKnifeRecipe(ItemStack output, Object... input)
+    private static void addKnifeRecipe(ItemStack output, Object... input)
     {
         List<Object> recipe = new ArrayList<Object>();
 
@@ -134,5 +139,17 @@ public class RecipeRegistry
         recipe.add(new ItemStack(knife));
 
         GameRegistry.addShapelessRecipe(output, recipe.toArray());
+    }
+
+    private static ItemStack getMixingBowlStack(String mixType, int usesLeft)
+    {
+        ItemStack bowl = new ItemStack(KitchenItems.mixing_bowl, 1, usesLeft);
+        if (mixType != null)
+        {
+            NBTTagCompound tagCompound = new NBTTagCompound();
+            tagCompound.setString("MixType", mixType);
+            bowl.setTagCompound(tagCompound);
+        }
+        return bowl;
     }
 }

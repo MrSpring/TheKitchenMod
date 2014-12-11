@@ -59,12 +59,16 @@ public class BlockWaffleIron extends BlockContainerBase
                 {
                     if (activator.getCurrentEquippedItem().getItem() == KitchenItems.mixing_bowl && activator.getCurrentEquippedItem().getItemDamage() > 0)
                     {
-                        TileEntityWaffleIron tileEntity = (TileEntityWaffleIron) world.getTileEntity(x, y, z);
-                        if (tileEntity.addWaffleDough())
-                        {
-                            world.markBlockForUpdate(x, y, z);
-                            activator.getCurrentEquippedItem().setItemDamage(activator.getCurrentEquippedItem().getItemDamage() - 1);
-                        } else return false;
+                        if (activator.getCurrentEquippedItem().getTagCompound()!=null)
+                            if (activator.getCurrentEquippedItem().getTagCompound().getString("MixType").equals("waffle_dough")&&activator.getCurrentEquippedItem().getItemDamage()>0)
+                            {
+                                TileEntityWaffleIron tileEntity = (TileEntityWaffleIron) world.getTileEntity(x, y, z);
+                                if (tileEntity.addWaffleDough())
+                                {
+                                    world.markBlockForUpdate(x, y, z);
+                                    activator.getCurrentEquippedItem().setItemDamage(activator.getCurrentEquippedItem().getItemDamage() - 1);
+                                } else return false;
+                            }
                     }
                 } else
                 {
