@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelToaster;
+import dk.mrspring.kitchen.tileentity.TileEntityTimeable;
 import dk.mrspring.kitchen.tileentity.TileEntityToaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -16,7 +17,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created by MrSpring on 10-12-2014 for TheKitchenMod.
  */
-public class TileEntityToasterRenderer extends TileEntitySpecialRenderer
+public class TileEntityToasterRenderer extends TileEntityTimeableRenderer
 {
     ModelToaster model = new ModelToaster();
     ResourceLocation texture = new ResourceLocation(ModInfo.toTexture("textures/models/toaster.png"));
@@ -24,6 +25,8 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer
     @Override
     public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float p_147500_8_)
     {
+        super.renderTileEntityAt(var1, x, y, z, p_147500_8_);
+
         GL11.glPushMatrix();
 
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
@@ -69,5 +72,11 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer
         RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, -0.08385D, 0.0F, 0.0F);
         RenderItem.renderInFrame = false;
         GL11.glPopMatrix();
+    }
+
+    @Override
+    public void translateTimer(TileEntity tileEntity)
+    {
+        // TODO: Translate timer
     }
 }

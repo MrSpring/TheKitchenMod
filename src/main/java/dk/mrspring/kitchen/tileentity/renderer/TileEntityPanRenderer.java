@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created by MrSpring on 24-10-2014 for TheKitchenMod.
  */
-public class TileEntityPanRenderer extends TileEntitySpecialRenderer
+public class TileEntityPanRenderer extends TileEntityTimeableRenderer
 {
 	protected ModelPan model;
 	protected ResourceLocation textureLocation;
@@ -29,6 +29,8 @@ public class TileEntityPanRenderer extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float p_147500_8_)
 	{
+		super.renderTileEntityAt(tileEntity, x, y, z, p_147500_8_);
+
 		GL11.glPushMatrix();
 
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
@@ -90,5 +92,11 @@ public class TileEntityPanRenderer extends TileEntitySpecialRenderer
 		GL11.glPopMatrix();
 
 		GL11.glPopMatrix();
+	}
+
+	@Override
+	public void translateTimer(TileEntity tileEntity)
+	{
+		// TODO: Translate timer
 	}
 }

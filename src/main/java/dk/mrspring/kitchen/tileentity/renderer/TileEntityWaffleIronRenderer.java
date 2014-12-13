@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created by MrSpring on 09-12-2014 for TheKitchenMod.
  */
-public class TileEntityWaffleIronRenderer extends TileEntitySpecialRenderer
+public class TileEntityWaffleIronRenderer extends TileEntityTimeableRenderer
 {
     ResourceLocation offTexture = new ResourceLocation(ModInfo.toTexture("textures/models/waffle_iron.png"));
     ResourceLocation onTexture = new ResourceLocation(ModInfo.toTexture("textures/models/waffle_iron_on.png"));
@@ -39,5 +39,11 @@ public class TileEntityWaffleIronRenderer extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
 
         GL11.glPopMatrix();
+    }
+
+    @Override
+    public void translateTimer(TileEntity tileEntity)
+    {
+        // TODO: Translate timer
     }
 }

@@ -3,7 +3,6 @@ package dk.mrspring.kitchen.model;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import org.lwjgl.opengl.GL11;
 
 public class ModelTimer extends ModelBase
 {
@@ -68,7 +67,8 @@ public class ModelTimer extends ModelBase
         base4.render(f5);
         base5.render(f5);
 //        arm.rotateAngleZ = (time * 360);
-        GL11.glRotatef(360, 0, 0, time);
+        System.out.println("Rendering timer, time: " + time);
+        arm.rotateAngleZ = time * ((float) Math.PI * 2);
         arm.render(f5);
     }
 
