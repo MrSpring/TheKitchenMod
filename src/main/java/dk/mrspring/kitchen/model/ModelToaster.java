@@ -72,7 +72,7 @@ public class ModelToaster extends ModelBase
         base7.setRotationPoint(-4F, 22F, -3F);
         base7.setTextureSize(64, 32);
         base7.mirror = true;
-        setRotation(base7, 0F, -0.0174533F, 0F);
+        setRotation(base7, 0F, 0F, 0F);
         base8 = new ModelRenderer(this, 0, 0);
         base8.addBox(0F, 0F, 0F, 1, 1, 1);
         base8.setRotationPoint(-3.5F, 23F, -2.5F);

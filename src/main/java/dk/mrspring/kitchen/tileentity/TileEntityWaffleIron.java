@@ -7,12 +7,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Created by MrSpring on 09-12-2014 for TheKitchenMod.
  */
-public class TileEntityWaffleIron extends TileEntity
+public class TileEntityWaffleIron extends TileEntityTimeable
 {
     boolean isOpen = false;
     float lidAngle = 0;
@@ -53,6 +52,8 @@ public class TileEntityWaffleIron extends TileEntity
     @Override
     public void updateEntity()
     {
+        super.updateEntity();
+
         if (this.isOpen())
         {
             if (this.lidAngle + 0.1F < 1.0)
@@ -150,5 +151,17 @@ public class TileEntityWaffleIron extends TileEntity
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
         return false;
+    }
+
+    @Override
+    public int getTime()
+    {
+        return this.getCookTime();
+    }
+
+    @Override
+    public int getDoneTime()
+    {
+        return 400;
     }
 }

@@ -30,6 +30,10 @@ public abstract class TileEntityTimeableRenderer extends TileEntitySpecialRender
 
         float cookTime = ((TileEntityTimeable) tileEntity).getTime();
         float doneTime = ((TileEntityTimeable) tileEntity).getDoneTime();
+
+//        System.out.println("cookTime = " + cookTime);
+//        System.out.println("doneTime = " + doneTime);
+
         float time;
 
         if (cookTime != 0 && doneTime != 0)
@@ -43,10 +47,9 @@ public abstract class TileEntityTimeableRenderer extends TileEntitySpecialRender
             time = 0;
 
 
-
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.translateTimer(tileEntity);
+        this.transformTimer(tileEntity);
         Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/timer.png")));
         model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, time);
 

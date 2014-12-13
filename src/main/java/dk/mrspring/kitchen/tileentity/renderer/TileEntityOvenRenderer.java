@@ -119,7 +119,7 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
     }
 
     @Override
-    public void translateTimer(TileEntity tileEntity)
+    public void transformTimer(TileEntity tileEntity)
     {
         int metadata = tileEntity.getBlockMetadata();
         GL11.glRotatef(metadata * 90, 0, 1, 0);

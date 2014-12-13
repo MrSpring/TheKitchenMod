@@ -75,8 +75,14 @@ public class TileEntityToasterRenderer extends TileEntityTimeableRenderer
     }
 
     @Override
-    public void translateTimer(TileEntity tileEntity)
+    public void transformTimer(TileEntity tileEntity)
     {
-        // TODO: Translate timer
+        int metadata = tileEntity.getBlockMetadata();
+        GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
+
+        GL11.glTranslatef(-0.02F, 0.75F, -0.205F);
+
+        float scale = 0.4F;
+        GL11.glScalef(scale, scale, scale);
     }
 }
