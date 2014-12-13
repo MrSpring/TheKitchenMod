@@ -121,6 +121,11 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
     @Override
     public void translateTimer(TileEntity tileEntity)
     {
-        // TODO: Translate timer
+        int metadata = tileEntity.getBlockMetadata();
+        GL11.glRotatef(metadata * 90, 0, 1, 0);
+
+        GL11.glTranslatef(0.405F, 0.4F, -0.385F);
+        float scale = 0.25F;
+        GL11.glScalef(scale, scale, scale);
     }
 }

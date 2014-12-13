@@ -67,7 +67,6 @@ public class ModelTimer extends ModelBase
         base4.render(f5);
         base5.render(f5);
 //        arm.rotateAngleZ = (time * 360);
-        System.out.println("Rendering timer, time: " + time);
         arm.rotateAngleZ = time * ((float) Math.PI * 2);
         arm.render(f5);
     }
