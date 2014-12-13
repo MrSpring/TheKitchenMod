@@ -78,6 +78,7 @@ public class BlockContainerBase extends BlockContainer
                     {
                         ((TileEntityTimeable) tileEntity).setHasTimer(true);
                         activator.getCurrentEquippedItem().stackSize--;
+                        world.markBlockForUpdate(x, y, z);
                         return true;
                     }
         return onRightClicked(world, x, y, z, activator, side, clickX, clickY, clickZ);
