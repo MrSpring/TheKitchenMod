@@ -67,7 +67,8 @@ jam.peanut.name=Jordnøddesmør
 jam.apple.name=Æble Marmelade
 jam.strawberry.name=Jordbær Marmelade
 
-mix.waffle_dough.name=Waffle Mix
+mix.waffle_dough.name=Vaffel Mix
+mix.waffle_dough.name=Pandekage Mix
 
 option.show_is_sandwich_ready=Vis Sandwich status på skærebræt
 option.show_oven_contents=Vis oven indhold

@@ -68,6 +68,7 @@ jam.apple.name=Apple Jam
 jam.strawberry.name=Strawberry Jam
 
 mix.waffle_dough.name=Waffle Mix
+mix.pancake_dough.name=Pancake Mix
 
 option.show_is_sandwich_ready=Show Sandwich Status on Board
 option.show_oven_contents=Show Oven Contents
