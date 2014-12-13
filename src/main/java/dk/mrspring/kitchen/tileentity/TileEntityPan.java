@@ -63,6 +63,7 @@ public class TileEntityPan extends TileEntityTimeable
             {
                 Jam resultJam = this.ingredient.getJamResult();
                 result = Kitchen.getJamJarItemStack(resultJam, 6);
+                clicked.stackSize--;
             } else if (!this.ingredient.isJam())
             {
                 result = this.ingredient.getItemResult();
@@ -71,7 +72,6 @@ public class TileEntityPan extends TileEntityTimeable
             {
                 this.cookTime = 0;
                 this.ingredient = Ingredient.getIngredient("empty");
-
 
                 worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, result));
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
