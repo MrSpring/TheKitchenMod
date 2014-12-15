@@ -6,12 +6,13 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
+import dk.mrspring.kitchen.gui.GuiHandler;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
@@ -35,6 +36,8 @@ public class Kitchen
 {
     @Instance(ModInfo.modid)
     public static Kitchen instance;
+
+    private GuiHandler guiHandler = new GuiHandler();
 
     @SidedProxy(serverSide = "dk.mrspring.kitchen.CommonProxy", clientSide = "dk.mrspring.kitchen.ClientProxy")
     public static CommonProxy proxy;
@@ -96,6 +99,8 @@ public class Kitchen
     @EventHandler
     public static void init(FMLInitializationEvent event)
     {
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance.guiHandler);
+
         ModLogger.print(ModLogger.INFO, "Loading Custom Oven recipes...");
 
         // Loads the recipe handlers

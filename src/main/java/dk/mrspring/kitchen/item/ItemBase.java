@@ -125,5 +125,6 @@ public class ItemBase extends Item
         registerItem(burnt_waffle);
         registerItem(pancake);
         registerItem(timer);
+        registerItem(cooking_book);
     }
 }

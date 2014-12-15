@@ -71,6 +71,7 @@ public class KitchenItems
     public static final Item burnt_meat = new ItemFoodBase("burnt_meat", 1, false, Kitchen.instance.foodTab);
     public static final Item chicken_leg = new ItemFoodBase("chicken_leg", 4, true, Kitchen.instance.foodTab);
     public static final Item timer = new ItemBase("timer", true);
+    public static final Item cooking_book = new ItemCookingBook();
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
