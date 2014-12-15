@@ -6,7 +6,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Created by MrSpring on 10-12-2014 for TheKitchenMod.
@@ -43,20 +42,17 @@ public class TileEntityToaster extends TileEntityTimeable
 
         if (isCooking)
         {
-            if (this.cookTime > 400)
+            if (this.cookTime > 400 && !worldObj.isRemote)
             {
                 if (this.stack1 != null)
-                {
                     this.stack1 = ToasterRecipes.instance().getOutputFor(stack1);
-                    this.stack1.stackSize = 1;
-                }
+
                 if (this.stack2 != null)
-                {
                     this.stack2 = ToasterRecipes.instance().getOutputFor(stack2);
-                    this.stack2.stackSize = 1;
-                }
+
                 this.cookTime = 0;
                 this.isCooking = false;
+
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
                 return;
             }

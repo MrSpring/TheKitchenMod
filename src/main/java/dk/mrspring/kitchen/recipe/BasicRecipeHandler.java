@@ -57,7 +57,7 @@ public class BasicRecipeHandler
         {
             ItemStack input2 = recipe.getInput();
             if (input1.isItemEqual(input2))
-                return recipe.getOutput();
+                return recipe.getOutput().copy();
         }
 
         return null;

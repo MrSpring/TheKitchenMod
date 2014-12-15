@@ -19,7 +19,6 @@ public abstract class TileEntityTimeable extends TileEntity implements ITimeable
 
         if (this.getTime() > this.getDoneTime() && !hasDinged && hasTimer)
         {
-            System.out.println("Dinging!");
             worldObj.playSound(xCoord, yCoord, zCoord, ModInfo.modid + ":" + "ding", 1, 1, false);
             hasDinged = true;
         } else if (this.getTime() < this.getDoneTime() && hasDinged && hasTimer)
