@@ -74,6 +74,9 @@ public class ItemBase extends Item
         registerItem(mortar_and_pestle);
         registerItem(mortar);
         registerItem(pestle);
+        registerItem(jam_jar);
+        registerItem(mixing_bowl);
+        registerItem(bacon);
         registerItem(raw_bacon);
         registerItem(bread_slice);
         GameRegistry.registerCustomItemStack("sandwich_itemstack", basic_sandwich);
@@ -81,11 +84,12 @@ public class ItemBase extends Item
         registerItem(lettuce);
         registerItem(tomato_slice);
         registerItem(lettuce_leaf);
-        registerItem(bacon);
         registerItem(potato_slice);
         registerItem(carrot_slice);
+        registerItem(cut_apple);
         registerItem(flour);
         registerItem(toast);
+        registerItem(toasted_toast);
         registerItem(raw_roast_beef);
         registerItem(roast_beef);
         registerItem(raw_chicken_fillet);
@@ -95,20 +99,16 @@ public class ItemBase extends Item
         registerItem(cheese_slice);
         registerItem(burnt_meat);
         registerItem(butter);
-        registerItem(jam_jar);
         registerItem(jam_strawberry);
         registerItem(jam_apple);
+        registerItem(jam_peanut);
         registerItem(strawberry);
-        registerItem(cut_apple);
         registerItem(cut_strawberry);
+        registerItem(jammable_strawberry);
         registerItem(peanut);
         registerItem(peanuts_in_shell);
-        registerItem(jam_peanut);
-        registerItem(jammable_strawberry);
-        registerItem(mixing_bowl);
         registerItem(waffle);
         registerItem(burnt_waffle);
-        registerItem(toasted_toast);
         registerItem(pancake);
         registerItem(timer);
     }
