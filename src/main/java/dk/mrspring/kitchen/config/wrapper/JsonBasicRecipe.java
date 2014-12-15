@@ -9,6 +9,12 @@ public class JsonBasicRecipe
 {
     String input, output;
 
+    public JsonBasicRecipe(String in, String out)
+    {
+        input = in;
+        output = out;
+    }
+
     public boolean isValid()
     {
         if (input == null)

@@ -9,6 +9,10 @@ import java.io.File;
  */
 public class OvenConfig extends BaseConfig
 {
+    JsonBasicRecipe[] example = new JsonBasicRecipe[] {
+            new JsonBasicRecipe("minecraft:dirt", "minecraft:diamond"),
+            new JsonBasicRecipe("kitchen:raw_bacon", "kitchen:bacon")
+    };
     public JsonBasicRecipe[] custom_oven_recipes = new JsonBasicRecipe[0];
 
     public OvenConfig(File location, String name)
