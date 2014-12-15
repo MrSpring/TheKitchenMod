@@ -21,7 +21,7 @@ public class TileEntityToaster extends TileEntityTimeable
     {
         ItemStack stack = clicked.copy();
         stack.stackSize = 1;
-        if (ToasterRecipes.getToastingResult(stack) != null && !isCooking)
+        if (ToasterRecipes.instance().getOutputFor(stack) != null && !isCooking)
         {
             if (this.stack1 == null)
             {
@@ -47,12 +47,12 @@ public class TileEntityToaster extends TileEntityTimeable
             {
                 if (this.stack1 != null)
                 {
-                    this.stack1 = ToasterRecipes.getToastingResult(stack1);
+                    this.stack1 = ToasterRecipes.instance().getOutputFor(stack1);
                     this.stack1.stackSize = 1;
                 }
                 if (this.stack2 != null)
                 {
-                    this.stack2 = ToasterRecipes.getToastingResult(stack2);
+                    this.stack2 = ToasterRecipes.instance().getOutputFor(stack2);
                     this.stack2.stackSize = 1;
                 }
                 this.cookTime = 0;
@@ -70,10 +70,10 @@ public class TileEntityToaster extends TileEntityTimeable
         if (this.stack1 != null || this.stack2 != null)
         {
             if (stack1 != null)
-                if (ToasterRecipes.getToastingResult(stack1) == null)
+                if (ToasterRecipes.instance().getOutputFor(stack1) == null)
                     return false;
             if (stack2 != null)
-                if (ToasterRecipes.getToastingResult(stack2) == null)
+                if (ToasterRecipes.instance().getOutputFor(stack2) == null)
                     return false;
 
             return true;

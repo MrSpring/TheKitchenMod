@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.config;
 
+import dk.mrspring.kitchen.config.wrapper.JsonBasicRecipe;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.recipe.ToasterRecipes;
 
@@ -10,8 +11,7 @@ import java.io.File;
  */
 public class ToasterConfig extends BaseConfig
 {
-    public String[] custom_toaster_recipes_input = ToasterRecipes.defaultInput;
-    public String[] custom_toaster_recipes_output = ToasterRecipes.defaultOutput;
+    public JsonBasicRecipe[] custom_toaster_recipes = new JsonBasicRecipe[0];
 
     public ToasterConfig(File location, String name)
     {

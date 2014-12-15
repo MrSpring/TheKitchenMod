@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.config;
 
+import dk.mrspring.kitchen.config.wrapper.JsonBasicRecipe;
+
 import java.io.File;
 
 /**

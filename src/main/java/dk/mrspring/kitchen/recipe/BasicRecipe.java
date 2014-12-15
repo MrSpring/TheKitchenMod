@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.config.JsonBasicRecipe;
+import dk.mrspring.kitchen.config.wrapper.JsonBasicRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 

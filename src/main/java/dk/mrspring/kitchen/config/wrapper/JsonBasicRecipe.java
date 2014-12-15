@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.config;
+package dk.mrspring.kitchen.config.wrapper;
 
 import dk.mrspring.kitchen.recipe.BasicRecipe;
 

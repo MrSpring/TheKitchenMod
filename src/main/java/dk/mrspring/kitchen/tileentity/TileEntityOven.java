@@ -11,7 +11,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityOven extends TileEntityTimeable
 {
@@ -41,7 +40,7 @@ public class TileEntityOven extends TileEntityTimeable
                     if (FurnaceRecipes.smelting().getSmeltingResult(itemStack).getItem() instanceof ItemFood)
                         return this.forceAddItemStack(itemStack);
 
-                if (OvenRecipes.getCookingResult(itemStack) != null)
+                if (OvenRecipes.instance().getOutputFor(itemStack) != null)
                     return this.forceAddItemStack(itemStack);
 
                 if (itemStack.getItem() == Items.coal && !this.hasCoal)
@@ -169,7 +168,7 @@ public class TileEntityOven extends TileEntityTimeable
 
         for (ItemStack item : this.ovenItems)
             if (item != null)
-                if (OvenRecipes.getCookingResult(item) != null)
+                if (OvenRecipes.instance().getOutputFor(item) != null)
                     foundCompatible = true;
 
         return foundCompatible;
@@ -203,10 +202,10 @@ public class TileEntityOven extends TileEntityTimeable
                         this.ovenItems[i].stackSize = stackSize;
                     }*/
 
-                    if (OvenRecipes.getCookingResult(this.ovenItems[i]) != null)
+                    if (OvenRecipes.instance().getOutputFor(this.ovenItems[i]) != null)
                     {
                         int stackSize = this.ovenItems[i].stackSize;
-                        this.ovenItems[i] = OvenRecipes.getCookingResult(this.ovenItems[i]);
+                        this.ovenItems[i] = OvenRecipes.instance().getOutputFor(this.ovenItems[i]);
                         this.ovenItems[i].stackSize = stackSize;
                     }
                 }

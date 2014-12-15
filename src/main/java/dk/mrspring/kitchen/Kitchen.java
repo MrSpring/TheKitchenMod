@@ -41,6 +41,9 @@ public class Kitchen
 
     public CreativeTabs tab;
 
+    public OvenRecipes ovenRecipes;
+    public ToasterRecipes toasterRecipes;
+
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
@@ -59,6 +62,8 @@ public class Kitchen
                 return KitchenItems.basic_sandwich.getItem();
             }
         };
+
+
 
         // Registering Tile Entities
         GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
@@ -84,9 +89,13 @@ public class Kitchen
     public static void init(FMLInitializationEvent event)
     {
         ModLogger.print(ModLogger.INFO, "Loading Custom Oven recipes...");
-        // Loading Custom recipes
-        OvenRecipes.load();
-        ToasterRecipes.load();
+
+        // Loads the recipe handlers
+        instance.ovenRecipes = new OvenRecipes();
+        instance.toasterRecipes = new ToasterRecipes();
+
+        instance.ovenRecipes.load();
+        instance.toasterRecipes.load();
 
         // Registering the Lettuce world generator
         GameRegistry.registerWorldGenerator(new WorldGenWildPlants(), 1);
@@ -204,12 +213,6 @@ public class Kitchen
 		/*JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
         JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);*/
 
-    }
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
-        OvenRecipes.addFoodRecipes();
     }
 
     @EventHandler
