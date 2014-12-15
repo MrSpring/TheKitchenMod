@@ -1,7 +1,5 @@
 package dk.mrspring.kitchen.config;
 
-import dk.mrspring.kitchen.recipe.OvenRecipes;
-
 import java.io.File;
 
 /**
@@ -9,8 +7,7 @@ import java.io.File;
  */
 public class OvenConfig extends BaseConfig
 {
-    public String[] custom_oven_recipes_input = OvenRecipes.defaultInput;
-    public String[] custom_oven_recipes_output = OvenRecipes.defaultOutput;
+    public JsonBasicRecipe[] custom_oven_recipes = new JsonBasicRecipe[0];
 
     public OvenConfig(File location, String name)
     {

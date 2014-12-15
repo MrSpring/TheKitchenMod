@@ -4,11 +4,16 @@ import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.tileentity.TileEntityTimeable;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 /**
  * Created by MrSpring on 29-09-2014 for TheKitchenMod.
@@ -110,5 +115,29 @@ public class BlockContainerBase extends BlockContainer
         return tileEntityClass;
     }
 
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
+    {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
 
+        if (tileEntity != null)
+            if (tileEntity instanceof TileEntityTimeable)
+                if (((TileEntityTimeable) tileEntity).getHasTimer())
+                {
+                    Random random = new Random();
+
+                    float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+                    float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+
+                    EntityItem entityItem = new EntityItem(world, x + xRandPos, y + 1, z + zRandPos, new ItemStack(KitchenItems.timer));
+
+                    entityItem.motionX = random.nextGaussian() * 0.005F;
+                    entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
+                    entityItem.motionZ = random.nextGaussian() * 0.005F;
+
+                    world.spawnEntityInWorld(entityItem);
+                }
+
+        super.breakBlock(world, x, y, z, block, p_149749_6_);
+    }
 }
