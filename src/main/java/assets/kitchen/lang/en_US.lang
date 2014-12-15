@@ -57,6 +57,8 @@ item.mixing_bowl.full.name=filled Mixing Bowl
 item.waffle.name=Waffle
 item.burnt_waffle.name=Burnt Waffle
 item.timer.name=Timer
+item.toasted_toast.name=Toasted Toast
+item.pancake.name=Pancake
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
