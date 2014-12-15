@@ -130,7 +130,6 @@ public class RecipeRegistry
         GameRegistry.addSmelting(flour, new ItemStack(toast, 2, 0), 3F);
         GameRegistry.addSmelting(raw_chicken_fillet, new ItemStack(chicken_fillet, 1, 0), 3F);
         GameRegistry.addSmelting(raw_roast_beef, new ItemStack(roast_beef, 1, 0), 3F);
-        GameRegistry.addSmelting(vanilla_fruit, new ItemStack(dried_vanilla,1),3F);
     }
 
     private static void addKnifeRecipe(ItemStack output, Object... input)
