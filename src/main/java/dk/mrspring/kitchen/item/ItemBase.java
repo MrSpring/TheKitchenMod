@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.item;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,6 +31,24 @@ public class ItemBase extends Item
             this.setCreativeTab(Kitchen.instance.tab);
     }
 
+    public ItemBase(String name, boolean useCreativeTab)
+    {
+        this(name, ModInfo.toTexture(name), useCreativeTab);
+    }
+
+    public ItemBase(String name, String textureName, CreativeTabs creativeTab)
+    {
+        this.setUnlocalizedName(name);
+        this.setTextureName(textureName);
+
+        this.setCreativeTab(creativeTab);
+    }
+
+    public ItemBase(String name, CreativeTabs creativeTabs)
+    {
+        this(name, ModInfo.toTexture(name), creativeTabs);
+    }
+
     public ItemBase setSelfAsContainerItem()
     {
         this.setContainerItem(this);
@@ -48,11 +67,6 @@ public class ItemBase extends Item
         if (this.localizableName.equals("super"))
             return super.getItemStackDisplayName(p_77653_1_);
         else return StatCollector.translateToLocal(this.localizableName);
-    }
-
-    public ItemBase(String name, boolean useCreativeTab)
-    {
-        this(name, ModInfo.modid + ":" + name, useCreativeTab);
     }
 
     public ItemBase setInformationLines(String[] informationLines)
