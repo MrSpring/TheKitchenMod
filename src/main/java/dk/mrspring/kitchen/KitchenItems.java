@@ -4,7 +4,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
 import dk.mrspring.kitchen.pan.Ingredient;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -24,39 +23,39 @@ public class KitchenItems
     public static final Item pestle = new ItemBase("pestle", true);
     public static final Item jam_jar = new ItemJamJar("jam_jar");
 
-    public static final Item raw_bacon = new ItemBase("bacon_raw", true);
-    public static final Item bacon = new ItemBase("bacon_cooked", true);
+    public static final Item raw_bacon = new ItemBase("bacon_raw", Kitchen.instance.foodTab);
+    public static final Item bacon = new ItemBase("bacon_cooked", Kitchen.instance.foodTab);
 
-    public static final Item raw_roast_beef = new ItemBase("raw_roast_beef", ModInfo.modid + ":beef_slice", true);
-    public static final Item roast_beef = new ItemBase("roast_beef", true);
+    public static final Item raw_roast_beef = new ItemBase("raw_roast_beef", ModInfo.toTexture("beef_slice"), Kitchen.instance.foodTab);
+    public static final Item roast_beef = new ItemBase("roast_beef", Kitchen.instance.foodTab);
 
-    public static final Item raw_chicken_fillet = new ItemBase("chicken_fillet_raw", true);
-    public static final Item chicken_fillet = new ItemBase("chicken_fillet_cooked", true);
+    public static final Item raw_chicken_fillet = new ItemBase("chicken_fillet_raw", Kitchen.instance.foodTab);
+    public static final Item chicken_fillet = new ItemBase("chicken_fillet_cooked", Kitchen.instance.foodTab);
 
-    public static final Item bread_slice = new ItemBase("bread_slice", true);
-    public static final Item flour = new ItemBase("flour", true);
-    public static final Item toast = new ItemBase("toast", true);
-    public static final Item toasted_toast = new ItemFoodBase("toasted_toast", 3, false);
+    public static final Item bread_slice = new ItemBase("bread_slice", Kitchen.instance.foodTab);
+    public static final Item flour = new ItemBase("flour", Kitchen.instance.foodTab);
+    public static final Item toast = new ItemBase("toast", Kitchen.instance.foodTab);
+    public static final Item toasted_toast = new ItemFoodBase("toasted_toast", 3, false, Kitchen.instance.foodTab);
 
-    public static final Item tomato = new ItemSeedBase("tomato", KitchenBlocks.tomato_crop, true);
-    public static final Item tomato_slice = new ItemBase("tomato_slice", true);
+    public static final Item tomato = new ItemSeedBase("tomato", KitchenBlocks.tomato_crop, Kitchen.instance.foodTab);
+    public static final Item tomato_slice = new ItemBase("tomato_slice", Kitchen.instance.foodTab);
 
-    public static final Item lettuce = new ItemSeedBase("lettuce", KitchenBlocks.lettuce_crop, true);
-    public static final Item lettuce_leaf = new ItemBase("lettuce_leaf", true);
+    public static final Item lettuce = new ItemSeedBase("lettuce", KitchenBlocks.lettuce_crop, Kitchen.instance.foodTab);
+    public static final Item lettuce_leaf = new ItemBase("lettuce_leaf", Kitchen.instance.foodTab);
 
-    public static final Item peanut = new ItemSeedBase("peanut", KitchenBlocks.peanut_crop, true);
-    public static final Item peanuts_in_shell = new ItemBase("peanuts_in_shell", ModInfo.toTexture("peanuts"), true);
+    public static final Item peanut = new ItemSeedBase("peanut", KitchenBlocks.peanut_crop, Kitchen.instance.foodTab);
+    public static final Item peanuts_in_shell = new ItemBase("peanuts_in_shell", ModInfo.toTexture("peanuts"), Kitchen.instance.foodTab);
 
-    public static final Item strawberry = new ItemSeedBase("strawberry", KitchenBlocks.strawberry_crop, true);
-    public static final Item jammable_strawberry = new ItemFood(1, false).setTextureName(ModInfo.toTexture("strawberry_slices_sugared")).setUnlocalizedName("sugared_strawberry_slices").setCreativeTab(Kitchen.instance.tab);
-    public static final Item cut_strawberry = new ItemFood(1, false).setTextureName(ModInfo.toTexture("strawberry_slices")).setUnlocalizedName("strawberry_slices").setCreativeTab(Kitchen.instance.tab);
+    public static final Item strawberry = new ItemSeedBase("strawberry", KitchenBlocks.strawberry_crop, Kitchen.instance.foodTab);
+    public static final Item jammable_strawberry = new ItemFoodBase("sugared_strawberry_slices", ModInfo.toTexture("strawberry_slices_sugared"), 1, false, Kitchen.instance.foodTab);
+    public static final Item cut_strawberry = new ItemFoodBase("strawberry_slices", 1, false, Kitchen.instance.foodTab);
 
-    public static final Item potato_slice = new ItemBase("potato_slice", true);
-    public static final Item carrot_slice = new ItemBase("carrot_slice", true);
-    public static final Item cut_apple = new ItemFood(1, false).setTextureName(ModInfo.toTexture("apple_slice")).setUnlocalizedName("apple_slice").setCreativeTab(Kitchen.instance.tab);
+    public static final Item potato_slice = new ItemBase("potato_slice", Kitchen.instance.foodTab);
+    public static final Item carrot_slice = new ItemBase("carrot_slice", Kitchen.instance.foodTab);
+    public static final Item cut_apple = new ItemFoodBase("apple_slice", 1, false, Kitchen.instance.foodTab);
 
-    public static final Item cheese = new ItemFood(3, false).setUnlocalizedName("cheese").setTextureName(ModInfo.modid + ":cheese").setCreativeTab(Kitchen.instance.tab);
-    public static final Item cheese_slice = new ItemBase("cheese_slice", true);
+    public static final Item cheese = new ItemFoodBase("cheese", 3, false, Kitchen.instance.foodTab);
+    public static final Item cheese_slice = new ItemBase("cheese_slice", Kitchen.instance.foodTab);
 
     public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[]{new ItemStack(bread_slice, 1, 0), new ItemStack(raw_bacon, 1, 0), new ItemStack(bread_slice, 1, 0)});
 
@@ -64,13 +63,13 @@ public class KitchenItems
     public static final Item jam_apple = new ItemBase("apple_jam", false).setLocalizableName("jam.apple.name");
     public static final Item jam_peanut = new ItemBase("peanut_jam", false).setLocalizableName("jam.peanut.name");
 
-    public static final Item waffle = new ItemFoodBase("waffle", 5, false); // TODO: Custom ItemRenderer? With modular ice cream? (iScream)
-    public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false);
-    public static final Item pancake = new ItemFoodBase("pancake", 4, false); //TODO: Custom ItemRenderer? With modular ice cream? (iScream)
+    public static final Item waffle = new ItemFoodBase("waffle", 5, false, Kitchen.instance.foodTab);
+    public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false, Kitchen.instance.foodTab);
+    public static final Item pancake = new ItemFoodBase("pancake", 4, false, Kitchen.instance.foodTab);
 
-    public static final Item butter = new ItemBase("butter", true);
-    public static final Item burnt_meat = new ItemFood(1, false).setUnlocalizedName("burnt_meat").setTextureName(ModInfo.modid + ":burnt_meat").setCreativeTab(Kitchen.instance.tab);
-    public static final Item chicken_leg = new ItemFood(4, true).setUnlocalizedName("chicken_leg").setTextureName(ModInfo.modid + ":chicken_leg").setCreativeTab(Kitchen.instance.tab);
+    public static final Item butter = new ItemBase("butter", Kitchen.instance.foodTab);
+    public static final Item burnt_meat = new ItemFoodBase("burnt_meat", 1, false, Kitchen.instance.foodTab);
+    public static final Item chicken_leg = new ItemFoodBase("chicken_leg", 4, true, Kitchen.instance.foodTab);
     public static final Item timer = new ItemBase("timer", true);
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.

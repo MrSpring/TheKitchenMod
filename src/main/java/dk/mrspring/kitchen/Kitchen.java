@@ -40,6 +40,7 @@ public class Kitchen
     public static CommonProxy proxy;
 
     public CreativeTabs tab;
+    public CreativeTabs foodTab;
 
     public OvenRecipes ovenRecipes;
     public ToasterRecipes toasterRecipes;
@@ -59,11 +60,18 @@ public class Kitchen
             @Override
             public Item getTabIconItem()
             {
-                return KitchenItems.basic_sandwich.getItem();
+                return KitchenItems.knife;
             }
         };
 
-
+        instance.foodTab = new CreativeTabs("tabKitchenFood")
+        {
+            @Override
+            public Item getTabIconItem()
+            {
+                return KitchenItems.basic_sandwich.getItem();
+            }
+        };
 
         // Registering Tile Entities
         GameRegistry.registerTileEntity(TileEntityBoard.class, "tileEntityBoard");
