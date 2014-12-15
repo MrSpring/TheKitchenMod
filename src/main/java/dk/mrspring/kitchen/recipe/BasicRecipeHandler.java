@@ -14,6 +14,11 @@ public class BasicRecipeHandler
 {
     List<BasicRecipe> recipes = new ArrayList<BasicRecipe>();
 
+    public void load()
+    {
+
+    }
+
     protected void addAll(JsonBasicRecipe[] array)
     {
         if (array != null)
