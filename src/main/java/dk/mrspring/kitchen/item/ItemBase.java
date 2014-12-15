@@ -110,9 +110,6 @@ public class ItemBase extends Item
         registerItem(burnt_waffle);
         registerItem(toasted_toast);
         registerItem(pancake);
-        registerItem(vanilla_fruit);
-        registerItem(vanilla_seeds);
-        registerItem(dried_vanilla);
         registerItem(timer);
     }
 }
