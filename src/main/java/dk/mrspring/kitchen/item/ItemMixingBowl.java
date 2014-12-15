@@ -2,12 +2,16 @@ package dk.mrspring.kitchen.item;
 
 import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by MrSpring on 09-12-2014 for TheKitchenMod.
@@ -28,6 +32,19 @@ public class ItemMixingBowl extends ItemBase
         super.addInformation(p_77624_1_, p_77624_2_, information, p_77624_4_);
         if (p_77624_1_.getItemDamage() > 0)
             information.add(StatCollector.translateToLocal("item.jam_jar.uses_left_msg") + ": " + p_77624_1_.getItemDamage());
+    }
+
+    @Override
+    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List list)
+    {
+        super.getSubItems(p_150895_1_, p_150895_2_, list);
+
+        for (Map.Entry<String, Integer> entry : ItemMixingBowlRenderer.mixColors.entrySet())
+        {
+            ItemStack stack = new ItemStack(p_150895_1_, 1, 3);
+            stack.setTagInfo("MixType", new NBTTagString(entry.getKey()));
+            list.add(stack);
+        }
     }
 
     @Override

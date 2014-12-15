@@ -3,7 +3,9 @@ package dk.mrspring.kitchen.item;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.pan.Jam;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -11,6 +13,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by MrSpring on 25-09-2014 for ModJam4.
@@ -37,6 +40,25 @@ public class ItemJamJar extends ItemBase
         if (metadata == 0)
             return 1;
         else return 2;
+    }
+
+    @Override
+    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List p_150895_3_)
+    {
+        super.getSubItems(p_150895_1_, p_150895_2_, p_150895_3_);
+
+        for (Map.Entry<String, Jam> entry : Jam.jams.entrySet())
+        {
+            if (!entry.getValue().getName().equals("empty"))
+            {
+                ItemStack stack = new ItemStack(p_150895_1_, 1, 1);
+                NBTTagCompound jamInfo = new NBTTagCompound();
+                jamInfo.setString("JamType", entry.getValue().getName());
+                jamInfo.setInteger("UsesLeft", 6);
+                stack.setTagInfo("JamInfo", jamInfo);
+                p_150895_3_.add(stack);
+            }
+        }
     }
 
     @Override
