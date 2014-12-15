@@ -4,7 +4,6 @@ import dk.mrspring.kitchen.config.wrapper.JsonBasicRecipe;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,7 +34,12 @@ public class BasicRecipeHandler
 
     protected void addAll(BasicRecipe[] array)
     {
-        Collections.addAll(recipes, array);
+//        Collections.addAll(recipes, array);
+        for (BasicRecipe recipe : array)
+        {
+            if (recipe.isValid())
+                this.recipes.add(recipe);
+        }
     }
 
     public List<BasicRecipe> getRecipes()
@@ -49,11 +53,11 @@ public class BasicRecipeHandler
      */
     public ItemStack getOutputFor(ItemStack input1)
     {
-        for (BasicRecipe entry : recipes)
+        for (BasicRecipe recipe : recipes)
         {
-            ItemStack input2 = entry.getInput();
+            ItemStack input2 = recipe.getInput();
             if (input1.isItemEqual(input2))
-                return entry.getOutput();
+                return recipe.getOutput();
         }
 
         return null;

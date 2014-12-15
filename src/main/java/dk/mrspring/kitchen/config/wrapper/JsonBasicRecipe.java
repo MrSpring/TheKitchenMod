@@ -7,40 +7,37 @@ import dk.mrspring.kitchen.recipe.BasicRecipe;
  */
 public class JsonBasicRecipe
 {
-    String input, output;
+    JsonItemStack input, output;
 
-    public JsonBasicRecipe(String in, String out)
+    public JsonBasicRecipe(JsonItemStack in, JsonItemStack out)
     {
         input = in;
         output = out;
     }
 
-    public boolean isValid()
+    public JsonBasicRecipe(String input, String output)
     {
-        if (input == null)
-            return false;
-        else if (input.isEmpty())
-            return false;
-
-        if (output == null)
-            return false;
-        else if (output.isEmpty())
-            return false;
-
-        return true;
+        this(new JsonItemStack(input), new JsonItemStack(output));
     }
 
     public BasicRecipe toBasicRecipe()
     {
-        return new BasicRecipe(this);
+        if (this.isValid())
+            return new BasicRecipe(this);
+        else return new BasicRecipe("", "");
     }
 
-    public String getInput()
+    private boolean isValid()
+    {
+        return this.input != null && this.output != null;
+    }
+
+    public JsonItemStack getInput()
     {
         return input;
     }
 
-    public String getOutput()
+    public JsonItemStack getOutput()
     {
         return output;
     }

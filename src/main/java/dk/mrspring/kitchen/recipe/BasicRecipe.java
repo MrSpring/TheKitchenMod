@@ -25,19 +25,19 @@ public class BasicRecipe
             String modId = input.split(":")[0];
             String itemName = input.split(":")[1];
             this.input = GameRegistry.findItemStack(modId, itemName, 1);
-        } else this.input = new ItemStack(Blocks.air);
+        }
 
         if (output.contains(":"))
         {
             String modId = output.split(":")[0];
             String itemName = output.split(":")[1];
             this.output = GameRegistry.findItemStack(modId, itemName, 1);
-        } else this.output = new ItemStack(Blocks.air);
+        }
     }
 
     public BasicRecipe(JsonBasicRecipe jsonRecipe)
     {
-        this(jsonRecipe.getInput(), jsonRecipe.getOutput());
+        this(jsonRecipe.getInput().toItemStack(), jsonRecipe.getOutput().toItemStack());
     }
 
     public BasicRecipe setInput(ItemStack input)
@@ -60,5 +60,10 @@ public class BasicRecipe
     public ItemStack getOutput()
     {
         return output;
+    }
+
+    public boolean isValid()
+    {
+        return this.input != null && this.output != null;
     }
 }
