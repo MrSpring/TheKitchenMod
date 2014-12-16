@@ -108,6 +108,9 @@ public class TileEntityBoard extends TileEntity
 
     public ItemStack finishSandwich()
     {
+        if (this.layers.size()<1)
+            return null;
+
         if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
             return null;
 
