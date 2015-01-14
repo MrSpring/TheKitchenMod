@@ -160,7 +160,7 @@ public class IMCHandler
                 output = ItemStack.loadItemStackFromNBT(outputCompound);
             } else return;
 
-            OvenRecipes.addRecipe(input, output);
+            Kitchen.instance.ovenRecipes.addRecipe(input, output);
         } else if (message.isStringMessage())
         {
             String messageText = message.getStringValue();
@@ -175,7 +175,7 @@ public class IMCHandler
                 ItemStack input = new ItemStack(GameRegistry.findItem(inputName.split(":")[0], inputName.split(":")[1]));
                 ItemStack output = new ItemStack(GameRegistry.findItem(outputName.split(":")[0], outputName.split(":")[1]));
 
-                OvenRecipes.addRecipe(input, output);
+                Kitchen.instance.ovenRecipes.addRecipe(input, output);
             }
         }
     }
