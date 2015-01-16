@@ -29,27 +29,11 @@ public class GuiScreenBook extends GuiScreen
         return lines.size();
     }
 
-    static List<Page> pages = new ArrayList<Page>();
+    List<Page> pages = new ArrayList<Page>();
 
     public static void initPages()
     {
-        Minecraft mc = Minecraft.getMinecraft();
 
-        final String introduction = StatCollector.translateToLocal("item.cooking_book.pages.introduction").replace("###", "\n");
-//        List lines = mc.fontRenderer.listFormattedStringToWidth(introduction, 120);
-
-        pages.add(new Page()
-        {
-            @Override
-            public void draw(Minecraft minecraft, int width)
-            {
-                GL11.glPushMatrix();
-                GL11.glScalef(1.5F, 1.5F, 1.5F);
-                minecraft.fontRenderer.drawString("Introduction", width / 3 - (minecraft.fontRenderer.getStringWidth("Introduction") / 2), 10, 0x4C1C06, false);
-                GL11.glPopMatrix();
-                drawSplitCenteredString(minecraft.fontRenderer, introduction, width / 2, 40, width, 0x4C1C06, false);
-            }
-        });
     }
 
     private interface Page
@@ -61,6 +45,40 @@ public class GuiScreenBook extends GuiScreen
     public void initGui()
     {
         super.initGui();
+
+        final String introduction = StatCollector.translateToLocal("item.cooking_book.pages.introduction").replace("###", "\n");
+        final List introLines = mc.fontRenderer.listFormattedStringToWidth(introduction, 120);
+
+        pages.add(new Page()
+        {
+            List<String> lines = new ArrayList<String>();
+
+            {
+                for (int i = 0; i < introLines.size(); i++)
+                {
+                    if (i >= 14)
+                        break;
+                    Object lineFromIntro = introLines.get(i);
+                    if (lineFromIntro instanceof String)
+                        this.lines.add((String) lineFromIntro);
+                }
+            }
+
+            @Override
+            public void draw(Minecraft minecraft, int width)
+            {
+                GL11.glPushMatrix();
+                GL11.glScalef(1.5F, 1.5F, 1.5F);
+                minecraft.fontRenderer.drawString("Introduction", width / 3 - (minecraft.fontRenderer.getStringWidth("Introduction") / 2), 10, 0x4C1C06, false);
+                GL11.glPopMatrix();
+                for (int i = 0; i < lines.size(); i++)
+                {
+                    String line = lines.get(i);
+                    int lineWidth = minecraft.fontRenderer.getStringWidth(line);
+                    minecraft.fontRenderer.drawString(line, width / 2 - (lineWidth / 2), 40 + (i * 9), 0x4C1C06, false);
+                }
+            }
+        });
     }
 
     @Override
@@ -68,12 +86,13 @@ public class GuiScreenBook extends GuiScreen
     {
         super.drawScreen(mouseX, mouseY, p_73863_3_);
 
-        mc.getTextureManager().bindTexture(new ResourceLocation("kitchen:textures/gui/cooking_book_left.png"));
+        mc.getTextureManager().bindTexture(new ResourceLocation("kitchen:textures/gui/cooking_book.png"));
         drawTexturedModalRect((width / 2) - 140, 20, 0, 0, 140, 180);
-        drawTexturedModalRect((width / 2) - 140 + 14, 180 - 14, 0, 180, 24, 24);
+        drawTexturedModalRect((width / 2) - 140 + 14, 190, isMouseHovering(mouseX, mouseY, (width / 2) - 140 + 14, 190, 24, 24) ? 24 : 0, 180, 24, 24);
         mc.getTextureManager().bindTexture(new ResourceLocation("kitchen:textures/gui/cooking_book_right.png"));
         drawTexturedModalRect(width / 2, 20, 0, 0, 140, 180);
-        drawTexturedModalRect((width / 2) + 140 - 38, 180 - 34, 0, 180, 24, 24);
+        drawTexturedModalRect((width / 2) + 140 - 38, 190, isMouseHovering(mouseX, mouseY, (width / 2) + 140 - 38, 190, 24, 24) ? 24 : 0, 180, 24, 24);
+        mc.getTextureManager().bindTexture(new ResourceLocation("kitchen:textures/gui/cooking_book.png"));
 
         GL11.glPushMatrix();
 
@@ -84,5 +103,10 @@ public class GuiScreenBook extends GuiScreen
         GL11.glPopMatrix();
 
 //        System.out.println("Done Rendering!");
+    }
+
+    static boolean isMouseHovering(int mouseX, int mouseY, int posX, int posY, int width, int height)
+    {
+        return mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
     }
 }
