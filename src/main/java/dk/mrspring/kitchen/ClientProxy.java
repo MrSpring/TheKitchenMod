@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
+import dk.mrspring.kitchen.gui.screen.GuiScreenBook;
 import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
 import dk.mrspring.kitchen.item.render.ItemRenderSandwich;
@@ -27,5 +28,7 @@ public class ClientProxy extends CommonProxy
 
         SandwichRender.loadRenderingHandlers();
         ItemMixingBowlRenderer.initColors();
+
+        GuiScreenBook.initPages();
     }
 }
