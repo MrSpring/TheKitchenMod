@@ -77,6 +77,7 @@ mix.pancake_dough.name=Pancake Mix
 option.show_is_sandwich_ready=Show Sandwich Status on Board
 option.show_oven_contents=Show Oven Contents
 option.show_oven_status=Show Oven Status
+option.show_pan_status=Show Pan Status
 option.show_toaster_contents=Show Toaster Contents
 option.show_toaster_status=Show Toaster Status
 option.show_waffle_iron_status=Show Waffle Iron Status
@@ -94,4 +95,7 @@ waila.done=Done!
 waila.true=True
 waila.false=False
 
-item.cooking_book.pages.introduction=This mod was originally made for ModJam. ModJam is where modders and mappers get to sit for 96 hours (4 days) and make a mod/map.###When the mod was finished for ModJam, you were only able to make the sandwiches. All the other features were later added in updates, after ModJam had ended. I only had so much time to make it, and I'd rather get that one feature working really well than many features working not so well. And what about the results of ModJam? I won 7th in Overall Excellence and 6th in Most Aesthetically Pleasing (Yay)!
+item.cooking_book.pages.introduction=Thank you for installing The Kitchen Mod!###You are currently using version §l%v§r
+item.cooking_book.pages.update_highlights=§l§nUpdate Highlights:§r
+item.cooking_book.pages.stop_mod_reposts.title=§l#StopModReposts§r
+item.cooking_book.pages.stop_mod_reposts.text=Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need? Added §lWaffles§r, §lPancakes§r and §lthis book§r! What more in life could one possibly need?

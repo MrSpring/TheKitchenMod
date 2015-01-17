@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
-import dk.mrspring.kitchen.gui.screen.GuiScreenBook;
 import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
 import dk.mrspring.kitchen.item.render.ItemRenderSandwich;
@@ -9,6 +8,10 @@ import dk.mrspring.kitchen.item.render.SandwichRender;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.tileentity.renderer.*;
 import net.minecraftforge.client.MinecraftForgeClient;
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStream;
+import java.net.URL;
 
 public class ClientProxy extends CommonProxy
 {
@@ -29,6 +32,13 @@ public class ClientProxy extends CommonProxy
         SandwichRender.loadRenderingHandlers();
         ItemMixingBowlRenderer.initColors();
 
-        GuiScreenBook.initPages();
+        try
+        {
+            InputStream inputStream = new URL("http://mrspring.dk/mods/kitchen/update_highlights.php?version="+ModInfo.version).openStream();
+            versionHighlights = IOUtils.toString(inputStream);
+        } catch (Exception e)
+        {
+            ModLogger.print(ModLogger.DEBUG, "Failed to download the version highlights, they will not be listed in the book!");
+        }
     }
 }
