@@ -1,0 +1,75 @@
+itemGroup.tabKitchen=Kitchen
+
+tile.tiles.name=Плитки
+tile.board.name=Разделочная доска
+tile.tomato_crop.name=Ростки томата
+tile.lettuce_crop.name=Ростки салата-латука
+tile.oven.name=Печь
+tile.plate.name=Тарелка
+tile.kitchen_cabinet.name=Кухонный буфет
+tile.frying_pan.name=Сковорода
+tile.peanut_crop.name=Ростки арахиса
+tile.wild_peanut.name=Дикий арахис
+tile.strawberry_crop.name=Ростки клубники
+tile.wild_strawberry.name=Дикая клубника
+
+item.knife.name=Нож
+item.bacon_raw.name=Сырой бекон
+item.bread_slice.name=Ломтик хлеба
+item.sandwich.name=Сэндвич
+item.tomato.name=Помидор
+item.lettuce.name=Салат-латук
+item.lettuce_leaf.name=Листья салата-латука
+item.tomato_slice.name=Разрезанный помидор
+item.bacon_cooked.name=Приготовленный бекон
+item.carrot_slice.name=Морковные ломтики
+item.potato_slice.name=Разрезанный картофель
+item.mortar.name=Ступка
+item.pestle.name=Пестик
+item.mortar_and_pestle.name=Ступка и пестик
+item.flour.name=Мука
+item.toast.name=Кусочек тоста
+item.raw_roast_beef.name=Кусочек сырой говядины
+item.roast_beef.name=Ростбиф
+item.chicken_fillet_raw.name=Сырое куриное филе
+item.chicken_fillet_cooked.name=Приготовленное куриное филе
+item.chicken_leg.name=Куриная ножка
+item.cheese.name=Сыр
+item.cheese_slice.name=Ломтик сыра
+item.burnt_meat.name=Сгоревшее мясо
+item.butter.name=Масло
+item.butter_knife.name=Нож для масла
+item.sandwichable.sandwichable_msg=Ингредиент сэндвича
+item.jam_jar.filled.name=Заполненный кувшин
+item.jam_jar.empty.name=Пустой кувшин
+item.jam_jar.uses_left_msg=Использований осталось
+item.strawberry.name=Клубника
+item.apple_slice.name=Яблочные ломтики
+item.strawberry_slices.name=Клубничные ломтики
+item.peanut.name=Арахис
+item.peanuts_in_shell.name=Очищенный арахис
+item.sugared_strawberry_slices.name=Засахаренные клубничные ломтики
+
+combo.big_mac.name=Он единственный!
+combo.blt.name=Старый добрый БЛП
+combo.only_bread.name=Немного скушный...
+combo.rrb.name=Ретро-ростбиф
+combo.smart_chicken.name=7 умных куриц
+combo.veggie.name=Вегетарианский сэндвич
+
+jam.peanut.name=Арахисовое масло
+jam.apple.name=Яблочный джем
+jam.strawberry.name=Клубничный джем
+
+option.show_is_sandwich_ready=Показывать состояние сэндвича
+option.show_oven_contents=Показывать содержимое печи
+option.show_oven_status=Показывать состояние печи
+option.show_pan_status=Показывать состояние сковороды
+
+waila.is_sandwich_ready=Готов ли сэндвич
+waila.oven_items=Предметы в печи
+waila.oven_has_coal=Есть ли уголь
+waila.pan_making=Готовится
+waila.pan_done=Приготовилось!
+waila.true=Да
+waila.false=Нет
