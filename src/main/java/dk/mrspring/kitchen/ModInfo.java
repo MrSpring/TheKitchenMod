@@ -1,16 +1,11 @@
 package dk.mrspring.kitchen;
 
+/**
+ * Created by MrSpring on 01-12-2014 for TheKitchenMod.
+ */
 public class ModInfo
 {
-	// The mod-id of the Mod
-	public static final String modid = "kitchen";
-	// The name of the Mod
-	public static final String name = "Kitchen";
-	// The version of the Mod
-	public static final String version = "1.3.4";
-
-	public static String toTexture(String name)
-	{
-		return modid+":"+name;
-	}
+    public static final String MOD_ID = "kitchen";
+    public static final String NAME = "The Kitchen Mod";
+    public static final String VERSION = "1.4.0-PRE";
 }

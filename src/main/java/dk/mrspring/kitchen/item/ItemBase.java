@@ -1,117 +1,49 @@
 package dk.mrspring.kitchen.item;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.ModInfo;
-import net.minecraft.entity.player.EntityPlayer;
+import dk.mrspring.kitchen.TheKitchenMod;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 
-import java.util.Collections;
-import java.util.List;
-
-import static dk.mrspring.kitchen.GameRegisterer.registerItem;
-import static dk.mrspring.kitchen.KitchenItems.*;
-
+/**
+ * Created by MrSpring on 01-12-2014 for TheKitchenMod.
+ */
 public class ItemBase extends Item
 {
-    private String[] informationLines = new String[0];
-    private String localizableName = "super";
-
-    public ItemBase(String name, String textureName, boolean useCreativeTab)
+	String modelName = "default";
+	
+    public ItemBase(String unlocalizedName, String modelName, boolean useCreativeTab)
     {
         super();
 
-        this.setUnlocalizedName(name);
-        this.setTextureName(textureName);
-
+        this.setModelName(modelName);
+        this.setUnlocalizedName(unlocalizedName);
         if (useCreativeTab)
-            this.setCreativeTab(Kitchen.instance.tab);
+            this.setCreativeTab(TheKitchenMod.instance.baseTab);
     }
-
-    public ItemBase setSelfAsContainerItem()
+    
+    public ItemBase(String unlocalizedName, boolean useCreativeTab)
     {
-        this.setContainerItem(this);
-        return this;
+    	this(unlocalizedName, "default", useCreativeTab);
     }
-
-    public ItemBase setLocalizableName(String localizableName)
+    
+    public ItemBase(String unlocalizedName, String modelName)
     {
-        this.localizableName = localizableName;
-        return this;
+    	this(unlocalizedName, modelName, true);
     }
-
-   /* @Override
-    public String getUnlocalizedName()
+    
+    public ItemBase(String unlocalizedName)
     {
-        if (this.localizableName.equals("super"))
-            return super.getUnlocalizedName();
-        else return localizableName;
-    }*/
-
-    @Override
-    public String getItemStackDisplayName(ItemStack p_77653_1_)
-    {
-        if (this.localizableName.equals("super"))
-            return super.getItemStackDisplayName(p_77653_1_);
-        else return StatCollector.translateToLocal(this.localizableName);
+    	this(unlocalizedName, "default", true);
     }
-
-    public ItemBase(String name, boolean useCreativeTab)
+    
+    public ItemBase setModelName(String modelName)
     {
-        this(name, ModInfo.modid + ":" + name, useCreativeTab);
+    	this.modelName = modelName;
+    	return this;
     }
-
-    public ItemBase setInformationLines(String[] informationLines)
+    
+    public String getModelName()
     {
-        this.informationLines = informationLines;
-        return this;
-    }
-
-    @Override
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List information, boolean p_77624_4_)
-    {
-        if (this.informationLines.length != 0)
-            Collections.addAll(information, this.informationLines);
-    }
-
-    public static void load()
-    {
-        registerItem(knife);
-        registerItem(mortar_and_pestle);
-        registerItem(mortar);
-        registerItem(pestle);
-        registerItem(raw_bacon);
-        registerItem(bread_slice);
-        GameRegistry.registerCustomItemStack("sandwich_itemstack", basic_sandwich);
-        registerItem(tomato);
-        registerItem(lettuce);
-        registerItem(tomato_slice);
-        registerItem(lettuce_leaf);
-        registerItem(bacon);
-        registerItem(potato_slice);
-        registerItem(carrot_slice);
-        registerItem(flour);
-        registerItem(toast);
-        registerItem(raw_roast_beef);
-        registerItem(roast_beef);
-        registerItem(raw_chicken_fillet);
-        registerItem(chicken_fillet);
-        registerItem(chicken_leg);
-        registerItem(cheese);
-        registerItem(cheese_slice);
-        registerItem(burnt_meat);
-        registerItem(butter);
-        registerItem(jam_jar);
-        registerItem(jam_strawberry);
-        registerItem(jam_apple);
-        registerItem(strawberry);
-        registerItem(cut_apple);
-        registerItem(cut_strawberry);
-        registerItem(peanut);
-        registerItem(peanuts_in_shell);
-        registerItem(jam_peanut);
-        registerItem(jammable_strawberry);
+    	return this.modelName;
     }
 }

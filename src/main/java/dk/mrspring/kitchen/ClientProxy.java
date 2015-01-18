@@ -1,27 +1,32 @@
 package dk.mrspring.kitchen;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
-import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
-import dk.mrspring.kitchen.item.render.ItemRenderSandwich;
-import dk.mrspring.kitchen.item.render.SandwichRender;
-import dk.mrspring.kitchen.tileentity.*;
-import dk.mrspring.kitchen.tileentity.renderer.*;
-import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 
+/**
+ * Created by MrSpring on 01-12-2014 for TheKitchenMod.
+ */
 public class ClientProxy extends CommonProxy
 {
-	@Override
-	public void registerRenderers()
-	{
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBoard.class, new TileEntityBoardRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOven.class, new TileEntityOvenRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlate.class, new TileEntityPlateRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityKitchenCabinet.class, new TileEntityKitchenCabinetRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPan.class, new TileEntityPanRenderer());
+    @Override
+    public void registerRenderers()
+    {
+//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(TheKitchenMod.knife, new ItemMeshDefinition()
+//        {
+//            @Override
+//            public ModelResourceLocation getModelLocation(ItemStack p_178113_1_)
+//            {
+//                return new ModelResourceLocation("inventory");
+//            }
+//        }/*new ModelResourceLocation("test_item")*/);
+//        MinecraftForgeClient.
+//        RenderItem.field_175051_f
+    }
 
-		MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("sandwich"), new ItemRenderSandwich());
-		MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("jam_jar"), new ItemRenderJamJar());
-
-		SandwichRender.loadRenderingHandlers();
-	}
+    @Override
+    public void registerItemRenderer(Item item, int metedata, ModelResourceLocation location)
+    {
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(TheKitchenMod.knife, 0, new ModelResourceLocation(ModInfo.MOD_ID + ":" + item.getUnlocalizedName().replace("item.", ""), "inventory"));
+    }
 }
