@@ -15,6 +15,15 @@ public class OvenConfig extends BaseConfig
     };
     public JsonBasicRecipe[] custom_oven_recipes = new JsonBasicRecipe[0];
 
+    public OvenConfig()
+    {
+        example = new JsonBasicRecipe[] {
+                new JsonBasicRecipe("minecraft:dirt", "minecraft:diamond"),
+                new JsonBasicRecipe("kitchen:raw_bacon", "kitchen:bacon")
+        };
+        custom_oven_recipes = new JsonBasicRecipe[0];
+    }
+    
     public OvenConfig(File location, String name)
     {
         super(location, name);

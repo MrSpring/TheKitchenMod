@@ -16,6 +16,8 @@ public class BaseConfig
 	private File location;
 	private String label;
 
+	public BaseConfig(){}
+	
 	public BaseConfig(File location,String name)
 	{
 		this.setLocation(location);

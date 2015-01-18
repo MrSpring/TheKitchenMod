@@ -21,11 +21,16 @@ import static net.minecraft.item.EnumRarity.*;
 public class ComboConfig extends BaseConfig
 {
     public List<SandwichCombo> combos = new ArrayList<SandwichCombo>();
+    
+    public ComboConfig()
+    {
+        combos = new ArrayList<SandwichCombo>();
+    }
 
     public ComboConfig(File location, String name)
     {
         super(location, name);
-
+        
         final String ANY_BREAD = "all-bread";
 
         combos.add(new SandwichCombo("big_mac", rare, 2, "kitchen:bread_slice", "kitchen:cheese_slice", "kitchen:roast_beef", "kitchen:lettuce_leaf", "kitchen:bread_slice", "kitchen:roast_beef", "kitchen:lettuce_leaf", "kitchen:bread_slice").translateName());
