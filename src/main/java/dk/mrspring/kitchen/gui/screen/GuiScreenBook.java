@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.gui.screen;
 
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -45,40 +46,21 @@ public class GuiScreenBook extends GuiScreen
         else pages = new ArrayList<Page>();
 
         this.addIntroPages();
-
-        List<String> tempList = new ArrayList<String>();
-        String tempString = StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.text");
-        tempList.add(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.title"));
-        tempList.addAll(mc.fontRenderer.listFormattedStringToWidth(tempString, 120));
-        List<Page> tempPageList = this.getPagesFromLines(tempList);
-        this.pages.addAll(tempPageList);
-        tempList.clear();
-        tempList.add("Thanks for reading!");
-        tempList.add("Mod made by Mr. Spring");
-        this.pages.add(new TextPage(tempList));
+        if (ModConfig.getKitchenConfig().show_mod_repost_into)
+            this.addModRepostPages();
     }
 
-    private List<Page> getPagesFromLines(List<String> lines)
+    private void addModRepostPages()
     {
-        List<Page> pages = new ArrayList<Page>();
-        List<String> pageTemp = new ArrayList<String>();
-
-        for (String line : lines)
-        {
-            System.out.println("Going through line: " + line + ", current pages: " + pages.size() + ", current page size: " + pageTemp.size());
-            pageTemp.add(line);
-            if (pageTemp.size() > 17)
-            {
-                pages.add(new TextPage(pageTemp));
-                pageTemp.clear();
-            }
-        }
-        return pages;
+        List<String> stopModRepostsInfo = new ArrayList<String>();
+        stopModRepostsInfo.add(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.title"));
+        stopModRepostsInfo.addAll(mc.fontRenderer.listFormattedStringToWidth(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.text").replace("\\n", "\n"), 120));
+        this.pages.addAll(getPagesFromLines(stopModRepostsInfo));
     }
 
     private void addIntroPages()
     {
-        String introduction = StatCollector.translateToLocal("item.cooking_book.pages.introduction").replace("###", "\n").replace("%v", ModInfo.version) + ".";
+        String introduction = StatCollector.translateToLocal("item.cooking_book.pages.introduction").replace("\\n", "\n").replace("%v", ModInfo.version) + ".";
 
         if (!Kitchen.proxy.versionHighlights.equals(""))
         {
@@ -121,6 +103,27 @@ public class GuiScreenBook extends GuiScreen
             this.pages.add(new TextPage(introLines.subList(14, introLines.size())).center());
     }
 
+    private List<Page> getPagesFromLines(List<String> lines)
+    {
+        List<Page> localPages = new ArrayList<Page>();
+        List<String> pageTemp = new ArrayList<String>();
+
+        for (String line : lines)
+        {
+            System.out.println("Going through line: " + line + ", current pages: " + pages.size() + ", current page size: " + pageTemp.size());
+            pageTemp.add(line);
+            if (pageTemp.size() > 15)
+            {
+                localPages.add(new TextPage(new ArrayList<String>(pageTemp)));
+                System.out.println("Added a new Page!");
+                pageTemp.clear();
+            }
+        }
+        if (pageTemp.size() > 0)
+            localPages.add(new TextPage(pageTemp));
+        return localPages;
+    }
+
     @Override
     public void drawScreen(int mouseX, int mouseY, float p_73863_3_)
     {
@@ -129,8 +132,8 @@ public class GuiScreenBook extends GuiScreen
         Page leftPage = null, rightPage = null;
 
         leftPage = pages.get(pageSet * 2);
-        if (pages.size() > pageSet * 2 + 1)
-            rightPage = pages.get(pageSet * 2 + 1);
+        if (pages.size() > (pageSet * 2) + 1)
+            rightPage = pages.get((pageSet * 2) + 1);
 
         mc.getTextureManager().bindTexture(new ResourceLocation("kitchen", "textures/gui/cooking_book_left.png"));
         drawTexturedModalRect((width / 2) - 140, 20, 0, 0, 140, 180);
@@ -142,7 +145,7 @@ public class GuiScreenBook extends GuiScreen
 
         if (leftPage != null)
         {
-            mc.fontRenderer.drawString(String.valueOf(pageSet * 2 + 1), (width / 2) - 70, 181, 0x4C1C06, false);
+            mc.fontRenderer.drawString(String.valueOf(pageSet * 2 + 1), (width / 2) - 70, 182, 0x4C1C06, false);
             GL11.glPushMatrix();
             GL11.glTranslatef((width / 2) - 127, 35, 0);
             leftPage.draw(mc, 120);
@@ -150,12 +153,15 @@ public class GuiScreenBook extends GuiScreen
         }
         if (rightPage != null)
         {
-            mc.fontRenderer.drawString(String.valueOf(pageSet * 2 + 2), (width / 2) + 70, 181, 0x4C1C06, false);
+            mc.fontRenderer.drawString(String.valueOf(pageSet * 2 + 2), (width / 2) + 70, 182, 0x4C1C06, false);
             GL11.glPushMatrix();
             GL11.glTranslatef((width / 2) + 7, 35, 0);
             rightPage.draw(mc, 120);
             GL11.glPopMatrix();
         }
+
+//        TextPage page01 = (TextPage) pages.get(1);
+//        List<String> linesOnPage01 = page01.lines;
     }
 
     @Override
@@ -185,6 +191,10 @@ public class GuiScreenBook extends GuiScreen
         public TextPage(List<String> lines)
         {
             this.lines = lines;
+
+//            System.out.println("Creating new Text Page containing these lines: ");
+//            for (String line : lines)
+//                System.out.println(line);
         }
 
         public TextPage center()
@@ -196,9 +206,9 @@ public class GuiScreenBook extends GuiScreen
         @Override
         public void draw(Minecraft minecraft, int width)
         {
-            for (int i = 0; i < lines.size(); i++)
+            for (int i = 0; i < this.lines.size(); i++)
             {
-                String line = lines.get(i);
+                String line = this.lines.get(i);
                 int lineWidth = minecraft.fontRenderer.getStringWidth(line);
                 minecraft.fontRenderer.drawString(line, width / 2 - (lineWidth / 2), (i * 9), 0x4C1C06, false);
             }

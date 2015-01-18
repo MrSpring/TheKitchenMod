@@ -7,7 +7,7 @@ public class ModInfo
 	// The name of the Mod
 	public static final String name = "Kitchen";
 	// The version of the Mod
-	public static final String version = "1.4.1";
+	public static final String version = "1.4.0";
 
 	public static String toTexture(String name)
 	{
