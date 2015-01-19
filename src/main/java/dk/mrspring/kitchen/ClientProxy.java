@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 
@@ -12,21 +13,21 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerRenderers()
     {
-//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(TheKitchenMod.knife, new ItemMeshDefinition()
-//        {
-//            @Override
-//            public ModelResourceLocation getModelLocation(ItemStack p_178113_1_)
-//            {
-//                return new ModelResourceLocation("inventory");
-//            }
-//        }/*new ModelResourceLocation("test_item")*/);
-//        MinecraftForgeClient.
-//        RenderItem.field_175051_f
+        ModelBakery.addVariantName(TheKitchenMod.bread_slice, new String[]{
+        		ModInfo.MOD_ID+":bread_slice_top"
+        });
+        
+        ModelBakery.addVariantName(TheKitchenMod.bread_slice, new String[]{
+        		ModInfo.MOD_ID+":bread_slice_bottom"
+        });
+        
+        registerItemRenderer(TheKitchenMod.bread_slice, 0, ModInfo.MOD_ID+":bread_slice_top");
+        registerItemRenderer(TheKitchenMod.bread_slice, 1, ModInfo.MOD_ID+":bread_slice_bottom");
     }
 
     @Override
-    public void registerItemRenderer(Item item, int metedata, ModelResourceLocation location)
+    public void registerItemRenderer(Item item, int metadata, String name)
     {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(TheKitchenMod.knife, 0, new ModelResourceLocation(ModInfo.MOD_ID + ":" + item.getUnlocalizedName().replace("item.", ""), "inventory"));
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, metadata, new ModelResourceLocation(name, "inventory"));
     }
 }

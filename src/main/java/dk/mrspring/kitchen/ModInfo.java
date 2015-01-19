@@ -7,5 +7,5 @@ public class ModInfo
 {
     public static final String MOD_ID = "kitchen";
     public static final String NAME = "The Kitchen Mod";
-    public static final String VERSION = "1.4.0-PRE";
+    public static final String VERSION = "2.0.0-PRE";
 }

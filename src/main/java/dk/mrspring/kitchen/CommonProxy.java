@@ -12,8 +12,8 @@ public class CommonProxy
     {
 
     }
-    
-    public void registerItemRenderer(Item item, int metedata, ModelResourceLocation location)
+
+    public void registerItemRenderer(Item item, int metedata, String location)
     {
 
     }
