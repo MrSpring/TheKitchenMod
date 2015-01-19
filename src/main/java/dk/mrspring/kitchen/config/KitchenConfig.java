@@ -10,14 +10,14 @@ public class KitchenConfig extends BaseConfig
     public int lettuce_spawn_rate = 10;
     public boolean show_item_debug_info = false;
     public boolean show_console_debug = false;
-    public boolean show_mod_repost_into = true;
+    public boolean show_mod_repost_info = true;
 
     public KitchenConfig()
     {
         lettuce_spawn_rate = 10;
         show_item_debug_info = false;
         show_console_debug = false;
-        show_mod_repost_into = true;
+        show_mod_repost_info = true;
     }
 
     public KitchenConfig(File location, String name)
