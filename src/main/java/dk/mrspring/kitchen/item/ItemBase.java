@@ -27,7 +27,7 @@ public class ItemBase extends Item
     
     public ItemBase(String unlocalizedName, boolean useCreativeTab)
     {
-    	this(unlocalizedName, "default", useCreativeTab);
+    	this(unlocalizedName, unlocalizedName, useCreativeTab);
     }
     
     public ItemBase(String unlocalizedName, String modelName)
@@ -37,7 +37,13 @@ public class ItemBase extends Item
     
     public ItemBase(String unlocalizedName)
     {
-    	this(unlocalizedName, "default", true);
+    	this(unlocalizedName, unlocalizedName, true);
+    }
+    
+    public ItemBase addVariants(String... variantNames)
+    {
+    	TheKitchenMod.proxy.addVariants(this, variantNames);
+    	return this;
     }
     
     public ItemBase setModelName(String modelName)
@@ -49,10 +55,5 @@ public class ItemBase extends Item
     public String getModelName()
     {
     	return this.modelName;
-    }
-    
-    @Override
-    public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining) {
-    	return new ModelResourceLocation(ModInfo.MOD_ID + ":" + this.getModelName(), "inventory");
     }
 }
