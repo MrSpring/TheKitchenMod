@@ -13,6 +13,8 @@ public class ItemCookingBook extends ItemBase
     public ItemCookingBook()
     {
         super("cooking_book", true);
+
+        this.setMaxStackSize(1);
     }
 
     @Override
