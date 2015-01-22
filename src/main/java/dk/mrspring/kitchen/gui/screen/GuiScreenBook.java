@@ -1,19 +1,17 @@
 package dk.mrspring.kitchen.gui.screen;
 
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,6 +43,13 @@ public class GuiScreenBook extends GuiScreen
         public void draw(Minecraft minecraft, int maxWidth)
         {
             GL11.glPushMatrix();
+
+            RenderHelper.enableGUIStandardItemLighting();
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+            GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+            GL11.glEnable(GL11.GL_LIGHTING);
+
             for (Element element : elements)
             {
                 element.draw(minecraft, maxWidth);
@@ -79,12 +84,15 @@ public class GuiScreenBook extends GuiScreen
 
         public TextElement(String text)
         {
-            lines = Arrays.asList(text.split("\n"));
+            lines = mc.fontRenderer.listFormattedStringToWidth(text, 120);
         }
 
         public TextElement(List<String> lines)
         {
-            this.lines = lines;
+//            this.lines = new ArrayList<String>(lines);
+            this.lines = new ArrayList<String>();
+            for (String line : lines)
+                this.lines.addAll(mc.fontRenderer.listFormattedStringToWidth(line, 120));
         }
 
         @Override
@@ -186,9 +194,11 @@ public class GuiScreenBook extends GuiScreen
         {
             GL11.glPushMatrix();
 
+            final int X_OFFSET = (maxWidth - 97) / 2;
+
             GL11.glColor4f(1, 1, 1, 1);
             mc.getTextureManager().bindTexture(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"));
-            drawTexturedModalRect(0, 0, 0, 0, 97, 62);
+            drawTexturedModalRect(X_OFFSET, 0, 0, 0, 97, 62);
 
             for (int i = 0; i < recipe.length; i++)
             {
@@ -240,7 +250,7 @@ public class GuiScreenBook extends GuiScreen
 
 //                    GL11.glTranslatef(x, y, 0);
 
-                    itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16 + 7, y * 16 + 7);
+                    itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16 + 7 + X_OFFSET, y * 16 + 7);
 //                    drawTexturedModelRectFromIcon(0, 0, stack.getIconIndex(), 0, 0);
 
                     GL11.glPopMatrix();
@@ -248,15 +258,16 @@ public class GuiScreenBook extends GuiScreen
                 }
             }
 
-            itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), output, 74, 23);
+            itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), output, 74 + X_OFFSET, 23);
 
+            GL11.glColor4f(1, 1, 1, 1);
             GL11.glPopMatrix();
         }
 
         @Override
         public int getHeight(Minecraft minecraft, int maxWidth)
         {
-            return 0;
+            return 62;
         }
     }
 
@@ -295,8 +306,14 @@ public class GuiScreenBook extends GuiScreen
         List<String> lines = new ArrayList<String>();
         List<Element> elements = new ArrayList<Element>();
         lines.add("§l§nSandwiches§r");
+        lines.add("There are a few things that you'll need to make your sandwiches.");
+        lines.add("First thing is a Knife, crafted like so:");
         elements.add(new TextElement(lines));
         elements.add(new CraftingElement(new ItemStack(KitchenItems.knife)));
+        lines.clear();
+        lines.add("After that you're gonna need a Cutting Board, crafted like so:");
+        elements.add(new TextElement(lines));
+        elements.add(new CraftingElement(new ItemStack(KitchenBlocks.board)));
         this.pages.addAll(this.splitElementsToPages(elements, mc, 120));
 
         return start;
@@ -341,9 +358,9 @@ public class GuiScreenBook extends GuiScreen
     {
         List<String> lines = new ArrayList<String>();
 
-        lines.addAll(mc.fontRenderer.listFormattedStringToWidth(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.title"), 120));
-        lines.add("\n");
-        lines.addAll(mc.fontRenderer.listFormattedStringToWidth(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.text").replace("\\n", "\n"), 120));
+        lines.add(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.title"));
+        lines.add("");
+        lines.add(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.text").replace("\\n", "\n"));
 
         List<Element> elements = new ArrayList<Element>();
         elements.add(new TextElement(lines));
@@ -354,11 +371,11 @@ public class GuiScreenBook extends GuiScreen
     private void addIntroPages()
     {
         List<String> lines = new ArrayList<String>();
-        lines.addAll(mc.fontRenderer.listFormattedStringToWidth(StatCollector.translateToLocal("item.cooking_book.pages.introduction").replace("\\n", "\n").replace("%v", ModInfo.version) + ".", 120));
+        lines.add(StatCollector.translateToLocal("item.cooking_book.pages.introduction").replace("\\n", "\n").replace("%v", ModInfo.version) + ".");
         if (!Kitchen.proxy.versionHighlights.equals(""))
         {
-            lines.addAll(mc.fontRenderer.listFormattedStringToWidth("\n\n" + StatCollector.translateToLocal("item.cooking_book.pages.update_highlights"), 120));
-            lines.addAll(mc.fontRenderer.listFormattedStringToWidth(Kitchen.proxy.versionHighlights, 120));
+            lines.add("\n\n" + StatCollector.translateToLocal("item.cooking_book.pages.update_highlights"));
+            lines.add(Kitchen.proxy.versionHighlights);
         }
 
         List<Element> introElements = new ArrayList<Element>();
