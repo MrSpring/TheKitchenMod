@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +22,7 @@ public class GuiScreenBook extends GuiScreen
 {
     private interface Page
     {
-        public void draw(Minecraft minecraft, int maxWidth);
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY);
     }
 
     private class SimplePage implements Page
@@ -40,7 +41,7 @@ public class GuiScreenBook extends GuiScreen
         }
 
         @Override
-        public void draw(Minecraft minecraft, int maxWidth)
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
         {
             GL11.glPushMatrix();
 
@@ -50,10 +51,13 @@ public class GuiScreenBook extends GuiScreen
             GL11.glEnable(GL11.GL_COLOR_MATERIAL);
             GL11.glEnable(GL11.GL_LIGHTING);
 
+            int relativeMouseY = mouseY;
+
             for (Element element : elements)
             {
-                element.draw(minecraft, maxWidth);
+                element.draw(minecraft, maxWidth, mouseX, relativeMouseY);
                 int height = element.getHeight(minecraft, maxWidth);
+                relativeMouseY += height;
                 GL11.glTranslatef(0, height, 0);
             }
             GL11.glPopMatrix();
@@ -73,7 +77,7 @@ public class GuiScreenBook extends GuiScreen
 
     private interface Element
     {
-        public void draw(Minecraft minecraft, int maxWidth);
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY);
 
         public int getHeight(Minecraft minecraft, int maxWidth);
     }
@@ -96,7 +100,7 @@ public class GuiScreenBook extends GuiScreen
         }
 
         @Override
-        public void draw(Minecraft minecraft, int maxWidth)
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
         {
             for (int i = 0; i < this.lines.size(); i++)
             {
@@ -150,15 +154,30 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 
+    private class Recipe
+    {
+        public ItemStack[] input;
+        public ItemStack output;
+
+        public Recipe(ItemStack output, ItemStack... input)
+        {
+            this.input = input;
+            this.output = output;
+        }
+    }
+
     private class CraftingElement implements Element
     {
-        ItemStack[] recipe;
-        ItemStack output;
+        Recipe recipe;
 
-        public CraftingElement(ItemStack crafting)
+        public CraftingElement(ItemStack input, ItemStack... output)
         {
-            this.output = crafting;
-            this.recipe = new ItemStack[]{new ItemStack(Items.iron_ingot), null, null, null, new ItemStack(Items.stick)};
+            this(new Recipe(input, output));
+        }
+
+        public CraftingElement(Recipe recipe)
+        {
+            this.recipe = recipe;
             /*List recipes = CraftingManager.getInstance().getRecipeList();
             for (Object object : recipes)
             {
@@ -190,7 +209,7 @@ public class GuiScreenBook extends GuiScreen
         }
 
         @Override
-        public void draw(Minecraft minecraft, int maxWidth)
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
         {
             GL11.glPushMatrix();
 
@@ -200,9 +219,9 @@ public class GuiScreenBook extends GuiScreen
             mc.getTextureManager().bindTexture(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"));
             drawTexturedModalRect(X_OFFSET, 0, 0, 0, 97, 62);
 
-            for (int i = 0; i < recipe.length; i++)
+            for (int i = 0; i < recipe.input.length; i++)
             {
-                ItemStack stack = recipe[i];
+                ItemStack stack = recipe.input[i];
                 if (stack != null)
                 {
                     GL11.glPushMatrix();
@@ -242,15 +261,20 @@ public class GuiScreenBook extends GuiScreen
                             x = 1;
                             y = 2;
                             break;
-                        case 8:      // TODO: Clean Up
-                            x = 2;
-                            y = 2;
+                        case 8:      // TODO: Clean up code
+                            x = 2;   // TODO: Support 2x2 and 3x3 recipes
+                            y = 2;   // TODO: Fix relative mouse problems
                             break;
                     }
 
 //                    GL11.glTranslatef(x, y, 0);
 
                     itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16 + 7 + X_OFFSET, y * 16 + 7);
+                    if (isMouseHovering(mouseX, mouseY, x * 16 + 7 + X_OFFSET, y * 16 + 7, 16, 16))
+                    {
+                        List lines = stack.getTooltip(mc.thePlayer, false);
+                        drawHoveringText(lines, mouseX, mouseY, mc.fontRenderer);
+                    }
 //                    drawTexturedModelRectFromIcon(0, 0, stack.getIconIndex(), 0, 0);
 
                     GL11.glPopMatrix();
@@ -258,7 +282,7 @@ public class GuiScreenBook extends GuiScreen
                 }
             }
 
-            itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), output, 74 + X_OFFSET, 23);
+            itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), recipe.output, 74 + X_OFFSET, 23);
 
             GL11.glColor4f(1, 1, 1, 1);
             GL11.glPopMatrix();
@@ -309,11 +333,11 @@ public class GuiScreenBook extends GuiScreen
         lines.add("There are a few things that you'll need to make your sandwiches.");
         lines.add("First thing is a Knife, crafted like so:");
         elements.add(new TextElement(lines));
-        elements.add(new CraftingElement(new ItemStack(KitchenItems.knife)));
+        elements.add(new CraftingElement(new ItemStack(KitchenItems.knife), new ItemStack(Items.iron_ingot), null, null, null, new ItemStack(Items.stick)));
         lines.clear();
         lines.add("After that you're gonna need a Cutting Board, crafted like so:");
         elements.add(new TextElement(lines));
-        elements.add(new CraftingElement(new ItemStack(KitchenBlocks.board)));
+        elements.add(new CraftingElement(new ItemStack(KitchenBlocks.board), new ItemStack(Blocks.wooden_slab), new ItemStack(Blocks.wooden_pressure_plate), new ItemStack(Blocks.wooden_slab)));
         this.pages.addAll(this.splitElementsToPages(elements, mc, 120));
 
         return start;
@@ -383,7 +407,7 @@ public class GuiScreenBook extends GuiScreen
         introElements.add(new Element()
         {
             @Override
-            public void draw(Minecraft minecraft, int maxWidth)
+            public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
             {
                 GL11.glPushMatrix();
                 GL11.glScalef(1.5F, 1.5F, 1.5F);
@@ -484,7 +508,11 @@ public class GuiScreenBook extends GuiScreen
             mc.fontRenderer.drawString(String.valueOf(pageSet * 2 + 1), (width / 2) - 70, 182, 0x4C1C06, false);
             GL11.glPushMatrix();
             GL11.glTranslatef((width / 2) - 127, 35, 0);
-            leftPage.draw(mc, 120);
+            int relativeMouseX = mouseX - ((width / 2) - 127);
+            int relativeMouseY = mouseY - 35;
+            System.out.println("mouseX = " + mouseX);
+            System.out.println("relativeMouseX = " + relativeMouseX);
+            leftPage.draw(mc, 120, relativeMouseX, relativeMouseY);
             GL11.glPopMatrix();
         }
         if (rightPage != null)
@@ -492,7 +520,10 @@ public class GuiScreenBook extends GuiScreen
             mc.fontRenderer.drawString(String.valueOf(pageSet * 2 + 2), (width / 2) + 70, 182, 0x4C1C06, false);
             GL11.glPushMatrix();
             GL11.glTranslatef((width / 2) + 7, 35, 0);
-            rightPage.draw(mc, 120);
+            int relativeMouseX = mouseX - (width / 2) + 7;
+            int relativeMouseY = mouseY - 35;
+
+            rightPage.draw(mc, 120, relativeMouseX, relativeMouseY);
             GL11.glPopMatrix();
         }
     }
