@@ -37,7 +37,7 @@ public class GuiScreenBook extends GuiScreen
 
         public SimplePage(List<Element> elements)
         {
-            this.elements = elements;
+            this.elements = new ArrayList<Element>(elements);
         }
 
         @Override
@@ -82,13 +82,49 @@ public class GuiScreenBook extends GuiScreen
         public int getHeight(Minecraft minecraft, int maxWidth);
     }
 
+    private class ImageElement implements Element
+    {
+        ResourceLocation location;
+        int u, v;
+        int width, height;
+
+        public ImageElement(ResourceLocation image, int u, int v, int width, int height)
+        {
+            this.location = image;
+            this.u = u;
+            this.v = v;
+            this.width = width;
+            this.height = height;
+        }
+
+        @Override
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
+        {
+            GL11.glPushMatrix();
+            GL11.glColor4f(1, 1, 1, 1);
+            minecraft.getTextureManager().bindTexture(location);
+            int x = (maxWidth / 2) - (width / 2);
+            drawTexturedModalRect(x, 2, u, v, width, height);
+//            drawRect(0, 0, width, height, 0xFFFFFF);
+//            minecraft.fontRenderer.drawString("IMAGE", 0, 0, 0x4C1C06);
+            GL11.glPopMatrix();
+        }
+
+        @Override
+        public int getHeight(Minecraft minecraft, int maxWidth)
+        {
+            return height + 4;
+        }
+    }
+
     private class TextElement implements Element, Splittable
     {
         List<String> lines;
+        boolean center = false;
 
         public TextElement(String text)
         {
-            lines = mc.fontRenderer.listFormattedStringToWidth(text, 120);
+            lines = mc.fontRenderer.listFormattedStringToWidth(text, 115);
         }
 
         public TextElement(List<String> lines)
@@ -96,7 +132,19 @@ public class GuiScreenBook extends GuiScreen
 //            this.lines = new ArrayList<String>(lines);
             this.lines = new ArrayList<String>();
             for (String line : lines)
-                this.lines.addAll(mc.fontRenderer.listFormattedStringToWidth(line, 120));
+                this.lines.addAll(mc.fontRenderer.listFormattedStringToWidth(line, 115));
+        }
+
+        public TextElement center()
+        {
+            this.center = true;
+            return this;
+        }
+
+        public TextElement setCenter(boolean center)
+        {
+            this.center = center;
+            return this;
         }
 
         @Override
@@ -105,8 +153,11 @@ public class GuiScreenBook extends GuiScreen
             for (int i = 0; i < this.lines.size(); i++)
             {
                 String line = this.lines.get(i);
-                int lineWidth = minecraft.fontRenderer.getStringWidth(line);
-                minecraft.fontRenderer.drawString(line, maxWidth / 2 - (lineWidth / 2), (i * 9), 0x4C1C06, false);
+                int textX = 3;
+                if (center)
+                    textX += maxWidth / 2 - (minecraft.fontRenderer.getStringWidth(line) / 2);//int lineWidth = minecraft.fontRenderer.getStringWidth(line);
+
+                minecraft.fontRenderer.drawString(line, textX, (i * 9), 0x4C1C06, false);
                 // TODO: Center String
             }
         }
@@ -137,19 +188,19 @@ public class GuiScreenBook extends GuiScreen
             List<String> linesInOne = lines.subList(0, linesWithinHeight);
             List<String> linesInTwo = lines.subList(linesWithinHeight, lines.size());
 
-            System.out.println("Lines in first element: ");
+//            System.out.println("Lines in first element: ");
 
-            for (String line : linesInOne)
-                System.out.println(line);
+//            for (String line : linesInOne)
+//                System.out.println(line);
 
-            System.out.println("Lines in second element: ");
+//            System.out.println("Lines in second element: ");
 
-            for (String line : linesInTwo)
-                System.out.println(line);
+//            for (String line : linesInTwo)
+//                System.out.println(line);
 
             return new Element[]{
-                    new TextElement(linesInOne),
-                    new TextElement(linesInTwo)
+                    new TextElement(linesInOne).setCenter(center),
+                    new TextElement(linesInTwo).setCenter(center)
             };
         }
     }
@@ -170,9 +221,9 @@ public class GuiScreenBook extends GuiScreen
     {
         Recipe recipe;
 
-        public CraftingElement(ItemStack input, ItemStack... output)
+        public CraftingElement(ItemStack output, ItemStack... input)
         {
-            this(new Recipe(input, output));
+            this(new Recipe(output, input));
         }
 
         public CraftingElement(Recipe recipe)
@@ -270,11 +321,11 @@ public class GuiScreenBook extends GuiScreen
 //                    GL11.glTranslatef(x, y, 0);
 
                     itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16 + 7 + X_OFFSET, y * 16 + 7);
-                    if (isMouseHovering(mouseX, mouseY, x * 16 + 7 + X_OFFSET, y * 16 + 7, 16, 16))
+                    /*if (isMouseHovering(mouseX, mouseY, x * 16 + 7 + X_OFFSET, y * 16 + 7, 16, 16))
                     {
                         List lines = stack.getTooltip(mc.thePlayer, false);
                         drawHoveringText(lines, mouseX, mouseY, mc.fontRenderer);
-                    }
+                    }*/
 //                    drawTexturedModelRectFromIcon(0, 0, stack.getIconIndex(), 0, 0);
 
                     GL11.glPopMatrix();
@@ -298,6 +349,17 @@ public class GuiScreenBook extends GuiScreen
 
     int pageSet = 0;
     List<Page> pages;
+    int[] pageIndex;
+
+    private void evenOutPages()
+    {
+        System.out.println("pages.size() = " + pages.size());
+        if (pages.size() % 2 != 0)
+        {
+            pages.add(new SimplePage(new ArrayList<Element>()));
+            System.out.println("pages.size() = " + pages.size());
+        }
+    }
 
     @Override
     public void initGui()
@@ -309,48 +371,78 @@ public class GuiScreenBook extends GuiScreen
         if (ModConfig.getKitchenConfig().show_mod_repost_info)
             this.addModRepostInfo();
 
-        if (pages.size() % 2 != 0)
-            pages.add(new SimplePage(new ArrayList<Element>()));
-
-        int tableOfContentLocation = pages.size();
-
-        int sandwichStartPage = this.addSandwichPages();
-        int ovenStartPage = this.addOvenPages();
-        int fryingPanStartPage = this.addPanPages();
-        int waffleStartPage = this.addWafflePages();
-        int toasterStartPage = this.addToasterPages();
+        this.evenOutPages();
 
         this.addTableOfContent();
+
+        pageIndex = new int[5];
+        pageIndex[0] = this.addSandwichPages();
+        pageIndex[1] = this.addOvenPages();
+        pageIndex[2] = this.addPanPages();
+        pageIndex[3] = this.addWafflePages();
+        pageIndex[4] = this.addToasterPages();
+    }
+
+    private String translate(String text)
+    {
+        return StatCollector.translateToLocal(text).replace("\\n", "\n");
     }
 
     private int addSandwichPages()
     {
-        int start = this.pages.size();
+        this.evenOutPages();
 
-        List<String> lines = new ArrayList<String>();
+        int start = this.pages.size() + 1;
+
         List<Element> elements = new ArrayList<Element>();
-        lines.add("§l§nSandwiches§r");
-        lines.add("There are a few things that you'll need to make your sandwiches.");
-        lines.add("First thing is a Knife, crafted like so:");
-        elements.add(new TextElement(lines));
+        elements.add(new TextElement(translate("item.cooking_book.pages.sandwiches.title")));
+        elements.add(new ImageElement(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), 99, 0, 99, 99));
+        this.pages.add(new SimplePage(elements));
+        elements.clear();
+        elements.add(new TextElement(translate("item.cooking_book.pages.sandwiches.text01")));
         elements.add(new CraftingElement(new ItemStack(KitchenItems.knife), new ItemStack(Items.iron_ingot), null, null, null, new ItemStack(Items.stick)));
-        lines.clear();
-        lines.add("After that you're gonna need a Cutting Board, crafted like so:");
-        elements.add(new TextElement(lines));
+        elements.add(new TextElement(translate("item.cooking_book.pages.sandwiches.text02")));
         elements.add(new CraftingElement(new ItemStack(KitchenBlocks.board), new ItemStack(Blocks.wooden_slab), new ItemStack(Blocks.wooden_pressure_plate), new ItemStack(Blocks.wooden_slab)));
-        this.pages.addAll(this.splitElementsToPages(elements, mc, 120));
+        this.pages.addAll(this.splitElementsToPages(elements, mc, 115));
 
         return start;
     }
 
     private int addOvenPages()
     {
-        return 0;
+        this.evenOutPages();
+
+        int start = this.pages.size() + 1;
+
+        List<Element> elements = new ArrayList<Element>();
+        elements.add(new TextElement(translate("item.cooking_book.pages.oven.title")).center());
+        elements.add(new ImageElement(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), 0, 62, 99, 99));
+        this.pages.add(new SimplePage(elements));
+        elements.clear();
+        elements.add(new TextElement(translate("item.cooking_book.pages.oven.text01")));
+        elements.add(new CraftingElement(new ItemStack(KitchenBlocks.oven), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.coal), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.flint_and_steel), new ItemStack(Items.iron_ingot)));
+        this.pages.addAll(this.splitElementsToPages(elements, mc, 115));
+
+        return start;
     }
 
+    // TODO: Add a simpler solution for all these "addXPages" functions
     private int addPanPages()
     {
-        return 0;
+        this.evenOutPages();
+
+        int start = this.pages.size() + 1;
+
+        List<Element> elements = new ArrayList<Element>();
+        elements.add(new TextElement(translate("item.cooking_book.pages.pan.title")));
+        elements.add(new ImageElement(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), 99, 99, 99, 99));
+        this.pages.add(new SimplePage(elements));
+        elements.clear();
+        elements.add(new TextElement(translate("item.cooking_book.pages.pan.text01")));
+        elements.add(new CraftingElement(new ItemStack(KitchenBlocks.frying_pan), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot)));
+        pages.addAll(this.splitElementsToPages(elements, mc, 115));
+
+        return start;
     }
 
     private int addWafflePages()
@@ -365,40 +457,68 @@ public class GuiScreenBook extends GuiScreen
 
     private void addTableOfContent()
     {
+        final String[] content = new String[]{"sandwich", "oven", "pan", "waffle", "toast"};
+
+        List<Element> elements = new ArrayList<Element>();
+        elements.add(new TextElement(translate("item.cooking_book.pages.contents.title") + "\n").center());
+        elements.add(new Element()
+        {
+            @Override
+            public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
+            {
+                final int COLOR = 0x4C1C06;
+
+                for (int i = 0; i < content.length; i++)
+                {
+                    String name = translate("item.cooking_book.pages.contents." + content[i]), value = String.valueOf(pageIndex[i]);
+                    minecraft.fontRenderer.drawString(name, 4, i * 9, COLOR);
+                    int valueWidth = minecraft.fontRenderer.getStringWidth(value);
+                    minecraft.fontRenderer.drawString(value, maxWidth - valueWidth - 4, i * 9, COLOR);
+                }
+            }
+
+            @Override
+            public int getHeight(Minecraft minecraft, int maxWidth)
+            {
+                return 0;
+            }
+        });
+        this.pages.add(new SimplePage(elements));
+    /*
         List<String> lines = new ArrayList<String>();
-        lines.add("§nContents:");
+        lines.add("§n§lContents:");
         lines.add("");
-        lines.add("Sandwiches");
-        lines.add("The Oven");
-        lines.add("The Frying Pan");
-        lines.add("Waffles");
-        lines.add("Toast");
+        lines.add("Sandwiches:  " + sandwichIndex);
+        lines.add("The Oven:  " + ovenIndex);
+        lines.add("The Frying Pan:  " + panIndex);
+        lines.add("Waffles:  " + waffleIndex);
+        lines.add("Toast:  " + toasterIndex);
 
         TextElement element = new TextElement(lines);
-        this.pages.add(new SimplePage(element));
+        this.pages.add(pageIndex, new SimplePage(element));*/
     }
 
     private void addModRepostInfo()
     {
         List<String> lines = new ArrayList<String>();
 
-        lines.add(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.title"));
+        lines.add(translate("item.cooking_book.pages.stop_mod_reposts.title"));
         lines.add("");
-        lines.add(StatCollector.translateToLocal("item.cooking_book.pages.stop_mod_reposts.text").replace("\\n", "\n"));
+        lines.add(translate("item.cooking_book.pages.stop_mod_reposts.text"));
 
         List<Element> elements = new ArrayList<Element>();
-        elements.add(new TextElement(lines));
+        elements.add(new TextElement(lines).center());
 
-        pages.addAll(splitElementsToPages(elements, mc, 120));
+        pages.addAll(splitElementsToPages(elements, mc, 115));
     }
 
     private void addIntroPages()
     {
         List<String> lines = new ArrayList<String>();
-        lines.add(StatCollector.translateToLocal("item.cooking_book.pages.introduction").replace("\\n", "\n").replace("%v", ModInfo.version) + ".");
+        lines.add(translate("item.cooking_book.pages.introduction").replace("%v", ModInfo.version) + ".");
         if (!Kitchen.proxy.versionHighlights.equals(""))
         {
-            lines.add("\n\n" + StatCollector.translateToLocal("item.cooking_book.pages.update_highlights"));
+            lines.add("\n\n" + translate("item.cooking_book.pages.update_highlights"));
             lines.add(Kitchen.proxy.versionHighlights);
         }
 
@@ -411,7 +531,7 @@ public class GuiScreenBook extends GuiScreen
             {
                 GL11.glPushMatrix();
                 GL11.glScalef(1.5F, 1.5F, 1.5F);
-                minecraft.fontRenderer.drawString("Introduction", maxWidth / 3 - (minecraft.fontRenderer.getStringWidth("Introduction") / 2), 0, 0x4C1C06, false);
+                minecraft.fontRenderer.drawString(translate("item.cooking_book.pages.introduction.title"), maxWidth / 3 - (minecraft.fontRenderer.getStringWidth(translate("item.cooking_book.pages.introduction.title")) / 2), 0, 0x4C1C06, false);
                 GL11.glPopMatrix();
             }
 
@@ -422,9 +542,9 @@ public class GuiScreenBook extends GuiScreen
             }
         });
 
-        introElements.add(new TextElement(lines));
+        introElements.add(new TextElement(lines).center());
 
-        pages.addAll(splitElementsToPages(introElements, mc, 120));
+        pages.addAll(splitElementsToPages(introElements, mc, 115));
     }
 
     private List<Page> splitElementsToPages(List<Element> elements, Minecraft minecraft, int width)
@@ -437,11 +557,11 @@ public class GuiScreenBook extends GuiScreen
         final int MAX_PAGE_HEIGHT = 16 * 9;
         for (Element element : elements)
         {
-            System.out.println("Adding another element!");
+//            System.out.println("Adding another element!");
             int elementHeight = element.getHeight(minecraft, width);
-            System.out.println("Current Pages: " + localPages.size());
-            System.out.println("Current Page Temp: " + pageTemp.size());
-            System.out.println("Current Page Height: " + pageHeight);
+//            System.out.println("Current Pages: " + localPages.size());
+//            System.out.println("Current Page Temp: " + pageTemp.size());
+//            System.out.println("Current Page Height: " + pageHeight);
             if (pageHeight + elementHeight > MAX_PAGE_HEIGHT)
             {
                 if (element instanceof Splittable)
@@ -478,7 +598,7 @@ public class GuiScreenBook extends GuiScreen
         if (pageTemp.size() > 0)
             localPages.add(new SimplePage(new ArrayList<Element>(pageTemp)));
 
-        System.out.println("localPages.size() = " + localPages.size());
+//        System.out.println("localPages.size() = " + localPages.size());
         return localPages;
     }
 
@@ -510,9 +630,7 @@ public class GuiScreenBook extends GuiScreen
             GL11.glTranslatef((width / 2) - 127, 35, 0);
             int relativeMouseX = mouseX - ((width / 2) - 127);
             int relativeMouseY = mouseY - 35;
-            System.out.println("mouseX = " + mouseX);
-            System.out.println("relativeMouseX = " + relativeMouseX);
-            leftPage.draw(mc, 120, relativeMouseX, relativeMouseY);
+            leftPage.draw(mc, 115, relativeMouseX, relativeMouseY);
             GL11.glPopMatrix();
         }
         if (rightPage != null)
@@ -523,7 +641,7 @@ public class GuiScreenBook extends GuiScreen
             int relativeMouseX = mouseX - (width / 2) + 7;
             int relativeMouseY = mouseY - 35;
 
-            rightPage.draw(mc, 120, relativeMouseX, relativeMouseY);
+            rightPage.draw(mc, 115, relativeMouseX, relativeMouseY);
             GL11.glPopMatrix();
         }
     }
@@ -792,7 +910,6 @@ public class GuiScreenBook extends GuiScreen
                 String line = this.lines.get(i);
                 int lineWidth = minecraft.fontRenderer.getStringWidth(line);
                 minecraft.fontRenderer.drawString(line, width / 2 - (lineWidth / 2), (i * 9), 0x4C1C06, false);
-                // TODO: Center String if (center);
             }
         }
 

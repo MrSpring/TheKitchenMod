@@ -95,7 +95,28 @@ waila.done=Done!
 waila.true=True
 waila.false=False
 
+item.cooking_book.pages.introduction.title=§lIntroduction
 item.cooking_book.pages.introduction=Thank you for installing The Kitchen Mod!\nYou are currently using version §l%v§r
 item.cooking_book.pages.update_highlights=§l§nUpdate Highlights:§r
 item.cooking_book.pages.stop_mod_reposts.title=§l#StopModReposts§r
 item.cooking_book.pages.stop_mod_reposts.text=Did you download this mod from §lMinecraftForum.net§r, §lPlanetMinecraft.com§r or §lMrSpring.dk§r?\nIf not, then please read this:\n\nThe site you downloaded from is probably illegally redistributing the mod. Downloading from such sites does not support the developers one bit. This is starting to become a big issue, and something has to be done about it!\nFor more information, including a long list of websites that do this, please visit §lStopModReposts.org§r
+
+item.cooking_book.pages.contents.title=§n§lContents:§r
+item.cooking_book.pages.contents.sandwich=Sandwiches
+item.cooking_book.pages.contents.oven=The Oven
+item.cooking_book.pages.contents.pan=The Frying Pan
+item.cooking_book.pages.contents.waffle=Waffle
+item.cooking_book.pages.contents.toast=Toast
+
+item.cooking_book.pages.sandwiches.title=§l§nSandwiches§r
+item.cooking_book.pages.sandwiches.text01=There are a few things that you'll need to make your sandwiches.\nFirst thing is a Knife, crafted like so:
+item.cooking_book.pages.sandwiches.text02=After that you're gonna need a Cutting Board, crafted like so:
+
+item.cooking_book.pages.oven.title=§l§nThe Oven§r
+item.cooking_book.pages.oven.text01=The Oven is an elegant and efficient way to cook your food.\nIt uses less coal than a regular furnace, and takes the same time to cook.\nOne piece of coal can cook up to 16 items.\nThe Oven is crafted like so:
+
+item.cooking_book.pages.pan.title=§l§nThe Frying Pan
+item.cooking_book.pages.pan.text01=The Frying Pan is used to fry things like Bacon, and to make all kinds of Jam.\nThe Frying Pan is crafted like so:
+
+        lines.add("The Frying Pan is used to fry things like Bacon, and to make all kinds of Jam.");
+        lines.add("The Frying Pan is crafted like so:");
