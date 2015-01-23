@@ -107,13 +107,20 @@ item.cooking_book.pages.contents.oven=The Oven
 item.cooking_book.pages.contents.pan=The Frying Pan
 item.cooking_book.pages.contents.waffle=Waffle
 item.cooking_book.pages.contents.toast=Toast
+item.cooking_book.pages.contents.timer=Timer
 
-item.cooking_book.pages.sandwiches.title=§l§nSandwiches§r
+item.cooking_book.pages.sandwiches.title=§l§nSandwiches
 item.cooking_book.pages.sandwiches.text01=There are a few things that you'll need to make your sandwiches.\nFirst thing is a Knife, crafted like so:
 item.cooking_book.pages.sandwiches.text02=After that you're gonna need a Cutting Board, crafted like so:
 
-item.cooking_book.pages.oven.title=§l§nThe Oven§r
+item.cooking_book.pages.oven.title=§l§nThe Oven
 item.cooking_book.pages.oven.text01=The Oven is an elegant and efficient way to cook your food.\nIt uses less coal than a regular furnace, and takes the same time to cook.\nOne piece of coal can cook up to 16 items.\nThe Oven is crafted like so:
 
 item.cooking_book.pages.pan.title=§l§nThe Frying Pan
 item.cooking_book.pages.pan.text01=The Frying Pan is used to fry things like Bacon, and to make all kinds of Jam.\nThe Frying Pan is crafted like so:
+
+item.cooking_book.pages.waffle.title=§l§nWaffles
+
+item.cooking_book.pages.toast.title=§l§nToast
+
+item.cooking_book.pages.timer.title=§l§nTimer

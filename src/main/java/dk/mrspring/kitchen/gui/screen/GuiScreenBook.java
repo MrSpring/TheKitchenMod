@@ -1,18 +1,22 @@
 package dk.mrspring.kitchen.gui.screen;
 
 import dk.mrspring.kitchen.*;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -124,7 +128,7 @@ public class GuiScreenBook extends GuiScreen
 
         public TextElement(String text)
         {
-            lines = mc.fontRenderer.listFormattedStringToWidth(text, 115);
+            lines = mc.fontRenderer.listFormattedStringToWidth(text, 120);
         }
 
         public TextElement(List<String> lines)
@@ -132,7 +136,7 @@ public class GuiScreenBook extends GuiScreen
 //            this.lines = new ArrayList<String>(lines);
             this.lines = new ArrayList<String>();
             for (String line : lines)
-                this.lines.addAll(mc.fontRenderer.listFormattedStringToWidth(line, 115));
+                this.lines.addAll(mc.fontRenderer.listFormattedStringToWidth(line, 120));
         }
 
         public TextElement center()
@@ -220,6 +224,11 @@ public class GuiScreenBook extends GuiScreen
     private class CraftingElement implements Element
     {
         Recipe recipe;
+
+        public CraftingElement(ItemStack output, List<ItemStack> input)
+        {
+            this(output, input.toArray(new ItemStack[input.size()]));
+        }
 
         public CraftingElement(ItemStack output, ItemStack... input)
         {
@@ -375,12 +384,56 @@ public class GuiScreenBook extends GuiScreen
 
         this.addTableOfContent();
 
-        pageIndex = new int[5];
-        pageIndex[0] = this.addSandwichPages();
-        pageIndex[1] = this.addOvenPages();
-        pageIndex[2] = this.addPanPages();
-        pageIndex[3] = this.addWafflePages();
-        pageIndex[4] = this.addToasterPages();
+        pageIndex = new int[6];
+        pageIndex[0] = this.addChapter("item.cooking_book.pages.sandwiches.title", 0, 99, 0,
+                START_TEXT,
+                "item.cooking_book.pages.sandwiches.text01",
+                STOP_TEXT,
+                START_CRAFTING,
+                new ItemStack(KitchenItems.knife),
+                Items.iron_ingot,
+                null, null, null,
+                Items.stick,
+                STOP_CRAFTING,
+                START_TEXT,
+                "item.cooking_book.pages.sandwiches.text02",
+                STOP_TEXT,
+                START_CRAFTING,
+                new ItemStack(KitchenBlocks.board),
+                Blocks.wooden_slab,
+                Blocks.wooden_pressure_plate,
+                Blocks.wooden_slab,
+                STOP_CRAFTING);
+        pageIndex[1] = this.addChapter("item.cooking_book.pages.oven.title", 0, 0, 62,
+                START_TEXT,
+                "item.cooking_book.pages.oven.text01",
+                STOP_TEXT,
+                START_CRAFTING,
+                new ItemStack(KitchenBlocks.oven),
+                Items.iron_ingot, Items.iron_ingot, Items.iron_ingot,
+                Items.iron_ingot, Items.coal, Items.iron_ingot,
+                Items.iron_ingot, Items.flint_and_steel, Items.iron_ingot,
+                STOP_CRAFTING);
+        pageIndex[2] = this.addChapter("item.cooking_book.pages.pan.title", 0, 99, 99,
+                START_TEXT,
+                "item.cooking_book.pages.pan.text01",
+                STOP_TEXT,
+                START_CRAFTING,
+                new ItemStack(KitchenBlocks.frying_pan),
+                Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot,
+                STOP_CRAFTING);
+        pageIndex[3] = this.addChapter("item.cooking_book.pages.waffle.title", 1, 0, 0,
+                START_TEXT,
+                "item.cooking_book.pages.waffle.text01",
+                STOP_TEXT);
+        pageIndex[4] = this.addChapter("item.cooking_book.pages.toast.title", 1, 0, 99,
+                START_TEXT,
+                "item.cooking_book.pages.toast.text01",
+                STOP_TEXT);
+        pageIndex[5] = this.addChapter("item.cooking_book.pages.timer.title", 1, 99, 0,
+                START_TEXT,
+                "item.cooking_book.pages.timer.text01",
+                STOP_TEXT);
     }
 
     private String translate(String text)
@@ -388,76 +441,139 @@ public class GuiScreenBook extends GuiScreen
         return StatCollector.translateToLocal(text).replace("\\n", "\n");
     }
 
-    private int addSandwichPages()
+    private List<String> translateList(List<String> lines)
+    {
+        List<String> translated = new ArrayList<String>();
+        for (String line : lines)
+            translated.add(translate(line));
+        return translated;
+    }
+
+    private static final String START_CRAFTING = "%C_START%";
+    private static final String STOP_CRAFTING = "%C_STOP%";
+
+    private static final String START_TEXT = "%T_START%";
+    private static final String STOP_TEXT = "%T_STOP%";
+    private static final String CENTER_TEXT = "%T_CENTER%";
+    private static final String DONT_TRANSLATE_TEXT = "%T_DT%";
+
+    private static final String START_IMAGE = "%I_START%";
+    private static final String STOP_IMAGE = "%I_STOP%";
+
+    private int addChapter(String title, int textureIndex, int logoU, int logoV, Object... content)
     {
         this.evenOutPages();
 
         int start = this.pages.size() + 1;
 
         List<Element> elements = new ArrayList<Element>();
-        elements.add(new TextElement(translate("item.cooking_book.pages.sandwiches.title")));
-        elements.add(new ImageElement(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), 99, 0, 99, 99));
-        this.pages.add(new SimplePage(elements));
-        elements.clear();
-        elements.add(new TextElement(translate("item.cooking_book.pages.sandwiches.text01")));
-        elements.add(new CraftingElement(new ItemStack(KitchenItems.knife), new ItemStack(Items.iron_ingot), null, null, null, new ItemStack(Items.stick)));
-        elements.add(new TextElement(translate("item.cooking_book.pages.sandwiches.text02")));
-        elements.add(new CraftingElement(new ItemStack(KitchenBlocks.board), new ItemStack(Blocks.wooden_slab), new ItemStack(Blocks.wooden_pressure_plate), new ItemStack(Blocks.wooden_slab)));
-        this.pages.addAll(this.splitElementsToPages(elements, mc, 115));
+        elements.add(new TextElement(translate(title)).center());
+        elements.add(new ImageElement(new ResourceLocation("kitchen", "textures/gui/cooking_book" + (textureIndex != 0 ? "_" + textureIndex : "") + ".png"), logoU, logoV, 99, 99));
+
+        List contentList = Arrays.asList(content);
+
+        Iterator iterator = contentList.listIterator();
+
+        while (iterator.hasNext())
+        {
+            Object object = iterator.next();
+
+            if (object instanceof String)
+            {
+                String objectAsString = (String) object;
+                if (objectAsString.equals(START_CRAFTING))
+                {
+                    List<ItemStack> input = new ArrayList<ItemStack>();
+                    ItemStack output = (ItemStack) iterator.next();
+
+                    while (iterator.hasNext())
+                    {
+                        Object inputObject = iterator.next();
+                        if (inputObject instanceof ItemStack)
+                            input.add((ItemStack) inputObject);
+                        else if (inputObject instanceof Item)
+                            input.add(new ItemStack((Item) inputObject));
+                        else if (inputObject instanceof Block)
+                            input.add(new ItemStack((Block) inputObject));
+                        else if (inputObject == null)
+                            input.add(null);
+                        else if (inputObject instanceof String)
+                            if (inputObject.equals(STOP_CRAFTING))
+                                break;
+                    }
+
+                    elements.add(new CraftingElement(output, input));
+                } else if (objectAsString.equals(START_TEXT))
+                {
+                    List<String> lines = new ArrayList<String>();
+                    boolean center = false, translate = true;
+
+                    while (iterator.hasNext())
+                    {
+                        Object lineObject = iterator.next();
+                        if (lineObject instanceof String)
+                        {
+                            if (lineObject.equals(STOP_TEXT))
+                                break;
+                            else if (lineObject.equals(CENTER_TEXT))
+                                center = true;
+                            else if (lineObject.equals(DONT_TRANSLATE_TEXT))
+                                translate = false;
+                            else lines.add((String) lineObject);
+                        }
+                    }
+                    if (translate)
+                        lines = translateList(lines);
+                    elements.add(new TextElement(lines).setCenter(center));
+                } else if (objectAsString.equals(START_IMAGE))
+                {
+                    ResourceLocation imageLocation = null;
+                    Integer u = null, v = null, width = null, height = null;
+
+                    while (iterator.hasNext())
+                    {
+                        Object imageObject = iterator.next();
+
+                        if (imageObject instanceof Integer)
+                        {
+                            if (u == null)
+                                u = (Integer) imageObject;
+                            else if (v == null)
+                                v = (Integer) imageObject;
+                            else if (width == null)
+                                width = (Integer) imageObject;
+                            else if (height == null)
+                                height = (Integer) imageObject;
+                        } else if (imageObject instanceof ResourceLocation)
+                            imageLocation = (ResourceLocation) imageObject;
+                        else if (imageObject instanceof String)
+                        {
+                            if (imageObject.equals(STOP_IMAGE))
+                                break;
+                            else
+                            {
+                                String imageObjectAsString = (String) imageObject;
+                                if (imageObjectAsString.contains(":"))
+                                    imageLocation = new ResourceLocation(imageObjectAsString);
+                                else imageLocation = new ResourceLocation("kitchen", imageObjectAsString);
+                            }
+                        }
+                    }
+
+                    if (imageLocation != null && u != null && v != null && width != null && height != null)
+                        elements.add(new ImageElement(imageLocation, u, v, width, height));
+                }
+            }
+        }
+
+        this.pages.addAll(this.splitElementsToPages(elements, mc, 120));
 
         return start;
-    }
-
-    private int addOvenPages()
-    {
-        this.evenOutPages();
-
-        int start = this.pages.size() + 1;
-
-        List<Element> elements = new ArrayList<Element>();
-        elements.add(new TextElement(translate("item.cooking_book.pages.oven.title")).center());
-        elements.add(new ImageElement(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), 0, 62, 99, 99));
-        this.pages.add(new SimplePage(elements));
-        elements.clear();
-        elements.add(new TextElement(translate("item.cooking_book.pages.oven.text01")));
-        elements.add(new CraftingElement(new ItemStack(KitchenBlocks.oven), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.coal), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.flint_and_steel), new ItemStack(Items.iron_ingot)));
-        this.pages.addAll(this.splitElementsToPages(elements, mc, 115));
-
-        return start;
-    }
-
-    // TODO: Add a simpler solution for all these "addXPages" functions
-    private int addPanPages()
-    {
-        this.evenOutPages();
-
-        int start = this.pages.size() + 1;
-
-        List<Element> elements = new ArrayList<Element>();
-        elements.add(new TextElement(translate("item.cooking_book.pages.pan.title")));
-        elements.add(new ImageElement(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), 99, 99, 99, 99));
-        this.pages.add(new SimplePage(elements));
-        elements.clear();
-        elements.add(new TextElement(translate("item.cooking_book.pages.pan.text01")));
-        elements.add(new CraftingElement(new ItemStack(KitchenBlocks.frying_pan), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot), new ItemStack(Items.iron_ingot)));
-        pages.addAll(this.splitElementsToPages(elements, mc, 115));
-
-        return start;
-    }
-
-    private int addWafflePages()
-    {
-        return 0;
-    }
-
-    private int addToasterPages()
-    {
-        return 0;
     }
 
     private void addTableOfContent()
     {
-        final String[] content = new String[]{"sandwich", "oven", "pan", "waffle", "toast"};
+        final String[] content = new String[]{"sandwich", "oven", "pan", "waffle", "toast", "timer"};
 
         List<Element> elements = new ArrayList<Element>();
         elements.add(new TextElement(translate("item.cooking_book.pages.contents.title") + "\n").center());
@@ -484,18 +600,6 @@ public class GuiScreenBook extends GuiScreen
             }
         });
         this.pages.add(new SimplePage(elements));
-    /*
-        List<String> lines = new ArrayList<String>();
-        lines.add("§n§lContents:");
-        lines.add("");
-        lines.add("Sandwiches:  " + sandwichIndex);
-        lines.add("The Oven:  " + ovenIndex);
-        lines.add("The Frying Pan:  " + panIndex);
-        lines.add("Waffles:  " + waffleIndex);
-        lines.add("Toast:  " + toasterIndex);
-
-        TextElement element = new TextElement(lines);
-        this.pages.add(pageIndex, new SimplePage(element));*/
     }
 
     private void addModRepostInfo()
@@ -509,7 +613,7 @@ public class GuiScreenBook extends GuiScreen
         List<Element> elements = new ArrayList<Element>();
         elements.add(new TextElement(lines).center());
 
-        pages.addAll(splitElementsToPages(elements, mc, 115));
+        pages.addAll(splitElementsToPages(elements, mc, 120));
     }
 
     private void addIntroPages()
@@ -544,7 +648,7 @@ public class GuiScreenBook extends GuiScreen
 
         introElements.add(new TextElement(lines).center());
 
-        pages.addAll(splitElementsToPages(introElements, mc, 115));
+        pages.addAll(splitElementsToPages(introElements, mc, 120));
     }
 
     private List<Page> splitElementsToPages(List<Element> elements, Minecraft minecraft, int width)
@@ -557,11 +661,7 @@ public class GuiScreenBook extends GuiScreen
         final int MAX_PAGE_HEIGHT = 16 * 9;
         for (Element element : elements)
         {
-//            System.out.println("Adding another element!");
             int elementHeight = element.getHeight(minecraft, width);
-//            System.out.println("Current Pages: " + localPages.size());
-//            System.out.println("Current Page Temp: " + pageTemp.size());
-//            System.out.println("Current Page Height: " + pageHeight);
             if (pageHeight + elementHeight > MAX_PAGE_HEIGHT)
             {
                 if (element instanceof Splittable)
@@ -627,21 +727,21 @@ public class GuiScreenBook extends GuiScreen
         {
             mc.fontRenderer.drawString(String.valueOf(pageSet * 2 + 1), (width / 2) - 70, 182, 0x4C1C06, false);
             GL11.glPushMatrix();
-            GL11.glTranslatef((width / 2) - 127, 35, 0);
+            GL11.glTranslatef((width / 2) - 130, 35, 0);
             int relativeMouseX = mouseX - ((width / 2) - 127);
             int relativeMouseY = mouseY - 35;
-            leftPage.draw(mc, 115, relativeMouseX, relativeMouseY);
+            leftPage.draw(mc, 120, relativeMouseX, relativeMouseY);
             GL11.glPopMatrix();
         }
         if (rightPage != null)
         {
             mc.fontRenderer.drawString(String.valueOf(pageSet * 2 + 2), (width / 2) + 70, 182, 0x4C1C06, false);
             GL11.glPushMatrix();
-            GL11.glTranslatef((width / 2) + 7, 35, 0);
+            GL11.glTranslatef((width / 2) + 6, 35, 0);
             int relativeMouseX = mouseX - (width / 2) + 7;
             int relativeMouseY = mouseY - 35;
 
-            rightPage.draw(mc, 115, relativeMouseX, relativeMouseY);
+            rightPage.draw(mc, 120, relativeMouseX, relativeMouseY);
             GL11.glPopMatrix();
         }
     }
