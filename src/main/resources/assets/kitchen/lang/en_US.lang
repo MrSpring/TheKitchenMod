@@ -95,6 +95,8 @@ waila.done=Done!
 waila.true=True
 waila.false=False
 
+item.cooking_book.name=Cooking Book
+
 item.cooking_book.pages.introduction.title=§lIntroduction
 item.cooking_book.pages.introduction=Thank you for installing The Kitchen Mod!\nYou are currently using version §l%v§r
 item.cooking_book.pages.update_highlights=§l§nUpdate Highlights:§r
