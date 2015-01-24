@@ -140,3 +140,16 @@ item.cooking_book.pages.waffle.title=§l§nWaffles
 item.cooking_book.pages.toast.title=§l§nToast
 
 item.cooking_book.pages.timer.title=§l§nTimer
+
+achievement.kitchen.installed=Kitchen Mod Installed
+achievement.kitchen.installed.desc=Install The Kitchen Mod
+achievement.kitchen.cutting_board=Chop Chop
+achievement.kitchen.cutting_board.desc=Craft a Cutting Board
+achievement.kitchen.first_sandwich=Sammich!
+achievement.kitchen.first_sandwich.desc=Make your first Sandwich
+achievement.kitchen.oven=Oven!
+achievement.kitchen.oven.desc=Make an Oven
+achievement.kitchen.frying_pan=Frying Pan!
+achievement.kitchen.frying_pan.desc=Make a Frying Pan
+achievement.kitchen.bacon=Makin' Bacon
+achievement.kitchen.bacon.desc=Fry Bacon on a Frying Pan

@@ -7,6 +7,7 @@ import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.pan.Ingredient;
 import dk.mrspring.kitchen.pan.Jam;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -30,13 +31,13 @@ public class TileEntityPan extends TileEntityTimeable
      * @param clicked The ItemStack the block is being right-clicked with.
      * @return Returns true if clicked's stack-size should be subtracted.
      */
-    public boolean rightClicked(ItemStack clicked)
+    public boolean rightClicked(ItemStack clicked, EntityPlayer player)
     {
         if (clicked != null)
         {
             if (this.cookTime >= 400 && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam() && clicked.getItemDamage() == 0)
             {
-                this.finishItem(clicked);
+                this.finishItem(clicked, player);
                 return true;
             } else if (this.ingredient == Ingredient.getIngredient("empty"))
             {
@@ -46,7 +47,7 @@ public class TileEntityPan extends TileEntityTimeable
         {
             if (this.cookTime >= 400)
             {
-                this.finishItem(null);
+                this.finishItem(null, player);
                 return false;
             }
         }
@@ -54,7 +55,7 @@ public class TileEntityPan extends TileEntityTimeable
         return false;
     }
 
-    private void finishItem(ItemStack clicked)
+    private void finishItem(ItemStack clicked, EntityPlayer player)
     {
         if (this.cookTime >= 400)
         {
@@ -71,6 +72,7 @@ public class TileEntityPan extends TileEntityTimeable
             if (result != null)
             {
                 this.cookTime = 0;
+                this.ingredient.onIngredientFinished(result, player);
                 this.ingredient = Ingredient.getIngredient("empty");
 
                 worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, result));

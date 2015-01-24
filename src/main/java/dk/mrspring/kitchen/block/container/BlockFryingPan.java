@@ -104,7 +104,7 @@ public class BlockFryingPan extends BlockContainerBase
         TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
 
         if (tileEntityPan != null && !world.isRemote)
-            if (tileEntityPan.rightClicked(player.getCurrentEquippedItem()))
+            if (tileEntityPan.rightClicked(player.getCurrentEquippedItem(), player))
             {
 //                player.getCurrentEquippedItem().stackSize--;
                 tileEntityPan.checkIsFunctional();

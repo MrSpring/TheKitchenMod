@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -11,6 +12,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
+import dk.mrspring.kitchen.event.PlayerEvents;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.gui.GuiHandler;
 import dk.mrspring.kitchen.item.ItemBase;
@@ -24,8 +26,10 @@ import dk.mrspring.kitchen.recipe.RecipeRegistry;
 import dk.mrspring.kitchen.recipe.ToasterRecipes;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -52,6 +56,7 @@ public class Kitchen
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+
         // Loads the mods logger
         ModLogger.initializeLogger(event);
 
@@ -165,7 +170,14 @@ public class Kitchen
             {
                 return true;
             }
-        }, new ItemStack(KitchenItems.bacon, 1)));
+        }, new ItemStack(KitchenItems.bacon, 1))
+        {
+            @Override
+            public void onIngredientFinished(ItemStack result, EntityPlayer player)
+            {
+                player.triggerAchievement(ModAchievements.bacon);
+            }
+        });
         Ingredient.registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
         Ingredient.registerIngredient(new Ingredient("pancake_dough", new IIngredientRenderingHandler()
         {
@@ -233,6 +245,9 @@ public class Kitchen
         KitchenItems.linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
         KitchenItems.linkToIngredient(KitchenItems.mixing_bowl, "pancake_dough");
         KitchenItems.linkToIngredient(Items.dye, "cocoa");
+
+        ModAchievements.load();
+        FMLCommonHandler.instance().bus().register(new PlayerEvents());
     }
 
     @EventHandler

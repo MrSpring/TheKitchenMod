@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.pan;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
@@ -97,5 +98,10 @@ public class Ingredient
     public void onAdded(ItemStack clickedStack)
     {
         clickedStack.stackSize--;
+    }
+
+    public void onIngredientFinished(ItemStack result, EntityPlayer player)
+    {
+
     }
 }

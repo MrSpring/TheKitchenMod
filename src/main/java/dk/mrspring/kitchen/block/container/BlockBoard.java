@@ -1,6 +1,6 @@
 package dk.mrspring.kitchen.block.container;
 
-import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.ModAchievements;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -23,6 +23,12 @@ public class BlockBoard extends BlockContainerBase
 
         this.setStepSound(soundTypeWood);
         this.setHardness(2.0F);
+    }
+
+    @Override
+    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
+    {
+        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
     }
 
     @Override
@@ -59,6 +65,7 @@ public class BlockBoard extends BlockContainerBase
                 {
                     world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, sandwich));
                     world.markBlockForUpdate(x, y, z);
+                    activator.triggerAchievement(ModAchievements.first_sandwich);
                     return true;
                 }
             }

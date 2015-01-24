@@ -12,6 +12,11 @@ public class GameRegisterer
 		GameRegistry.registerBlock(block, itemBlock, name);
 	}
 
+	public static void registerBlock(Block block, Class<? extends ItemBlock> itemBlock)
+	{
+		registerBlock(block, itemBlock, block.getUnlocalizedName().replace("tile.", ""));
+	}
+
 	public static void registerBlock(Block block, String name)
 	{
 		GameRegistry.registerBlock(block, name);
