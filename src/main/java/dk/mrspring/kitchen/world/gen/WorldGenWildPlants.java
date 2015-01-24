@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class WorldGenWildPlants implements IWorldGenerator
 {
-    Block[] wildPlants = new Block[]{KitchenBlocks.wild_lettuce, KitchenBlocks.wild_tomato, KitchenBlocks.wild_peanut, KitchenBlocks.wild_strawberry};
+    Block[] wildPlants = new Block[]{KitchenBlocks.wild_lettuce, KitchenBlocks.wild_tomato, KitchenBlocks.wild_peanut, KitchenBlocks.wild_strawberry, KitchenBlocks.wild_vanilla};
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
