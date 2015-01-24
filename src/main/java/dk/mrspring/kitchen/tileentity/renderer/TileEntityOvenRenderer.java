@@ -103,7 +103,7 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
             GL11.glTranslated(xOffset, yOffset, zOffset);
 
             ItemStack toRender = item.copy();
-            toRender.stackSize = 1;
+//            toRender.stackSize = 1;
 
             EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
             itemEntity.hoverStart = 0.0F;
