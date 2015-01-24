@@ -7,6 +7,8 @@ tile.tomato_crop.name=Tomato Plant
 tile.lettuce_crop.name=Lettuce Crop
 tile.oven.name=Oven
 tile.plate.name=Plate
+tile.plate.not_used_for_sandwiches1=NOT USED TO MAKE SANDWICHES!
+tile.plate.not_used_for_sandwiches2=For that you use a Cutting Board
 tile.kitchen_cabinet.name=Kitchen Cabinet
 tile.frying_pan.name=Frying Pan
 tile.peanut_crop.name=Peanut Crop
@@ -117,6 +119,7 @@ item.cooking_book.pages.sandwiches.text02=After that you're gonna need a Cutting
 
 item.cooking_book.pages.oven.title=§l§nThe Oven
 item.cooking_book.pages.oven.text01=The Oven is an elegant and efficient way to cook your food.\nIt uses less coal than a regular furnace, and takes the same time to cook.\nOne piece of coal can cook up to 16 items.\nThe Oven is crafted like so:
+item.cooking_book.pages.oven.text02=In order to put Items into The Oven, it must be opened first. You do so by right-clicking The Oven while crouching.
 
 item.cooking_book.pages.pan.title=§l§nThe Frying Pan
 item.cooking_book.pages.pan.text01=The Frying Pan is used to fry things like Bacon, and to make all kinds of Jam.\nThe Frying Pan is crafted like so:
