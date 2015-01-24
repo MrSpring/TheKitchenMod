@@ -5,6 +5,8 @@ tile.tiles.name=Tiles
 tile.board.name=Cutting Board
 tile.tomato_crop.name=Tomato Plant
 tile.lettuce_crop.name=Lettuce Crop
+tile.wild_tomato.name=Wild Tomato
+tile.wild_lettuce.name=Wild Lettuce
 tile.oven.name=Oven
 tile.plate.name=Plate
 tile.plate.not_used_for_sandwiches1=NOT USED TO MAKE SANDWICHES!
@@ -17,6 +19,8 @@ tile.strawberry_crop.name=Strawberry Crop
 tile.wild_strawberry.name=Wild Strawberry
 tile.waffle_iron.name=Waffle Iron
 tile.toaster.name=Toaster
+tile.vanilla_crop.name=Vanilla Crop
+tile.wild_vanilla.name=Wild Vanilla
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
@@ -76,6 +80,7 @@ combo.veggie.name=Veggie Sandwich
 jam.peanut.name=Peanut Butter
 jam.apple.name=Apple Jam
 jam.strawberry.name=Strawberry Jam
+jam.cocoa.name=Cocoa-Cream
 
 mix.waffle_dough.name=Waffle Mix
 mix.pancake_dough.name=Pancake Mix

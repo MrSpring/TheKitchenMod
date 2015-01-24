@@ -30,7 +30,7 @@ public class KitchenBlocks
     public static final Block wild_lettuce = new BlockWildBase("lettuce", "kitchen:lettuce");
     public static final Block wild_peanut = new BlockWildBase("peanut", "kitchen:peanuts_in_shell");
     public static final Block wild_strawberry = new BlockWildBase("strawberry", "kitchen:strawberry");
-    public static final Block wild_vanilla = new BlockWildBase("vanilla", "kitchen:vanilla_fruit");
+    public static final Block wild_vanilla = new BlockWildBase("vanilla", "kitchen:raw_vanilla");
 
     // "Machines"
     public static final Block board = new BlockBoard();

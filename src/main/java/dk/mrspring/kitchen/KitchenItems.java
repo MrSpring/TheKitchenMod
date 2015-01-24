@@ -62,6 +62,7 @@ public class KitchenItems
     public static final Item jam_strawberry = new ItemBase("strawberry_jam", false).setLocalizableName("jam.strawberry.name");
     public static final Item jam_apple = new ItemBase("apple_jam", false).setLocalizableName("jam.apple.name");
     public static final Item jam_peanut = new ItemBase("peanut_jam", false).setLocalizableName("jam.peanut.name");
+    public static final Item jam_cocoa = new ItemBase("cocoa_jam", false).setLocalizableName("jam.cocoa.name");
 
     public static final Item waffle = new ItemFoodBase("waffle", 5, false, Kitchen.instance.foodTab);
     public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false, Kitchen.instance.foodTab);
@@ -75,7 +76,7 @@ public class KitchenItems
 
     public static final Item crushed_ice = new ItemBase("crushed_ice", Kitchen.instance.foodTab);
 
-    public static final Item raw_vanilla = new ItemFoodBase("raw_vanilla", 2, false).setCreativeTab(Kitchen.instance.foodTab);
+    public static final Item raw_vanilla = new ItemSeedBase("raw_vanilla", KitchenBlocks.vanilla_crop, Kitchen.instance.foodTab);
     public static final Item dried_vanilla = new ItemFoodBase("dried_vanilla", 3, false).setCreativeTab(Kitchen.instance.foodTab);
     public static final Item crushed_vanilla = new ItemFoodBase("crushed_vanilla", 1, false).setCreativeTab(Kitchen.instance.foodTab);
 

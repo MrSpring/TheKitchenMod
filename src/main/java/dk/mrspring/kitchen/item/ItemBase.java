@@ -116,6 +116,7 @@ public class ItemBase extends Item
         registerItem(jam_strawberry);
         registerItem(jam_apple);
         registerItem(jam_peanut);
+        registerItem(jam_cocoa);
         registerItem(strawberry);
         registerItem(cut_strawberry);
         registerItem(jammable_strawberry);

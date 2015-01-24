@@ -16,6 +16,7 @@ public class Jam
     final String name;
     final int color;
     final String item;
+    final int metadata;
 
     public int getColor()
     {
@@ -32,11 +33,12 @@ public class Jam
         } else return null;
     }
 
-    public Jam(String name, int color, String itemName)
+    public Jam(String name, int color, String itemName, int metadata)
     {
         this.name = name;
         this.color = color;
         this.item = itemName;
+        this.metadata = metadata;
     }
 
     public static void registerJam(Jam jam)
