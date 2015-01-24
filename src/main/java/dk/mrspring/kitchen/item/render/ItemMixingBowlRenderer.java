@@ -36,5 +36,6 @@ public class ItemMixingBowlRenderer
     {
         mixColors.put("waffle_dough", 0xFFBB56);
         mixColors.put("pancake_dough", 0xFFD375);
+        mixColors.put("vanilla_ice_cream", 0xFFFFFF);
     }
 }

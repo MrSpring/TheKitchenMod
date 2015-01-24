@@ -61,6 +61,10 @@ item.burnt_waffle.name=Burnt Waffle
 item.timer.name=Timer
 item.toasted_toast.name=Toasted Toast
 item.pancake.name=Pancake
+item.raw_vanilla.name=Raw Vanilla
+item.dried_vanilla.name=Dried Vanilla
+item.crushed_vanilla.name=Vanilla Powder
+item.crushed_ice.name=Crushed Ice
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
@@ -75,6 +79,7 @@ jam.strawberry.name=Strawberry Jam
 
 mix.waffle_dough.name=Waffle Mix
 mix.pancake_dough.name=Pancake Mix
+mix.vanilla_ice_cream.name=Vanilla Ice Cream
 
 option.show_is_sandwich_ready=Show Sandwich Status on Board
 option.show_oven_contents=Show Oven Contents

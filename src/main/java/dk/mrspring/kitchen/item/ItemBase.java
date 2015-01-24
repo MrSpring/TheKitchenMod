@@ -129,5 +129,6 @@ public class ItemBase extends Item
         registerItem(raw_vanilla);
         registerItem(dried_vanilla);
         registerItem(crushed_vanilla);
+        registerItem(crushed_ice);
     }
 }

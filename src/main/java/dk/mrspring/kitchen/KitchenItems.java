@@ -73,6 +73,8 @@ public class KitchenItems
     public static final Item timer = new ItemBase("timer", true);
     public static final Item cooking_book = new ItemCookingBook();
 
+    public static final Item crushed_ice = new ItemBase("crushed_ice", Kitchen.instance.foodTab);
+
     public static final Item raw_vanilla = new ItemFoodBase("raw_vanilla", 2, false).setCreativeTab(Kitchen.instance.foodTab);
     public static final Item dried_vanilla = new ItemFoodBase("dried_vanilla", 3, false).setCreativeTab(Kitchen.instance.foodTab);
     public static final Item crushed_vanilla = new ItemFoodBase("crushed_vanilla", 1, false).setCreativeTab(Kitchen.instance.foodTab);
