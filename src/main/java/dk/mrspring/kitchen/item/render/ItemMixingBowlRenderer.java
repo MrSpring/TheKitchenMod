@@ -3,13 +3,14 @@ package dk.mrspring.kitchen.item.render;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by MrSpring on 10-12-2014 for TheKitchenMod.
  */
 public class ItemMixingBowlRenderer
 {
-    public static HashMap<String, Integer> mixColors = new HashMap<String, Integer>();
+    public static HashMap<String, Integer> mixColors = new LinkedHashMap<String, Integer>();
 
     public static int getColorAsInteger(String mixType)
     {
@@ -37,5 +38,6 @@ public class ItemMixingBowlRenderer
         mixColors.put("waffle_dough", 0xFFBB56);
         mixColors.put("pancake_dough", 0xFFD375);
         mixColors.put("vanilla_ice_cream", 0xFFFFFF);
+        mixColors.put("strawberry_ice_cream", 0xFF9F9E);
     }
 }
