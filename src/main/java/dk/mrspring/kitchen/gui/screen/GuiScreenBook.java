@@ -121,6 +121,36 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 
+    private class SpacerElement implements Element, Splittable
+    {
+        int height = 0;
+
+        public SpacerElement(int height)
+        {
+            this.height = height;
+        }
+
+        @Override
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
+        {
+        }
+
+        @Override
+        public int getHeight(Minecraft minecraft, int maxWidth)
+        {
+            return this.height;
+        }
+
+        @Override
+        public Element[] split(int toHeight)
+        {
+            return new Element[]{
+                    new SpacerElement(Math.min(this.height, toHeight)),
+                    new SpacerElement(0)
+            };
+        }
+    }
+
     private class TextElement implements Element, Splittable
     {
         List<String> lines;
@@ -413,7 +443,23 @@ public class GuiScreenBook extends GuiScreen
                 Items.iron_ingot, Items.iron_ingot, Items.iron_ingot,
                 Items.iron_ingot, Items.coal, Items.iron_ingot,
                 Items.iron_ingot, Items.flint_and_steel, Items.iron_ingot,
-                STOP_CRAFTING);
+                STOP_CRAFTING,
+                ADD_SPACE, 10,
+                START_TEXT,
+                "item.cooking_book.pages.oven.text02",
+                STOP_TEXT,
+                START_IMAGE,
+                "kitchen:textures/gui/cooking_book.png",
+                0,
+                161,
+                99,
+                61,
+                STOP_IMAGE,
+                START_TEXT,
+                "And now Items can be added!",
+                "Only food items, though. That means you can't cook ores in the oven. You can only cook items that are edible.",
+                DONT_TRANSLATE_TEXT,
+                STOP_TEXT);
         pageIndex[2] = this.addChapter("item.cooking_book.pages.pan.title", 0, 99, 99,
                 START_TEXT,
                 "item.cooking_book.pages.pan.text01",
@@ -459,6 +505,8 @@ public class GuiScreenBook extends GuiScreen
 
     private static final String START_IMAGE = "%I_START%";
     private static final String STOP_IMAGE = "%I_STOP%";
+
+    private static final String ADD_SPACE = "%SPACE%";
 
     private int addChapter(String title, int textureIndex, int logoU, int logoV, Object... content)
     {
@@ -562,6 +610,11 @@ public class GuiScreenBook extends GuiScreen
 
                     if (imageLocation != null && u != null && v != null && width != null && height != null)
                         elements.add(new ImageElement(imageLocation, u, v, width, height));
+                } else if (objectAsString.equals(ADD_SPACE))
+                {
+                    Object height = iterator.next();
+                    if (height instanceof Integer)
+                        elements.add(new SpacerElement((Integer) height));
                 }
             }
         }
