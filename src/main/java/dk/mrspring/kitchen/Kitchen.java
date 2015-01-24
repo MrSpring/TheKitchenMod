@@ -125,11 +125,11 @@ public class Kitchen
 
         MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
 
-        Jam.registerJam(new Jam("empty", 000000, "null", 0));
-        Jam.registerJam(new Jam("strawberry", 16196364, "kitchen:strawberry_jam", 0));
-        Jam.registerJam(new Jam("apple", 14415786, "kitchen:apple_jam", 0));
-        Jam.registerJam(new Jam("peanut", 9659689, "kitchen:peanut_jam", 0));
-        Jam.registerJam(new Jam("cocoa", 0x895836, "kitchen:cocoa_jam", 0));
+        Jam.registerJam(new Jam("empty", 000000, "null"));
+        Jam.registerJam(new Jam("strawberry", 16196364, "kitchen:strawberry_jam"));
+        Jam.registerJam(new Jam("apple", 14415786, "kitchen:apple_jam"));
+        Jam.registerJam(new Jam("peanut", 9659689, "kitchen:peanut_jam"));
+        Jam.registerJam(new Jam("cocoa", 0x895836, "kitchen:cocoa_jam"));
 
         Ingredient.registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
         Ingredient.registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
