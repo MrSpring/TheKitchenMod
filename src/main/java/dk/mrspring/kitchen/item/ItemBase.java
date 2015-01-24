@@ -126,5 +126,8 @@ public class ItemBase extends Item
         registerItem(pancake);
         registerItem(timer);
         registerItem(cooking_book);
+        registerItem(raw_vanilla);
+        registerItem(dried_vanilla);
+        registerItem(crushed_vanilla);
     }
 }

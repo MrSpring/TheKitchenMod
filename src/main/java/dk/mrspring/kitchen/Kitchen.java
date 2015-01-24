@@ -103,13 +103,6 @@ public class Kitchen
 
         ModLogger.print(ModLogger.INFO, "Loading Custom Oven recipes...");
 
-        // Loads the recipe handlers
-        instance.ovenRecipes = new OvenRecipes();
-        instance.toasterRecipes = new ToasterRecipes();
-
-        instance.ovenRecipes.load();
-        instance.toasterRecipes.load();
-
         // Registering the Lettuce world generator
         GameRegistry.registerWorldGenerator(new WorldGenWildPlants(), 1);
 
@@ -117,6 +110,13 @@ public class Kitchen
          * RECIPES
          */
         RecipeRegistry.registerRecipes();
+
+        // Loads the recipe handlers
+        instance.ovenRecipes = new OvenRecipes();
+        instance.toasterRecipes = new ToasterRecipes();
+
+        instance.ovenRecipes.load();
+        instance.toasterRecipes.load();
 
         FMLInterModComms.sendMessage("Waila", "register", "dk.mrspring.kitchen.comp.waila.WailaDataProvider.callbackRegister");
         FMLInterModComms.sendRuntimeMessage(ModInfo.modid, "VersionChecker", "addVersionCheck", "http://www.mrspring.dk/mods/kitchen/vchecker.json");

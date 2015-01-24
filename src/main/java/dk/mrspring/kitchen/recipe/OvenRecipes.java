@@ -48,7 +48,7 @@ public class OvenRecipes extends BasicRecipeHandler
         BasicRecipe[] defaultRecipes = new BasicRecipe[]{
                 new BasicRecipe(new ItemStack(KitchenItems.raw_roast_beef), new ItemStack(KitchenItems.roast_beef)),
                 new BasicRecipe(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)),
-                new BasicRecipe(new ItemStack(KitchenItems.raw_bacon), new ItemStack(KitchenItems.bacon))
+                new BasicRecipe(new ItemStack(KitchenItems.raw_bacon), new ItemStack(KitchenItems.bacon)),
         };
         addAll(defaultRecipes);
     }

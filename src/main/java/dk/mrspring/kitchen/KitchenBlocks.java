@@ -23,7 +23,7 @@ public class KitchenBlocks
     public static final Block lettuce_crop = new BlockCropBase("lettuce", "kitchen:lettuce");
     public static final Block peanut_crop = new BlockCropBase("peanut", "kitchen:peanuts_in_shell");
     public static final Block strawberry_crop = new BlockCropBase("strawberry", "kitchen:strawberry");
-    public static final Block vanilla_crop = new BlockCropBase("vanilla", "kitchen_vanilla_fruit");
+    public static final Block vanilla_crop = new BlockCropBase("vanilla", "kitchen:raw_vanilla");
 
     // Wild Plants
     public static final Block wild_tomato = new BlockWildBase("tomato", "kitchen:tomato");
