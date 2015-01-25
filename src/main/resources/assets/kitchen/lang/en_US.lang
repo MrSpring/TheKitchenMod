@@ -70,6 +70,8 @@ item.dried_vanilla.name=Dried Vanilla
 item.crushed_vanilla.name=Vanilla Powder
 item.crushed_ice.name=Crushed Ice
 item.ice_cream.ice_cream_message=Ice Cream
+item.raw_burger_bun.name=Uncooked Burger Bun
+item.burger_bun.name=Burger Bun
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
@@ -85,6 +87,7 @@ jam.cocoa.name=Cocoa-Cream
 
 mix.waffle_dough.name=Waffle Mix
 mix.pancake_dough.name=Pancake Mix
+mix.burger_bun_dough.name=Burger Bun Dough
 mix.vanilla_ice_cream.name=Vanilla Ice Cream
 mix.strawberry_ice_cream.name=Strawberry Ice Cream
 mix.chocolate_ice_cream.name=Chocolate Ice Cream

@@ -80,6 +80,10 @@ public class KitchenItems
     public static final Item dried_vanilla = new ItemFoodBase("dried_vanilla", 3, false).setCreativeTab(Kitchen.instance.foodTab);
     public static final Item crushed_vanilla = new ItemFoodBase("crushed_vanilla", 1, false).setCreativeTab(Kitchen.instance.foodTab);
 
+    public static final Item raw_burger_bun = new ItemBase("raw_burger_bun", Kitchen.instance.foodTab);
+    public static final Item burger_bun = new ItemFoodBase("burger_bun", 2, false, Kitchen.instance.foodTab);
+    public static final Item sliced_burger_bun = new ItemFoodBase("sliced_burger_bun", 1, false, Kitchen.instance.foodTab);
+
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
     {

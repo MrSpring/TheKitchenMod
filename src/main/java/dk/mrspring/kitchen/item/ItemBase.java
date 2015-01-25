@@ -131,5 +131,8 @@ public class ItemBase extends Item
         registerItem(dried_vanilla);
         registerItem(crushed_vanilla);
         registerItem(crushed_ice);
+        registerItem(raw_burger_bun);
+        registerItem(burger_bun);
+        registerItem(sliced_burger_bun);
     }
 }

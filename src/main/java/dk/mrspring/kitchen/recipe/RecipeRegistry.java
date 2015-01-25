@@ -45,11 +45,14 @@ public class RecipeRegistry
 
         // Jam Jar recipe
         GameRegistry.addRecipe(new ItemStack(jam_jar, 1), " I ", "G G", "GGG", valueOf('I'), iron_ingot, valueOf('G'), glass);
+        // Mixing Bowl recipe
+        GameRegistry.addRecipe(new ItemStack(mixing_bowl, 1), "CDC", " C ", valueOf('C'), clay_ball, valueOf('D'), new ItemStack(dye, 1, 12));
 
 
         // Mixing Bowl recipes
         GameRegistry.addShapelessRecipe(getMixingBowlStack("waffle_dough", 3), getMixingBowlStack(null, 0), egg, Items.wheat, milk_bucket, sugar);
         GameRegistry.addShapelessRecipe(getMixingBowlStack("pancake_dough", 3), getMixingBowlStack(null, 0), egg, flour, milk_bucket, sugar, butter);
+        GameRegistry.addShapelessRecipe(getMixingBowlStack("burger_bun_dough", 3), getMixingBowlStack(null, 0), egg, flour, milk_bucket, butter, wheat_seeds);
         GameRegistry.addShapelessRecipe(getMixingBowlStack("vanilla_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar);
         GameRegistry.addShapelessRecipe(getMixingBowlStack("strawberry_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar, cut_strawberry);
         GameRegistry.addShapelessRecipe(getMixingBowlStack("strawberry_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, jammable_strawberry);
@@ -85,6 +88,50 @@ public class RecipeRegistry
 
         GameRegistry.addShapelessRecipe(new ItemStack(cheese, 2), new ItemStack(milk_bucket));
         GameRegistry.addShapelessRecipe(new ItemStack(jammable_strawberry), new ItemStack(cut_strawberry), new ItemStack(sugar));
+        GameRegistry.addRecipe(new IRecipe()
+        {
+
+            @Override
+            public boolean matches(InventoryCrafting crafting, World p_77569_2_)
+            {
+                ItemStack bowlStack = null;
+
+                for (int i = 0; i < 9; i++)
+                {
+                    ItemStack inSlot = crafting.getStackInSlot(i);
+                    if (inSlot != null)
+                        if (inSlot.getItem() == mixing_bowl)
+                            bowlStack = inSlot.copy();
+                        else return false;
+                }
+
+                if (bowlStack == null)
+                    return false;
+
+                if (!bowlStack.hasTagCompound())
+                    return false;
+
+                return ItemMixingBowlRenderer.getMixType(bowlStack).equals("burger_bun_dough");
+            }
+
+            @Override
+            public ItemStack getCraftingResult(InventoryCrafting p_77572_1_)
+            {
+                return new ItemStack(raw_burger_bun, 1, 0);
+            }
+
+            @Override
+            public int getRecipeSize()
+            {
+                return 0;
+            }
+
+            @Override
+            public ItemStack getRecipeOutput()
+            {
+                return null;
+            }
+        });
 
         GameRegistry.addShapelessRecipe(new ItemStack(mortar_and_pestle, 1), new ItemStack(mortar), new ItemStack(pestle));
 
@@ -144,6 +191,7 @@ public class RecipeRegistry
         GameRegistry.addSmelting(raw_chicken_fillet, new ItemStack(chicken_fillet, 1, 0), 3F);
         GameRegistry.addSmelting(raw_roast_beef, new ItemStack(roast_beef, 1, 0), 3F);
         GameRegistry.addSmelting(raw_vanilla, new ItemStack(dried_vanilla, 1, 0), 3F);
+        GameRegistry.addSmelting(raw_burger_bun, new ItemStack(burger_bun), 3F);
 
         GameRegistry.addRecipe(new IRecipe()
         {
@@ -160,6 +208,7 @@ public class RecipeRegistry
                             waffleStack = inSlot;
                         else if (inSlot.getItem() == mixing_bowl)
                             bowlStack = inSlot;
+                        else return false;
                 }
 
                 if (waffleStack == null || bowlStack == null)
@@ -239,6 +288,7 @@ public class RecipeRegistry
                             pancakeStack = inSlot;
                         else if (inSlot.getItem() == mixing_bowl)
                             bowlStack = inSlot;
+                        else return false;
                 }
 
                 if (pancakeStack == null || bowlStack == null)

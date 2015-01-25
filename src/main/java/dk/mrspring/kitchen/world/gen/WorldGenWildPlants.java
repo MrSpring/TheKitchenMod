@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.world.gen;
 import cpw.mods.fml.common.IWorldGenerator;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.ModLogger;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -30,6 +31,7 @@ public class WorldGenWildPlants implements IWorldGenerator
             {
                 Block toGenerate = wildPlants[random.nextInt(wildPlants.length)];
                 world.setBlock(x, y, z, toGenerate);
+                ModLogger.print(ModLogger.DEBUG, "Generating " + toGenerate.getUnlocalizedName() + " at X: " + x + ", Y: " + y + ", Z: " + z);
             }
         }
     }

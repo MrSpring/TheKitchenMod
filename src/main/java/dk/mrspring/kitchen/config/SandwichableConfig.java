@@ -18,7 +18,7 @@ public class SandwichableConfig extends BaseConfig
     {
         sandwichable_items = new ArrayList<SandwichableEntry>();
     }
-    
+
     public SandwichableConfig(File location, String name)
     {
         super(location, name);
@@ -29,6 +29,7 @@ public class SandwichableConfig extends BaseConfig
     public void addDefaultItems()
     {
         this.makeSandwichable(new SandwichableEntry("kitchen:bread_slice", 0, true));
+        this.makeSandwichable(new SandwichableEntry("kitchen:sliced_burger_bun", 1, true));
         this.makeSandwichable(new SandwichableEntry("kitchen:toast", 0, true));
 
         this.makeSandwichable(new SandwichableEntry("kitchen:bacon_cooked", 2));
