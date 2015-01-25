@@ -79,6 +79,12 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                 GL11.glTranslatef(0.25F, 0.6F, -0.4F);
                 GL11.glRotatef(20, 0, 0, 1);
                 break;
+            case EQUIPPED:
+                GL11.glScalef(2, 2, 2);
+                GL11.glRotatef(-60, 1, 0, 0);
+                GL11.glRotatef(17.5F, 0, 0, 1);
+                GL11.glTranslatef(0.2F, 0.2F, 0);
+                break;
         }
 
         if (item.hasTagCompound())
@@ -89,11 +95,11 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                 if (creams.length > 0)
                     renderIceCream(creams[0].color, -0.05F, 0, 0.11F);
                 if (creams.length > 1)
-                    renderIceCream(creams[1].color, 0.1F, 0.04F, 0.1F);
+                    renderIceCream(creams[1].color, 0.1F, 0.04F, 0.0F);
                 if (creams.length > 2)
                     renderIceCream(creams[2].color, 0, 0.03F, -0.12F);
                 if (creams.length > 3)
-                    renderIceCream(creams[3].color, -0.04F, 0.2F, 0.1F);
+                    renderIceCream(creams[3].color, 0.04F, 0.2F, 0.1F);
             }
         }
         renderItem(item, 0, 0, 0);
