@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -61,12 +62,13 @@ public class ItemMixingBowl extends ItemBase
     {
         super.getSubItems(p_150895_1_, p_150895_2_, list);
 
-        for (Map.Entry<String, Integer> entry : ItemMixingBowlRenderer.mixColors.entrySet())
-        {
-            ItemStack stack = new ItemStack(p_150895_1_, 1, 3);
-            stack.setTagInfo("MixType", new NBTTagString(entry.getKey()));
-            list.add(stack);
-        }
+        if (ModConfig.getKitchenConfig().show_different_mixing_bowls_in_creative_tab)
+            for (Map.Entry<String, Integer> entry : ItemMixingBowlRenderer.mixColors.entrySet())
+            {
+                ItemStack stack = new ItemStack(p_150895_1_, 1, 3);
+                stack.setTagInfo("MixType", new NBTTagString(entry.getKey()));
+                list.add(stack);
+            }
     }
 
     @Override

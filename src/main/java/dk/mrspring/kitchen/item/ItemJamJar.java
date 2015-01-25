@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.pan.Jam;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -47,18 +48,19 @@ public class ItemJamJar extends ItemBase
     {
         super.getSubItems(p_150895_1_, p_150895_2_, p_150895_3_);
 
-        for (Map.Entry<String, Jam> entry : Jam.jams.entrySet())
-        {
-            if (!entry.getValue().getName().equals("empty"))
+        if (ModConfig.getKitchenConfig().show_different_jars_in_creative_tab)
+            for (Map.Entry<String, Jam> entry : Jam.jams.entrySet())
             {
-                ItemStack stack = new ItemStack(p_150895_1_, 1, 1);
-                NBTTagCompound jamInfo = new NBTTagCompound();
-                jamInfo.setString("JamType", entry.getValue().getName());
-                jamInfo.setInteger("UsesLeft", 6);
-                stack.setTagInfo("JamInfo", jamInfo);
-                p_150895_3_.add(stack);
+                if (!entry.getValue().getName().equals("empty"))
+                {
+                    ItemStack stack = new ItemStack(p_150895_1_, 1, 1);
+                    NBTTagCompound jamInfo = new NBTTagCompound();
+                    jamInfo.setString("JamType", entry.getValue().getName());
+                    jamInfo.setInteger("UsesLeft", 6);
+                    stack.setTagInfo("JamInfo", jamInfo);
+                    p_150895_3_.add(stack);
+                }
             }
-        }
     }
 
     @Override

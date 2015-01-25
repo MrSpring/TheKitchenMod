@@ -28,7 +28,7 @@ public class ModConfig
                 ModLogger.print(ModLogger.INFO, "Loading " + names[i] + " from JSON @ " + locationForJson);
                 BaseConfig config = (BaseConfig) configClass.getConstructor(File.class, String.class).newInstance(new File(locationForJson), names[i]);
                 configs[i] = config.readFromFile();
-                config.writeToFile();
+                configs[i].writeToFile();
             } catch (ClassNotFoundException e)
             {
                 e.printStackTrace();
