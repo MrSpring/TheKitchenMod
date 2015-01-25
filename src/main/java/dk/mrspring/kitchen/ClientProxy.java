@@ -1,10 +1,7 @@
 package dk.mrspring.kitchen;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
-import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
-import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
-import dk.mrspring.kitchen.item.render.ItemRenderSandwich;
-import dk.mrspring.kitchen.item.render.SandwichRender;
+import dk.mrspring.kitchen.item.render.*;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.tileentity.renderer.*;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -28,6 +25,7 @@ public class ClientProxy extends CommonProxy
 
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("sandwich"), new ItemRenderSandwich());
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("jam_jar"), new ItemRenderJamJar());
+        MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("pancake"), new ItemIceCreamableRenderer());
 
         SandwichRender.loadRenderingHandlers();
         ItemMixingBowlRenderer.initColors();

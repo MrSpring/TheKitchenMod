@@ -86,6 +86,7 @@ mix.waffle_dough.name=Waffle Mix
 mix.pancake_dough.name=Pancake Mix
 mix.vanilla_ice_cream.name=Vanilla Ice Cream
 mix.strawberry_ice_cream.name=Strawberry Ice Cream
+mix.chocolate_ice_cream.name=Chocolate Ice Cream
 
 option.show_is_sandwich_ready=Show Sandwich Status on Board
 option.show_oven_contents=Show Oven Contents
