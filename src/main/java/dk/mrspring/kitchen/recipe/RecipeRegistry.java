@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
@@ -46,7 +45,6 @@ public class RecipeRegistry
 
         // Jam Jar recipe
         GameRegistry.addRecipe(new ItemStack(jam_jar, 1), " I ", "G G", "GGG", valueOf('I'), iron_ingot, valueOf('G'), glass);
-
 
 
         // Mixing Bowl recipes
@@ -206,6 +204,7 @@ public class RecipeRegistry
                     waffleStack.getTagCompound().setTag("IceCream", new NBTTagList());
 
                 waffleStack.getTagCompound().getTagList("IceCream", 8).appendTag(new NBTTagString(iceCream));
+                waffleStack.stackSize = 1;
 
                 return waffleStack;
             }
@@ -284,6 +283,7 @@ public class RecipeRegistry
                     pancakeStack.getTagCompound().setTag("IceCream", new NBTTagList());
 
                 pancakeStack.getTagCompound().getTagList("IceCream", 8).appendTag(new NBTTagString(iceCream));
+                pancakeStack.stackSize = 1;
 
                 return pancakeStack;
             }
