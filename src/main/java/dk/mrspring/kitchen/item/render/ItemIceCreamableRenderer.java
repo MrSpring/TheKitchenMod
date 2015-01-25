@@ -139,11 +139,14 @@ public class ItemIceCreamableRenderer implements IItemRenderer
         GL11.glPopMatrix();
     }
 
-    private void renderItem(ItemStack toRender, double xOffset, double yOffset, double zOffset)
+    private void renderItem(ItemStack stack, double xOffset, double yOffset, double zOffset)
     {
-        if (toRender != null)
+        if (stack != null)
         {
             GL11.glPushMatrix();
+
+            ItemStack toRender = stack.copy();
+            toRender.stackSize = 1;
 
             GL11.glScalef(1, 2, 1);
             GL11.glTranslated(xOffset, yOffset, zOffset);
