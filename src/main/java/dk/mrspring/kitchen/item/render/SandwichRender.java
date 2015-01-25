@@ -3,10 +3,7 @@ package dk.mrspring.kitchen.item.render;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichableRenderingHandler;
 import dk.mrspring.kitchen.api.sandwichable.SandwichableRenderingRegistry;
-import dk.mrspring.kitchen.model.ModelBaconCooked;
-import dk.mrspring.kitchen.model.ModelBaconRaw;
-import dk.mrspring.kitchen.model.ModelBreadSliceBottom;
-import dk.mrspring.kitchen.model.ModelBreadSliceTop;
+import dk.mrspring.kitchen.model.*;
 import dk.mrspring.kitchen.model.butter.ModelButter0;
 import dk.mrspring.kitchen.model.butter.ModelButter1;
 import dk.mrspring.kitchen.model.butter.ModelButter2;
@@ -38,6 +35,22 @@ public class SandwichRender
                 if (indexInList == itemStackList.size() - 1)
                     return new ModelBreadSliceTop();
                 else return new ModelBreadSliceBottom();
+            }
+
+            @Override
+            public double getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
+            {
+                return 2 * 0.0625;
+            }
+        });
+        SandwichableRenderingRegistry.registerRenderingHandler(KitchenItems.sliced_burger_bun, new ISandwichableRenderingHandler()
+        {
+            @Override
+            public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
+            {
+                if (indexInList == itemStackList.size() - 1)
+                    return new ModelBurgerBunTop();
+                else return new ModelBurgerBunBottom();
             }
 
             @Override
