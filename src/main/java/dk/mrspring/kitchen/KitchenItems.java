@@ -84,6 +84,8 @@ public class KitchenItems
     public static final Item burger_bun = new ItemFoodBase("burger_bun", 2, false, Kitchen.instance.foodTab);
     public static final Item sliced_burger_bun = new ItemFoodBase("sliced_burger_bun", 1, false, Kitchen.instance.foodTab);
 
+    public static final Item fried_egg = new ItemFoodBase("fried_egg", 3, false, Kitchen.instance.foodTab);
+
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
     {

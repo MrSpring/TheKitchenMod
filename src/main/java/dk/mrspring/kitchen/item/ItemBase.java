@@ -134,5 +134,6 @@ public class ItemBase extends Item
         registerItem(raw_burger_bun);
         registerItem(burger_bun);
         registerItem(sliced_burger_bun);
+        registerItem(fried_egg);
     }
 }

@@ -12,8 +12,8 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
-import dk.mrspring.kitchen.event.PlayerEvents;
 import dk.mrspring.kitchen.event.ModEventHandler;
+import dk.mrspring.kitchen.event.PlayerEvents;
 import dk.mrspring.kitchen.gui.GuiHandler;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
@@ -236,6 +236,7 @@ public class Kitchen
                 return stack.getItemDamage() == 3;
             }
         });
+        Ingredient.registerIngredient(new Ingredient("fried_egg", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.fried_egg), new ItemStack(KitchenItems.fried_egg)), new ItemStack(KitchenItems.fried_egg)));
 
         KitchenItems.linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         KitchenItems.linkToIngredient(KitchenItems.cut_apple, "apple");
@@ -244,6 +245,7 @@ public class Kitchen
         KitchenItems.linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
         KitchenItems.linkToIngredient(KitchenItems.mixing_bowl, "pancake_dough");
         KitchenItems.linkToIngredient(Items.dye, "cocoa");
+        KitchenItems.linkToIngredient(Items.egg, "fried_egg");
 
         ModAchievements.load();
         FMLCommonHandler.instance().bus().register(new PlayerEvents());

@@ -75,6 +75,7 @@ public class RecipeRegistry
         addKnifeRecipe(new ItemStack(cut_strawberry, 2), new ItemStack(strawberry));
         addKnifeRecipe(new ItemStack(jammable_strawberry, 2), new ItemStack(strawberry), new ItemStack(sugar));
         addKnifeRecipe(new ItemStack(cut_apple, 2), new ItemStack(apple));
+        addKnifeRecipe(new ItemStack(sliced_burger_bun), new ItemStack(burger_bun));
 
         /**
          * Mortar and Pestle recipes
