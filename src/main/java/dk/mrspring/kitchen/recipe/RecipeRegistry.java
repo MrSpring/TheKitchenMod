@@ -170,7 +170,7 @@ public class RecipeRegistry
                     if (waffleStack.getTagCompound().getTagList("IceCream", 8).tagCount() > 0)
                         iceCreamAlreadyOnWaffle = waffleStack.getTagCompound().getTagList("IceCream", 8).tagCount();
 
-                if (iceCreamAlreadyOnWaffle >= 4 || bowlMixType == null)
+                if (iceCreamAlreadyOnWaffle >= 4 || bowlMixType == null || bowlStack.getItemDamage() <= 0)
                     return false;
 
                 return bowlMixType.toLowerCase().contains("ice_cream");

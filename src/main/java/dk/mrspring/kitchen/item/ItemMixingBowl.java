@@ -27,6 +27,28 @@ public class ItemMixingBowl extends ItemBase
     }
 
     @Override
+    public boolean hasContainerItem(ItemStack stack)
+    {
+        return true;
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack)
+    {
+        ItemStack stack = itemStack.copy();
+        stack.setItemDamage(stack.getItemDamage() - 1);
+        if (stack.getItemDamage() == 0)
+            stack.getTagCompound().removeTag("MixType");
+        return stack;
+    }
+
+    @Override
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack p_77630_1_)
+    {
+        return false;
+    }
+
+    @Override
     public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List information, boolean p_77624_4_)
     {
         super.addInformation(p_77624_1_, p_77624_2_, information, p_77624_4_);
@@ -99,12 +121,4 @@ public class ItemMixingBowl extends ItemBase
             return icons[damage];
         else return icons[0];
     }
-
-    /*@Override
-    public IIcon getIconFromDamage(int metadata)
-    {
-        if (metadata < 4 && metadata > 0)
-            return this.icons[metadata];
-        else return this.icons[0];
-    }*/
 }
