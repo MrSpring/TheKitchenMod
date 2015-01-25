@@ -72,6 +72,7 @@ item.crushed_ice.name=Crushed Ice
 item.ice_cream.ice_cream_message=Ice Cream
 item.raw_burger_bun.name=Uncooked Burger Bun
 item.burger_bun.name=Burger Bun
+item.sliced_burger_bun.name=Cut Burger Bun
 item.fried_egg.name=Fried Egg
 
 combo.big_mac.name=There is Only One!
