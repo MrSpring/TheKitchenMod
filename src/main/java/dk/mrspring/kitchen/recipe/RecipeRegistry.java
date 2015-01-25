@@ -101,7 +101,9 @@ public class RecipeRegistry
                     ItemStack inSlot = crafting.getStackInSlot(i);
                     if (inSlot != null)
                         if (inSlot.getItem() == mixing_bowl)
-                            bowlStack = inSlot.copy();
+                            if (bowlStack == null)
+                                bowlStack = inSlot.copy();
+                            else return false;
                         else return false;
                 }
 
@@ -205,9 +207,13 @@ public class RecipeRegistry
                     ItemStack inSlot = crafting.getStackInSlot(i);
                     if (inSlot != null)
                         if (inSlot.getItem() == waffle)
-                            waffleStack = inSlot;
+                            if (waffleStack == null)
+                                waffleStack = inSlot;
+                            else return false;
                         else if (inSlot.getItem() == mixing_bowl)
-                            bowlStack = inSlot;
+                            if (bowlStack == null)
+                                bowlStack = inSlot;
+                            else return false;
                         else return false;
                 }
 
@@ -285,9 +291,13 @@ public class RecipeRegistry
                     ItemStack inSlot = crafting.getStackInSlot(i);
                     if (inSlot != null)
                         if (inSlot.getItem() == pancake)
-                            pancakeStack = inSlot;
+                            if (pancakeStack == null)
+                                pancakeStack = inSlot;
+                            else return false;
                         else if (inSlot.getItem() == mixing_bowl)
-                            bowlStack = inSlot;
+                            if (bowlStack == null)
+                                bowlStack = inSlot;
+                            else return false;
                         else return false;
                 }
 
