@@ -81,17 +81,21 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                 break;
         }
 
-        IceCream[] creams = getIceCreamsFromStack(item);
-
-        if (creams.length > 0)
-            renderIceCream(creams[0].color, -0.05F, 0, 0.11F);
-        if (creams.length > 1)
-            renderIceCream(creams[1].color, 0.1F, 0.04F, 0.1F);
-        if (creams.length > 2)
-            renderIceCream(creams[2].color, 0, 0.03F, -0.12F);
-        if (creams.length > 3)
-            renderIceCream(creams[3].color, -0.04F, 0.2F, 0.1F);
-
+        if (item.hasTagCompound())
+        {
+            if (item.getTagCompound().hasKey("IceCream"))
+            {
+                IceCream[] creams = getIceCreamsFromStack(item);
+                if (creams.length > 0)
+                    renderIceCream(creams[0].color, -0.05F, 0, 0.11F);
+                if (creams.length > 1)
+                    renderIceCream(creams[1].color, 0.1F, 0.04F, 0.1F);
+                if (creams.length > 2)
+                    renderIceCream(creams[2].color, 0, 0.03F, -0.12F);
+                if (creams.length > 3)
+                    renderIceCream(creams[3].color, -0.04F, 0.2F, 0.1F);
+            }
+        }
         renderItem(item, 0, 0, 0);
 
         GL11.glPopMatrix();

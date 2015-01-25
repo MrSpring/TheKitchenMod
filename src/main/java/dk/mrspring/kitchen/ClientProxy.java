@@ -26,13 +26,14 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("sandwich"), new ItemRenderSandwich());
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("jam_jar"), new ItemRenderJamJar());
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("pancake"), new ItemIceCreamableRenderer());
+        MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("waffle"), new ItemIceCreamableRenderer());
 
         SandwichRender.loadRenderingHandlers();
         ItemMixingBowlRenderer.initColors();
 
         try
         {
-            InputStream inputStream = new URL("http://mrspring.dk/mods/kitchen/update_highlights.php?version="+ModInfo.version).openStream();
+            InputStream inputStream = new URL("http://mrspring.dk/mods/kitchen/update_highlights.php?version=" + ModInfo.version).openStream();
             versionHighlights = IOUtils.toString(inputStream);
         } catch (Exception e)
         {
