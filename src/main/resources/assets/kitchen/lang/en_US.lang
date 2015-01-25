@@ -69,6 +69,7 @@ item.raw_vanilla.name=Raw Vanilla
 item.dried_vanilla.name=Dried Vanilla
 item.crushed_vanilla.name=Vanilla Powder
 item.crushed_ice.name=Crushed Ice
+item.ice_cream.ice_cream_message=Ice Cream
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT

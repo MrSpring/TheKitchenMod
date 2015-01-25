@@ -13,7 +13,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.event.PlayerEvents;
-import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
+import dk.mrspring.kitchen.event.ModEventHandler;
 import dk.mrspring.kitchen.gui.GuiHandler;
 import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.model.ModelBaconCooked;
@@ -26,7 +26,6 @@ import dk.mrspring.kitchen.recipe.RecipeRegistry;
 import dk.mrspring.kitchen.recipe.ToasterRecipes;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -128,7 +127,7 @@ public class Kitchen
         FMLInterModComms.sendRuntimeMessage(ModInfo.modid, "VersionChecker", "addVersionCheck", "http://www.mrspring.dk/mods/kitchen/vchecker.json");
         FMLInterModComms.sendMessage("cfm", "register", "dk.mrspring.kitchen.comp.furniture.CrayfishFurnitureRegister.registerRecipes");
 
-        MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
+        MinecraftForge.EVENT_BUS.register(new ModEventHandler());
 
         Jam.registerJam(new Jam("empty", 000000, "null"));
         Jam.registerJam(new Jam("strawberry", 16196364, "kitchen:strawberry_jam"));
