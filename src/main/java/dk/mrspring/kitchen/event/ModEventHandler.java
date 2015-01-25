@@ -28,7 +28,7 @@ public class ModEventHandler
             if (stack.hasTagCompound())
             {
                 NBTTagList iceCreamList = stack.getTagCompound().getTagList("IceCream", 8);
-                event.toolTip.add(StatCollector.translateToLocal("item.ice_cream.ice_cream_message") + ":");
+                event.toolTip.add(StatCollector.translateToLocal("item.ice_cream.ice_cream_message") + ": " + iceCreamList.tagCount() + "/4");
                 for (int i = 0; i < iceCreamList.tagCount(); i++)
                     event.toolTip.add(" " + StatCollector.translateToLocal("mix." + iceCreamList.getStringTagAt(i) + ".name"));
             }
