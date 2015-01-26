@@ -434,6 +434,7 @@ public class GuiScreenBook extends GuiScreen
                 Blocks.wooden_pressure_plate,
                 Blocks.wooden_slab,
                 STOP_CRAFTING);
+
         pageIndex[1] = this.addChapter("item.cooking_book.pages.oven.title", 0, 0, 62,
                 START_TEXT,
                 "item.cooking_book.pages.oven.text01",
@@ -456,10 +457,29 @@ public class GuiScreenBook extends GuiScreen
                 61,
                 STOP_IMAGE,
                 START_TEXT,
-                "And now Items can be added!",
-                "Only food items, though. That means you can't cook ores in the oven. You can only cook items that are edible.",
-                DONT_TRANSLATE_TEXT,
+                "item.cooking_book.pages.oven.text03",
+                STOP_TEXT,
+                ADD_SPACE, 5,
+                START_TEXT,
+                "item.cooking_book.pages.oven.text04",
+                STOP_TEXT,
+                START_IMAGE,
+                "kitchen:textures/gui/cooking_book.png",
+                99, 198,
+                99, 58,
+                STOP_IMAGE,
+                START_TEXT,
+                "item.cooking_book.pages.oven.text05",
+                STOP_TEXT,
+                START_IMAGE,
+                "kitchen:textures/gui/cooking_book_1.png",
+                99, 99,
+                99, 61,
+                STOP_IMAGE,
+                START_TEXT,
+                "item.cooking_book.pages.oven.text06",
                 STOP_TEXT);
+
         pageIndex[2] = this.addChapter("item.cooking_book.pages.pan.title", 0, 99, 99,
                 START_TEXT,
                 "item.cooking_book.pages.pan.text01",
@@ -468,14 +488,17 @@ public class GuiScreenBook extends GuiScreen
                 new ItemStack(KitchenBlocks.frying_pan),
                 Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot,
                 STOP_CRAFTING);
+
         pageIndex[3] = this.addChapter("item.cooking_book.pages.waffle.title", 1, 0, 0,
                 START_TEXT,
                 "item.cooking_book.pages.waffle.text01",
                 STOP_TEXT);
+
         pageIndex[4] = this.addChapter("item.cooking_book.pages.toast.title", 1, 0, 99,
                 START_TEXT,
                 "item.cooking_book.pages.toast.text01",
                 STOP_TEXT);
+
         pageIndex[5] = this.addChapter("item.cooking_book.pages.timer.title", 1, 99, 0,
                 START_TEXT,
                 "item.cooking_book.pages.timer.text01",

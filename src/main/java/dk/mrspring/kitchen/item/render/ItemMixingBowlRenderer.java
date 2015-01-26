@@ -20,6 +20,20 @@ public class ItemMixingBowlRenderer
         return 16777215;
     }
 
+    public static float[] getColorAsRGB(String mixType)
+    {
+        int baseColor = getColorAsInteger(mixType);
+        return intAsFloatArray(baseColor);
+    }
+
+    public static float[] intAsFloatArray(int color)
+    {
+        float red = ((color >> 16) & 0xFF);
+        float green = ((color >> 8) & 0xFF);
+        float blue = (color & 0xFF);
+        return new float[]{red, green, blue};
+    }
+
     public static String getMixType(ItemStack mixingBowlStack)
     {
         if (mixingBowlStack.getTagCompound() != null)
@@ -42,5 +56,6 @@ public class ItemMixingBowlRenderer
         mixColors.put("strawberry_ice_cream", 0xFF9F9E);
         mixColors.put("chocolate_ice_cream", 0xCC8051);
         mixColors.put("apple_ice_cream", 0xF2EFBC);
+        mixColors.put("pasta_dough", 0xFFE789);
     }
 }

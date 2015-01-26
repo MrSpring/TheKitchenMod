@@ -1,10 +1,14 @@
 package dk.mrspring.kitchen.item.render;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.model.ModelIceCream;
+import dk.mrspring.kitchen.model.ModelIceCreamCone;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -13,13 +17,24 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Konrad on 24-01-2015.
  */
 public class ItemIceCreamableRenderer implements IItemRenderer
 {
+    public static Map<Item, ModelBase> specialItemModels;
+
+    public static void load()
+    {
+        specialItemModels = new HashMap<Item, ModelBase>();
+
+        specialItemModels.put(KitchenItems.ice_cream_cone, new ModelIceCreamCone());
+    }
+
     public class IceCream
     {
         String name;
@@ -38,13 +53,8 @@ public class ItemIceCreamableRenderer implements IItemRenderer
 
         public IceCream(String name, int color)
         {
-            float red = ((color >> 16) & 0xFF);
-            float green = ((color >> 8) & 0xFF);
-            float blue = (color & 0xFF);
-            float[] colorAsRGB = new float[]{red, green, blue};
-
             this.name = name;
-            this.color = colorAsRGB;
+            this.color = ItemMixingBowlRenderer.intAsFloatArray(color);
         }
     }
 
@@ -148,16 +158,24 @@ public class ItemIceCreamableRenderer implements IItemRenderer
             ItemStack toRender = stack.copy();
             toRender.stackSize = 1;
 
-            GL11.glScalef(1, 2, 1);
-            GL11.glTranslated(xOffset, yOffset, zOffset);
-            EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
-            itemEntity.hoverStart = 0.0F;
-            RenderItem.renderInFrame = true;
-            GL11.glRotatef(180, 0, 1, 1);
-            GL11.glRotatef(180, 0, 1, 0);
-            GL11.glTranslatef(0, 0, .1F);
-            RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-            RenderItem.renderInFrame = false;
+            if (specialItemModels.containsKey(toRender.getItem()))
+            {
+                ModelBase itemModel = specialItemModels.get(toRender.getItem());
+                GL11.glTranslated(xOffset, yOffset, zOffset);
+                itemModel.render(null, 0F, 0F, 0F, 0F, 0F, 0.0625F);
+            } else
+            {
+                GL11.glScalef(1, 2, 1);
+                GL11.glTranslated(xOffset, yOffset, zOffset);
+                EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
+                itemEntity.hoverStart = 0.0F;
+                RenderItem.renderInFrame = true;
+                GL11.glRotatef(180, 0, 1, 1);
+                GL11.glRotatef(180, 0, 1, 0);
+                GL11.glTranslatef(0, 0, .1F);
+                RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+                RenderItem.renderInFrame = false;
+            }
 
             GL11.glPopMatrix();
         }

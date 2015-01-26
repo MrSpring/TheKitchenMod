@@ -24,7 +24,7 @@ public class ModEventHandler
             if (entry.showInformation())
                 event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_msg"));
 
-        if (stack.getItem() == KitchenItems.pancake || stack.getItem() == KitchenItems.waffle)
+        if (stack.getItem() == KitchenItems.pancake || stack.getItem() == KitchenItems.waffle || stack.getItem() == KitchenItems.ice_cream_cone)
             if (stack.hasTagCompound())
             {
                 NBTTagList iceCreamList = stack.getTagCompound().getTagList("IceCream", 8);

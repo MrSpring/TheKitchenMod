@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import dk.mrspring.kitchen.model.ModelWaffleIron;
 import dk.mrspring.kitchen.tileentity.TileEntityWaffleIron;
 import net.minecraft.client.Minecraft;
@@ -35,7 +36,7 @@ public class TileEntityWaffleIronRenderer extends TileEntityTimeableRenderer
 
         int metadata = var1.getBlockMetadata();
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F, ((TileEntityWaffleIron) var1).getLidAngle(), ((TileEntityWaffleIron) var1).getWaffleState());
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F, ((TileEntityWaffleIron) var1).getLidAngle(), ((TileEntityWaffleIron) var1).getWaffleState(), ItemMixingBowlRenderer.getColorAsRGB(((TileEntityWaffleIron) var1).dough));
 
         GL11.glPopMatrix();
 

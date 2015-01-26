@@ -8,15 +8,32 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by MrSpring on 09-12-2014 for TheKitchenMod.
  */
 public class TileEntityWaffleIron extends TileEntityTimeable
 {
+    static Map<String, ItemStack[]> recipes;
+
+    public static void load()
+    {
+        recipes = new HashMap<String, ItemStack[]>();
+        recipes.put("waffle_dough", new ItemStack[]{new ItemStack(KitchenItems.waffle, 2), new ItemStack(KitchenItems.burnt_waffle, 2)});
+        recipes.put("pasta_dough", new ItemStack[]{new ItemStack(KitchenItems.lasagna_plate, 2), new ItemStack(KitchenItems.burnt_lasagna_plate, 2)});
+    }
+
+    public static void registerWaffleRecipe(String mixName, ItemStack result, ItemStack burntResult)
+    {
+        recipes.put(mixName, new ItemStack[]{result, burntResult});
+    }
+
     boolean isOpen = false;
     float lidAngle = 0;
     int cookTime = 0;
-    public boolean hasDough = false;
+    public String dough = "";
 
     public float getLidAngle()
     {
@@ -28,23 +45,16 @@ public class TileEntityWaffleIron extends TileEntityTimeable
         this.lidAngle = lidAngle;
     }
 
-    public void printStatus()
-    {
-        System.out.println("Updating!");
-        System.out.println("isOpen = " + isOpen);
-        System.out.println("lidAngle = " + lidAngle);
-    }
-
     public int getCookTime()
     {
         return cookTime;
     }
 
-    public boolean addWaffleDough()
+    public boolean addDough(String dough)
     {
-        if (this.isOpen() && !this.hasDough)
+        if (this.isOpen() && this.dough.isEmpty() && recipes.containsKey(dough))
         {
-            this.hasDough = true;
+            this.dough = dough;
             return true;
         } else return false;
     }
@@ -63,7 +73,7 @@ public class TileEntityWaffleIron extends TileEntityTimeable
             if (this.lidAngle - 0.1F > 0.0)
                 this.lidAngle -= 0.1F;
 
-            if (this.hasDough)
+            if (!this.dough.isEmpty())
             {
                 if (cookTime < 610)
                     this.cookTime++;
@@ -73,7 +83,7 @@ public class TileEntityWaffleIron extends TileEntityTimeable
 
     public int getWaffleState()
     {
-        if (this.hasDough)
+        if (!this.dough.isEmpty())
         {
             if (this.cookTime < 400)
                 return 1;
@@ -107,7 +117,7 @@ public class TileEntityWaffleIron extends TileEntityTimeable
 
         this.cookTime = compound.getInteger("CookTime");
         this.isOpen = compound.getBoolean("IsOpen");
-        this.hasDough = compound.getBoolean("HasDough");
+        this.dough = compound.getString("Dough");
     }
 
     @Override
@@ -117,7 +127,7 @@ public class TileEntityWaffleIron extends TileEntityTimeable
 
         compound.setInteger("CookTime", this.cookTime);
         compound.setBoolean("IsOpen", this.isOpen);
-        compound.setBoolean("HasDough", this.hasDough);
+        compound.setString("Dough", this.dough);
     }
 
     @Override
@@ -141,10 +151,10 @@ public class TileEntityWaffleIron extends TileEntityTimeable
             ItemStack result;
 
             if (this.cookTime > 600)
-                result = new ItemStack(KitchenItems.burnt_waffle, 2);
-            else result = new ItemStack(KitchenItems.waffle, 2);
+                result = recipes.get(this.dough)[1];
+            else result = recipes.get(this.dough)[0];
 
-            this.hasDough = false;
+            this.dough = "";
             this.cookTime = 0;
 
             worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord, yCoord, zCoord, result));

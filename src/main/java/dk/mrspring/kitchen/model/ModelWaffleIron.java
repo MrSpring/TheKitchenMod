@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class ModelWaffleIron extends ModelBase
 {
@@ -165,7 +166,7 @@ public class ModelWaffleIron extends ModelBase
         setRotation(bottomBase12, 0F, 0F, 0F);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float lidAngle, int waffleState)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float lidAngle, int waffleState, float[] doughColor)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
@@ -215,7 +216,10 @@ public class ModelWaffleIron extends ModelBase
                 Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/cooked_waffle.png")));
             else
                 Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/burnt_waffle.png")));
+            GL11.glPushMatrix();
+            GL11.glColor4f(doughColor[0]/255, doughColor[1]/255, doughColor[2]/255, 1);
             waffleMesh.render(f5);
+            GL11.glPopMatrix();
         }
     }
 

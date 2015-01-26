@@ -86,6 +86,11 @@ public class KitchenItems
 
     public static final Item fried_egg = new ItemFoodBase("fried_egg", 3, false, Kitchen.instance.foodTab);
 
+    public static final Item lasagna_plate = new ItemFoodBase("lasagna_plate", 1, false, Kitchen.instance.foodTab);
+    public static final Item burnt_lasagna_plate = new ItemFoodBase("burnt_lasagna_plate", 0, false, Kitchen.instance.foodTab);
+
+    public static final Item ice_cream_cone = new ItemIceCreamableBase("ice_cream_cone", 8, false, Kitchen.instance.foodTab);
+
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
     {

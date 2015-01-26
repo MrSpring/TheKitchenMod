@@ -35,11 +35,11 @@ public class WailaWaffleIronProvider implements IWailaDataProvider
 
             if (tileEntityWaffleIron.getCookTime() < 400)
             {
-                if (tileEntityWaffleIron.hasDough && tileEntityWaffleIron.isOpen())
+                if (!tileEntityWaffleIron.dough.isEmpty() && tileEntityWaffleIron.isOpen())
                     list.add(StatCollector.translateToLocal("waila.waffle_iron_ready"));
-                if (tileEntityWaffleIron.hasDough && !tileEntityWaffleIron.isOpen())
+                if (!tileEntityWaffleIron.dough.isEmpty() && !tileEntityWaffleIron.isOpen())
                     list.add(StatCollector.translateToLocal("waila.waffle_iron_cooking")+"...");
-            } else if (tileEntityWaffleIron.hasDough)
+            } else if (!tileEntityWaffleIron.dough.isEmpty())
                 list.add(StatCollector.translateToLocal("waila.done"));
         }
         return list;
