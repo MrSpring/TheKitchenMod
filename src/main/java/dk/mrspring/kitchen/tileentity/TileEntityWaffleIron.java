@@ -151,8 +151,8 @@ public class TileEntityWaffleIron extends TileEntityTimeable
             ItemStack result;
 
             if (this.cookTime > 600)
-                result = recipes.get(this.dough)[1];
-            else result = recipes.get(this.dough)[0];
+                result = recipes.get(this.dough)[1].copy();
+            else result = recipes.get(this.dough)[0].copy();
 
             this.dough = "";
             this.cookTime = 0;
