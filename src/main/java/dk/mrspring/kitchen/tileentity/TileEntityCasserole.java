@@ -27,7 +27,13 @@ public class TileEntityCasserole extends TileEntity
 
     public void onRightClicked(ItemStack clicked)
     {
-        casserole.addItem(clicked);
+        if (clicked != null)
+            casserole.addItem(clicked);
+    }
+
+    public ItemStack[] removeTopLayer()
+    {
+        return casserole.removeTopLayer();
     }
 
     @Override

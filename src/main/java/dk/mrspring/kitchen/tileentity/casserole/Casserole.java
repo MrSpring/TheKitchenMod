@@ -84,6 +84,16 @@ public class Casserole
         return this;
     }
 
+    public ItemStack[] removeTopLayer()
+    {
+        Layer topLayer = this.getTopLayer();
+        if (topLayer != null)
+        {
+            this.layers.remove(topLayer);
+            return topLayer.removeLayer();
+        } else return new ItemStack[0];
+    }
+
     public Casserole addLayer(ItemStack stack)
     {
         String layerName = itemLayerRelations.get(stack.getItem());

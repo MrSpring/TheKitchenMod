@@ -1,7 +1,9 @@
 package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.tileentity.TileEntityCasserole;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /**
@@ -23,6 +25,13 @@ public class BlockCasserole extends BlockContainerBase
             TileEntityCasserole tileEntity = (TileEntityCasserole) world.getTileEntity(x, y, z);
             if (activator.getCurrentEquippedItem() != null)
                 tileEntity.onRightClicked(activator.getCurrentEquippedItem());
+            else
+            {
+                ItemStack[] removedLayer = tileEntity.removeTopLayer();
+                for (ItemStack stack : removedLayer)
+                    if (stack != null)
+                        world.spawnEntityInWorld(new EntityItem(world, x, y, x, stack));
+            }
         }
         return true;
     }

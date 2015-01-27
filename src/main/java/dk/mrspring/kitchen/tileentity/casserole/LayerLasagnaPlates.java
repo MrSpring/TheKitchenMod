@@ -1,12 +1,13 @@
 package dk.mrspring.kitchen.tileentity.casserole;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.model.ModelLasagnaPlates;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -15,6 +16,9 @@ import org.lwjgl.opengl.GL11;
 public class LayerLasagnaPlates implements Layer
 {
     int plates = 0;
+
+    @SideOnly(Side.CLIENT)
+    ModelLasagnaPlates model = new ModelLasagnaPlates();
 
     @Override
     public boolean handleRightClick(ItemStack stack)
@@ -37,7 +41,11 @@ public class LayerLasagnaPlates implements Layer
     @Override
     public ItemStack[] removeLayer()
     {
-        return plates > 0 ? new ItemStack[]{new ItemStack(KitchenItems.lasagna_plate, plates)} : null;
+        if (plates > 0)
+        {
+            ItemStack stack = new ItemStack(KitchenItems.lasagna_plate, plates);
+            return new ItemStack[]{stack};
+        } else return new ItemStack[0];
     }
 
     @Override
@@ -50,27 +58,8 @@ public class LayerLasagnaPlates implements Layer
     public void render(Casserole.CasseroleState state)
     {
         GL11.glPushMatrix();
-        for (int i = 0; i < plates; i++)
-        {
-            ItemStack item = new ItemStack(KitchenItems.lasagna_plate);
-
-            GL11.glTranslated(0, 0, 0.5);
-
-            GL11.glPushMatrix();
-
-            ItemStack toRender = item.copy();
-
-            EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
-            itemEntity.hoverStart = 0.0F;
-            RenderItem.renderInFrame = true;
-            GL11.glRotatef(180, 0, 1, 1);
-            GL11.glRotatef(180, 0, 1, 0);
-            GL11.glTranslatef(0, 0, .1F);
-            RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-            RenderItem.renderInFrame = false;
-
-            GL11.glPopMatrix();
-        }
+        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("kitchen", "textures/models/ice_cream_cone.png"));
+        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, plates);
         GL11.glPopMatrix();
     }
 
