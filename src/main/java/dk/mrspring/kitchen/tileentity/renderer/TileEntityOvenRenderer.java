@@ -90,6 +90,8 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
             }
         }
 
+        GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
+
         if (tileEntityOven.hasCasserole())
             this.renderCasserole(tileEntityOven.getCasserole());
 
@@ -102,6 +104,7 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
     {
         GL11.glPushMatrix();
 
+        GL11.glTranslatef(0.0F, 0.1F, -0.1F);
         TileEntityCasseroleRenderer.renderCasserole(casserole);
 
         GL11.glPopMatrix();
