@@ -29,6 +29,7 @@ public class ModConfig
                 BaseConfig config = (BaseConfig) configClass.getConstructor(File.class, String.class).newInstance(new File(locationForJson), names[i]);
                 configs[i] = config.readFromFile();
                 configs[i].writeToFile();
+                configs[i].addDefaults();
             } catch (ClassNotFoundException e)
             {
                 e.printStackTrace();

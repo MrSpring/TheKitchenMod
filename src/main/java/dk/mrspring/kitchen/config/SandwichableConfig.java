@@ -12,25 +12,33 @@ import java.util.List;
  */
 public class SandwichableConfig extends BaseConfig
 {
+    SandwichableEntry[] example = new SandwichableEntry[]{
+            new SandwichableEntry("minecraft:diamond", 4, false),
+            new SandwichableEntry("kitchen:bread_slice", 0, true)
+    };
     List<SandwichableEntry> sandwichable_items = new ArrayList<SandwichableEntry>();
 
     public SandwichableConfig()
     {
+        example = new SandwichableEntry[]{
+                new SandwichableEntry("minecraft:diamond", 4, false),
+                new SandwichableEntry("kitchen:bread_slice", 0, true)
+        };
         sandwichable_items = new ArrayList<SandwichableEntry>();
     }
 
     public SandwichableConfig(File location, String name)
     {
         super(location, name);
-
-        this.addDefaultItems();
     }
 
-    public void addDefaultItems()
+    @Override
+    public void addDefaults()
     {
         this.makeSandwichable(new SandwichableEntry("kitchen:bread_slice", 0, true));
         this.makeSandwichable(new SandwichableEntry("kitchen:sliced_burger_bun", 1, true));
         this.makeSandwichable(new SandwichableEntry("kitchen:toast", 0, true));
+        this.makeSandwichable(new SandwichableEntry("kitchen:toasted_toast", 1, true));
 
         this.makeSandwichable(new SandwichableEntry("kitchen:bacon_cooked", 2));
         this.makeSandwichable(new SandwichableEntry("kitchen:bacon_raw", 1));

@@ -13,87 +13,94 @@ import java.lang.reflect.Modifier;
  */
 public class BaseConfig
 {
-	private File location;
-	private String label;
+    private File location;
+    private String label;
 
-	public BaseConfig(){}
-	
-	public BaseConfig(File location,String name)
-	{
-		this.setLocation(location);
-		this.setLabel(name);
-	}
+    public BaseConfig()
+    {
+    }
 
-	public BaseConfig readFromFile() throws IOException
-	{
-		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
-		Gson gson = builder.create();
+    public BaseConfig(File location, String name)
+    {
+        this.setLocation(location);
+        this.setLabel(name);
+    }
 
-		if (this.location.exists())
-		{
-			BufferedReader reader = new BufferedReader(new FileReader(this.location));
-			BaseConfig config = gson.fromJson(reader, this.getClass());
-			config.setLocation(this.location);
-			config.setLabel(this.getLabel());
-			return config;
-		} else
-		{
-			this.location.getParentFile().mkdir();
-			this.location.createNewFile();
-			this.writeToFile();
-			return this;
-		}
-	}
+    public BaseConfig readFromFile() throws IOException
+    {
+        GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
+        Gson gson = builder.create();
 
-	public void writeToFile() throws IOException
-	{
-		BufferedReader reader = new BufferedReader(new FileReader(this.location));
-		GsonBuilder builder = new GsonBuilder().setPrettyPrinting().setExclusionStrategies(new ExclusionStrategy()
-		{
-			@Override
-			public boolean shouldSkipField(FieldAttributes f)
-			{
-				return f.hasModifier(Modifier.PRIVATE);
-			}
+        if (this.location.exists())
+        {
+            BufferedReader reader = new BufferedReader(new FileReader(this.location));
+            BaseConfig config = gson.fromJson(reader, this.getClass());
+            config.setLocation(this.location);
+            config.setLabel(this.getLabel());
+            return config;
+        } else
+        {
+            this.location.getParentFile().mkdir();
+            this.location.createNewFile();
+            this.writeToFile();
+            return this;
+        }
+    }
 
-			@Override
-			public boolean shouldSkipClass(Class<?> clazz)
-			{
-				return false;
-			}
-		});
-		Gson gson = builder.create();
-		String json = gson.toJson(this);
-		this.location.createNewFile();
-		FileWriter writer = new FileWriter(this.location);
-		writer.write(json);
-		writer.close();
-	}
+    public void writeToFile() throws IOException
+    {
+        BufferedReader reader = new BufferedReader(new FileReader(this.location));
+        GsonBuilder builder = new GsonBuilder().setPrettyPrinting().setExclusionStrategies(new ExclusionStrategy()
+        {
+            @Override
+            public boolean shouldSkipField(FieldAttributes f)
+            {
+                return f.hasModifier(Modifier.PRIVATE);
+            }
 
-	public BaseConfig setLocation(File location)
-	{
-		this.location = location;
-		return this;
-	}
+            @Override
+            public boolean shouldSkipClass(Class<?> clazz)
+            {
+                return false;
+            }
+        });
+        Gson gson = builder.create();
+        String json = gson.toJson(this);
+        this.location.createNewFile();
+        FileWriter writer = new FileWriter(this.location);
+        writer.write(json);
+        writer.close();
+    }
 
-	public File getLocation()
-	{
-		return location;
-	}
+    public BaseConfig setLocation(File location)
+    {
+        this.location = location;
+        return this;
+    }
 
-	public BaseConfig setLabel(String label)
-	{
-		this.label = label;
-		return this;
-	}
+    public File getLocation()
+    {
+        return location;
+    }
 
-	public String getLabel()
-	{
-		return label;
-	}
+    public BaseConfig setLabel(String label)
+    {
+        this.label = label;
+        return this;
+    }
+
+    public String getLabel()
+    {
+        return label;
+    }
+
+    public void addDefaults()
+    {
+
+    }
 
 	/*public void readFromFile() throws IOException
-	{
+    {
 		GsonBuilder builder = new GsonBuilder().setPrettyPrinting();
 		Gson gson = builder.create();
 
