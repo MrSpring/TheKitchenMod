@@ -1,11 +1,12 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
+import dk.mrspring.kitchen.tileentity.casserole.Casserole;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemFood;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -15,6 +16,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 public class TileEntityOven extends TileEntityTimeable
 {
     protected ItemStack[] ovenItems = new ItemStack[4];
+    protected Casserole casserole = null;
     protected int burnTime = 0;
     protected int itemState = 0;
     protected boolean isCooking = false;
@@ -36,12 +38,10 @@ public class TileEntityOven extends TileEntityTimeable
         if (itemStack != null)
             if (itemStack.getItem() != null)
             {
-                if (FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null)
-                    if (FurnaceRecipes.smelting().getSmeltingResult(itemStack).getItem() instanceof ItemFood)
-                        return this.forceAddItemStack(itemStack);
-
+                System.out.println("ItemStack is not null");
                 if (OvenRecipes.instance().getOutputFor(itemStack) != null)
                     return this.forceAddItemStack(itemStack);
+                System.out.println("Could not find recipe for it...");
 
                 if (itemStack.getItem() == Items.coal && !this.hasCoal)
                 {
@@ -50,11 +50,44 @@ public class TileEntityOven extends TileEntityTimeable
                     return true;
                 }
 
+                System.out.println("And it is not coal either...");
+
+                if (itemStack.getItem() == Item.getItemFromBlock(KitchenBlocks.casserole) && this.casserole == null && isArrayEmpty(this.ovenItems))
+                {
+                    System.out.println("Got it! It's a casserole!");
+                    Casserole fromItemStack = Casserole.loadFromItemStack(itemStack);
+                    if (fromItemStack != null)
+                    {
+                        System.out.println("Setting casserole");
+                        this.casserole = fromItemStack;
+                        itemStack.stackSize--;
+                        return true;
+                    }
+                }
+
                 return false;
             } else
                 return false;
         else
             return false;
+    }
+
+    public boolean hasCasserole()
+    {
+        return this.casserole != null && isArrayEmpty(this.ovenItems);
+    }
+
+    public Casserole getCasserole()
+    {
+        return casserole;
+    }
+
+    private boolean isArrayEmpty(ItemStack[] array)
+    {
+        for (ItemStack stack : array)
+            if (stack != null)
+                return false;
+        return true;
     }
 
     private boolean forceAddItemStack(ItemStack itemStack)
@@ -118,18 +151,16 @@ public class TileEntityOven extends TileEntityTimeable
             this.burnTime = 0;
 
         if (this.burnTime == 0)
-        {
             this.itemState = RAW;
-        }
 
-        if (this.burnTime == 400)
+        if (this.burnTime >= 400)
         {
             this.itemState = COOKED;
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             this.cookItems();
         }
 
-        if (this.burnTime == 600)
+        if (this.burnTime >= 600)
         {
             this.itemState = BURNT;
             this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
@@ -195,13 +226,6 @@ public class TileEntityOven extends TileEntityTimeable
             {
                 if (this.ovenItems[i].getItem() != null)
                 {
-                    /*if (FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]) != null)
-                    {
-                        int stackSize = this.ovenItems[i].stackSize;
-                        this.ovenItems[i] = FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]);
-                        this.ovenItems[i].stackSize = stackSize;
-                    }*/
-
                     if (OvenRecipes.instance().getOutputFor(this.ovenItems[i]) != null)
                     {
                         int stackSize = this.ovenItems[i].stackSize;
@@ -295,6 +319,13 @@ public class TileEntityOven extends TileEntityTimeable
         }
 
         compound.setTag("Items", nbtTagList);
+
+        if (casserole != null)
+        {
+            NBTTagCompound casseroleCompound = new NBTTagCompound();
+            casserole.writeToNBT(casseroleCompound);
+            compound.setTag("Casserole", casseroleCompound);
+        }
     }
 
     @Override
@@ -319,6 +350,12 @@ public class TileEntityOven extends TileEntityTimeable
 
             if (slot >= 0 && slot < this.ovenItems.length)
                 this.ovenItems[slot] = ItemStack.loadItemStackFromNBT(itemCompound);
+        }
+
+        if (compound.hasKey("Casserole"))
+        {
+            casserole = new Casserole();
+            casserole.readFromNBT(compound.getCompoundTag("Casserole"));
         }
     }
 

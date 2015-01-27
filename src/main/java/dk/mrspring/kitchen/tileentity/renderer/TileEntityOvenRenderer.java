@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.tileentity.renderer;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelOven;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
+import dk.mrspring.kitchen.tileentity.casserole.Casserole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -89,7 +90,19 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
             }
         }
 
+        if (tileEntityOven.hasCasserole())
+            this.renderCasserole(tileEntityOven.getCasserole());
+
         GL11.glPopMatrix();
+
+        GL11.glPopMatrix();
+    }
+
+    private void renderCasserole(Casserole casserole)
+    {
+        GL11.glPushMatrix();
+
+        TileEntityCasseroleRenderer.renderCasserole(casserole);
 
         GL11.glPopMatrix();
     }

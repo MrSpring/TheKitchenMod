@@ -52,5 +52,6 @@ public class BlockBase extends Block
         registerBlock(KitchenBlocks.frying_pan, ItemBlockPan.class);
         registerBlock(KitchenBlocks.waffle_iron);
         registerBlock(KitchenBlocks.toaster);
+        registerBlock(KitchenBlocks.casserole);
     }
 }
