@@ -137,14 +137,15 @@ item.cooking_book.pages.contents.timer=Timer
 
 item.cooking_book.pages.sandwiches.title=§l§nSandwiches
 item.cooking_book.pages.sandwiches.text01=There are a few things that you'll need to make your sandwiches.\nFirst thing is a Knife, crafted like so:
-item.cooking_book.pages.sandwiches.text02=After that you're gonna need a Cutting Board, crafted like so:
+item.cooking_book.pages.sandwiches.text02=The knife is used to slice up the ingredients you'll need to make your sandwiches. Simply put the knife in a crafting table with an item, and it will result in the items sliced up counterpart (If it has one).
+item.cooking_book.pages.sandwiches.text03=After that you're gonna need a Cutting Board, crafted like so:
 
 item.cooking_book.pages.oven.title=§l§nThe Oven
-item.cooking_book.pages.oven.text01=The Oven is an elegant and efficient way to cook your food.\nIt uses less coal than a regular furnace, one piece of coal can cook up to 16 items.\nThe Oven is crafted like so:
-item.cooking_book.pages.oven.text02=In order to put Items into The Oven, it must be opened first. You do so by right-clicking The Oven while crouching.
-item.cooking_book.pages.oven.text03=And now Items can be added!\nOnly food items, though. That means you can't cook ores in the oven. You can only cook items that are edible.
-item.cooking_book.pages.oven.text04=The oven can hold 4 stacks of items. Each stack can hold up to 4 items. When you have added the desired items, you then have to fuel the oven with 1 piece of coal.\nJust right-click the oven, holding coal in your hand, and fire particles shall start appearing inside the oven.
-item.cooking_book.pages.oven.text05=You then close the oven, by right-clicking while crouched, and the oven starts cooking.\n When the items are ready smoke particles will form around the hatch of the oven.
+item.cooking_book.pages.oven.text01=The Oven is an elegant and efficient way to cook your food.\nIt uses less coal than a regular furnace; one piece of coal can cook up to 16 items.\nThe Oven is crafted like so:
+item.cooking_book.pages.oven.text02=In order to put items into the oven, it must be opened first. You do so by right-clicking the oven while crouching.
+item.cooking_book.pages.oven.text03=And now items can be added!\nOnly food items, though. That means you can't cook ores in the oven. You can only cook items that are edible.
+item.cooking_book.pages.oven.text04=The oven can hold 4 stacks of items, each stack can hold up to 4 items, which results in a grand total of 16 items! When you have added the desired items, you then have to fuel the oven with 1 piece of coal.\nJust right-click the oven, holding coal in your hand, and fire particles shall start appearing inside the oven.
+item.cooking_book.pages.oven.text05=You then close the oven, by right-clicking while crouched, and the oven starts cooking.\nWhen the items are ready smoke particles will form around the hatch of the oven.
 item.cooking_book.pages.oven.text06=Open it and right click with an empty hand to take out the items.\nMake sure you keep an eye on your items. If you don't get them out in time, they'll burn!
 
 item.cooking_book.pages.pan.title=§l§nThe Frying Pan

@@ -268,34 +268,6 @@ public class GuiScreenBook extends GuiScreen
         public CraftingElement(Recipe recipe)
         {
             this.recipe = recipe;
-            /*List recipes = CraftingManager.getInstance().getRecipeList();
-            for (Object object : recipes)
-            {
-                if (object instanceof ShapedRecipes)
-                {
-                    ShapedRecipes recipe = (ShapedRecipes) object;
-                    if (ItemStack.areItemStacksEqual(recipe.getRecipeOutput(), crafting))
-                    {
-                        int recipeSize = recipe.getRecipeSize();
-                        if (recipeSize == 9)
-                        {
-                            this.recipe = recipe.recipeItems;
-                        } else if (recipeSize == 4)
-                        {
-                            ItemStack[] fourByFour = recipe.recipeItems;
-                            for (int i = 0; i < fourByFour.length; i++)
-                            {
-                                this.recipe = new ItemStack[5];
-                                ItemStack stack = fourByFour[i];
-                                if (i < 2)
-                                    this.recipe[i] = stack;
-                                else this.recipe[i + 1] = stack;
-                            }
-                            break;
-                        }
-                    }
-                }
-            }*/
         }
 
         @Override
@@ -357,15 +329,7 @@ public class GuiScreenBook extends GuiScreen
                             break;
                     }
 
-//                    GL11.glTranslatef(x, y, 0);
-
                     itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16 + 7 + X_OFFSET, y * 16 + 7);
-                    /*if (isMouseHovering(mouseX, mouseY, x * 16 + 7 + X_OFFSET, y * 16 + 7, 16, 16))
-                    {
-                        List lines = stack.getTooltip(mc.thePlayer, false);
-                        drawHoveringText(lines, mouseX, mouseY, mc.fontRenderer);
-                    }*/
-//                    drawTexturedModelRectFromIcon(0, 0, stack.getIconIndex(), 0, 0);
 
                     GL11.glPopMatrix();
                     GL11.glColor4f(1, 1, 1, 1);
@@ -392,12 +356,8 @@ public class GuiScreenBook extends GuiScreen
 
     private void evenOutPages()
     {
-        System.out.println("pages.size() = " + pages.size());
         if (pages.size() % 2 != 0)
-        {
             pages.add(new SimplePage(new ArrayList<Element>()));
-            System.out.println("pages.size() = " + pages.size());
-        }
     }
 
     @Override
@@ -414,95 +374,103 @@ public class GuiScreenBook extends GuiScreen
 
         this.addTableOfContent();
 
-        pageIndex = new int[6];
-        pageIndex[0] = this.addChapter("item.cooking_book.pages.sandwiches.title", 0, 99, 0,
-                START_TEXT,
-                "item.cooking_book.pages.sandwiches.text01",
-                STOP_TEXT,
-                START_CRAFTING,
-                new ItemStack(KitchenItems.knife),
-                Items.iron_ingot,
-                null, null, null,
-                Items.stick,
-                STOP_CRAFTING,
-                START_TEXT,
-                "item.cooking_book.pages.sandwiches.text02",
-                STOP_TEXT,
-                START_CRAFTING,
-                new ItemStack(KitchenBlocks.board),
-                Blocks.wooden_slab,
-                Blocks.wooden_pressure_plate,
-                Blocks.wooden_slab,
-                STOP_CRAFTING);
+        pageIndex = new int[]{
+                this.addChapter("item.cooking_book.pages.sandwiches.title", 0, 99, 0,
+                        START_TEXT,
+                        "item.cooking_book.pages.sandwiches.text01",
+                        STOP_TEXT,
+                        START_CRAFTING,
+                        new ItemStack(KitchenItems.knife),
+                        Items.iron_ingot, null, null,
+                        null, Items.stick,
+                        STOP_CRAFTING,
+                        ADD_SPACE, 6,
+                        START_TEXT,
+                        "item.cooking_book.pages.sandwiches.text02",
+                        STOP_TEXT,
+                        ADD_SPACE, 9,
+                        START_TEXT,
+                        "item.cooking_book.pages.sandwiches.text03",
+                        STOP_TEXT,
+                        START_CRAFTING,
+                        new ItemStack(KitchenBlocks.board),
+                        Blocks.wooden_slab,
+                        Blocks.wooden_pressure_plate,
+                        Blocks.wooden_slab,
+                        STOP_CRAFTING,
+                        START_TEXT,
+                        CENTER_TEXT,
+                        "item.cooking_book.pages.sandwiches.text04",
+                        STOP_TEXT),
 
-        pageIndex[1] = this.addChapter("item.cooking_book.pages.oven.title", 0, 0, 62,
-                START_TEXT,
-                "item.cooking_book.pages.oven.text01",
-                STOP_TEXT,
-                START_CRAFTING,
-                new ItemStack(KitchenBlocks.oven),
-                Items.iron_ingot, Items.iron_ingot, Items.iron_ingot,
-                Items.iron_ingot, Items.coal, Items.iron_ingot,
-                Items.iron_ingot, Items.flint_and_steel, Items.iron_ingot,
-                STOP_CRAFTING,
-                ADD_SPACE, 10,
-                START_TEXT,
-                "item.cooking_book.pages.oven.text02",
-                STOP_TEXT,
-                START_IMAGE,
-                "kitchen:textures/gui/cooking_book.png",
-                0,
-                161,
-                99,
-                61,
-                STOP_IMAGE,
-                START_TEXT,
-                "item.cooking_book.pages.oven.text03",
-                STOP_TEXT,
-                ADD_SPACE, 5,
-                START_TEXT,
-                "item.cooking_book.pages.oven.text04",
-                STOP_TEXT,
-                START_IMAGE,
-                "kitchen:textures/gui/cooking_book.png",
-                99, 198,
-                99, 58,
-                STOP_IMAGE,
-                START_TEXT,
-                "item.cooking_book.pages.oven.text05",
-                STOP_TEXT,
-                START_IMAGE,
-                "kitchen:textures/gui/cooking_book_1.png",
-                99, 99,
-                99, 61,
-                STOP_IMAGE,
-                START_TEXT,
-                "item.cooking_book.pages.oven.text06",
-                STOP_TEXT);
+                this.addChapter("item.cooking_book.pages.oven.title", 0, 0, 62,
+                        START_TEXT,
+                        "item.cooking_book.pages.oven.text01",
+                        STOP_TEXT,
+                        START_CRAFTING,
+                        new ItemStack(KitchenBlocks.oven),
+                        Items.iron_ingot, Items.iron_ingot, Items.iron_ingot,
+                        Items.iron_ingot, Items.coal, Items.iron_ingot,
+                        Items.iron_ingot, Items.flint_and_steel, Items.iron_ingot,
+                        STOP_CRAFTING,
+                        ADD_SPACE, 10,
+                        START_TEXT,
+                        "item.cooking_book.pages.oven.text02",
+                        STOP_TEXT,
+                        START_IMAGE,
+                        "kitchen:textures/gui/cooking_book.png",
+                        0,
+                        161,
+                        99,
+                        61,
+                        STOP_IMAGE,
+                        START_TEXT,
+                        "item.cooking_book.pages.oven.text03",
+                        STOP_TEXT,
+                        ADD_SPACE, 5,
+                        START_TEXT,
+                        "item.cooking_book.pages.oven.text04",
+                        STOP_TEXT,
+                        START_IMAGE,
+                        "kitchen:textures/gui/cooking_book.png",
+                        99, 198,
+                        99, 58,
+                        STOP_IMAGE,
+                        START_TEXT,
+                        "item.cooking_book.pages.oven.text05",
+                        STOP_TEXT,
+                        START_IMAGE,
+                        "kitchen:textures/gui/cooking_book_1.png",
+                        99, 99,
+                        99, 61,
+                        STOP_IMAGE,
+                        START_TEXT,
+                        "item.cooking_book.pages.oven.text06",
+                        STOP_TEXT),
 
-        pageIndex[2] = this.addChapter("item.cooking_book.pages.pan.title", 0, 99, 99,
-                START_TEXT,
-                "item.cooking_book.pages.pan.text01",
-                STOP_TEXT,
-                START_CRAFTING,
-                new ItemStack(KitchenBlocks.frying_pan),
-                Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot,
-                STOP_CRAFTING);
+                this.addChapter("item.cooking_book.pages.pan.title", 0, 99, 99,
+                        START_TEXT,
+                        "item.cooking_book.pages.pan.text01",
+                        STOP_TEXT,
+                        START_CRAFTING,
+                        new ItemStack(KitchenBlocks.frying_pan),
+                        Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot, Items.iron_ingot,
+                        STOP_CRAFTING),
 
-        pageIndex[3] = this.addChapter("item.cooking_book.pages.waffle.title", 1, 0, 0,
-                START_TEXT,
-                "item.cooking_book.pages.waffle.text01",
-                STOP_TEXT);
+                this.addChapter("item.cooking_book.pages.waffle.title", 1, 0, 0,
+                        START_TEXT,
+                        "item.cooking_book.pages.waffle.text01",
+                        STOP_TEXT),
 
-        pageIndex[4] = this.addChapter("item.cooking_book.pages.toast.title", 1, 0, 99,
-                START_TEXT,
-                "item.cooking_book.pages.toast.text01",
-                STOP_TEXT);
+                this.addChapter("item.cooking_book.pages.toast.title", 1, 0, 99,
+                        START_TEXT,
+                        "item.cooking_book.pages.toast.text01",
+                        STOP_TEXT),
 
-        pageIndex[5] = this.addChapter("item.cooking_book.pages.timer.title", 1, 99, 0,
-                START_TEXT,
-                "item.cooking_book.pages.timer.text01",
-                STOP_TEXT);
+                this.addChapter("item.cooking_book.pages.timer.title", 1, 99, 0,
+                        START_TEXT,
+                        "item.cooking_book.pages.timer.text01",
+                        STOP_TEXT)};
     }
 
     private String translate(String text)
