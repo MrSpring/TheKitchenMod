@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -44,10 +45,17 @@ public class ItemBlockPlate extends ItemBlock
                 }
             } else
             {
-                list.add(StatCollector.translateToLocal("tile.plate.not_used_for_sandwiches1"));
-                list.add(StatCollector.translateToLocal("tile.plate.not_used_for_sandwiches2"));
+                addPlateMessage(list);
             }
         } else
+        {
+            addPlateMessage(list);
+        }
+    }
+
+    private void addPlateMessage(List list)
+    {
+        if (ModConfig.getKitchenConfig().show_plate_message)
         {
             list.add(StatCollector.translateToLocal("tile.plate.not_used_for_sandwiches1"));
             list.add(StatCollector.translateToLocal("tile.plate.not_used_for_sandwiches2"));

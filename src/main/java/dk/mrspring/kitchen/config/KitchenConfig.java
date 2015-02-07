@@ -13,6 +13,7 @@ public class KitchenConfig extends BaseConfig
     public boolean show_mod_repost_info = true;
     public boolean show_different_jars_in_creative_tab = true;
     public boolean show_different_mixing_bowls_in_creative_tab = true;
+    public boolean show_plate_message = true;
 
     public KitchenConfig()
     {
