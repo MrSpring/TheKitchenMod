@@ -37,7 +37,7 @@ public class Casserole
     public static Casserole loadFromItemStack(ItemStack stack)
     {
         if (stack.hasTagCompound())
-            return loadFromNBT(stack.getTagCompound());
+            return loadFromNBT(stack.getTagCompound().getCompoundTag("Casserole"));
         else return new Casserole();
     }
 

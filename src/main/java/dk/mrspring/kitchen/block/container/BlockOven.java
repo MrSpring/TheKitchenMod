@@ -30,7 +30,7 @@ public class BlockOven extends BlockContainerBase
 
         if (tileEntityBoard != null)
         {
-            ItemStack[] stacks = tileEntityBoard.getOvenItems();
+            ItemStack[] stacks = tileEntityBoard.getDroppedItems();
 
             for (ItemStack item : stacks)
             {
@@ -39,7 +39,6 @@ public class BlockOven extends BlockContainerBase
                     Random random = new Random();
 
                     float xRandPos = random.nextFloat() * 0.8F + 0.1F;
-                    float yRandPos = 1.2F;
                     float zRandPos = random.nextFloat() * 0.8F + 0.1F;
 
                     EntityItem entityItem = new EntityItem(world, x + xRandPos, y + 1, z + zRandPos, item);
@@ -88,6 +87,7 @@ public class BlockOven extends BlockContainerBase
                                 entityItem.motionZ = random.nextGaussian() * 0.005F;
 
                                 world.spawnEntityInWorld(entityItem);
+                                world.markBlockForUpdate(x, y, z);
                                 return true;
                             } else
                                 return false;

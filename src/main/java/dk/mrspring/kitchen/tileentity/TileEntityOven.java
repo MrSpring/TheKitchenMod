@@ -188,6 +188,18 @@ public class TileEntityOven extends TileEntityTimeable
         return ovenItems;
     }
 
+    public ItemStack[] getDroppedItems()
+    {
+        if (hasCasserole())
+        {
+            ItemStack casseroleStack = new ItemStack(KitchenBlocks.casserole);
+            NBTTagCompound casseroleCompound = new NBTTagCompound();
+            getCasserole().writeToNBT(casseroleCompound);
+            casseroleStack.setTagInfo("Casserole", casseroleCompound);
+            return new ItemStack[]{casseroleStack};
+        } else return getOvenItems();
+    }
+
     public float getLidAngle()
     {
         return this.lidAngle;
@@ -242,16 +254,24 @@ public class TileEntityOven extends TileEntityTimeable
         int i;
         ItemStack itemStack = null;
 
-        for (i = 3; i >= 0; --i)
+        if (hasCasserole())
         {
-            if (this.ovenItems[i] != null)
-                if (this.ovenItems[i].getItem() != null)
-                {
-                    itemStack = this.ovenItems[i].copy();
-                    this.ovenItems[i] = null;
-                    break;
-                }
-        }
+            itemStack = new ItemStack(KitchenBlocks.casserole);
+            NBTTagCompound casseroleCompound = new NBTTagCompound();
+            getCasserole().writeToNBT(casseroleCompound);
+            itemStack.setTagInfo("Casserole", casseroleCompound);
+            this.casserole = null;
+        } else
+            for (i = 3; i >= 0; --i)
+            {
+                if (this.ovenItems[i] != null)
+                    if (this.ovenItems[i].getItem() != null)
+                    {
+                        itemStack = this.ovenItems[i].copy();
+                        this.ovenItems[i] = null;
+                        break;
+                    }
+            }
 
 
         if (itemStack != null)
@@ -325,7 +345,7 @@ public class TileEntityOven extends TileEntityTimeable
             NBTTagCompound casseroleCompound = new NBTTagCompound();
             casserole.writeToNBT(casseroleCompound);
             compound.setTag("Casserole", casseroleCompound);
-        }
+        } else compound.removeTag("Casserole");
     }
 
     @Override
@@ -356,7 +376,7 @@ public class TileEntityOven extends TileEntityTimeable
         {
             casserole = new Casserole();
             casserole.readFromNBT(compound.getCompoundTag("Casserole"));
-        }
+        } else casserole = null;
     }
 
     @Override
