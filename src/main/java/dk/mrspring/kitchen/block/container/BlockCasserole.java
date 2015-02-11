@@ -6,6 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 /**
  * Created by Konrad on 27-01-2015.
  */
@@ -30,7 +32,7 @@ public class BlockCasserole extends BlockContainerBase
                 ItemStack[] removedLayer = tileEntity.removeTopLayer();
                 for (ItemStack stack : removedLayer)
                     if (stack != null)
-                        world.spawnEntityInWorld(new EntityItem(world, x, y, x, stack));
+                        world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 2, z + 0.5, stack));
             }
         }
         return true;
