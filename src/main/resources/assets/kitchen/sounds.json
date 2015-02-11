@@ -1,0 +1,12 @@
+{
+  "ding":
+  {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "ding",
+        "stream": false
+      }
+    ]
+  }
+}
