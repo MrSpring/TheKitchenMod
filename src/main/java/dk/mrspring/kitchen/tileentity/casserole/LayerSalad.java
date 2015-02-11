@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -23,6 +24,12 @@ public class LayerSalad implements Layer
     public String getTypeName()
     {
         return "Salad";
+    }
+
+    @Override
+    public String getTranslatedName()
+    {
+        return StatCollector.translateToLocal("item.salad.name");
     }
 
     @Override

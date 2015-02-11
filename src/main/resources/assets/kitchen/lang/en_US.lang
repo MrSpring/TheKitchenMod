@@ -21,6 +21,8 @@ tile.waffle_iron.name=Waffle Iron
 tile.toaster.name=Toaster
 tile.vanilla_crop.name=Vanilla Crop
 tile.wild_vanilla.name=Wild Vanilla
+tile.casserole.name=Casserole
+tile.casserole.contents=Contains
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
@@ -77,6 +79,7 @@ item.fried_egg.name=Fried Egg
 item.ice_cream_cone.name=Ice Cream Cone
 item.lasagna_plate.name=Lasagna Plate
 item.burnt_lasagna_plate.name=Burnt Lasagna Plate
+item.salad.name=Salad
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT

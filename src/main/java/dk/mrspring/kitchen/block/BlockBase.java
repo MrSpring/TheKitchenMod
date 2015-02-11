@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.block;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.ItemBlockCasserole;
 import dk.mrspring.kitchen.item.ItemBlockCuttingBoard;
 import dk.mrspring.kitchen.item.ItemBlockPan;
 import dk.mrspring.kitchen.item.ItemBlockPlate;
@@ -52,6 +53,6 @@ public class BlockBase extends Block
         registerBlock(KitchenBlocks.frying_pan, ItemBlockPan.class);
         registerBlock(KitchenBlocks.waffle_iron);
         registerBlock(KitchenBlocks.toaster);
-        registerBlock(KitchenBlocks.casserole);
+        registerBlock(KitchenBlocks.casserole, ItemBlockCasserole.class);
     }
 }

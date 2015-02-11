@@ -14,6 +14,8 @@ public interface Layer
 
     public String getTypeName();
 
+    public String getTranslatedName();
+
     /***
      * Removes the layer from the Casserole.
      * @return Returns items that should be dropped.

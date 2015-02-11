@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -36,6 +37,12 @@ public class LayerLasagnaPlates implements Layer
     public String getTypeName()
     {
         return "LasagnaPlates";
+    }
+
+    @Override
+    public String getTranslatedName()
+    {
+        return StatCollector.translateToLocal("item.lasagna_plate.name");
     }
 
     @Override
