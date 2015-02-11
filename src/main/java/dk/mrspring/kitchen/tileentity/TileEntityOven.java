@@ -191,13 +191,8 @@ public class TileEntityOven extends TileEntityTimeable
     public ItemStack[] getDroppedItems()
     {
         if (hasCasserole())
-        {
-            ItemStack casseroleStack = new ItemStack(KitchenBlocks.casserole);
-            NBTTagCompound casseroleCompound = new NBTTagCompound();
-            getCasserole().writeToNBT(casseroleCompound);
-            casseroleStack.setTagInfo("Casserole", casseroleCompound);
-            return new ItemStack[]{casseroleStack};
-        } else return getOvenItems();
+            return new ItemStack[]{casserole.toItemStack()};
+        else return getOvenItems();
     }
 
     public float getLidAngle()
@@ -256,10 +251,7 @@ public class TileEntityOven extends TileEntityTimeable
 
         if (hasCasserole())
         {
-            itemStack = new ItemStack(KitchenBlocks.casserole);
-            NBTTagCompound casseroleCompound = new NBTTagCompound();
-            getCasserole().writeToNBT(casseroleCompound);
-            itemStack.setTagInfo("Casserole", casseroleCompound);
+            itemStack = casserole.toItemStack();
             this.casserole = null;
         } else
             for (i = 3; i >= 0; --i)

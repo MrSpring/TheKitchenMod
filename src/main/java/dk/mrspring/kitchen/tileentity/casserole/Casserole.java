@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.tileentity.casserole;
 
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModLogger;
 import net.minecraft.item.Item;
@@ -168,6 +169,15 @@ public class Casserole
             } else
                 ModLogger.print(ModLogger.INFO, "Unable to find casserole layer type: \"" + layerType + "\". Ignoring it.");
         }
+    }
+
+    public ItemStack toItemStack()
+    {
+        ItemStack casseroleStack = new ItemStack(KitchenBlocks.casserole);
+        NBTTagCompound casseroleCompound = new NBTTagCompound();
+        this.writeToNBT(casseroleCompound);
+        casseroleStack.setTagInfo("Casserole", casseroleCompound);
+        return casseroleStack;
     }
 
     public enum CasseroleState
