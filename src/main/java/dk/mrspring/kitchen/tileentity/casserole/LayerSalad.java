@@ -29,7 +29,23 @@ public class LayerSalad implements Layer
     @Override
     public String getTranslatedName()
     {
-        return StatCollector.translateToLocal("item.salad.name");
+        String string = "";
+        if (hasTomatoes)
+            string += StatCollector.translateToLocal("item.tomato.name");
+        if (hasLettuce)
+        {
+            if (hasTomatoes)
+                string += ", ";
+            string += StatCollector.translateToLocal("item.lettuce.name");
+        }
+        if (hasCarrots)
+        {
+            if (hasTomatoes || hasLettuce)
+                string += ", ";
+            string += StatCollector.translateToLocal("item.carrots.name");
+        }
+        return string;
+//        StatCollector.translateToLocal("item.salad.name");
     }
 
     @Override
