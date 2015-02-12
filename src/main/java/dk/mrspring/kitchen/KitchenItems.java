@@ -17,6 +17,8 @@ public class KitchenItems
 
     // All the Item variables
     public static final Item knife = new ItemKnife().setMaxStackSize(1);
+    public static final Item fork = new ItemBase("fork", true);
+    public static final Item knife_and_fork = new ItemBase("knife_and_fork", true);
     public static final Item mixing_bowl = new ItemMixingBowl("mixing_bowl");
     public static final Item mortar_and_pestle = new ItemMandP().setMaxStackSize(1);
     public static final Item mortar = new ItemBase("mortar", true);
@@ -67,6 +69,7 @@ public class KitchenItems
     public static final Item waffle = new ItemIceCreamableBase("waffle", 5, false, Kitchen.instance.foodTab);
     public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false, Kitchen.instance.foodTab);
     public static final Item pancake = new ItemIceCreamableBase("pancake", 4, false, Kitchen.instance.foodTab);
+    public static final Item ice_cream_cone = new ItemIceCreamableBase("ice_cream_cone", 8, false, Kitchen.instance.foodTab);
 
     public static final Item butter = new ItemBase("butter", Kitchen.instance.foodTab);
     public static final Item burnt_meat = new ItemFoodBase("burnt_meat", 1, false, Kitchen.instance.foodTab);
@@ -89,7 +92,6 @@ public class KitchenItems
     public static final Item lasagna_plate = new ItemFoodBase("lasagna_plate", 1, false, Kitchen.instance.foodTab);
     public static final Item burnt_lasagna_plate = new ItemFoodBase("burnt_lasagna_plate", 0, false, Kitchen.instance.foodTab);
 
-    public static final Item ice_cream_cone = new ItemIceCreamableBase("ice_cream_cone", 8, false, Kitchen.instance.foodTab);
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
