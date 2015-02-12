@@ -26,7 +26,7 @@ public class ItemBlockCasserole extends ItemBlock
         super.addInformation(stack, player, list, p_77624_4_);
 
         Casserole fromStack = Casserole.loadFromItemStack(stack);
-        if (fromStack != null)
+        if (fromStack != null && fromStack.getLayers().size() > 0)
         {
             list.add(StatCollector.translateToLocal("tile.casserole.contents") + ":");
             for (Layer layer : fromStack.getLayers())
