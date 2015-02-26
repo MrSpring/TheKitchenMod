@@ -18,7 +18,6 @@ public class KitchenItems
     // All the Item variables
     public static final Item knife = new ItemKnife().setMaxStackSize(1);
     public static final Item fork = new ItemBase("fork", true);
-    public static final Item knife_and_fork = new ItemBase("knife_and_fork", true);
     public static final Item mixing_bowl = new ItemMixingBowl("mixing_bowl");
     public static final Item mortar_and_pestle = new ItemMandP().setMaxStackSize(1);
     public static final Item mortar = new ItemBase("mortar", true);
