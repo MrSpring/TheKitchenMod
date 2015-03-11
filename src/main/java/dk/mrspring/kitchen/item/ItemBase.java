@@ -85,6 +85,7 @@ public class ItemBase extends Item
     public static void load()
     {
         registerItem(knife);
+        registerItem(fork);
         registerItem(mortar_and_pestle);
         registerItem(mortar);
         registerItem(pestle);
@@ -135,7 +136,8 @@ public class ItemBase extends Item
         registerItem(burger_bun);
         registerItem(sliced_burger_bun);
         registerItem(fried_egg);
+        registerItem(lasagna_plate);
+        registerItem(burnt_lasagna_plate);
         registerItem(ice_cream_cone);
-        registerItem(fork);
     }
 }
