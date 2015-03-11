@@ -1,11 +1,8 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
-import dk.mrspring.kitchen.tileentity.casserole.Casserole;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -16,7 +13,6 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 public class TileEntityOven extends TileEntityTimeable
 {
     protected ItemStack[] ovenItems = new ItemStack[4];
-    protected Casserole casserole = null;
     protected int burnTime = 0;
     protected int itemState = 0;
     protected boolean isCooking = false;
@@ -38,10 +34,8 @@ public class TileEntityOven extends TileEntityTimeable
         if (itemStack != null)
             if (itemStack.getItem() != null)
             {
-                System.out.println("ItemStack is not null");
                 if (OvenRecipes.instance().getOutputFor(itemStack) != null)
                     return this.forceAddItemStack(itemStack);
-                System.out.println("Could not find recipe for it...");
 
                 if (itemStack.getItem() == Items.coal && !this.hasCoal)
                 {
@@ -50,36 +44,11 @@ public class TileEntityOven extends TileEntityTimeable
                     return true;
                 }
 
-                System.out.println("And it is not coal either...");
-
-                if (itemStack.getItem() == Item.getItemFromBlock(KitchenBlocks.casserole) && this.casserole == null && isArrayEmpty(this.ovenItems))
-                {
-                    System.out.println("Got it! It's a casserole!");
-                    Casserole fromItemStack = Casserole.loadFromItemStack(itemStack);
-                    if (fromItemStack != null)
-                    {
-                        System.out.println("Setting casserole");
-                        this.casserole = fromItemStack;
-                        itemStack.stackSize--;
-                        return true;
-                    }
-                }
-
                 return false;
             } else
                 return false;
         else
             return false;
-    }
-
-    public boolean hasCasserole()
-    {
-        return this.casserole != null && isArrayEmpty(this.ovenItems);
-    }
-
-    public Casserole getCasserole()
-    {
-        return casserole;
     }
 
     private boolean isArrayEmpty(ItemStack[] array)
@@ -190,9 +159,7 @@ public class TileEntityOven extends TileEntityTimeable
 
     public ItemStack[] getDroppedItems()
     {
-        if (hasCasserole())
-            return new ItemStack[]{casserole.toItemStack()};
-        else return getOvenItems();
+        return getOvenItems();
     }
 
     public float getLidAngle()
@@ -249,21 +216,16 @@ public class TileEntityOven extends TileEntityTimeable
         int i;
         ItemStack itemStack = null;
 
-        if (hasCasserole())
+        for (i = 3; i >= 0; --i)
         {
-            itemStack = casserole.toItemStack();
-            this.casserole = null;
-        } else
-            for (i = 3; i >= 0; --i)
-            {
-                if (this.ovenItems[i] != null)
-                    if (this.ovenItems[i].getItem() != null)
-                    {
-                        itemStack = this.ovenItems[i].copy();
-                        this.ovenItems[i] = null;
-                        break;
-                    }
-            }
+            if (this.ovenItems[i] != null)
+                if (this.ovenItems[i].getItem() != null)
+                {
+                    itemStack = this.ovenItems[i].copy();
+                    this.ovenItems[i] = null;
+                    break;
+                }
+        }
 
 
         if (itemStack != null)
@@ -331,13 +293,6 @@ public class TileEntityOven extends TileEntityTimeable
         }
 
         compound.setTag("Items", nbtTagList);
-
-        if (casserole != null)
-        {
-            NBTTagCompound casseroleCompound = new NBTTagCompound();
-            casserole.writeToNBT(casseroleCompound);
-            compound.setTag("Casserole", casseroleCompound);
-        } else compound.removeTag("Casserole");
     }
 
     @Override
@@ -363,12 +318,6 @@ public class TileEntityOven extends TileEntityTimeable
             if (slot >= 0 && slot < this.ovenItems.length)
                 this.ovenItems[slot] = ItemStack.loadItemStackFromNBT(itemCompound);
         }
-
-        if (compound.hasKey("Casserole"))
-        {
-            casserole = new Casserole();
-            casserole.readFromNBT(compound.getCompoundTag("Casserole"));
-        } else casserole = null;
     }
 
     @Override

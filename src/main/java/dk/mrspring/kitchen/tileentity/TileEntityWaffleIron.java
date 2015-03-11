@@ -22,7 +22,6 @@ public class TileEntityWaffleIron extends TileEntityTimeable
     {
         recipes = new HashMap<String, ItemStack[]>();
         recipes.put("waffle_dough", new ItemStack[]{new ItemStack(KitchenItems.waffle, 2), new ItemStack(KitchenItems.burnt_waffle, 2)});
-        recipes.put("pasta_dough", new ItemStack[]{new ItemStack(KitchenItems.lasagna_plate, 2), new ItemStack(KitchenItems.burnt_lasagna_plate, 2)});
     }
 
     public static void registerWaffleRecipe(String mixName, ItemStack result, ItemStack burntResult)

@@ -135,10 +135,7 @@ public class ItemBase extends Item
         registerItem(burger_bun);
         registerItem(sliced_burger_bun);
         registerItem(fried_egg);
-        registerItem(lasagna_plate);
-        registerItem(burnt_lasagna_plate);
         registerItem(ice_cream_cone);
         registerItem(fork);
-        registerItem(knife_and_fork);
     }
 }
