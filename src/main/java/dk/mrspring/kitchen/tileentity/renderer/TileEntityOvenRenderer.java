@@ -3,7 +3,6 @@ package dk.mrspring.kitchen.tileentity.renderer;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelOven;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
-import dk.mrspring.kitchen.tileentity.casserole.Casserole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -92,20 +91,7 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
 
         GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
 
-        if (tileEntityOven.hasCasserole())
-            this.renderCasserole(tileEntityOven.getCasserole());
-
         GL11.glPopMatrix();
-
-        GL11.glPopMatrix();
-    }
-
-    private void renderCasserole(Casserole casserole)
-    {
-        GL11.glPushMatrix();
-
-        GL11.glTranslatef(0.0F, 0.1F, -0.1F);
-        TileEntityCasseroleRenderer.renderCasserole(casserole);
 
         GL11.glPopMatrix();
     }
@@ -119,7 +105,6 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
             GL11.glTranslated(xOffset, yOffset, zOffset);
 
             ItemStack toRender = item.copy();
-//            toRender.stackSize = 1;
 
             EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
             itemEntity.hoverStart = 0.0F;

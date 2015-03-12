@@ -25,7 +25,6 @@ import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.recipe.RecipeRegistry;
 import dk.mrspring.kitchen.recipe.ToasterRecipes;
 import dk.mrspring.kitchen.tileentity.*;
-import dk.mrspring.kitchen.tileentity.casserole.Casserole;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
@@ -90,7 +89,6 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityPan.class, "tileEntityFryingPan");
         GameRegistry.registerTileEntity(TileEntityWaffleIron.class, "tileEntityWaffleIron");
         GameRegistry.registerTileEntity(TileEntityToaster.class, "tileEntityToaster");
-        GameRegistry.registerTileEntity(TileEntityCasserole.class, "tileEntityCasserole");
 
 
         // Loading Blocks and Items
@@ -126,7 +124,6 @@ public class Kitchen
         instance.toasterRecipes.load();
 
         TileEntityWaffleIron.load();
-        Casserole.load();
 
         FMLInterModComms.sendMessage("Waila", "register", "dk.mrspring.kitchen.comp.waila.WailaDataProvider.callbackRegister");
         FMLInterModComms.sendRuntimeMessage(ModInfo.modid, "VersionChecker", "addVersionCheck", "http://www.mrspring.dk/mods/kitchen/vchecker.json");

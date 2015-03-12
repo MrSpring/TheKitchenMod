@@ -62,6 +62,11 @@ public class SandwichableConfig extends BaseConfig
         this.makeSandwichable(new SandwichableEntry("kitchen:peanut_jam", 2).hideInformation().dontDropItem());
 
         this.makeSandwichable(new SandwichableEntry("kitchen:jam_jar", 0).hideInformation());
+
+        this.makeSandwichable(new SandwichableEntry("kitchen:raw_cut_fish", 1));
+        this.makeSandwichable(new SandwichableEntry("kitchen:cut_fish", 2));
+
+        this.makeSandwichable(new SandwichableEntry("kitchen:ham_slice", 3));
     }
 
     public void makeSandwichable(SandwichableEntry entry)

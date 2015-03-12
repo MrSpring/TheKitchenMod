@@ -39,5 +39,4 @@ public class KitchenBlocks
     public static final Block frying_pan = new BlockFryingPan();
     public static final Block waffle_iron = new BlockWaffleIron();
     public static final Block toaster = new BlockToaster();
-    public static final Block casserole = new BlockCasserole();
 }

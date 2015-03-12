@@ -82,6 +82,8 @@ item.burnt_lasagna_plate.name=Burnt Lasagna Plate
 item.salad.name=Salad
 item.fork.name=Fork
 item.knife_and_fork.name=Knife And Fork
+item.raw_cut_fish.name=Raw Sliced Fish
+item.cut_fish=Cooked Sliced Fish
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
