@@ -27,7 +27,6 @@ import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -170,14 +169,7 @@ public class Kitchen
             {
                 return true;
             }
-        }, new ItemStack(KitchenItems.bacon, 1))
-        {
-            @Override
-            public void onIngredientFinished(ItemStack result, EntityPlayer player)
-            {
-                player.triggerAchievement(ModAchievements.bacon);
-            }
-        });
+        }, new ItemStack(KitchenItems.bacon, 1)));
         Ingredient.registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
         Ingredient.registerIngredient(new Ingredient("pancake_dough", new IIngredientRenderingHandler()
         {
@@ -248,7 +240,6 @@ public class Kitchen
         KitchenItems.linkToIngredient(Items.dye, "cocoa");
         KitchenItems.linkToIngredient(Items.egg, "fried_egg");
 
-        ModAchievements.load();
         FMLCommonHandler.instance().bus().register(new ModEventHandler());
     }
 

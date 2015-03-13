@@ -3,8 +3,6 @@ package dk.mrspring.kitchen.block;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.item.ItemBlockCuttingBoard;
-import dk.mrspring.kitchen.item.ItemBlockPan;
 import dk.mrspring.kitchen.item.ItemBlockPlate;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -32,7 +30,7 @@ public class BlockBase extends Block
     public static void load()
     {
         registerBlock(KitchenBlocks.tiles);
-        registerBlock(KitchenBlocks.board, ItemBlockCuttingBoard.class);
+        registerBlock(KitchenBlocks.board);
 
         registerBlock(KitchenBlocks.tomato_crop);
         registerBlock(KitchenBlocks.lettuce_crop);
@@ -49,7 +47,7 @@ public class BlockBase extends Block
         registerBlock(KitchenBlocks.oven);
         registerBlock(KitchenBlocks.plate, ItemBlockPlate.class);
         registerBlock(KitchenBlocks.kitchen_cabinet);
-        registerBlock(KitchenBlocks.frying_pan, ItemBlockPan.class);
+        registerBlock(KitchenBlocks.frying_pan);
         registerBlock(KitchenBlocks.waffle_iron);
         registerBlock(KitchenBlocks.toaster);
     }

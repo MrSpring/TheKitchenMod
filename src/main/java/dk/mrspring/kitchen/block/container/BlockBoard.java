@@ -1,6 +1,5 @@
 package dk.mrspring.kitchen.block.container;
 
-import dk.mrspring.kitchen.ModAchievements;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -65,7 +64,6 @@ public class BlockBoard extends BlockContainerBase
                 {
                     world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, sandwich));
                     world.markBlockForUpdate(x, y, z);
-                    activator.triggerAchievement(ModAchievements.first_sandwich);
                     return true;
                 }
             }

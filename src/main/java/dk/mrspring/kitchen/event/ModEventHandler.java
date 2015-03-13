@@ -3,7 +3,6 @@ package dk.mrspring.kitchen.event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.ModAchievements;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.entity.EntityLivingBase;
@@ -101,7 +100,6 @@ public class ModEventHandler
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
-        player.triggerAchievement(ModAchievements.installed);
         if (!player.getEntityData().getBoolean("HasGottenCookingBook"))
         {
             player.getEntityData().setBoolean("HasGottenCookingBook", true);

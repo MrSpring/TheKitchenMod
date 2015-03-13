@@ -61,7 +61,7 @@ public class RecipeRegistry
         GameRegistry.addShapelessRecipe(getMixingBowlStack("strawberry_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, jammable_strawberry);
         GameRegistry.addShapelessRecipe(getMixingBowlStack("chocolate_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, new ItemStack(dye, 1, 3));
         GameRegistry.addShapelessRecipe(getMixingBowlStack("apple_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_vanilla, crushed_ice, cut_apple);
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("pasta_dough", 3), getMixingBowlStack(null, 0), water_bucket, egg, flour);
+//        GameRegistry.addShapelessRecipe(getMixingBowlStack("pasta_dough", 3), getMixingBowlStack(null, 0), water_bucket, egg, flour);
 
         /**
          * Knife recipes
@@ -98,7 +98,6 @@ public class RecipeRegistry
         GameRegistry.addShapelessRecipe(new ItemStack(jammable_strawberry), new ItemStack(cut_strawberry), new ItemStack(sugar));
         GameRegistry.addRecipe(new IRecipe()
         {
-
             @Override
             public boolean matches(InventoryCrafting crafting, World p_77569_2_)
             {
@@ -133,7 +132,7 @@ public class RecipeRegistry
             @Override
             public int getRecipeSize()
             {
-                return 0;
+                return 1;
             }
 
             @Override
