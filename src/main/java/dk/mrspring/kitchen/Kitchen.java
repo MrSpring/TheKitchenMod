@@ -146,7 +146,7 @@ public class Kitchen
             @Override
             public ModelBase getModel(int boilTime, Ingredient ingredient)
             {
-                if (boilTime >= 400)
+                if (boilTime >= 250)
                     return cookedBaconModel;
                 else return rawBaconModel;
             }
