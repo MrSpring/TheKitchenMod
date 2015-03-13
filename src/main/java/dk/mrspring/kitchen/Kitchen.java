@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -11,6 +12,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
+import dk.mrspring.kitchen.comp.nei.NEIKitchenConfig;
 import dk.mrspring.kitchen.event.ModEventHandler;
 import dk.mrspring.kitchen.gui.GuiHandler;
 import dk.mrspring.kitchen.item.ItemBase;
@@ -246,6 +248,17 @@ public class Kitchen
         KitchenItems.linkToIngredient(Items.fish, "vanilla_fish");
         KitchenItems.linkToIngredient(Items.porkchop, "vanilla_porkchop");
         KitchenItems.linkToIngredient(Items.beef, "vanilla_beef");
+
+        if (Loader.isModLoaded("NotEnoughItems"))
+        {
+            try
+            {
+                codechicken.nei.NEIModContainer.plugins.add(new NEIKitchenConfig());
+            } catch (Exception e)
+            {
+                ModLogger.print(ModLogger.ERROR, "Failed loading compatibility with NEI:", e);
+            }
+        }
     }
 
     @EventHandler
