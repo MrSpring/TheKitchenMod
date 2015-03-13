@@ -89,8 +89,8 @@ public class KitchenItems
     public static final Item fried_egg = new ItemFoodBase("fried_egg", 3, false, Kitchen.instance.foodTab);
     public static final Item raw_cut_fish = new ItemFoodBase("raw_cut_fish", 2, false, Kitchen.instance.foodTab);
     public static final Item cut_fish = new ItemFoodBase("cut_fish", 4, false, Kitchen.instance.foodTab);
-    public static final Item cooked_ham = new ItemFoodBase("ham_bone", 10, true, Kitchen.instance.foodTab);
-    public static final Item raw_ham = new ItemFoodBase("ham_bone", 4, true, Kitchen.instance.foodTab);
+    public static final Item cooked_ham = new ItemFoodWeaponBase("cooked_ham_bone", 10, true, 3, Kitchen.instance.foodTab);
+    public static final Item raw_ham = new ItemFoodWeaponBase("raw_ham_bone", 4, true, 3, Kitchen.instance.foodTab);
     public static final Item ham_slice = new ItemFoodBase("ham_slice", 4, false, Kitchen.instance.foodTab);
 
 

@@ -170,5 +170,15 @@ public class SandwichableConfig extends BaseConfig
         {
             return this.item_name;
         }
+
+        public int getHealAmount()
+        {
+            return this.heal_amount;
+        }
+
+        public boolean isBread()
+        {
+            return this.is_bread;
+        }
     }
 }

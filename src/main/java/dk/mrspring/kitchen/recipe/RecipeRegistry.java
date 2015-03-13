@@ -7,6 +7,7 @@ import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -81,6 +82,7 @@ public class RecipeRegistry
         addKnifeRecipe(new ItemStack(sliced_burger_bun), new ItemStack(burger_bun));
         addKnifeRecipe(new ItemStack(raw_cut_fish, 2), new ItemStack(fish));
         addKnifeRecipe(new ItemStack(cut_fish, 2), new ItemStack(cooked_fished));
+        addKnifeRecipe(new ItemStack(ham_slice, 4), new ItemStack(cooked_ham));
 
         /**
          * Mortar and Pestle recipes
@@ -200,21 +202,34 @@ public class RecipeRegistry
         GameRegistry.addSmelting(raw_roast_beef, new ItemStack(roast_beef, 1, 0), 3F);
         GameRegistry.addSmelting(raw_vanilla, new ItemStack(dried_vanilla, 1, 0), 3F);
         GameRegistry.addSmelting(raw_burger_bun, new ItemStack(burger_bun), 3F);
+        GameRegistry.addSmelting(raw_cut_fish, new ItemStack(cut_fish, 1), 3F);
 
+        /**
+         * Ice Cream Recipes
+         */
+        addIceCreamRecipe(pancake);
+        addIceCreamRecipe(waffle);
+        addIceCreamRecipe(ice_cream_cone);
+    }
+
+    private static void addIceCreamRecipe(final Item targetItem)
+    {
         GameRegistry.addRecipe(new IRecipe()
         {
+            private final Item item = targetItem;
+
             @Override
             public boolean matches(InventoryCrafting crafting, World world)
             {
-                ItemStack waffleStack = null, bowlStack = null;
+                ItemStack iceCreamableStack = null, bowlStack = null;
 
                 for (int i = 0; i < 9; i++)
                 {
                     ItemStack inSlot = crafting.getStackInSlot(i);
                     if (inSlot != null)
-                        if (inSlot.getItem() == waffle)
-                            if (waffleStack == null)
-                                waffleStack = inSlot;
+                        if (inSlot.getItem() == item)
+                            if (iceCreamableStack == null)
+                                iceCreamableStack = inSlot;
                             else return false;
                         else if (inSlot.getItem() == mixing_bowl)
                             if (bowlStack == null)
@@ -223,99 +238,15 @@ public class RecipeRegistry
                         else return false;
                 }
 
-                if (waffleStack == null || bowlStack == null)
-                    return false;
-
-                String bowlMixType = ItemMixingBowlRenderer.getMixType(bowlStack);
-                int iceCreamAlreadyOnWaffle = 0;
-
-                if (waffleStack.hasTagCompound())
-                    if (waffleStack.getTagCompound().getTagList("IceCream", 8).tagCount() > 0)
-                        iceCreamAlreadyOnWaffle = waffleStack.getTagCompound().getTagList("IceCream", 8).tagCount();
-
-                if (iceCreamAlreadyOnWaffle >= 4 || bowlMixType == null || bowlStack.getItemDamage() <= 0)
-                    return false;
-
-                return bowlMixType.toLowerCase().contains("ice_cream");
-
-            }
-
-            @Override
-            public ItemStack getCraftingResult(InventoryCrafting crafting)
-            {
-                ItemStack waffleStack = null, bowlStack = null;
-
-                for (int i = 0; i < 9; i++)
-                {
-                    ItemStack inSlot = crafting.getStackInSlot(i);
-                    if (inSlot != null)
-                        if (inSlot.getItem() == waffle)
-                            waffleStack = inSlot.copy();
-                        else if (inSlot.getItem() == mixing_bowl)
-                            bowlStack = inSlot.copy();
-                }
-
-                if (waffleStack == null || bowlStack == null)
-                    return null;
-
-                if (waffleStack.stackTagCompound == null)
-                    waffleStack.stackTagCompound = new NBTTagCompound();
-
-                String iceCream = ItemMixingBowlRenderer.getMixType(bowlStack);
-
-                if (!waffleStack.getTagCompound().hasKey("IceCream", 9))
-                    waffleStack.getTagCompound().setTag("IceCream", new NBTTagList());
-
-                waffleStack.getTagCompound().getTagList("IceCream", 8).appendTag(new NBTTagString(iceCream));
-                waffleStack.stackSize = 1;
-
-                return waffleStack;
-            }
-
-            @Override
-            public int getRecipeSize()
-            {
-                return 2;
-            }
-
-            @Override
-            public ItemStack getRecipeOutput()
-            {
-                return null;
-            }
-        });
-
-        GameRegistry.addRecipe(new IRecipe()
-        {
-            @Override
-            public boolean matches(InventoryCrafting crafting, World world)
-            {
-                ItemStack pancakeStack = null, bowlStack = null;
-
-                for (int i = 0; i < 9; i++)
-                {
-                    ItemStack inSlot = crafting.getStackInSlot(i);
-                    if (inSlot != null)
-                        if (inSlot.getItem() == pancake)
-                            if (pancakeStack == null)
-                                pancakeStack = inSlot;
-                            else return false;
-                        else if (inSlot.getItem() == mixing_bowl)
-                            if (bowlStack == null)
-                                bowlStack = inSlot;
-                            else return false;
-                        else return false;
-                }
-
-                if (pancakeStack == null || bowlStack == null)
+                if (iceCreamableStack == null || bowlStack == null)
                     return false;
 
                 String bowlMixType = ItemMixingBowlRenderer.getMixType(bowlStack);
                 int iceCreamAlreadyOnPancake = 0;
 
-                if (pancakeStack.hasTagCompound())
-                    if (pancakeStack.getTagCompound().getTagList("IceCream", 8).tagCount() > 0)
-                        iceCreamAlreadyOnPancake = pancakeStack.getTagCompound().getTagList("IceCream", 8).tagCount();
+                if (iceCreamableStack.hasTagCompound())
+                    if (iceCreamableStack.getTagCompound().getTagList("IceCream", 8).tagCount() > 0)
+                        iceCreamAlreadyOnPancake = iceCreamableStack.getTagCompound().getTagList("IceCream", 8).tagCount();
 
                 if (iceCreamAlreadyOnPancake >= 4 || bowlMixType == null)
                     return false;
@@ -327,117 +258,33 @@ public class RecipeRegistry
             @Override
             public ItemStack getCraftingResult(InventoryCrafting crafting)
             {
-                ItemStack pancakeStack = null, bowlStack = null;
+                ItemStack iceCreamableStack = null, bowlStack = null;
 
                 for (int i = 0; i < 9; i++)
                 {
                     ItemStack inSlot = crafting.getStackInSlot(i);
                     if (inSlot != null)
-                        if (inSlot.getItem() == pancake)
-                            pancakeStack = inSlot.copy();
+                        if (inSlot.getItem() == item)
+                            iceCreamableStack = inSlot.copy();
                         else if (inSlot.getItem() == mixing_bowl)
                             bowlStack = inSlot.copy();
                 }
 
-                if (pancakeStack == null || bowlStack == null)
+                if (iceCreamableStack == null || bowlStack == null)
                     return null;
 
-                if (pancakeStack.stackTagCompound == null)
-                    pancakeStack.stackTagCompound = new NBTTagCompound();
+                if (iceCreamableStack.stackTagCompound == null)
+                    iceCreamableStack.stackTagCompound = new NBTTagCompound();
 
                 String iceCream = ItemMixingBowlRenderer.getMixType(bowlStack);
 
-                if (!pancakeStack.getTagCompound().hasKey("IceCream", 9))
-                    pancakeStack.getTagCompound().setTag("IceCream", new NBTTagList());
+                if (!iceCreamableStack.getTagCompound().hasKey("IceCream", 9))
+                    iceCreamableStack.getTagCompound().setTag("IceCream", new NBTTagList());
 
-                pancakeStack.getTagCompound().getTagList("IceCream", 8).appendTag(new NBTTagString(iceCream));
-                pancakeStack.stackSize = 1;
+                iceCreamableStack.getTagCompound().getTagList("IceCream", 8).appendTag(new NBTTagString(iceCream));
+                iceCreamableStack.stackSize = 1;
 
-                return pancakeStack;
-            }
-
-            @Override
-            public int getRecipeSize()
-            {
-                return 2;
-            }
-
-            @Override
-            public ItemStack getRecipeOutput()
-            {
-                return null;
-            }
-        });
-
-        GameRegistry.addRecipe(new IRecipe()
-        {
-            @Override
-            public boolean matches(InventoryCrafting crafting, World world)
-            {
-                ItemStack pancakeStack = null, bowlStack = null;
-
-                for (int i = 0; i < 9; i++)
-                {
-                    ItemStack inSlot = crafting.getStackInSlot(i);
-                    if (inSlot != null)
-                        if (inSlot.getItem() == ice_cream_cone)
-                            if (pancakeStack == null)
-                                pancakeStack = inSlot;
-                            else return false;
-                        else if (inSlot.getItem() == mixing_bowl)
-                            if (bowlStack == null)
-                                bowlStack = inSlot;
-                            else return false;
-                        else return false;
-                }
-
-                if (pancakeStack == null || bowlStack == null)
-                    return false;
-
-                String bowlMixType = ItemMixingBowlRenderer.getMixType(bowlStack);
-                int iceCreamAlreadyOnPancake = 0;
-
-                if (pancakeStack.hasTagCompound())
-                    if (pancakeStack.getTagCompound().getTagList("IceCream", 8).tagCount() > 0)
-                        iceCreamAlreadyOnPancake = pancakeStack.getTagCompound().getTagList("IceCream", 8).tagCount();
-
-                if (iceCreamAlreadyOnPancake >= 4 || bowlMixType == null)
-                    return false;
-
-                return bowlMixType.toLowerCase().contains("ice_cream");
-
-            }
-
-            @Override
-            public ItemStack getCraftingResult(InventoryCrafting crafting)
-            {
-                ItemStack pancakeStack = null, bowlStack = null;
-
-                for (int i = 0; i < 9; i++)
-                {
-                    ItemStack inSlot = crafting.getStackInSlot(i);
-                    if (inSlot != null)
-                        if (inSlot.getItem() == ice_cream_cone)
-                            pancakeStack = inSlot.copy();
-                        else if (inSlot.getItem() == mixing_bowl)
-                            bowlStack = inSlot.copy();
-                }
-
-                if (pancakeStack == null || bowlStack == null)
-                    return null;
-
-                if (pancakeStack.stackTagCompound == null)
-                    pancakeStack.stackTagCompound = new NBTTagCompound();
-
-                String iceCream = ItemMixingBowlRenderer.getMixType(bowlStack);
-
-                if (!pancakeStack.getTagCompound().hasKey("IceCream", 9))
-                    pancakeStack.getTagCompound().setTag("IceCream", new NBTTagList());
-
-                pancakeStack.getTagCompound().getTagList("IceCream", 8).appendTag(new NBTTagString(iceCream));
-                pancakeStack.stackSize = 1;
-
-                return pancakeStack;
+                return iceCreamableStack;
             }
 
             @Override
