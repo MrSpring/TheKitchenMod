@@ -35,7 +35,7 @@ public class TileEntityPan extends TileEntityTimeable
     {
         if (clicked != null)
         {
-            if (this.cookTime >= 400 && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam() && clicked.getItemDamage() == 0)
+            if (this.cookTime >= getDoneTime() && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam() && clicked.getItemDamage() == 0)
             {
                 this.finishItem(clicked, player);
                 return true;
@@ -45,7 +45,7 @@ public class TileEntityPan extends TileEntityTimeable
             }
         } else
         {
-            if (this.cookTime >= 400)
+            if (this.cookTime >= getDoneTime())
             {
                 this.finishItem(null, player);
                 return false;
@@ -57,7 +57,7 @@ public class TileEntityPan extends TileEntityTimeable
 
     private void finishItem(ItemStack clicked, EntityPlayer player)
     {
-        if (this.cookTime >= 400)
+        if (this.cookTime >= getDoneTime())
         {
             ItemStack result = null;
             if (clicked != null && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam())
@@ -114,7 +114,7 @@ public class TileEntityPan extends TileEntityTimeable
 
         if (this.getIngredient() != Ingredient.getIngredient("empty") && isFunctional)
         {
-            if (this.cookTime < 410)
+            if (this.cookTime < getDoneTime() + 10)
                 this.cookTime++;
         } else this.cookTime = 0;
     }
@@ -196,6 +196,6 @@ public class TileEntityPan extends TileEntityTimeable
     @Override
     public int getDoneTime()
     {
-        return 400;
+        return 250;
     }
 }

@@ -202,6 +202,7 @@ public class RecipeRegistry
         GameRegistry.addSmelting(raw_vanilla, new ItemStack(dried_vanilla, 1, 0), 3F);
         GameRegistry.addSmelting(raw_burger_bun, new ItemStack(burger_bun), 3F);
         GameRegistry.addSmelting(raw_cut_fish, new ItemStack(cut_fish, 1), 3F);
+        GameRegistry.addSmelting(raw_ham, new ItemStack(cooked_ham, 1), 4F);
 
         /**
          * Ice Cream Recipes
