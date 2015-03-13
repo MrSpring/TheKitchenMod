@@ -81,7 +81,7 @@ public class RecipeRegistry
         addKnifeRecipe(new ItemStack(cut_apple, 2), new ItemStack(apple));
         addKnifeRecipe(new ItemStack(sliced_burger_bun), new ItemStack(burger_bun));
         addKnifeRecipe(new ItemStack(raw_cut_fish, 2), new ItemStack(fish));
-        addKnifeRecipe(new ItemStack(cut_fish, 2), new ItemStack(cooked_fished));
+        addKnifeRecipe(new ItemStack(cooked_cut_fish, 2), new ItemStack(cooked_fished));
         addKnifeRecipe(new ItemStack(ham_slice, 4), new ItemStack(cooked_ham));
 
         /**
@@ -201,7 +201,7 @@ public class RecipeRegistry
         GameRegistry.addSmelting(raw_roast_beef, new ItemStack(roast_beef, 1, 0), 3F);
         GameRegistry.addSmelting(raw_vanilla, new ItemStack(dried_vanilla, 1, 0), 3F);
         GameRegistry.addSmelting(raw_burger_bun, new ItemStack(burger_bun), 3F);
-        GameRegistry.addSmelting(raw_cut_fish, new ItemStack(cut_fish, 1), 3F);
+        GameRegistry.addSmelting(raw_cut_fish, new ItemStack(cooked_cut_fish, 1), 3F);
         GameRegistry.addSmelting(raw_ham, new ItemStack(cooked_ham, 1), 4F);
 
         /**

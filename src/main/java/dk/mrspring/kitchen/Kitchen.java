@@ -1,6 +1,5 @@
 package dk.mrspring.kitchen;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -230,6 +229,8 @@ public class Kitchen
             }
         });
         Ingredient.registerIngredient(new Ingredient("fried_egg", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.fried_egg), new ItemStack(KitchenItems.fried_egg)), new ItemStack(KitchenItems.fried_egg)));
+        Ingredient.registerIngredient(new Ingredient("sliced_fish", new ItemBaseRenderingHandler(KitchenItems.raw_cut_fish, KitchenItems.cooked_cut_fish), new ItemStack(KitchenItems.cooked_cut_fish)));
+        Ingredient.registerIngredient(new Ingredient("vanilla_fish", new ItemBaseRenderingHandler(Items.fish, Items.cooked_fished), new ItemStack(Items.cooked_fished)));
 
         KitchenItems.linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         KitchenItems.linkToIngredient(KitchenItems.cut_apple, "apple");
@@ -239,8 +240,8 @@ public class Kitchen
         KitchenItems.linkToIngredient(KitchenItems.mixing_bowl, "pancake_dough");
         KitchenItems.linkToIngredient(Items.dye, "cocoa");
         KitchenItems.linkToIngredient(Items.egg, "fried_egg");
-
-        FMLCommonHandler.instance().bus().register(new ModEventHandler());
+        KitchenItems.linkToIngredient(KitchenItems.raw_cut_fish, "sliced_fish");
+        KitchenItems.linkToIngredient(Items.fish, "vanilla_fish");
     }
 
     @EventHandler

@@ -137,7 +137,7 @@ public class ItemBase extends Item
         registerItem(fried_egg);
         registerItem(ice_cream_cone);
         registerItem(raw_cut_fish);
-        registerItem(cut_fish);
+        registerItem(cooked_cut_fish);
         registerItem(cooked_ham);
         registerItem(raw_ham);
         registerItem(ham_slice);

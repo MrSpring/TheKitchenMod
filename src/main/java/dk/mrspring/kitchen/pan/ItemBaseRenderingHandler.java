@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.pan;
 
 import dk.mrspring.kitchen.model.ModelItemBase;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -11,6 +12,21 @@ public class ItemBaseRenderingHandler implements IIngredientRenderingHandler
 {
     ModelBase preFried;
     ModelBase postFried;
+
+    public ItemBaseRenderingHandler(Item pre, Item post)
+    {
+        this(new ItemStack(pre), new ItemStack(post));
+    }
+
+    public ItemBaseRenderingHandler(ItemStack pre, Item post)
+    {
+        this(pre, new ItemStack(post));
+    }
+
+    public ItemBaseRenderingHandler(Item pre, ItemStack post)
+    {
+        this(new ItemStack(pre), post);
+    }
 
     public ItemBaseRenderingHandler(ItemStack pre, ItemStack post)
     {
