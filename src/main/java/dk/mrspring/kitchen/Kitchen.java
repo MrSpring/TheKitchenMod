@@ -231,6 +231,8 @@ public class Kitchen
         Ingredient.registerIngredient(new Ingredient("fried_egg", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.fried_egg), new ItemStack(KitchenItems.fried_egg)), new ItemStack(KitchenItems.fried_egg)));
         Ingredient.registerIngredient(new Ingredient("sliced_fish", new ItemBaseRenderingHandler(KitchenItems.raw_cut_fish, KitchenItems.cooked_cut_fish), new ItemStack(KitchenItems.cooked_cut_fish)));
         Ingredient.registerIngredient(new Ingredient("vanilla_fish", new ItemBaseRenderingHandler(Items.fish, Items.cooked_fished), new ItemStack(Items.cooked_fished)));
+        Ingredient.registerIngredient(new Ingredient("vanilla_porkchop", new ItemBaseRenderingHandler(Items.porkchop, Items.cooked_porkchop), new ItemStack(Items.cooked_porkchop)));
+        Ingredient.registerIngredient(new Ingredient("vanilla_beef", new ItemBaseRenderingHandler(Items.beef, Items.cooked_beef), new ItemStack(Items.cooked_beef)));
 
         KitchenItems.linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         KitchenItems.linkToIngredient(KitchenItems.cut_apple, "apple");
@@ -242,6 +244,8 @@ public class Kitchen
         KitchenItems.linkToIngredient(Items.egg, "fried_egg");
         KitchenItems.linkToIngredient(KitchenItems.raw_cut_fish, "sliced_fish");
         KitchenItems.linkToIngredient(Items.fish, "vanilla_fish");
+        KitchenItems.linkToIngredient(Items.porkchop, "vanilla_porkchop");
+        KitchenItems.linkToIngredient(Items.beef, "vanilla_beef");
     }
 
     @EventHandler
