@@ -32,6 +32,7 @@ item.cheese.name=Formaggio
 item.cheese_slice.name=Fetta di Formaggio
 item.burnt_meat.name=Carne Bruciata
 item.sandwichable.sandwichable_msg=Per Panini
+item.butter.name=Burro
 
 combo.big_mac.name=C'è n'è solo uno!
 combo.blt.name=Il Buon Vecchio BLT
