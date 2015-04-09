@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.pan;
 
+import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
+import dk.mrspring.kitchen.api.ingredient.Ingredient;
 import dk.mrspring.kitchen.model.jam.ModelJam0;
 import dk.mrspring.kitchen.model.jam.ModelJam1;
 import dk.mrspring.kitchen.model.jam.ModelJam2;
@@ -20,7 +22,7 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
 
     public JamBaseRenderingHandler(float[] colors)
     {
-        this.baseColor=colors;
+        this.baseColor = colors;
         modelJam0 = new ModelJam0();
         modelJam1 = new ModelJam1();
         modelJam2 = new ModelJam2();
@@ -30,11 +32,11 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
     @Override
     public ModelBase getModel(int boilTime, Ingredient ingredient)
     {
-        if (boilTime>=400)
+        if (boilTime >= 250)
             return modelJam3;
-        else if (boilTime>300)
+        else if (boilTime > 125)
             return modelJam2;
-        else if (boilTime>150)
+        else if (boilTime > 75)
             return modelJam1;
         else return modelJam0;
     }
@@ -51,9 +53,9 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
         return baseColor;
     }
 
-	@Override
-	public boolean scaleOnPan(int boilTime, Ingredient ingredient)
-	{
-		return false;
-	}
+    @Override
+    public boolean scaleOnPan(int boilTime, Ingredient ingredient)
+    {
+        return false;
+    }
 }

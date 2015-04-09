@@ -67,7 +67,9 @@ public class NEIKitchenConfig implements IConfigureNEI
                 };
             }
         });
-//        API.
+        API.registerRecipeHandler(new FryingPanCraftingHandler());
+        API.registerUsageHandler(new FryingPanCraftingHandler());
+//        API.registerRecipeHandler(new MixingBowlCraftingHandler());
     }
 
     @Override

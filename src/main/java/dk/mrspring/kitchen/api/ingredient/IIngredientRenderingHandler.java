@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.pan;
+package dk.mrspring.kitchen.api.ingredient;
 
 import net.minecraft.client.model.ModelBase;
 

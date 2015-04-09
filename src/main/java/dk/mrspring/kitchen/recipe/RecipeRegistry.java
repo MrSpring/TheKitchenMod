@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModLogger;
@@ -53,15 +54,16 @@ public class RecipeRegistry
 
 
         // Mixing Bowl recipes
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("waffle_dough", 3), getMixingBowlStack(null, 0), egg, Items.wheat, milk_bucket, sugar);
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("pancake_dough", 3), getMixingBowlStack(null, 0), egg, flour, milk_bucket, sugar, butter);
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("burger_bun_dough", 3), getMixingBowlStack(null, 0), egg, flour, milk_bucket, butter, wheat_seeds);
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("vanilla_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar);
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("strawberry_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar, cut_strawberry);
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("strawberry_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, jammable_strawberry);
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("chocolate_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_ice, new ItemStack(dye, 1, 3));
-        GameRegistry.addShapelessRecipe(getMixingBowlStack("apple_ice_cream", 3), getMixingBowlStack(null, 0), milk_bucket, crushed_vanilla, crushed_ice, cut_apple);
-//        GameRegistry.addShapelessRecipe(getMixingBowlStack("pasta_dough", 3), getMixingBowlStack(null, 0), water_bucket, egg, flour);
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("waffle_dough", 3), Kitchen.getMixingBowlStack(null, 0), egg, Items.wheat, milk_bucket, sugar);
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("pancake_dough", 3), Kitchen.getMixingBowlStack(null, 0), egg, flour, milk_bucket, sugar, butter);
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("burger_bun_dough", 3), Kitchen.getMixingBowlStack(null, 0), egg, flour, milk_bucket, butter, wheat_seeds);
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("vanilla_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar);
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("strawberry_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar, cut_strawberry);
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("strawberry_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, jammable_strawberry);
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("chocolate_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_ice, new ItemStack(dye, 1, 3));
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("apple_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_vanilla, crushed_ice, cut_apple);
+        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("scrambled_eggs", 3), Kitchen.getMixingBowlStack(null, 0), Items.egg, hand_mixer);
+//        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("pasta_dough", 3), Kitchen.getMixingBowlStack(null, 0), water_bucket, egg, flour);
 
         /**
          * Knife recipes
@@ -309,17 +311,5 @@ public class RecipeRegistry
         recipe.add(new ItemStack(knife));
 
         GameRegistry.addShapelessRecipe(output, recipe.toArray());
-    }
-
-    private static ItemStack getMixingBowlStack(String mixType, int usesLeft)
-    {
-        ItemStack bowl = new ItemStack(mixing_bowl, 1, usesLeft);
-        if (mixType != null)
-        {
-            NBTTagCompound tagCompound = new NBTTagCompound();
-            tagCompound.setString("MixType", mixType);
-            bowl.setTagCompound(tagCompound);
-        }
-        return bowl;
     }
 }

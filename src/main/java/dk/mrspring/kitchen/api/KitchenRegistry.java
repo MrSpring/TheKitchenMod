@@ -1,10 +1,10 @@
 package dk.mrspring.kitchen.api;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.api.event.IBoardEvent;
+import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -71,13 +71,13 @@ public class KitchenRegistry
     }
 
 
-    public static void linkItemToIngredient(Item item, String ingredientName)
+    public static void linkItemToIngredient(Item item, int metadata, String ingredientName)
     {
-        KitchenItems.linkToIngredient(item, ingredientName);
+        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.Stack(item, metadata), ingredientName);
     }
 
-    public static void linkItemToIngredient(String itemName, String ingredientName)
+    public static void linkItemToIngredient(Item item, String ingredientName)
     {
-        KitchenItems.linkToIngredient(itemName, ingredientName);
+        linkItemToIngredient(item, -1, ingredientName);
     }
 }

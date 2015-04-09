@@ -4,7 +4,8 @@ import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModLogger;
-import dk.mrspring.kitchen.pan.Ingredient;
+import dk.mrspring.kitchen.api.ingredient.Ingredient;
+import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
 import dk.mrspring.kitchen.pan.Jam;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
  */
 public class TileEntityPan extends TileEntityTimeable
 {
-    Ingredient ingredient = Ingredient.getIngredient("empty");
+    Ingredient ingredient = IngredientRegistry.getInstance().getIngredient("empty");
     int cookTime = 0;
     boolean isFunctional = true, firstRun = true;
 
@@ -39,7 +40,7 @@ public class TileEntityPan extends TileEntityTimeable
             {
                 this.finishItem(clicked, player);
                 return true;
-            } else if (this.ingredient == Ingredient.getIngredient("empty"))
+            } else if (this.ingredient == IngredientRegistry.getInstance().getIngredient("empty"))
             {
                 return this.setIngredient(clicked);
             }
@@ -73,7 +74,7 @@ public class TileEntityPan extends TileEntityTimeable
             {
                 this.cookTime = 0;
                 this.ingredient.onIngredientFinished(result, player);
-                this.ingredient = Ingredient.getIngredient("empty");
+                this.ingredient = IngredientRegistry.getInstance().getIngredient("empty");
 
                 worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, result));
                 worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -89,10 +90,10 @@ public class TileEntityPan extends TileEntityTimeable
      */
     private boolean setIngredient(ItemStack clicked)
     {
-        if (this.ingredient == Ingredient.getIngredient("empty") && this.cookTime == 0)
+        if (this.ingredient == IngredientRegistry.getInstance().getIngredient("empty") && this.cookTime == 0)
         {
-            Ingredient ingredientFromItem = KitchenItems.valueOf(clicked.getItem());
-            if (ingredientFromItem != Ingredient.getIngredient("empty") && ingredientFromItem.canAdd(clicked))
+            Ingredient ingredientFromItem = IngredientRegistry.getInstance().getOutput(clicked);
+            if (ingredientFromItem != IngredientRegistry.getInstance().getIngredient("empty") && ingredientFromItem.canAdd(clicked))
             {
                 this.ingredient = ingredientFromItem;
                 ingredientFromItem.onAdded(clicked);
@@ -112,7 +113,7 @@ public class TileEntityPan extends TileEntityTimeable
             this.firstRun = false;
         }
 
-        if (this.getIngredient() != Ingredient.getIngredient("empty") && isFunctional)
+        if (this.getIngredient() != IngredientRegistry.getInstance().getIngredient("empty") && isFunctional)
         {
             if (this.cookTime < getDoneTime() + 10)
                 this.cookTime++;
@@ -164,7 +165,7 @@ public class TileEntityPan extends TileEntityTimeable
         String string = compound.getString("Ingredient");
         try
         {
-            this.ingredient = Ingredient.getIngredient(string);
+            this.ingredient = IngredientRegistry.getInstance().getIngredient(string);
         } catch (IllegalArgumentException e)
         {
             ModLogger.print(ModLogger.WARNING, "There was a problem loading pan @ X:" + this.xCoord + ", Y:" + this.yCoord + ", Z:" + this.zCoord + ", the ingredient " + string + " could not be found!");

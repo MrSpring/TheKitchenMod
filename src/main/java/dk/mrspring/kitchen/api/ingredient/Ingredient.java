@@ -1,5 +1,6 @@
-package dk.mrspring.kitchen.pan;
+package dk.mrspring.kitchen.api.ingredient;
 
+import dk.mrspring.kitchen.pan.Jam;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -12,8 +13,6 @@ import java.util.Map;
  */
 public class Ingredient
 {
-    public static Map<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
-
     final String name;
     final IIngredientRenderingHandler renderingHandler;
     final boolean isJam;
@@ -50,20 +49,7 @@ public class Ingredient
             return this.getItemResult().getDisplayName();
     }
 
-    public static void registerIngredient(Ingredient ingredient)
-    {
-        if (ingredient != null)
-            if (!ingredients.containsKey(ingredient.getName()))
-                ingredients.put(ingredient.getName(), ingredient);
-    }
 
-    public static Ingredient getIngredient(String name)
-    {
-        if (name != null)
-            if (ingredients.containsKey(name))
-                return ingredients.get(name);
-        return ingredients.get("empty");
-    }
 
     public String getName()
     {

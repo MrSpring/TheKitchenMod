@@ -11,6 +11,10 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
+import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
+import dk.mrspring.kitchen.api.ingredient.Ingredient;
+import dk.mrspring.kitchen.api.ingredient.IngredientMixingBowl;
+import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.comp.nei.NEIKitchenConfig;
 import dk.mrspring.kitchen.event.ModEventHandler;
@@ -20,7 +24,9 @@ import dk.mrspring.kitchen.model.ModelBaconCooked;
 import dk.mrspring.kitchen.model.ModelBaconRaw;
 import dk.mrspring.kitchen.model.ModelPancakeCooked;
 import dk.mrspring.kitchen.model.ModelPancakeUncooked;
-import dk.mrspring.kitchen.pan.*;
+import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
+import dk.mrspring.kitchen.pan.Jam;
+import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.recipe.RecipeRegistry;
 import dk.mrspring.kitchen.recipe.ToasterRecipes;
@@ -33,6 +39,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
+
+import static dk.mrspring.kitchen.KitchenItems.mixing_bowl;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
 public class Kitchen
@@ -136,11 +144,11 @@ public class Kitchen
         Jam.registerJam(new Jam("peanut", 9659689, "kitchen:peanut_jam"));
         Jam.registerJam(new Jam("cocoa", 0x895836, "kitchen:cocoa_jam"));
 
-        Ingredient.registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
-        Ingredient.registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
-        Ingredient.registerIngredient(new Ingredient("apple", new JamBaseRenderingHandler(new float[]{224, 255, 163}), "apple"));
-        Ingredient.registerIngredient(new Ingredient("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}), "peanut"));
-        Ingredient.registerIngredient(new Ingredient("bacon", new IIngredientRenderingHandler()
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("apple", new JamBaseRenderingHandler(new float[]{224, 255, 163}), "apple"));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}), "peanut"));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("bacon", new IIngredientRenderingHandler()
         {
             ModelBase rawBaconModel = new ModelBaconRaw();
             ModelBase cookedBaconModel = new ModelBaconCooked();
@@ -171,8 +179,8 @@ public class Kitchen
                 return true;
             }
         }, new ItemStack(KitchenItems.bacon, 1)));
-        Ingredient.registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
-        Ingredient.registerIngredient(new Ingredient("pancake_dough", new IIngredientRenderingHandler()
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
+        IngredientRegistry.getInstance().registerIngredient(new IngredientMixingBowl("pancake_dough", new IIngredientRenderingHandler()
         {
             ModelBase uncookedModel = new ModelPancakeUncooked();
             ModelBase cookedModel = new ModelPancakeCooked();
@@ -202,52 +210,26 @@ public class Kitchen
             {
                 return false;
             }
-        }, new ItemStack(KitchenItems.pancake))
-        {
-            @Override
-            public boolean canAdd(ItemStack stack)
-            {
-                if (stack.getTagCompound() != null && stack.getItemDamage() > 0)
-                {
-                    String mixType = stack.getTagCompound().getString("MixType");
-                    if (mixType != null)
-                        return mixType.equals("pancake_dough");
-                }
-                return false;
-            }
+        }, new ItemStack(KitchenItems.pancake), "pancake_dough"));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("cocoa", new JamBaseRenderingHandler(new float[]{137, 88, 54}), "cocoa"));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("fried_egg", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.fried_egg), new ItemStack(KitchenItems.fried_egg)), new ItemStack(KitchenItems.fried_egg)));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("sliced_fish", new ItemBaseRenderingHandler(KitchenItems.raw_cut_fish, KitchenItems.cooked_cut_fish), new ItemStack(KitchenItems.cooked_cut_fish)));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_fish", new ItemBaseRenderingHandler(Items.fish, Items.cooked_fished), new ItemStack(Items.cooked_fished)));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_porkchop", new ItemBaseRenderingHandler(Items.porkchop, Items.cooked_porkchop), new ItemStack(Items.cooked_porkchop)));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_beef", new ItemBaseRenderingHandler(Items.beef, Items.cooked_beef), new ItemStack(Items.cooked_beef)));
 
-            @Override
-            public void onAdded(ItemStack clickedStack)
-            {
-                clickedStack.setItemDamage(clickedStack.getItemDamage() - 1);
-            }
-        });
-        Ingredient.registerIngredient(new Ingredient("cocoa", new JamBaseRenderingHandler(new float[]{137, 88, 54}), "cocoa")
-        {
-            @Override
-            public boolean canAdd(ItemStack stack)
-            {
-                return stack.getItemDamage() == 3;
-            }
-        });
-        Ingredient.registerIngredient(new Ingredient("fried_egg", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.fried_egg), new ItemStack(KitchenItems.fried_egg)), new ItemStack(KitchenItems.fried_egg)));
-        Ingredient.registerIngredient(new Ingredient("sliced_fish", new ItemBaseRenderingHandler(KitchenItems.raw_cut_fish, KitchenItems.cooked_cut_fish), new ItemStack(KitchenItems.cooked_cut_fish)));
-        Ingredient.registerIngredient(new Ingredient("vanilla_fish", new ItemBaseRenderingHandler(Items.fish, Items.cooked_fished), new ItemStack(Items.cooked_fished)));
-        Ingredient.registerIngredient(new Ingredient("vanilla_porkchop", new ItemBaseRenderingHandler(Items.porkchop, Items.cooked_porkchop), new ItemStack(Items.cooked_porkchop)));
-        Ingredient.registerIngredient(new Ingredient("vanilla_beef", new ItemBaseRenderingHandler(Items.beef, Items.cooked_beef), new ItemStack(Items.cooked_beef)));
-
-        KitchenItems.linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
-        KitchenItems.linkToIngredient(KitchenItems.cut_apple, "apple");
-        KitchenItems.linkToIngredient(KitchenItems.raw_bacon, "bacon");
-        KitchenItems.linkToIngredient(KitchenItems.peanut, "peanut");
-        KitchenItems.linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
-        KitchenItems.linkToIngredient(KitchenItems.mixing_bowl, "pancake_dough");
-        KitchenItems.linkToIngredient(Items.dye, "cocoa");
-        KitchenItems.linkToIngredient(Items.egg, "fried_egg");
-        KitchenItems.linkToIngredient(KitchenItems.raw_cut_fish, "sliced_fish");
-        KitchenItems.linkToIngredient(Items.fish, "vanilla_fish");
-        KitchenItems.linkToIngredient(Items.porkchop, "vanilla_porkchop");
-        KitchenItems.linkToIngredient(Items.beef, "vanilla_beef");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.cut_apple, "apple");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_bacon, "bacon");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.peanut, "peanut");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
+        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("pancake_dough", "pancake_dough")/*KitchenItems.mixing_bowl, "pancake_dough"*/);
+        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.Stack(Items.dye, 3), "cocoa");
+        IngredientRegistry.getInstance().linkToIngredient(Items.egg, "fried_egg");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_cut_fish, "sliced_fish");
+        IngredientRegistry.getInstance().linkToIngredient(Items.fish, "vanilla_fish");
+        IngredientRegistry.getInstance().linkToIngredient(Items.porkchop, "vanilla_porkchop");
+        IngredientRegistry.getInstance().linkToIngredient(Items.beef, "vanilla_beef");
 
         if (Loader.isModLoaded("NotEnoughItems"))
         {
@@ -271,7 +253,7 @@ public class Kitchen
 
     public static ItemStack getJamJarItemStack(Jam jam, int usesLeft)
     {
-        ItemStack jamStack = new ItemStack(KitchenItems.jam_jar, 1, 1);
+        ItemStack jamStack = new ItemStack(KitchenItems.jam_jar, 1, usesLeft);
 
         if (jam == Jam.getJam("empty"))
         {
@@ -287,5 +269,17 @@ public class Kitchen
             jamStack.setTagInfo("JamInfo", compound);
             return jamStack;
         }
+    }
+
+    public static ItemStack getMixingBowlStack(String mixType, int usesLeft)
+    {
+        ItemStack bowl = new ItemStack(mixing_bowl, 1, usesLeft);
+        if (mixType != null)
+        {
+            NBTTagCompound tagCompound = new NBTTagCompound();
+            tagCompound.setString("MixType", mixType);
+            bowl.setTagCompound(tagCompound);
+        }
+        return bowl;
     }
 }

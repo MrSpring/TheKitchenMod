@@ -6,11 +6,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.KitchenRegistry;
 import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
-import dk.mrspring.kitchen.pan.Ingredient;
+import dk.mrspring.kitchen.api.ingredient.Ingredient;
 import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
 import dk.mrspring.kitchen.pan.Jam;
 import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
-import dk.mrspring.kitchen.recipe.OvenRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -49,9 +48,9 @@ public class IMCHandler
         }
     }
 
-    public static void handleLinkMessage(FMLInterModComms.IMCMessage message)
+    public static void handleLinkMessage(FMLInterModComms.IMCMessage message) // TODO: Fix using IngredientRegistry
     {
-        if (message.isStringMessage())
+        /*if (message.isStringMessage())
         {
             String messageText = message.getStringValue();
             if (messageText.contains(","))
@@ -91,7 +90,7 @@ public class IMCHandler
             } else return;
 
             KitchenRegistry.linkItemToIngredient(itemName, ingredientName);
-        }
+        }*/
     }
 
     public static void handleMakeSandwichableMessage(FMLInterModComms.IMCMessage message)
@@ -180,9 +179,9 @@ public class IMCHandler
         }
     }
 
-    public static void handlePanRecipeMessage(FMLInterModComms.IMCMessage message)
+    public static void handlePanRecipeMessage(FMLInterModComms.IMCMessage message) // TODO: Fix using IngredientRegistry
     {
-        if (message.isNBTMessage())
+        /*if (message.isNBTMessage())
         {
             NBTTagCompound messageCompound = message.getNBTValue();
 
@@ -224,12 +223,12 @@ public class IMCHandler
                 Ingredient.registerIngredient(new Ingredient(ingredientName, new ItemBaseRenderingHandler(input, output), output));
                 KitchenItems.linkToIngredient(input.getItem(), ingredientName);
             }
-        }
+        }*/
     }
 
-    public static void handleJamMessage(FMLInterModComms.IMCMessage message)
+    public static void handleJamMessage(FMLInterModComms.IMCMessage message) // TODO: Fix using IngredientRegistry
     {
-        if (message.isNBTMessage())
+        /*if (message.isNBTMessage())
         {
             NBTTagCompound messageCompound = message.getNBTValue();
 
@@ -273,6 +272,6 @@ public class IMCHandler
             Ingredient.registerIngredient(ingredient);
 
             KitchenItems.linkToIngredient(inputItemName, ingredientName);
-        }
+        }*/
     }
 }

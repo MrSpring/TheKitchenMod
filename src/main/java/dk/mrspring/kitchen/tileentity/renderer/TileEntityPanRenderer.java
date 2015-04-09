@@ -1,9 +1,11 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
+import dk.mrspring.kitchen.api.ingredient.Ingredient;
+import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
 import dk.mrspring.kitchen.model.ModelPan;
-import dk.mrspring.kitchen.pan.IIngredientRenderingHandler;
-import dk.mrspring.kitchen.pan.Ingredient;
 import dk.mrspring.kitchen.tileentity.TileEntityPan;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -38,28 +40,17 @@ public class TileEntityPanRenderer extends TileEntityTimeableRenderer
         GL11.glPushMatrix();
 
         int metadata;
-        metadata = tileEntity.getBlockMetadata();
+        int xc = tileEntity.xCoord, yc = tileEntity.yCoord, zc = tileEntity.zCoord;
+        metadata = tileEntity.getWorldObj().getBlockMetadata(xc, yc - 1, zc);
 
         GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
 
         GL11.glPushMatrix();
 
         float pixel = 0.0625F;
-        switch (metadata)
-        {
-            case 0:
-                GL11.glTranslatef(2 * pixel, 0F, -(4 * pixel));
-                break;
-            case 1:
-                GL11.glTranslatef(4 * pixel, 0F, -(5 * pixel));
-                break;
-            case 2:
-                GL11.glTranslatef(5 * pixel, 0F, -(4 * pixel));
-                break;
-            case 3:
-                GL11.glTranslatef(4 * pixel, 0F, -(2 * pixel));
-                break;
-        }
+
+        if (tileEntity.getWorldObj().getBlock(xc, yc - 1, zc) == KitchenBlocks.oven)
+            GL11.glTranslatef(4 * pixel, 0F, -(2 * pixel));
 
 
         Minecraft.getMinecraft().renderEngine.bindTexture(this.textureLocation);
@@ -69,7 +60,7 @@ public class TileEntityPanRenderer extends TileEntityTimeableRenderer
 
         Ingredient ingredient = pan.getIngredient();
         if (ingredient != null)
-            if (ingredient != Ingredient.getIngredient("empty"))
+            if (ingredient != IngredientRegistry.getInstance().getIngredient("empty"))
             {
                 IIngredientRenderingHandler renderingHandler = ingredient.getRenderingHandler();
                 ModelBase ingredientModel = renderingHandler.getModel(pan.getCookTime(), ingredient);

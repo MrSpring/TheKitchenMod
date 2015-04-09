@@ -19,6 +19,7 @@ public class ItemBase extends Item
 {
     private String[] informationLines = new String[0];
     private String localizableName = "super";
+    private boolean doesItemLeave = true;
 
     public ItemBase(String name, String textureName, boolean useCreativeTab)
     {
@@ -47,6 +48,18 @@ public class ItemBase extends Item
     public ItemBase(String name, CreativeTabs creativeTabs)
     {
         this(name, ModInfo.toTexture(name), creativeTabs);
+    }
+
+    @Override
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack p_77630_1_)
+    {
+        return this.doesItemLeave;
+    }
+
+    public ItemBase setDoesItemLeaveCraftingGrid(boolean doesItemLeave)
+    {
+        this.doesItemLeave = doesItemLeave;
+        return this;
     }
 
     public ItemBase setSelfAsContainerItem()
@@ -86,6 +99,7 @@ public class ItemBase extends Item
     {
         registerItem(knife);
         registerItem(mortar_and_pestle);
+        registerItem(hand_mixer);
         registerItem(mortar);
         registerItem(pestle);
         registerItem(jam_jar);

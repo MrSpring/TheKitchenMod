@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.pan;
 
+import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
+import dk.mrspring.kitchen.api.ingredient.Ingredient;
 import dk.mrspring.kitchen.model.ModelItemBase;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
@@ -37,7 +39,7 @@ public class ItemBaseRenderingHandler implements IIngredientRenderingHandler
     @Override
     public ModelBase getModel(int boilTime, Ingredient ingredient)
     {
-        if (boilTime>=400)
+        if (boilTime >= 250)
             return postFried;
         else return preFried;
     }

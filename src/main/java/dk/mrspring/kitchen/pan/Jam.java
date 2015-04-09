@@ -13,6 +13,13 @@ public class Jam
 {
     public static Map<String, Jam> jams = new HashMap<String, Jam>();
 
+    public static void registerJam(Jam jam)
+    {
+        if (jam != null)
+            if (!jams.containsKey(jam.getName()))
+                jams.put(jam.getName(), jam);
+    }
+
     final String name;
     final int color;
     final String item;
@@ -37,13 +44,6 @@ public class Jam
         this.name = name;
         this.color = color;
         this.item = itemName;
-    }
-
-    public static void registerJam(Jam jam)
-    {
-        if (jam != null)
-            if (!jams.containsKey(jam.getName()))
-                jams.put(jam.getName(), jam);
     }
 
     public String getName()

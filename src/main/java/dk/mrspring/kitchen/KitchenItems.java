@@ -2,7 +2,6 @@ package dk.mrspring.kitchen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
-import dk.mrspring.kitchen.pan.Ingredient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,14 +11,16 @@ import java.util.HashMap;
 
 public class KitchenItems
 {
-    // A HashMap storing the name if the item (key) and the name of the associated ingredient (value).
-    private static HashMap<String, String> ingredientRelations = new HashMap<String, String>();
+
+
 
     // All the Item variables
     public static final Item knife = new ItemKnife().setMaxStackSize(1);
     public static final Item fork = new ItemBase("fork", true);
     public static final Item mixing_bowl = new ItemMixingBowl("mixing_bowl");
-    public static final Item mortar_and_pestle = new ItemMandP().setMaxStackSize(1);
+    public static final Item mortar_and_pestle = new ItemBase("mortar_and_pestle", true).setSelfAsContainerItem().setDoesItemLeaveCraftingGrid(false).setMaxStackSize(1);
+    public static final Item hand_mixer = new ItemHandMixer().setMaxStackSize(1);//new ItemBase("hand_mixer", true).setSelfAsContainerItem().setDoesItemLeaveCraftingGrid(false).setMaxDamage(1);
+    public static final Item dirty_hand_mixer = new ItemBase("dirty_hand_mixer", true).setMaxDamage(1);
     public static final Item mortar = new ItemBase("mortar", true);
     public static final Item pestle = new ItemBase("pestle", true);
     public static final Item jam_jar = new ItemJamJar("jam_jar");
@@ -116,24 +117,71 @@ public class KitchenItems
         return basicSandwich;
     }
 
+    /*public static Stack[] getInputsForIngredientAsStrings(Ingredient ingredient)
+    {
+        return getInputsForIngredientAsStrings(ingredient.getName());
+    }
+
+    public static Stack[] getInputsForIngredientAsStrings(String ingredient)
+    {
+        System.out.println("Returning strings for: " + ingredient);
+        List<Stack> found = new ArrayList<Stack>();
+        for (Map.Entry<Stack, String> entry : ingredientRelations.entrySet())
+        {
+            if (entry.getValue().equals(ingredient))
+            {
+                System.out.println("Found match: " + entry.getKey());
+                found.add(entry.getKey());
+            }
+        }
+        return found.toArray(new Stack[found.size()]);
+    }
+
+    public static ItemStack[] getInputsForIngredientAsItems(Ingredient ingredient)
+    {
+        return getInputsForIngredientAsItems(ingredient.getName());
+    }
+
+    public static ItemStack[] getInputsForIngredientAsItems(String ingredient)
+    {
+        Stack[] identifiers = getInputsForIngredientAsStrings(ingredient);
+        List<ItemStack> foundItems = new ArrayList<ItemStack>();
+        for (Stack itemIdentifier : identifiers)
+        {
+            System.out.println("Converting: " + itemIdentifier + " to item...");
+            if (itemIdentifier.item.contains(":"))
+            {
+                String modId = itemIdentifier.item.split(":")[0];
+                String itemName = itemIdentifier.item.split(":")[1];
+                Item found = GameRegisterer.findItem(modId, itemName);
+                if (found != null)
+                {
+                    System.out.println("Found it!");
+                    foundItems.add(new ItemStack(found, itemIdentifier.metadata));
+                } else System.out.println("Didn't found anything.");
+            }
+        }
+        return foundItems.toArray(new ItemStack[foundItems.size()]);
+    }
+
     public static void linkToIngredient(Item item, String ingredientName)
     {
         if (item != null)
         {
             GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(item);
             if (identifier != null)
-                linkToIngredient(identifier.toString(), ingredientName);
+                linkToIngredient(new Stack(identifier.toString(), 0), ingredientName);
         }
     }
 
-    public static void linkToIngredient(String itemName, String ingredientName)
+    public static void linkToIngredient(Stack item, String ingredientName)
     {
-        if (!ingredientRelations.containsKey(itemName))
+        if (!ingredientRelations.containsKey(item))
         {
-            ModLogger.print(ModLogger.DEBUG, "Registering: " + itemName + " to ingredient: " + ingredientName);
-            ingredientRelations.put(itemName, ingredientName);
+            ModLogger.print(ModLogger.DEBUG, "Registering: " + item.toString() + " to ingredient: " + ingredientName);
+            ingredientRelations.put(item, ingredientName);
         } else
-            ModLogger.print(ModLogger.DEBUG, "Tried to register: " + itemName + ", but it is already bound to: " + ingredientRelations.get(itemName));
+            ModLogger.print(ModLogger.DEBUG, "Tried to register: " + item.toString() + ", but it is already bound to: " + ingredientRelations.get(item));
     }
 
     public static Ingredient valueOf(String itemName)
@@ -146,10 +194,5 @@ public class KitchenItems
     public static Ingredient valueOf(Item item)
     {
         return valueOf(GameRegistry.findUniqueIdentifierFor(item).toString());
-    }
-
-    public static HashMap<String, String> getIngredientRelations()
-    {
-        return ingredientRelations;
-    }
+    }*/
 }

@@ -30,7 +30,7 @@ public class ItemMixingBowl extends ItemBase
     @Override
     public boolean hasContainerItem(ItemStack stack)
     {
-        return true;
+        return stack.getItemDamage() > 0;
     }
 
     @Override
