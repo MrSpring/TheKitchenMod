@@ -155,5 +155,7 @@ public class ItemBase extends Item
         registerItem(cooked_ham);
         registerItem(raw_ham);
         registerItem(ham_slice);
+        registerItem(onion);
+        registerItem(onion_slice);
     }
 }

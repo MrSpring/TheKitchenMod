@@ -3,9 +3,14 @@ package dk.mrspring.kitchen.comp.nei;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.FurnaceRecipeHandler;
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.ingredient.Ingredient;
 import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
@@ -27,7 +32,7 @@ public class FryingPanCraftingHandler extends FurnaceRecipeHandler
         @Override
         public PositionedStack getOtherStack()
         {
-            return null;
+            return new PositionedStack(new ItemStack(KitchenBlocks.frying_pan), 51, 42, false);
         }
     }
 
@@ -47,7 +52,7 @@ public class FryingPanCraftingHandler extends FurnaceRecipeHandler
             {
                 Ingredient ingredient = entry.getValue();
                 if (ingredient.isJam())
-                    this.loadCraftingRecipes(Kitchen.getJamJarItemStack(ingredient.getJamResult(), 3));
+                    this.loadCraftingRecipes(Kitchen.getJamJarItemStack(ingredient.getJamResult(), 6));
                 else
                     this.loadCraftingRecipes(ingredient.getItemResult());
             }
@@ -104,5 +109,32 @@ public class FryingPanCraftingHandler extends FurnaceRecipeHandler
     public void drawExtras(int recipe)
     {
         drawProgressBar(74, 23, 176, 14, 24, 16, 48, 0);
+        int drawX = 176;
+        int mouseButton = Minecraft.getMinecraft().gameSettings.keyBindUseItem.getKeyCode();
+        if (mouseButton == -100)
+            drawX += 16;
+        else if (mouseButton == -99)
+            drawX += 32;
+        else if (mouseButton == -98)
+            drawX += 48;
+        drawTexturedModalRect(51, 42 - 18, drawX, 31, 16, 16);
+    }
+
+    public void drawCenteredString(FontRenderer renderer, String string, int x, int y, int color)
+    {
+        renderer.drawString(string, x - renderer.getStringWidth(string) / 2, y, color);
+    }
+
+    private void drawTexturedModalRect(int x, int y, int u, int v, int width, int height)
+    {
+        float f = 0.00390625F;
+        float f1 = 0.00390625F;
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((double) (x + 0), (double) (y + height), 1, (double) ((float) (u + 0) * f), (double) ((float) (v + height) * f1));
+        tessellator.addVertexWithUV((double) (x + width), (double) (y + height), 1, (double) ((float) (u + width) * f), (double) ((float) (v + height) * f1));
+        tessellator.addVertexWithUV((double) (x + width), (double) (y + 0), 1, (double) ((float) (u + width) * f), (double) ((float) (v + 0) * f1));
+        tessellator.addVertexWithUV((double) (x + 0), (double) (y + 0), 1, (double) ((float) (u + 0) * f), (double) ((float) (v + 0) * f1));
+        tessellator.draw();
     }
 }

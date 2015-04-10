@@ -7,11 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import java.util.HashMap;
-
 public class KitchenItems
 {
-
 
 
     // All the Item variables
@@ -52,6 +49,9 @@ public class KitchenItems
     public static final Item jammable_strawberry = new ItemFoodBase("sugared_strawberry_slices", ModInfo.toTexture("strawberry_slices_sugared"), 1, false, Kitchen.instance.foodTab);
     public static final Item cut_strawberry = new ItemFoodBase("strawberry_slices", 1, false, Kitchen.instance.foodTab);
 
+    public static final Item onion = new ItemSeedBase("onion", KitchenBlocks.onion_crop, Kitchen.instance.foodTab);
+    public static final Item onion_slice = new ItemBase("onion_slice", Kitchen.instance.foodTab);
+
     public static final Item potato_slice = new ItemBase("potato_slice", Kitchen.instance.foodTab);
     public static final Item carrot_slice = new ItemBase("carrot_slice", Kitchen.instance.foodTab);
     public static final Item cut_apple = new ItemFoodBase("apple_slice", 1, false, Kitchen.instance.foodTab);
@@ -65,6 +65,7 @@ public class KitchenItems
     public static final Item jam_apple = new ItemBase("apple_jam", false).setLocalizableName("jam.apple.name");
     public static final Item jam_peanut = new ItemBase("peanut_jam", false).setLocalizableName("jam.peanut.name");
     public static final Item jam_cocoa = new ItemBase("cocoa_jam", false).setLocalizableName("jam.cocoa.name");
+    public static final Item jam_ketchup = new ItemBase("ketchup_jam", false).setLocalizableName("jam.ketchup.name");
 
     public static final Item waffle = new ItemIceCreamableBase("waffle", 5, false, Kitchen.instance.foodTab);
     public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false, Kitchen.instance.foodTab);

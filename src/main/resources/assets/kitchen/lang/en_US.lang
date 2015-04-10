@@ -91,6 +91,8 @@ item.raw_cut_fish.name=Raw Sliced Fish
 item.cut_fish.name=Cooked Sliced Fish
 item.raw_ham_bone.name=Raw Ham
 item.cooked_ham_bone=Cooked Ham
+item.onion.name=Onion
+item.onion_slice.name=Onion Slice
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
@@ -103,6 +105,7 @@ jam.peanut.name=Peanut Butter
 jam.apple.name=Apple Jam
 jam.strawberry.name=Strawberry Jam
 jam.cocoa.name=Cocoa-Cream
+jam.ketchup.name=Ketchup
 
 mix.waffle_dough.name=Waffle Mix
 mix.pancake_dough.name=Pancake Mix
