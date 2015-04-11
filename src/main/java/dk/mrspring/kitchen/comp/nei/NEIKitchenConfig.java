@@ -26,6 +26,7 @@ public class NEIKitchenConfig implements IConfigureNEI
         BANNED.add(KitchenItems.jam_cocoa);
         BANNED.add(KitchenItems.jam_peanut);
         BANNED.add(KitchenItems.jam_strawberry);
+        BANNED.add(KitchenItems.jam_ketchup);
     }
 
     @Override
@@ -69,7 +70,12 @@ public class NEIKitchenConfig implements IConfigureNEI
         });
         API.registerRecipeHandler(new FryingPanCraftingHandler());
         API.registerUsageHandler(new FryingPanCraftingHandler());
-//        API.registerRecipeHandler(new MixingBowlCraftingHandler());
+
+        API.registerRecipeHandler(new OvenCraftingHandler());
+        API.registerUsageHandler(new OvenCraftingHandler());
+
+        API.registerRecipeHandler(new ToasterCraftingHandler());
+        API.registerUsageHandler(new ToasterCraftingHandler());
     }
 
     @Override

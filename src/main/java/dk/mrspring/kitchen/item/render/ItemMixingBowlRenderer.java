@@ -57,4 +57,14 @@ public class ItemMixingBowlRenderer
         mixColors.put("chocolate_ice_cream", 0xCC8051);
         mixColors.put("apple_ice_cream", 0xF2EFBC);
     }
+
+    public static void reduceUsesLeft(ItemStack mixingBowlStack, int amount)
+    {
+        if (mixingBowlStack.getItemDamage() > 0)
+        {
+            mixingBowlStack.setItemDamage(mixingBowlStack.getItemDamage() - amount);
+            if (mixingBowlStack.getItemDamage() == 0 && mixingBowlStack.hasTagCompound())
+                mixingBowlStack.getTagCompound().removeTag("MixType");
+        }
+    }
 }

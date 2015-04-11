@@ -197,7 +197,7 @@ public class RecipeRegistry
         /**
          * Smelting recipes
          */
-        GameRegistry.addSmelting(raw_bacon, new ItemStack(bacon, 1, 0), 3F);
+//        GameRegistry.addSmelting(raw_bacon, new ItemStack(bacon, 1, 0), 3F);
         GameRegistry.addSmelting(flour, new ItemStack(toast, 2, 0), 3F);
         GameRegistry.addSmelting(raw_chicken_fillet, new ItemStack(chicken_fillet, 1, 0), 3F);
         GameRegistry.addSmelting(raw_roast_beef, new ItemStack(roast_beef, 1, 0), 3F);
@@ -212,6 +212,11 @@ public class RecipeRegistry
         addIceCreamRecipe(pancake);
         addIceCreamRecipe(waffle);
         addIceCreamRecipe(ice_cream_cone);
+
+        /**
+         * Waffle Iron Recipes
+         */
+        WaffleIronRecipes.registerRecipe(new WaffleIronRecipes.MixingBowlRecipe(0xFFCEA3, 0xFFB760, 0x8E4936, waffle, burnt_waffle, "waffle_dough"));
     }
 
     private static void addIceCreamRecipe(final Item targetItem)

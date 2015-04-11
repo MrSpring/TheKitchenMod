@@ -27,7 +27,8 @@ public class ToasterRecipes extends BasicRecipeHandler
     private void addDefaultRecipes()
     {
         BasicRecipe[] defaultRecipes = new BasicRecipe[]{
-                new BasicRecipe(new ItemStack(KitchenItems.toast), new ItemStack(KitchenItems.toasted_toast))
+                new BasicRecipe(new ItemStack(KitchenItems.toast), new ItemStack(KitchenItems.toasted_toast)),
+                new BasicRecipe(new ItemStack(KitchenItems.raw_bacon), new ItemStack(KitchenItems.bacon))
         };
         addAll(defaultRecipes);
     }

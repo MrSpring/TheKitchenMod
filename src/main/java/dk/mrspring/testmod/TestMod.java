@@ -27,7 +27,7 @@ public class TestMod
     public static Item testOrangeJam;
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
+    public void init(FMLInitializationEvent event) // TODO: Update
     {
         System.out.println("Loading test Mod!");
 
