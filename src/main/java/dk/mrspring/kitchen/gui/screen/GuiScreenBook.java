@@ -222,16 +222,6 @@ public class GuiScreenBook extends GuiScreen
             List<String> linesInOne = lines.subList(0, linesWithinHeight);
             List<String> linesInTwo = lines.subList(linesWithinHeight, lines.size());
 
-//            System.out.println("Lines in first element: ");
-
-//            for (String line : linesInOne)
-//                System.out.println(line);
-
-//            System.out.println("Lines in second element: ");
-
-//            for (String line : linesInTwo)
-//                System.out.println(line);
-
             return new Element[]{
                     new TextElement(linesInOne).setCenter(center),
                     new TextElement(linesInTwo).setCenter(center)
@@ -325,7 +315,7 @@ public class GuiScreenBook extends GuiScreen
                             break;
                         case 8:      // TODO: Clean up code
                             x = 2;   // TODO: Support 2x2 and 3x3 recipes
-                            y = 2;   // TODO: Fix relative mouse problems
+                            y = 2;
                             break;
                     }
 
@@ -374,7 +364,7 @@ public class GuiScreenBook extends GuiScreen
 
         this.addTableOfContent();
 
-        pageIndex = new int[]{
+        pageIndex = new int[]{ // TODO: Finish book.
                 this.addChapter("item.cooking_book.pages.sandwiches.title", 0, 99, 0,
                         START_TEXT,
                         "item.cooking_book.pages.sandwiches.text01",
@@ -486,7 +476,7 @@ public class GuiScreenBook extends GuiScreen
         return translated;
     }
 
-    private static final String START_CRAFTING = "%C_START%";
+    private static final String START_CRAFTING = "%C_START%"; // TODO: Replace with enum?
     private static final String STOP_CRAFTING = "%C_STOP%";
 
     private static final String START_TEXT = "%T_START%";
