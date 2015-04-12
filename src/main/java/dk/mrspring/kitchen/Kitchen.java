@@ -217,19 +217,21 @@ public class Kitchen
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_fish", new ItemBaseRenderingHandler(Items.fish, Items.cooked_fished), new ItemStack(Items.cooked_fished)));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_porkchop", new ItemBaseRenderingHandler(Items.porkchop, Items.cooked_porkchop), new ItemStack(Items.cooked_porkchop)));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_beef", new ItemBaseRenderingHandler(Items.beef, Items.cooked_beef), new ItemStack(Items.cooked_beef)));
+        IngredientRegistry.getInstance().registerIngredient(new IngredientMixingBowl("scrambled_eggs", new JamBaseRenderingHandler(new float[]{255, 243, 86}), new ItemStack(KitchenItems.scrambled_eggs), "scrambled_eggs"));
 
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.cut_apple, "apple");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_bacon, "bacon");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.peanut, "peanut");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
-        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("pancake_dough", "pancake_dough")/*KitchenItems.mixing_bowl, "pancake_dough"*/);
+        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("pancake_dough", "pancake_dough"));
         IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.Stack(Items.dye, 3), "cocoa");
         IngredientRegistry.getInstance().linkToIngredient(Items.egg, "fried_egg");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_cut_fish, "sliced_fish");
         IngredientRegistry.getInstance().linkToIngredient(Items.fish, "vanilla_fish");
         IngredientRegistry.getInstance().linkToIngredient(Items.porkchop, "vanilla_porkchop");
         IngredientRegistry.getInstance().linkToIngredient(Items.beef, "vanilla_beef");
+        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("scrambled_eggs", "scrambled_eggs"));
 
         if (Loader.isModLoaded("NotEnoughItems"))
         {

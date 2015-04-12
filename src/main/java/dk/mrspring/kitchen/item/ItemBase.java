@@ -158,5 +158,6 @@ public class ItemBase extends Item
         registerItem(ham_slice);
         registerItem(onion);
         registerItem(onion_slice);
+        registerItem(scrambled_eggs);
     }
 }

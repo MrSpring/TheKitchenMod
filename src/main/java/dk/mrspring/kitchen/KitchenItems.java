@@ -94,6 +94,7 @@ public class KitchenItems
     public static final Item cooked_ham = new ItemFoodWeaponBase("cooked_ham_bone", 10, true, 3, Kitchen.instance.foodTab);
     public static final Item raw_ham = new ItemFoodWeaponBase("raw_ham_bone", 4, true, 3, Kitchen.instance.foodTab);
     public static final Item ham_slice = new ItemFoodBase("ham_slice", 4, false, Kitchen.instance.foodTab);
+    public static final Item scrambled_eggs = new ItemFoodBase("scrambled_eggs", 5, false, Kitchen.instance.foodTab).setMaxStackSize(16);
 
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.
