@@ -217,6 +217,11 @@ public class RecipeRegistry
          * Waffle Iron Recipes
          */
         WaffleIronRecipes.registerRecipe(new WaffleIronRecipes.MixingBowlRecipe(0xFFCEA3, 0xFFB760, 0x8E4936, waffle, burnt_waffle, "waffle_dough"));
+
+        /**
+         * Misc. Recipes
+         */
+        GameRegistry.addShapelessRecipe(new ItemStack(hand_mixer), new ItemStack(dirty_hand_mixer), new ItemStack(water_bucket));
     }
 
     private static void addIceCreamRecipe(final Item targetItem)

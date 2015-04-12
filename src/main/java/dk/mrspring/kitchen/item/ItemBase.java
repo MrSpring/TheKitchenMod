@@ -100,6 +100,7 @@ public class ItemBase extends Item
         registerItem(knife);
         registerItem(mortar_and_pestle);
         registerItem(hand_mixer);
+        registerItem(dirty_hand_mixer);
         registerItem(mortar);
         registerItem(pestle);
         registerItem(jam_jar);

@@ -24,4 +24,10 @@ public class ItemHandMixer extends ItemBase
             return super.getContainerItem(itemStack);
         else return new ItemStack(KitchenItems.dirty_hand_mixer, itemStack.stackSize);
     }
+
+    @Override
+    public boolean isFull3D()
+    {
+        return true;
+    }
 }

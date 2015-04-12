@@ -93,6 +93,9 @@ item.raw_ham_bone.name=Raw Ham
 item.cooked_ham_bone=Cooked Ham
 item.onion.name=Onion
 item.onion_slice.name=Onion Slice
+item.hand_mixer.name=Hand Mixer
+item.dirty_hand_mixer.name=Dirty Hand Mixer
+item.dirty_hand_mixer.desc=Wash with some Water
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT

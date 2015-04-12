@@ -16,8 +16,8 @@ public class KitchenItems
     public static final Item fork = new ItemBase("fork", true);
     public static final Item mixing_bowl = new ItemMixingBowl("mixing_bowl");
     public static final Item mortar_and_pestle = new ItemBase("mortar_and_pestle", true).setSelfAsContainerItem().setDoesItemLeaveCraftingGrid(false).setMaxStackSize(1);
-    public static final Item hand_mixer = new ItemHandMixer().setMaxStackSize(1);//new ItemBase("hand_mixer", true).setSelfAsContainerItem().setDoesItemLeaveCraftingGrid(false).setMaxDamage(1);
-    public static final Item dirty_hand_mixer = new ItemBase("dirty_hand_mixer", true).setMaxDamage(1);
+    public static final Item hand_mixer = new ItemHandMixer().setMaxStackSize(1);
+    public static final Item dirty_hand_mixer = new ItemDirtyHandMixer().setMaxDamage(1).setMaxStackSize(1);
     public static final Item mortar = new ItemBase("mortar", true);
     public static final Item pestle = new ItemBase("pestle", true);
     public static final Item jam_jar = new ItemJamJar("jam_jar");
