@@ -51,6 +51,8 @@ public class RecipeRegistry
         GameRegistry.addRecipe(new ItemStack(mixing_bowl, 1), "CDC", " C ", valueOf('C'), clay_ball, valueOf('D'), new ItemStack(dye, 1, 12));
         // Ice Cream Cone recipe
         GameRegistry.addRecipe(new ItemStack(ice_cream_cone, 1), "W W", " W ", valueOf('W'), waffle);
+        // Hand Mixer Recipe
+        GameRegistry.addRecipe(new ItemStack(hand_mixer), " I ", "I I", "SI ", valueOf('I'), iron_ingot, valueOf('S'), stick);
 
 
         // Mixing Bowl recipes

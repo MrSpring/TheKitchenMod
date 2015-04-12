@@ -56,6 +56,7 @@ public class ItemMixingBowlRenderer
         mixColors.put("strawberry_ice_cream", 0xFF9F9E);
         mixColors.put("chocolate_ice_cream", 0xCC8051);
         mixColors.put("apple_ice_cream", 0xF2EFBC);
+        mixColors.put("scrambled_eggs", 0xFFF356);
     }
 
     public static void reduceUsesLeft(ItemStack mixingBowlStack, int amount)

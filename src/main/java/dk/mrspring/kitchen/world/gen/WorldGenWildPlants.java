@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.world.gen;
 
 import cpw.mods.fml.common.IWorldGenerator;
-import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModLogger;
 import net.minecraft.block.Block;
@@ -12,14 +11,16 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 import java.util.Random;
 
+import static dk.mrspring.kitchen.KitchenBlocks.*;
+
 public class WorldGenWildPlants implements IWorldGenerator
 {
-    Block[] wildPlants = new Block[]{KitchenBlocks.wild_lettuce, KitchenBlocks.wild_tomato, KitchenBlocks.wild_peanut, KitchenBlocks.wild_strawberry, KitchenBlocks.wild_vanilla};
+    Block[] wildPlants = new Block[]{wild_lettuce, wild_tomato, wild_peanut, wild_strawberry, wild_vanilla, wild_onion};
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
     {
-        if (world.provider.dimensionId == 0)
+        if (world.provider.isSurfaceWorld())
         {
             int x = (chunkX * 16) + random.nextInt(16);
             int z = (chunkZ * 16) + random.nextInt(16);
