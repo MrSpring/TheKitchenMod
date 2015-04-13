@@ -18,6 +18,7 @@ public class KitchenItems
     public static final Item mortar_and_pestle = new ItemBase("mortar_and_pestle", true).setSelfAsContainerItem().setDoesItemLeaveCraftingGrid(false).setMaxStackSize(1);
     public static final Item hand_mixer = new ItemHandMixer().setMaxStackSize(1);
     public static final Item dirty_hand_mixer = new ItemDirtyHandMixer().setMaxDamage(1).setMaxStackSize(1);
+    public static final Item meat_hammer = new ItemBase("meat_handler", true).setSelfAsContainerItem().setMaxStackSize(1).setFull3D();
     public static final Item mortar = new ItemBase("mortar", true);
     public static final Item pestle = new ItemBase("pestle", true);
     public static final Item jam_jar = new ItemJamJar("jam_jar");
@@ -95,6 +96,9 @@ public class KitchenItems
     public static final Item raw_ham = new ItemFoodWeaponBase("raw_ham_bone", 4, true, 3, Kitchen.instance.foodTab);
     public static final Item ham_slice = new ItemFoodBase("ham_slice", 4, false, Kitchen.instance.foodTab);
     public static final Item scrambled_eggs = new ItemFoodBase("scrambled_eggs", 5, false, Kitchen.instance.foodTab).setMaxStackSize(16);
+
+    public static final Item raw_meat_patty = new ItemFoodBase("raw_meat_patty", 1, true, Kitchen.instance.foodTab);
+    public static final Item cooked_meat_patty = new ItemFoodBase("cooked_meat_patty", 4, true, Kitchen.instance.foodTab);
 
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.

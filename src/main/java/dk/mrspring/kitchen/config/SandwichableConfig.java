@@ -60,6 +60,8 @@ public class SandwichableConfig extends BaseConfig
         this.makeSandwichable(new SandwichableEntry("kitchen:strawberry_jam", 2).hideInformation().dontDropItem());
         this.makeSandwichable(new SandwichableEntry("kitchen:apple_jam", 2).hideInformation().dontDropItem());
         this.makeSandwichable(new SandwichableEntry("kitchen:peanut_jam", 2).hideInformation().dontDropItem());
+        this.makeSandwichable(new SandwichableEntry("kitchen:cocoa_jam", 2).hideInformation().dontDropItem());
+        this.makeSandwichable(new SandwichableEntry("kitchen:ketchup_jam", 2).hideInformation().dontDropItem());
 
         this.makeSandwichable(new SandwichableEntry("kitchen:jam_jar", 0).hideInformation());
 
@@ -68,6 +70,9 @@ public class SandwichableConfig extends BaseConfig
 
         this.makeSandwichable(new SandwichableEntry("kitchen:ham_slice", 3));
         this.makeSandwichable(new SandwichableEntry("kitchen:onion_slice", 2));
+
+        this.makeSandwichable(new SandwichableEntry("kitchen:raw_meat_patty", 1).hideInformation());
+        this.makeSandwichable(new SandwichableEntry("kitchen:cooked_meat_patty", 3));
     }
 
     public void makeSandwichable(SandwichableEntry entry)

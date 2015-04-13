@@ -103,6 +103,7 @@ public class ItemBase extends Item
         registerItem(dirty_hand_mixer);
         registerItem(mortar);
         registerItem(pestle);
+        registerItem(meat_hammer);
         registerItem(jam_jar);
         registerItem(mixing_bowl);
         registerItem(bacon);
@@ -132,6 +133,7 @@ public class ItemBase extends Item
         registerItem(jam_apple);
         registerItem(jam_peanut);
         registerItem(jam_cocoa);
+        registerItem(jam_ketchup);
         registerItem(strawberry);
         registerItem(cut_strawberry);
         registerItem(jammable_strawberry);
@@ -159,5 +161,7 @@ public class ItemBase extends Item
         registerItem(onion);
         registerItem(onion_slice);
         registerItem(scrambled_eggs);
+        registerItem(raw_meat_patty);
+        registerItem(cooked_meat_patty);
     }
 }
