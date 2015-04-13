@@ -92,7 +92,7 @@ public class ItemMixingBowl extends ItemBase
             return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
         else if (itemStack.getTagCompound() != null)
             if (itemStack.getTagCompound().hasKey("MixType"))
-                return StatCollector.translateToLocal("mix." + ItemMixingBowlRenderer.getMixType(itemStack) + ".name") + " " + StatCollector.translateToLocal("item.mixing_bowl.full.name");
+                return StatCollector.translateToLocal("mix." + getMixType(itemStack) + ".name") + " " + StatCollector.translateToLocal("item.mixing_bowl.full.name");
         return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
     }
 
@@ -122,5 +122,30 @@ public class ItemMixingBowl extends ItemBase
         else if (damage > 0 && damage < 4)
             return icons[damage];
         else return icons[0];
+    }
+
+    public static boolean isIceCream(ItemStack mixingBowlStack)
+    {
+        String mixType = getMixType(mixingBowlStack);
+        if (mixType == null || mixType.isEmpty())
+            return false;
+        return mixType.toLowerCase().contains("ice_cream");
+    }
+
+    public static String getMixType(ItemStack mixingBowlStack)
+    {
+        if (mixingBowlStack.getTagCompound() != null)
+            return mixingBowlStack.getTagCompound().getString("MixType");
+        else return null;
+    }
+
+    public static void reduceUsesLeft(ItemStack mixingBowlStack, int amount)
+    {
+        if (mixingBowlStack.getItemDamage() > 0)
+        {
+            mixingBowlStack.setItemDamage(mixingBowlStack.getItemDamage() - amount);
+            if (mixingBowlStack.getItemDamage() == 0 && mixingBowlStack.hasTagCompound())
+                mixingBowlStack.getTagCompound().removeTag("MixType");
+        }
     }
 }

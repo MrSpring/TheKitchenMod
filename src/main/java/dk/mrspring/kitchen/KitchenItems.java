@@ -18,7 +18,7 @@ public class KitchenItems
     public static final Item mortar_and_pestle = new ItemBase("mortar_and_pestle", true).setSelfAsContainerItem().setDoesItemLeaveCraftingGrid(false).setMaxStackSize(1);
     public static final Item hand_mixer = new ItemHandMixer().setMaxStackSize(1);
     public static final Item dirty_hand_mixer = new ItemDirtyHandMixer().setMaxDamage(1).setMaxStackSize(1);
-    public static final Item meat_hammer = new ItemBase("meat_handler", true).setSelfAsContainerItem().setMaxStackSize(1).setFull3D();
+    public static final Item meat_hammer = new ItemBase("meat_hammer", true).setSelfAsContainerItem().setMaxStackSize(1).setFull3D();
     public static final Item mortar = new ItemBase("mortar", true);
     public static final Item pestle = new ItemBase("pestle", true);
     public static final Item jam_jar = new ItemJamJar("jam_jar");

@@ -5,7 +5,7 @@ import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModLogger;
-import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
+import dk.mrspring.kitchen.item.ItemMixingBowl;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -50,7 +50,7 @@ public class RecipeRegistry
         // Mixing Bowl recipe
         GameRegistry.addRecipe(new ItemStack(mixing_bowl, 1), "CDC", " C ", valueOf('C'), clay_ball, valueOf('D'), new ItemStack(dye, 1, 12));
         // Ice Cream Cone recipe
-        GameRegistry.addRecipe(new ItemStack(ice_cream_cone, 1), "W W", " W ", valueOf('W'), waffle);
+        GameRegistry.addRecipe(new ItemStack(ice_cream_cone, 2), "W W", " W ", valueOf('W'), waffle);
         // Hand Mixer Recipe
         GameRegistry.addRecipe(new ItemStack(hand_mixer), " I ", "I I", "SI ", valueOf('I'), iron_ingot, valueOf('S'), stick);
 
@@ -124,7 +124,7 @@ public class RecipeRegistry
                 if (!bowlStack.hasTagCompound())
                     return false;
 
-                return ItemMixingBowlRenderer.getMixType(bowlStack).equals("burger_bun_dough");
+                return ItemMixingBowl.getMixType(bowlStack).equals("burger_bun_dough");
             }
 
             @Override
@@ -255,7 +255,7 @@ public class RecipeRegistry
                 if (iceCreamableStack == null || bowlStack == null)
                     return false;
 
-                String bowlMixType = ItemMixingBowlRenderer.getMixType(bowlStack);
+                String bowlMixType = ItemMixingBowl.getMixType(bowlStack);
                 int iceCreamAlreadyOnPancake = 0;
 
                 if (iceCreamableStack.hasTagCompound())
@@ -290,7 +290,7 @@ public class RecipeRegistry
                 if (iceCreamableStack.stackTagCompound == null)
                     iceCreamableStack.stackTagCompound = new NBTTagCompound();
 
-                String iceCream = ItemMixingBowlRenderer.getMixType(bowlStack);
+                String iceCream = ItemMixingBowl.getMixType(bowlStack);
 
                 if (!iceCreamableStack.getTagCompound().hasKey("IceCream", 9))
                     iceCreamableStack.getTagCompound().setTag("IceCream", new NBTTagList());

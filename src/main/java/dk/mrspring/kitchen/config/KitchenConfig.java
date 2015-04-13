@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.config;
 
+import org.lwjgl.input.Keyboard;
+
 import java.io.File;
 
 /**
@@ -14,6 +16,7 @@ public class KitchenConfig extends BaseConfig
     public boolean show_different_jars_in_creative_tab = true;
     public boolean show_different_mixing_bowls_in_creative_tab = true;
     public boolean show_plate_message = true;
+    public int show_stats_key = Keyboard.KEY_LSHIFT;
 
     public KitchenConfig()
     {
@@ -23,6 +26,7 @@ public class KitchenConfig extends BaseConfig
         show_mod_repost_info = true;
         show_different_jars_in_creative_tab = true;
         show_different_mixing_bowls_in_creative_tab = true;
+        show_stats_key = Keyboard.KEY_LSHIFT;
     }
 
     public KitchenConfig(File location, String name)

@@ -143,6 +143,7 @@ public class Kitchen
         Jam.registerJam(new Jam("apple", 14415786, "kitchen:apple_jam"));
         Jam.registerJam(new Jam("peanut", 9659689, "kitchen:peanut_jam"));
         Jam.registerJam(new Jam("cocoa", 0x895836, "kitchen:cocoa_jam"));
+        Jam.registerJam(new Jam("ketchup", 0xFF3200, "kitchen:ketchup_jam"));
 
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
@@ -218,6 +219,7 @@ public class Kitchen
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_porkchop", new ItemBaseRenderingHandler(Items.porkchop, Items.cooked_porkchop), new ItemStack(Items.cooked_porkchop)));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_beef", new ItemBaseRenderingHandler(Items.beef, Items.cooked_beef), new ItemStack(Items.cooked_beef)));
         IngredientRegistry.getInstance().registerIngredient(new IngredientMixingBowl("scrambled_eggs", new JamBaseRenderingHandler(new float[]{255, 243, 86}), new ItemStack(KitchenItems.scrambled_eggs), "scrambled_eggs"));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("ketchup", new JamBaseRenderingHandler(new float[]{255, 50, 0}), "ketchup"));
 
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.cut_apple, "apple");
@@ -232,6 +234,7 @@ public class Kitchen
         IngredientRegistry.getInstance().linkToIngredient(Items.porkchop, "vanilla_porkchop");
         IngredientRegistry.getInstance().linkToIngredient(Items.beef, "vanilla_beef");
         IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("scrambled_eggs", "scrambled_eggs"));
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.tomato_slice, "ketchup");
 
         if (Loader.isModLoaded("NotEnoughItems"))
         {

@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item.render;
 
+import dk.mrspring.kitchen.item.ItemMixingBowl;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
@@ -34,16 +35,9 @@ public class ItemMixingBowlRenderer
         return new float[]{red, green, blue};
     }
 
-    public static String getMixType(ItemStack mixingBowlStack)
-    {
-        if (mixingBowlStack.getTagCompound() != null)
-            return mixingBowlStack.getTagCompound().getString("MixType");
-        else return null;
-    }
-
     public static int getColorAsInteger(ItemStack mixingBowlStack)
     {
-        String mixType = getMixType(mixingBowlStack);
+        String mixType = ItemMixingBowl.getMixType(mixingBowlStack);
         return getColorAsInteger(mixType);
     }
 
@@ -57,15 +51,5 @@ public class ItemMixingBowlRenderer
         mixColors.put("chocolate_ice_cream", 0xCC8051);
         mixColors.put("apple_ice_cream", 0xF2EFBC);
         mixColors.put("scrambled_eggs", 0xFFF356);
-    }
-
-    public static void reduceUsesLeft(ItemStack mixingBowlStack, int amount)
-    {
-        if (mixingBowlStack.getItemDamage() > 0)
-        {
-            mixingBowlStack.setItemDamage(mixingBowlStack.getItemDamage() - amount);
-            if (mixingBowlStack.getItemDamage() == 0 && mixingBowlStack.hasTagCompound())
-                mixingBowlStack.getTagCompound().removeTag("MixType");
-        }
     }
 }

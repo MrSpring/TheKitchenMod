@@ -5,6 +5,7 @@ import cpw.mods.fml.common.gameevent.PlayerEvent;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityPig;
@@ -33,8 +34,9 @@ public class ModEventHandler
             if (entry.showInformation() || ModConfig.getKitchenConfig().show_item_debug_info)
             {
                 event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_msg"));
-                if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
-                    event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_stats_msg"));
+                int key = ModConfig.getKitchenConfig().show_stats_key;
+                if (!Keyboard.isKeyDown(key))
+                    event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_stats_msg").replace("%s", GameSettings.getKeyDisplayString(key)));
                 else
                 {
                     event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.stats.heal_amount") + ": §3" + String.valueOf(entry.getHealAmount()));
@@ -54,7 +56,7 @@ public class ModEventHandler
                         else line += "§c" + StatCollector.translateToLocal("waila.false");
                         event.toolTip.add(line);
 
-                        line = StatCollector.translateToLocal("item.sandwichable.stats.drop_item")+": ";
+                        line = StatCollector.translateToLocal("item.sandwichable.stats.drop_item") + ": ";
                         if (entry.dropItem())
                             line += "§3" + StatCollector.translateToLocal("waila.true");
                         else line += "§c" + StatCollector.translateToLocal("waila.false");

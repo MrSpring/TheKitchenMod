@@ -98,12 +98,12 @@ public class ItemBase extends Item
     public static void load()
     {
         registerItem(knife);
-        registerItem(mortar_and_pestle);
         registerItem(hand_mixer);
         registerItem(dirty_hand_mixer);
+        registerItem(meat_hammer);
         registerItem(mortar);
         registerItem(pestle);
-        registerItem(meat_hammer);
+        registerItem(mortar_and_pestle);
         registerItem(jam_jar);
         registerItem(mixing_bowl);
         registerItem(bacon);
