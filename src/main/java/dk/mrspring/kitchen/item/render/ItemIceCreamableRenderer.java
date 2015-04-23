@@ -26,13 +26,27 @@ import java.util.Map;
  */
 public class ItemIceCreamableRenderer implements IItemRenderer
 {
-    public static Map<Item, ModelBase> specialItemModels;
+    public static Map<Item, ICustomModel> specialItemModels;
 
     public static void load()
     {
-        specialItemModels = new HashMap<Item, ModelBase>();
+        specialItemModels = new HashMap<Item, ICustomModel>();
 
-        specialItemModels.put(KitchenItems.ice_cream_cone, new ModelIceCreamCone());
+        specialItemModels.put(KitchenItems.ice_cream_cone, new SimpleCustomModel(new ModelIceCreamCone())
+        {
+        /*.setPositionOffset(0, 0.1F, 0)*/
+
+            @Override
+            public void preRender(ItemStack rendering, ItemRenderType renderType)
+            {
+                //super.preRender(rendering);
+                if (renderType == ItemRenderType.ENTITY)
+                {
+                    GL11.glScalef(0.75F, 0.75F, 0.75F);
+                    GL11.glTranslatef(0, 0.5F, 0);
+                }
+            }
+        });
     }
 
     @Override
@@ -56,13 +70,13 @@ public class ItemIceCreamableRenderer implements IItemRenderer
     @Override
     public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
     {
-        /*switch (helper)
+        switch (helper)
         {
             case ENTITY_BOBBING:
                 return true;
             case ENTITY_ROTATION:
                 return true;
-        }*/
+        }
         return false;
     }
 
@@ -84,8 +98,19 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                 GL11.glTranslatef(0.2F, 0.2F, 0);
                 break;
             case ENTITY:
+                GL11.glScalef(2, 2, 2);
+                GL11.glTranslatef(0.01F, 0.15F, -0.2F);
                 break;
         }
+
+
+        if (specialItemModels.containsKey(item.getItem()))
+        {
+            ICustomModel customModel = specialItemModels.get(item.getItem());
+            customModel.preRender(item, type);
+            customModel.getModel(item).render(null, 0F, 0F, 0F, 0F, 0F, 0.0625F);
+        } else
+            renderItem(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()), 0, 0, 0);
 
         if (item.hasTagCompound())
         {
@@ -102,7 +127,6 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                     renderIceCream(creams[3].color, 0.04F, 0.2F, 0.1F);
             }
         }
-        renderItem(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()), 0, 0, 0);
 
         GL11.glPopMatrix();
     }
@@ -150,26 +174,64 @@ public class ItemIceCreamableRenderer implements IItemRenderer
             ItemStack toRender = stack.copy();
             toRender.stackSize = 1;
 
-            if (specialItemModels.containsKey(toRender.getItem()))
+            /*if (specialItemModels.containsKey(toRender.getItem()))
             {
-                ModelBase itemModel = specialItemModels.get(toRender.getItem());
+                ICustomModel customModel = specialItemModels.get(toRender.getItem());
+                ModelBase itemModel = customModel.getModel(stack);
                 GL11.glTranslated(xOffset, yOffset, zOffset);
+                customModel.preRender(stack);
                 itemModel.render(null, 0F, 0F, 0F, 0F, 0F, 0.0625F);
             } else
-            {
-                GL11.glScalef(1, 2, 1);
-                GL11.glTranslated(xOffset, yOffset, zOffset);
-                EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
-                itemEntity.hoverStart = 0.0F;
-                RenderItem.renderInFrame = true;
-                GL11.glRotatef(180, 0, 1, 1);
-                GL11.glRotatef(180, 0, 1, 0);
-                GL11.glTranslatef(0, 0, .1F);
-                RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-                RenderItem.renderInFrame = false;
-            }
+            {*/
+            GL11.glScalef(1, 2, 1);
+            GL11.glTranslated(xOffset, yOffset, zOffset);
+            EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
+            itemEntity.hoverStart = 0.0F;
+            RenderItem.renderInFrame = true;
+            GL11.glRotatef(180, 0, 1, 1);
+            GL11.glRotatef(180, 0, 1, 0);
+            GL11.glTranslatef(0, 0, .1F);
+            RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+            RenderItem.renderInFrame = false;
+            //}
 
             GL11.glPopMatrix();
+        }
+    }
+
+    public interface ICustomModel
+    {
+        ModelBase getModel(ItemStack rendering);
+
+        void preRender(ItemStack rendering, ItemRenderType renderType);
+    }
+
+    public static class SimpleCustomModel implements ICustomModel
+    {
+        ModelBase model;
+        float[] translateOffset = new float[]{0, 0, 0};
+
+        public SimpleCustomModel(ModelBase model)
+        {
+            this.model = model;
+        }
+
+        public SimpleCustomModel setPositionOffset(float x, float y, float z)
+        {
+            this.translateOffset = new float[]{x, y, z};
+            return this;
+        }
+
+        @Override
+        public ModelBase getModel(ItemStack rendering)
+        {
+            return model;
+        }
+
+        @Override
+        public void preRender(ItemStack rendering, ItemRenderType renderType)
+        {
+            GL11.glTranslatef(translateOffset[0], translateOffset[1], translateOffset[2]);
         }
     }
 
