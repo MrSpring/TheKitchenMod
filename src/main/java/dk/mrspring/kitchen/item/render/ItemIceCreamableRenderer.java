@@ -35,46 +35,34 @@ public class ItemIceCreamableRenderer implements IItemRenderer
         specialItemModels.put(KitchenItems.ice_cream_cone, new ModelIceCreamCone());
     }
 
-    public class IceCream
-    {
-        String name;
-        float[] color;
-
-        public IceCream(String name, float[] colors)
-        {
-            this.name = name;
-            this.color = colors;
-        }
-
-        public IceCream(String name, float r, float g, float b)
-        {
-            this(name, new float[]{r, g, b});
-        }
-
-        public IceCream(String name, int color)
-        {
-            this.name = name;
-            this.color = ItemMixingBowlRenderer.intAsFloatArray(color);
-        }
-    }
-
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        switch (type)
-        {
-            case EQUIPPED:
-                return true;
-            case EQUIPPED_FIRST_PERSON:
-                return true;
-            default:
-                return false;
-        }
+        if (getIceCreamsFromStack(item).length > 0)
+            switch (type)
+            {
+                case EQUIPPED:
+                    return true;
+                case EQUIPPED_FIRST_PERSON:
+                    return true;
+                case ENTITY:
+                    return true;
+                default:
+                    return false;
+            }
+        else return false;
     }
 
     @Override
     public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
     {
+        /*switch (helper)
+        {
+            case ENTITY_BOBBING:
+                return true;
+            case ENTITY_ROTATION:
+                return true;
+        }*/
         return false;
     }
 
@@ -95,6 +83,8 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                 GL11.glRotatef(17.5F, 0, 0, 1);
                 GL11.glTranslatef(0.2F, 0.2F, 0);
                 break;
+            case ENTITY:
+                break;
         }
 
         if (item.hasTagCompound())
@@ -112,7 +102,7 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                     renderIceCream(creams[3].color, 0.04F, 0.2F, 0.1F);
             }
         }
-        renderItem(item, 0, 0, 0);
+        renderItem(new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()), 0, 0, 0);
 
         GL11.glPopMatrix();
     }
@@ -122,15 +112,17 @@ public class ItemIceCreamableRenderer implements IItemRenderer
         List<IceCream> iceCreams = new ArrayList<IceCream>();
 
         NBTTagCompound compound = stack.getTagCompound();
-        NBTTagList iceCreamsCompound = compound.getTagList("IceCream", 8);
-
-        for (int i = 0; i < iceCreamsCompound.tagCount(); i++)
+        if (compound != null)
         {
-            String iceCreamName = iceCreamsCompound.getStringTagAt(i);
-            if (iceCreamName != null)
+            NBTTagList iceCreamsCompound = compound.getTagList("IceCream", 8);
+            for (int i = 0; i < iceCreamsCompound.tagCount(); i++)
             {
-                int color = ItemMixingBowlRenderer.getColorAsInteger(iceCreamName);
-                iceCreams.add(new IceCream(iceCreamName, color));
+                String iceCreamName = iceCreamsCompound.getStringTagAt(i);
+                if (iceCreamName != null)
+                {
+                    int color = ItemMixingBowlRenderer.getColorAsInteger(iceCreamName);
+                    iceCreams.add(new IceCream(iceCreamName, color));
+                }
             }
         }
 
@@ -178,6 +170,29 @@ public class ItemIceCreamableRenderer implements IItemRenderer
             }
 
             GL11.glPopMatrix();
+        }
+    }
+
+    public class IceCream
+    {
+        String name;
+        float[] color;
+
+        public IceCream(String name, float[] colors)
+        {
+            this.name = name;
+            this.color = colors;
+        }
+
+        public IceCream(String name, float r, float g, float b)
+        {
+            this(name, new float[]{r, g, b});
+        }
+
+        public IceCream(String name, int color)
+        {
+            this.name = name;
+            this.color = ItemMixingBowlRenderer.intAsFloatArray(color);
         }
     }
 }
