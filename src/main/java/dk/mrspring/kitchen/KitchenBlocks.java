@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.block.container.*;
 import dk.mrspring.kitchen.block.decorative.BlockKitchenCabinet;
 import dk.mrspring.kitchen.block.plant.BlockCropBase;
+import dk.mrspring.kitchen.block.plant.BlockPeanutCrop;
 import dk.mrspring.kitchen.block.plant.BlockWildBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -21,7 +22,7 @@ public class KitchenBlocks
     // Crops
     public static final Block tomato_crop = new BlockCropBase("tomato", "kitchen:tomato");
     public static final Block lettuce_crop = new BlockCropBase("lettuce", "kitchen:lettuce");
-    public static final Block peanut_crop = new BlockCropBase("peanut", "kitchen:peanuts_in_shell");
+    public static final Block peanut_crop = new BlockPeanutCrop("peanut", "kitchen:peanut");
     public static final Block strawberry_crop = new BlockCropBase("strawberry", "kitchen:strawberry");
     public static final Block vanilla_crop = new BlockCropBase("vanilla", "kitchen:raw_vanilla");
     public static final Block onion_crop = new BlockCropBase("onion", "kitchen:onion");
