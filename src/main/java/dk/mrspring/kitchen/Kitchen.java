@@ -180,8 +180,7 @@ public class Kitchen
                 return true;
             }
         }, new ItemStack(KitchenItems.bacon, 1)));
-//        IngredientRegistry.getInstance().registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
-        IngredientRegistry.registerItemPanRecipe(new ItemStack(KitchenItems.chicken_fillet), KitchenItems.raw_chicken_fillet, KitchenItems.chicken_fillet, new ItemStack(KitchenItems.raw_chicken_fillet));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
         IngredientRegistry.getInstance().registerIngredient(new IngredientMixingBowl("pancake_dough", new IIngredientRenderingHandler()
         {
             ModelBase uncookedModel = new ModelPancakeUncooked();
@@ -227,7 +226,7 @@ public class Kitchen
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.cut_apple, "apple");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_bacon, "bacon");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.peanut, "peanut");
-//        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
         IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("pancake_dough", "pancake_dough"));
         IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.Stack(Items.dye, 3), "cocoa");
         IngredientRegistry.getInstance().linkToIngredient(Items.egg, "fried_egg");
