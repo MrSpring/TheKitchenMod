@@ -180,7 +180,8 @@ public class Kitchen
                 return true;
             }
         }, new ItemStack(KitchenItems.bacon, 1)));
-        IngredientRegistry.getInstance().registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
+//        IngredientRegistry.getInstance().registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
+        IngredientRegistry.registerItemPanRecipe(new ItemStack(KitchenItems.chicken_fillet), KitchenItems.raw_chicken_fillet, KitchenItems.chicken_fillet, new ItemStack(KitchenItems.raw_chicken_fillet));
         IngredientRegistry.getInstance().registerIngredient(new IngredientMixingBowl("pancake_dough", new IIngredientRenderingHandler()
         {
             ModelBase uncookedModel = new ModelPancakeUncooked();
@@ -220,12 +221,13 @@ public class Kitchen
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_beef", new ItemBaseRenderingHandler(Items.beef, Items.cooked_beef), new ItemStack(Items.cooked_beef)));
         IngredientRegistry.getInstance().registerIngredient(new IngredientMixingBowl("scrambled_eggs", new JamBaseRenderingHandler(new float[]{255, 243, 86}), new ItemStack(KitchenItems.scrambled_eggs), "scrambled_eggs"));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("ketchup", new JamBaseRenderingHandler(new float[]{255, 50, 0}), "ketchup"));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("meat_patty", new ItemBaseRenderingHandler(KitchenItems.raw_meat_patty, KitchenItems.cooked_meat_patty), new ItemStack(KitchenItems.cooked_meat_patty)));
 
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.cut_apple, "apple");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_bacon, "bacon");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.peanut, "peanut");
-        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
+//        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
         IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("pancake_dough", "pancake_dough"));
         IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.Stack(Items.dye, 3), "cocoa");
         IngredientRegistry.getInstance().linkToIngredient(Items.egg, "fried_egg");
@@ -235,6 +237,7 @@ public class Kitchen
         IngredientRegistry.getInstance().linkToIngredient(Items.beef, "vanilla_beef");
         IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("scrambled_eggs", "scrambled_eggs"));
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.tomato_slice, "ketchup");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_meat_patty, "meat_patty");
 
         if (Loader.isModLoaded("NotEnoughItems"))
         {

@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.api.ingredient;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,9 +44,14 @@ public class IngredientRegistry
 
     public void registerIngredient(Ingredient ingredient)
     {
+        this.registerIngredient(ingredient, ingredient.getName());
+    }
+
+    public void registerIngredient(Ingredient ingredient, String ingredientName)
+    {
         if (ingredient != null)
-            if (!ingredients.containsKey(ingredient.getName()))
-                ingredients.put(ingredient.getName(), ingredient);
+            if (!ingredients.containsKey(ingredientName))
+                ingredients.put(ingredientName, ingredient);
     }
 
     public Ingredient getIngredient(String name)
@@ -64,13 +70,13 @@ public class IngredientRegistry
     public Stack[] getInputs(String ingredient)
     {
         List<Stack> found = new ArrayList<Stack>();
-        for (LinkedStack stack : ingredientRelations/*Map.Entry<Stack, String> entry : ingredientRelations.entrySet()*/)
-            if (stack.ingredient/*entry.getValue()*/.equals(ingredient))
-                found.add(stack/*entry.getKey()*/);
+        for (LinkedStack stack : ingredientRelations)
+            if (stack.ingredient.equals(ingredient))
+                found.add(stack);
         return found.toArray(new Stack[found.size()]);
     }
 
-    public ItemStack[] getInputsAsItemStack(String ingredient)
+    public ItemStack[] getInputsAsItemStacks(String ingredient)
     {
         Stack[] stacks = getInputs(ingredient);
         ItemStack[] itemStacks = new ItemStack[stacks.length];
@@ -89,7 +95,7 @@ public class IngredientRegistry
     {
         for (LinkedStack linkedStack : ingredientRelations)
             if (stack.equals(linkedStack))
-                return getIngredient(linkedStack.ingredient/*ingredientRelations.get(stack)*/);
+                return getIngredient(linkedStack.ingredient);
         return null;
     }
 
@@ -154,6 +160,65 @@ public class IngredientRegistry
         return ingredientList.toArray(new Ingredient[ingredientList.size()]);
     }
 
+
+    public static void registerItemPanRecipe(ItemStack output, String ingredientName, IIngredientRenderingHandler renderingHandler, Stack... inputs)
+    {
+        IngredientRegistry registry = getInstance();
+        Ingredient ingredient = new Ingredient(ingredientName, renderingHandler, output);
+        registry.registerIngredient(ingredient);
+        for (Stack input : inputs)
+        {
+            LinkedStack linkedStack;
+            if (input instanceof LinkedStack)
+                linkedStack = (LinkedStack) input;
+            else linkedStack = new LinkedStack(input, ingredientName);
+            registry.linkToIngredient(linkedStack);
+        }
+    }
+
+    public static void registerItemPanRecipe(ItemStack output, String ingredientName, IIngredientRenderingHandler renderingHandler, ItemStack... inputs)
+    {
+        Stack[] stacks = new Stack[inputs.length];
+        for (int i = 0; i < inputs.length; i++)
+        {
+            ItemStack itemStack = inputs[i];
+            stacks[i] = new Stack(itemStack);
+        }
+        registerItemPanRecipe(output, ingredientName, renderingHandler, stacks);
+    }
+
+    public static void registerItemPanRecipe(ItemStack output, IIngredientRenderingHandler renderingHandler, Stack... inputs)
+    {
+        String ingredientName = output.getUnlocalizedName();
+        registerItemPanRecipe(output, ingredientName, renderingHandler, inputs);
+    }
+
+    public static void registerItemPanRecipe(ItemStack output, IIngredientRenderingHandler renderingHandler, ItemStack... inputs)
+    {
+        String ingredientName = output.getUnlocalizedName();
+        registerItemPanRecipe(output, ingredientName, renderingHandler, inputs);
+    }
+
+    public static void registerItemPanRecipe(ItemStack output, String ingredientName, Item rawModel, Item cookedModel, Stack... inputs)
+    {
+        registerItemPanRecipe(output, ingredientName, new ItemBaseRenderingHandler(rawModel, cookedModel), inputs);
+    }
+
+    public static void registerItemPanRecipe(ItemStack output, String ingredientName, Item rawModel, Item cookedModel, ItemStack... inputs)
+    {
+        registerItemPanRecipe(output, ingredientName, new ItemBaseRenderingHandler(rawModel, cookedModel), inputs);
+    }
+
+    public static void registerItemPanRecipe(ItemStack output, Item rawModel, Item cookedModel, Stack... inputs)
+    {
+        registerItemPanRecipe(output, new ItemBaseRenderingHandler(rawModel, cookedModel), inputs);
+    }
+
+    public static void registerItemPanRecipe(ItemStack output, Item rawModel, Item cookedModel, ItemStack... inputs)
+    {
+        registerItemPanRecipe(output, new ItemBaseRenderingHandler(rawModel, cookedModel), inputs);
+    }
+
     public static class LinkedStack extends Stack
     {
         public String ingredient;
@@ -209,15 +274,35 @@ public class IngredientRegistry
         public int metadata;
         public Item item;
 
+        /**
+         * @param item     The item associated with this Stack.
+         * @param metadata The metadata associated with this Stack. Use -1 if any can be used.
+         */
         public Stack(Item item, int metadata)
         {
             this.metadata = metadata;
             this.item = item;
         }
 
+        /**
+         * Creates a Stack based on an {@link net.minecraft.item.ItemStack ItemStack}.
+         *
+         * @param stack The {@link net.minecraft.item.ItemStack ItemStack} to copy data from.
+         */
         public Stack(ItemStack stack)
         {
-            this(stack.getItem(), stack.getItemDamage());
+            this(stack, true);
+        }
+
+        /**
+         * Creates a Stack based on an {@link net.minecraft.item.ItemStack ItemStack}.
+         *
+         * @param stack        The {@link net.minecraft.item.ItemStack ItemStack} to copy data from.
+         * @param copyMetadata Whether the metadata from stack should be used. If false any will be accepted.
+         */
+        public Stack(ItemStack stack, boolean copyMetadata)
+        {
+            this(stack.getItem(), copyMetadata ? stack.getItemDamage() : -1);
         }
 
         @Override
