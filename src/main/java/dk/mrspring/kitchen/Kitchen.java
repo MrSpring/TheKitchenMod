@@ -107,7 +107,7 @@ public class Kitchen
         // Registering renderers
         proxy.registerRenderers();
         // Registers the default Board events
-        BoardEventRegistry.registerDefaultEvents();
+//        BoardEventRegistry.registerDefaultEvents();
     }
 
     @EventHandler

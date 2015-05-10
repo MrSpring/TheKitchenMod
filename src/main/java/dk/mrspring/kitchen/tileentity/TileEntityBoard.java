@@ -5,9 +5,6 @@ import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.api.event.IBoardItemHandler;
-import dk.mrspring.kitchen.api.event.IOnAddedToBoardEvent;
-import dk.mrspring.kitchen.api.event.IOnBoardRightClickedEvent;
-import dk.mrspring.kitchen.api.event.ITopItemEvent;
 import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,11 +41,13 @@ public class TileEntityBoard extends TileEntity
                 if (!topHandler.onRightClicked(this, clicked, player))
                     return true;
             }
+
             if (itemHandler.canAdd(this, clicked, player))
             {
                 layers.add(itemHandler.onAdded(this, clicked, player));
-            }
-        }
+                return true;
+            } else return false;
+        } else return false;
         /*if (toAdd != null)
         {
             IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
@@ -113,14 +112,14 @@ public class TileEntityBoard extends TileEntity
 
     public ItemStack removeTopItem()
     {
-        if (this.layers.size() > 0)
+        /*if (this.layers.size() > 0)
         {
             ItemStack removed = this.layers.remove(this.layers.size() - 1);
             ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(removed);
             SandwichableConfig.SandwichableEntry itemEntry = ModConfig.getSandwichConfig().findEntry(removed);
             if (itemEntry.dropItem())
                 return topItemEvent.getDroppeditem(this.layers, removed, this.getSpecialInfo());
-        }
+        }*/
         return null;
     }
 
@@ -180,7 +179,8 @@ public class TileEntityBoard extends TileEntity
             NBTTagCompound layerCompound = list.getCompoundTagAt(i);
             ItemStack layer = ItemStack.loadItemStackFromNBT(layerCompound);
 
-            this.rightClicked(layer, false);
+            if (layer != null)
+                layers.add(layer);
         }
 
         this.setSpecialInfo(compound.getCompoundTag("SpecialInfo"));

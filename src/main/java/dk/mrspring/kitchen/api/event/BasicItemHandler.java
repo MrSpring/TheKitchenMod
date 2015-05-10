@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.api.event;
 
+import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
@@ -16,20 +18,32 @@ public class BasicItemHandler implements IBoardItemHandler
     }
 
     @Override
-    public boolean canAdd(List<ItemStack> layersOnBoard, ItemStack adding)
+    public boolean canAdd(TileEntityBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
     {
         return false;
     }
 
     @Override
-    public void onAdded(List<ItemStack> layersOnBoard, ItemStack added)
+    public ItemStack onAdded(TileEntityBoard tileEntityBoard, ItemStack added, EntityPlayer player)
     {
-
+        return null;
     }
 
     @Override
-    public boolean onRightClicked(List<ItemStack> layersOnBoard, ItemStack clicked)
+    public boolean onRightClicked(TileEntityBoard tileEntityBoard, ItemStack clicked, EntityPlayer player)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean canBeRemoved(TileEntityBoard tileEntityBoard, ItemStack topMostItem, EntityPlayer player)
     {
         return false;
+    }
+
+    @Override
+    public ItemStack onRemoved(TileEntityBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
+    {
+        return null;
     }
 }

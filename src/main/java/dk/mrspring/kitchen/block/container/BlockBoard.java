@@ -37,7 +37,9 @@ public class BlockBoard extends BlockContainerBase
 
         if (!world.isRemote)
         {
-            if (!activator.isSneaking())
+            entity.rightClicked(activator.getCurrentEquippedItem(), activator);
+            world.markBlockForUpdate(x, y, z);
+            /*if (!activator.isSneaking())
             {
                 if (activator.getCurrentEquippedItem() != null)
                 {
@@ -66,7 +68,7 @@ public class BlockBoard extends BlockContainerBase
                     world.markBlockForUpdate(x, y, z);
                     return true;
                 }
-            }
+            }*/
         }
 
         return false;

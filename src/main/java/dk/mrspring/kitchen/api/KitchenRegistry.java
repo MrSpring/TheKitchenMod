@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.api;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.api.event.IBoardEvent;
 import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.item.Item;
