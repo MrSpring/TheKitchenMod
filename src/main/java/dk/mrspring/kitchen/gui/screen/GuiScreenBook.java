@@ -489,7 +489,7 @@ public class GuiScreenBook extends GuiScreen
 
     private static final String ADD_SPACE = "$SPACE$";
 
-    private Object[] convertStringToObjects(String string)
+    /*private Object[] convertStringToObjects(String string)
     {
         List<Object> objects = new ArrayList<Object>();
         String[] split = string.split("$");
@@ -542,7 +542,7 @@ public class GuiScreenBook extends GuiScreen
                 }
             }
         }
-    }
+    }*/
 
     private int addChapter(String title, int textureIndex, int logoU, int logoV, Object... content)
     {

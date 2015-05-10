@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -87,25 +88,15 @@ public class TileEntityPanRenderer extends TileEntityTimeableRenderer
     @Override
     public void transformTimer(TileEntity tileEntity)
     {
-        // TODO: Translate timer
-        int metadata = tileEntity.getBlockMetadata();
+        int x = tileEntity.xCoord, y = tileEntity.yCoord, z = tileEntity.zCoord;
+        World world = tileEntity.getWorldObj();
+        int metadata = world.getBlockMetadata(x, y-1, z);
         GL11.glRotatef(metadata * 90, 0, 1, 0);
-        GL11.glTranslatef(0, 0.825F, 0);
-        switch (metadata)
-        {
-            case 0:
-                GL11.glTranslatef(0.062F, 0, -.515F);
-                break;
-            case 1:
-                GL11.glTranslatef(0.19F, 0, -.575F);
-                break;
-            case 2:
-                GL11.glTranslatef(0.25F, 0, -.515F);
-                break;
-            case 3:
-                GL11.glTranslatef(0.19F, 0, -.39F);
-                break;
-        }
+        GL11.glTranslatef(-0.06F, 0.825F, -0.275F);
+        float pixel = 0.0625F;
+
+        if (tileEntity.getWorldObj().getBlock(x, y - 1, z) == KitchenBlocks.oven)
+            GL11.glTranslatef(4 * pixel, 0F, -(2 * pixel));
         float scale = 0.5F;
         GL11.glScalef(scale, scale, scale);
     }
