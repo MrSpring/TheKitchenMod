@@ -70,4 +70,9 @@ public class BasicRecipeHandler
             recipes.add(new BasicRecipe(input, output));
         }
     }
+
+    public boolean hasOutput(ItemStack toAdd)
+    {
+        return getOutputFor(toAdd) != null;
+    }
 }

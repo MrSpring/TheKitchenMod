@@ -3,11 +3,13 @@ package dk.mrspring.kitchen.api.event;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.pan.Jam;
+import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +19,28 @@ import java.util.Map;
  */
 public class BoardEventRegistry
 {
-    static Map<String, IBoardEvent> onAddedToBoardEvents = new HashMap<String, IBoardEvent>();
+    private static final BoardEventRegistry instance = new BoardEventRegistry();
+    private List<IBoardItemHandler> handlers = new ArrayList<IBoardItemHandler>();
+
+    public static BoardEventRegistry instance()
+    {
+        return instance;
+    }
+
+    public void registerHandler(IBoardItemHandler handler)
+    {
+        if (handler != null)
+            handlers.add(handler);
+    }
+
+    public IBoardItemHandler getHandlerFor(ItemStack item)
+    {
+        for (IBoardItemHandler handler : handlers)
+            if (handler.isForItem(item)) return handler;
+        return new BasicItemHandler();
+    }
+
+    /*static Map<String, IBoardEvent> onAddedToBoardEvents = new HashMap<String, IBoardEvent>();
     static Map<String, IBoardEvent> onBoardRightClickedEvents = new HashMap<String, IBoardEvent>();
     static Map<String, IBoardEvent> topItemEvents = new HashMap<String, IBoardEvent>();
 
@@ -347,5 +370,5 @@ public class BoardEventRegistry
                 return "on_added-kitchen:jam_jar";
             }
         });
-    }
+    }*/
 }

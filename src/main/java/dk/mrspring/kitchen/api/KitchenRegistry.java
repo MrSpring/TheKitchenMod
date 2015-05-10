@@ -2,11 +2,9 @@ package dk.mrspring.kitchen.api;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.api.event.IBoardEvent;
 import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
 import dk.mrspring.kitchen.config.SandwichableConfig;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
 /**
@@ -14,7 +12,7 @@ import net.minecraft.item.Item;
  */
 public class KitchenRegistry
 {
-    public static void registerOnAddedToBoardEvent(Item item, IBoardEvent eventHandler)
+    /*public static void registerOnAddedToBoardEvent(Item item, IBoardEvent eventHandler)
     {
         BoardEventRegistry.registerOnAddedEvent(item, eventHandler);
     }
@@ -44,7 +42,7 @@ public class KitchenRegistry
     public static void registerTopItemBoardEvent(Block block, IBoardEvent eventHandler)
     {
         BoardEventRegistry.registerTopItemEvent(block, eventHandler);
-    }
+    }*/
 
 
     public static void makeSandwichable(SandwichableConfig.SandwichableEntry entry)

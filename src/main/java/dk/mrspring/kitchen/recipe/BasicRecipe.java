@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.recipe;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.config.wrapper.JsonBasicRecipe;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -11,6 +12,21 @@ import net.minecraft.item.ItemStack;
 public class BasicRecipe
 {
     ItemStack input, output;
+
+    public BasicRecipe(Item input, Item output)
+    {
+        this(new ItemStack(input), new ItemStack(output));
+    }
+
+    public BasicRecipe(Item input, ItemStack output)
+    {
+        this(new ItemStack(input), output);
+    }
+
+    public BasicRecipe(ItemStack input, Item output)
+    {
+        this(input, new ItemStack(output));
+    }
 
     public BasicRecipe(ItemStack input, ItemStack output)
     {
@@ -40,26 +56,26 @@ public class BasicRecipe
         this(jsonRecipe.getInput().toItemStack(), jsonRecipe.getOutput().toItemStack());
     }
 
+    public ItemStack getInput()
+    {
+        return input;
+    }
+
     public BasicRecipe setInput(ItemStack input)
     {
         this.input = input;
         return this;
     }
 
+    public ItemStack getOutput()
+    {
+        return output;
+    }
+
     public BasicRecipe setOutput(ItemStack output)
     {
         this.output = output;
         return this;
-    }
-
-    public ItemStack getInput()
-    {
-        return input;
-    }
-
-    public ItemStack getOutput()
-    {
-        return output;
     }
 
     public boolean isValid()

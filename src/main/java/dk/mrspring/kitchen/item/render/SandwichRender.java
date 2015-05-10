@@ -15,8 +15,10 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
+import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,6 +173,7 @@ public class SandwichRender
                 float scale = 1.3F;
                 GL11.glScalef(scale, scale, scale);
                 GL11.glTranslatef(0, 0.35F, 0);
+
                 EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
                 itemEntity.hoverStart = 0.0F;
                 RenderItem.renderInFrame = true;
@@ -178,6 +181,7 @@ public class SandwichRender
                 GL11.glTranslatef(.0F, -.2F, -1.395F);
                 RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, -0.08385D, 0.0F, 0.0F);
                 RenderItem.renderInFrame = false;
+//                GL11.glDisable(GL11.GL_CLIP_PLANE5);
             }
 
             GL11.glPopMatrix();

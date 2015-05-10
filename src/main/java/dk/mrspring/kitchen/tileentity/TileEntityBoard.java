@@ -4,11 +4,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.event.BoardEventRegistry;
+import dk.mrspring.kitchen.api.event.IBoardItemHandler;
 import dk.mrspring.kitchen.api.event.IOnAddedToBoardEvent;
 import dk.mrspring.kitchen.api.event.IOnBoardRightClickedEvent;
 import dk.mrspring.kitchen.api.event.ITopItemEvent;
 import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -26,12 +28,28 @@ public class TileEntityBoard extends TileEntity
     private NBTTagCompound specialInfo = new NBTTagCompound();
 
     /**
-     * @param toAdd The ItemStack trying to get added to the Board.
-     * @return Returns true if the ItemStack was added, and should therefore decrement it's stackSize, false if not.
+     * @param clicked The ItemStack trying to get added to the Board.
+     * @param player  The player adding the ItemStack to the Cutting Board.
+     * @return Returns true if the ItemStack was added, false if not.
      */
-    public boolean rightClicked(ItemStack toAdd, boolean callEvents)
+    public boolean rightClicked(ItemStack clicked, EntityPlayer player)
     {
-        if (toAdd != null)
+        if (clicked != null)
+        {
+            IBoardItemHandler itemHandler = BoardEventRegistry.instance().getHandlerFor(clicked);
+            if (layers.size() > 0)
+            {
+                ItemStack topItem = layers.get(layers.size() - 1);
+                IBoardItemHandler topHandler = BoardEventRegistry.instance().getHandlerFor(topItem);
+                if (!topHandler.onRightClicked(this.getLayers(), clicked, player))
+                    return true;
+            }
+            if (itemHandler.canAdd(this.getLayers(), clicked, player))
+            {
+                layers.add(itemHandler.onAdded(this.getLayers(), clicked, player));
+            }
+        }
+        /*if (toAdd != null)
         {
             IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
             ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTopItem());
@@ -65,7 +83,7 @@ public class TileEntityBoard extends TileEntity
                 return false;
             }
         }
-        return false;
+        return false;*/
     }
 
     public ItemStack getTopItem()
@@ -126,10 +144,10 @@ public class TileEntityBoard extends TileEntity
 
         NBTTagCompound comboCompound = new NBTTagCompound();
         ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getComboMatching(sandwich);
-        String comboName="none";
+        String comboName = "none";
 
-        if (combo!=null)
-            comboName=combo.getUnlocalizedName();
+        if (combo != null)
+            comboName = combo.getUnlocalizedName();
 
         comboCompound.setString("ComboName", comboName);
         sandwich.setTagInfo("Combo", comboCompound);

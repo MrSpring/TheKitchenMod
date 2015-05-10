@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.config;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import net.minecraft.item.ItemStack;
 
 import java.io.File;
@@ -116,7 +117,10 @@ public class SandwichableConfig extends BaseConfig
             GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(stack.getItem());
             if (identifier != null)
                 return this.findEntry(identifier.toString());
-            else return null;
+            else if (KnifeRecipes.instance().hasOutput(stack))
+            {
+                return new KnifeSandwichableEntry();
+            } else return null;
         } else return null;
     }
 
@@ -185,6 +189,14 @@ public class SandwichableConfig extends BaseConfig
         public boolean isBread()
         {
             return this.is_bread;
+        }
+    }
+
+    public static class KnifeSandwichableEntry extends SandwichableEntry
+    {
+        public KnifeSandwichableEntry()
+        {
+            super("", 0);
         }
     }
 }

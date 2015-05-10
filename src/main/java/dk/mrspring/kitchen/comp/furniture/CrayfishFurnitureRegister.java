@@ -15,7 +15,7 @@ public class CrayfishFurnitureRegister
 {
     public static void registerRecipes(IRecipeRegistry registryComm)
     {
-        ModLogger.print(ModLogger.INFO, "Loading Crayfish Furniture Mod compatibility...");
+        ModLogger.print(ModLogger.INFO, "Loading Crayfish Furniture Mod compatibility..."); // TODO: Use new KnifeRecipes registry
 
         RecipeVariables variables = new RecipeVariables();
         variables.addValue("input", new ItemStack(Items.porkchop));

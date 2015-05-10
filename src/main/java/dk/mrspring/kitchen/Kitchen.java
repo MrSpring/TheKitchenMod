@@ -27,6 +27,7 @@ import dk.mrspring.kitchen.model.ModelPancakeUncooked;
 import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
 import dk.mrspring.kitchen.pan.Jam;
 import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
+import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.recipe.RecipeRegistry;
 import dk.mrspring.kitchen.recipe.ToasterRecipes;
@@ -58,6 +59,7 @@ public class Kitchen
 
     public OvenRecipes ovenRecipes;
     public ToasterRecipes toasterRecipes;
+    public KnifeRecipes knifeRecipes;
 
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
@@ -126,6 +128,7 @@ public class Kitchen
         // Loads the recipe handlers
         instance.ovenRecipes = new OvenRecipes();
         instance.toasterRecipes = new ToasterRecipes();
+        instance.knifeRecipes = new KnifeRecipes();
 
         instance.ovenRecipes.load();
         instance.toasterRecipes.load();

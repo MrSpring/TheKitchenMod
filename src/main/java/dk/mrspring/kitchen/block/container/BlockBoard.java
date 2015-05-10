@@ -33,7 +33,7 @@ public class BlockBoard extends BlockContainerBase
     @Override
     public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer activator, int p_149727_6_, float clickX, float clickY, float clickZ)
     {
-        TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
+        TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z); // TODO: Make the TileEntity take care of all the stuff
 
         if (!world.isRemote)
         {
