@@ -41,12 +41,12 @@ public class TileEntityBoard extends TileEntity
             {
                 ItemStack topItem = layers.get(layers.size() - 1);
                 IBoardItemHandler topHandler = BoardEventRegistry.instance().getHandlerFor(topItem);
-                if (!topHandler.onRightClicked(this.getLayers(), clicked, player))
+                if (!topHandler.onRightClicked(this, clicked, player))
                     return true;
             }
-            if (itemHandler.canAdd(this.getLayers(), clicked, player))
+            if (itemHandler.canAdd(this, clicked, player))
             {
-                layers.add(itemHandler.onAdded(this.getLayers(), clicked, player));
+                layers.add(itemHandler.onAdded(this, clicked, player));
             }
         }
         /*if (toAdd != null)
@@ -84,6 +84,11 @@ public class TileEntityBoard extends TileEntity
             }
         }
         return false;*/
+    }
+
+    public void clearBoard()
+    {
+        this.layers = new ArrayList<ItemStack>();
     }
 
     public ItemStack getTopItem()
