@@ -15,7 +15,7 @@ public interface IBoardItemHandler
      * @param stack ItemStack being tested.
      * @return Returns true if this handler should be used for the ItemStack's Item.
      */
-    boolean isForItem(ItemStack stack);
+    boolean isForItem(TileEntityBoard tileEntityBoard, ItemStack stack, EntityPlayer player);
 
     /**
      * Gets called before #onAdded but after #onRightClicked through the top-most item's handler.

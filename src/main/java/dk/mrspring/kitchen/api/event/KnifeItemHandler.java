@@ -11,15 +11,15 @@ import net.minecraft.item.ItemStack;
 public class KnifeItemHandler implements IBoardItemHandler
 {
     @Override
-    public boolean isForItem(ItemStack stack)
+    public boolean isForItem(TileEntityBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
     {
-        return KnifeRecipes.instance().hasOutput(stack);
+        return (KnifeRecipes.instance().hasOutput(stack) && tileEntityBoard.getLayerCount() == 0);
     }
 
     @Override
     public boolean canAdd(TileEntityBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
     {
-        return KnifeRecipes.instance().hasOutput(adding);
+        return tileEntityBoard.getLayerCount() == 0;
     }
 
     @Override

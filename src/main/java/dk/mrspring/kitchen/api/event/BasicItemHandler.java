@@ -12,7 +12,7 @@ import java.util.List;
 public class BasicItemHandler implements IBoardItemHandler
 {
     @Override
-    public boolean isForItem(ItemStack stack)
+    public boolean isForItem(TileEntityBoard board, ItemStack stack, EntityPlayer player)
     {
         return false;
     }

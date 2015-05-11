@@ -4,7 +4,9 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.pan.Jam;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
+import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,6 +24,12 @@ public class BoardEventRegistry
     private static final BoardEventRegistry instance = new BoardEventRegistry();
     private List<IBoardItemHandler> handlers = new ArrayList<IBoardItemHandler>();
 
+    private BoardEventRegistry()
+    {
+        registerHandler(new SandwichableItemHandler());
+        registerHandler(new KnifeItemHandler());
+    }
+
     public static BoardEventRegistry instance()
     {
         return instance;
@@ -33,10 +41,10 @@ public class BoardEventRegistry
             handlers.add(handler);
     }
 
-    public IBoardItemHandler getHandlerFor(ItemStack item)
+    public IBoardItemHandler getHandlerFor(TileEntityBoard board, ItemStack item, EntityPlayer player)
     {
         for (IBoardItemHandler handler : handlers)
-            if (handler.isForItem(item)) return handler;
+            if (handler.isForItem(board, item, player)) return handler;
         return new BasicItemHandler();
     }
 

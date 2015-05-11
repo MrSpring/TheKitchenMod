@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.api.event;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -12,15 +13,16 @@ import net.minecraft.item.ItemStack;
 public class SandwichableItemHandler implements IBoardItemHandler
 {
     @Override
-    public boolean isForItem(ItemStack stack)
+    public boolean isForItem(TileEntityBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
     {
-        return ModConfig.getSandwichConfig().canAdd(stack);
+        return ModConfig.getSandwichConfig().canAdd(stack) &&
+                (tileEntityBoard.getLayerCount() <= 0 || SandwichUtils.isAllSandwichable(tileEntityBoard.getLayers()));
     }
 
     @Override
     public boolean canAdd(TileEntityBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
     {
-        return ModConfig.getSandwichConfig().canAdd(adding);
+        return true;
     }
 
     @Override

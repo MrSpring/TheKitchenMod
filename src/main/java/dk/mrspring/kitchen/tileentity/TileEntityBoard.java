@@ -219,4 +219,9 @@ public class TileEntityBoard extends TileEntity
     {
         this.readFromNBT(pkt.func_148857_g());
     }
+
+    public int getLayerCount()
+    {
+        return getLayers().size();
+    }
 }
