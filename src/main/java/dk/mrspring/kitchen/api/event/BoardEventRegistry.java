@@ -44,7 +44,14 @@ public class BoardEventRegistry
     public IBoardItemHandler getHandlerFor(TileEntityBoard board, ItemStack item, EntityPlayer player)
     {
         for (IBoardItemHandler handler : handlers)
-            if (handler.isForItem(board, item, player)) return handler;
+        {
+            System.out.println("Checking if handler matches. Class: " + handler.getClass().getName());
+            if (handler.isForItem(board, item, player))
+            {
+                System.out.println("Returning handler of type: " + handler.getClass().getName());
+                return handler;
+            }
+        }
         return new BasicItemHandler();
     }
 

@@ -7,6 +7,7 @@ import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.api.event.IBoardItemHandler;
 import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TileEntityBoard extends TileEntity
 {
@@ -33,17 +35,18 @@ public class TileEntityBoard extends TileEntity
     {
         if (clicked != null)
         {
-            IBoardItemHandler itemHandler = BoardEventRegistry.instance().getHandlerFor(clicked);
+            IBoardItemHandler itemHandler = BoardEventRegistry.instance().getHandlerFor(this, clicked, player);
             if (layers.size() > 0)
             {
                 ItemStack topItem = layers.get(layers.size() - 1);
-                IBoardItemHandler topHandler = BoardEventRegistry.instance().getHandlerFor(topItem);
+                IBoardItemHandler topHandler = BoardEventRegistry.instance().getHandlerFor(this, topItem, player);
                 if (!topHandler.onRightClicked(this, clicked, player))
                     return true;
             }
 
             if (itemHandler.canAdd(this, clicked, player))
             {
+                this.resetSpecialInfo();
                 layers.add(itemHandler.onAdded(this, clicked, player));
                 return true;
             } else return false;
@@ -85,9 +88,15 @@ public class TileEntityBoard extends TileEntity
         return false;*/
     }
 
+    public void resetSpecialInfo()
+    {
+        this.setSpecialInfo(new NBTTagCompound());
+    }
+
     public void clearBoard()
     {
-        this.layers = new ArrayList<ItemStack>();
+        this.resetLayers();
+        this.resetSpecialInfo();
     }
 
     public ItemStack getTopItem()
@@ -95,6 +104,23 @@ public class TileEntityBoard extends TileEntity
         if (this.getLayers().size() > 0)
             return this.getLayers().get(this.getLayers().size() - 1);
         else return null;
+    }
+
+    public void spawnItemInWorld(ItemStack stack)
+    {
+        // TODO: Spawn
+        Random random = new Random();
+
+        float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+        float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+
+        EntityItem entityItem = new EntityItem(worldObj, xCoord + xRandPos, yCoord + 1, zCoord + zRandPos, stack);
+
+        entityItem.motionX = random.nextGaussian() * 0.005F;
+        entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
+        entityItem.motionZ = random.nextGaussian() * 0.005F;
+
+        worldObj.spawnEntityInWorld(entityItem);
     }
 
     public NBTTagCompound getSpecialInfo()

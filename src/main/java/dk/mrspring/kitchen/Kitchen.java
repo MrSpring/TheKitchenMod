@@ -132,6 +132,7 @@ public class Kitchen
 
         instance.ovenRecipes.load();
         instance.toasterRecipes.load();
+        instance.knifeRecipes.load();
 
         TileEntityWaffleIron.load();
 

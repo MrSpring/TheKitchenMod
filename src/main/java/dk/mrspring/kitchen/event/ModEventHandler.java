@@ -5,6 +5,7 @@ import cpw.mods.fml.common.gameevent.PlayerEvent;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
+import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -28,14 +29,15 @@ public class ModEventHandler
     public void handleToolTip(ItemTooltipEvent event)
     {
         ItemStack stack = event.itemStack;
+        int key = ModConfig.getKitchenConfig().show_stats_key;
+        boolean isModifierKeyDown = Keyboard.isKeyDown(key);
 
         SandwichableConfig.SandwichableEntry entry = ModConfig.getSandwichConfig().findEntry(stack);
         if (entry != null)
             if (entry.showInformation() || ModConfig.getKitchenConfig().show_item_debug_info)
             {
                 event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_msg"));
-                int key = ModConfig.getKitchenConfig().show_stats_key;
-                if (!Keyboard.isKeyDown(key))
+                if (!isModifierKeyDown)
                     event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_stats_msg").replace("%s", GameSettings.getKeyDisplayString(key)));
                 else
                 {
@@ -73,6 +75,16 @@ public class ModEventHandler
                 for (int i = 0; i < iceCreamList.tagCount(); i++)
                     event.toolTip.add(" " + StatCollector.translateToLocal("mix." + iceCreamList.getStringTagAt(i) + ".name"));
             }
+
+        if (KnifeRecipes.instance().hasOutput(stack))
+        {
+            ItemStack output = KnifeRecipes.instance().getOutputFor(stack);
+            String line;
+            if (isModifierKeyDown)
+                line = StatCollector.translateToLocal("item.slicable.long") + ": §3" + output.getDisplayName();// Slice on a Cutting Board to get: ITEM
+            else line = StatCollector.translateToLocal("item.slicable.short") + ": §3" + output.getDisplayName(); // Slice to get: ITEM
+            event.toolTip.add(line);
+        }
     }
 
     @SubscribeEvent
