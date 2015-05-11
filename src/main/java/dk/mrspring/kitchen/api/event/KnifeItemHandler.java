@@ -14,13 +14,14 @@ import net.minecraft.nbt.NBTTagCompound;
 public class KnifeItemHandler implements IBoardItemHandler
 {
     private static final String SLICE_COUNT = "SliceCount";
+    public static int maxSliceCount = 3;
 
     @Override
     public boolean isForItem(TileEntityBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
     {
-        System.out.println("Has output: " + String.valueOf(KnifeRecipes.instance().hasOutput(stack)) + ", layer count: " + tileEntityBoard.getLayerCount());
+        System.out.println("Has output: " + String.valueOf(KnifeRecipes.instance().hasOutput(stack)) + ", layer count: " + tileEntityBoard.getLayerCount() + ", item: " + stack.getDisplayName());
         int lc = tileEntityBoard.getLayerCount();
-        return (KnifeRecipes.instance().hasOutput(stack) && lc == 0) || (stack.getItem() == KitchenItems.knife && lc == 1);
+        return (KnifeRecipes.instance().hasOutput(stack) && (lc == 0 || lc == 1)) || (stack.getItem() == KitchenItems.knife && lc == 1);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class KnifeItemHandler implements IBoardItemHandler
             if (compound.hasKey(SLICE_COUNT))
                 sliceCount = compound.getInteger(SLICE_COUNT);
             sliceCount++;
-            if (sliceCount > 5)
+            if (sliceCount >= maxSliceCount)
             {
                 ItemStack output = KnifeRecipes.instance().getOutputFor(tileEntityBoard.getTopItem());
                 tileEntityBoard.spawnItemInWorld(output);
@@ -55,18 +56,18 @@ public class KnifeItemHandler implements IBoardItemHandler
     @Override
     public boolean onRightClicked(TileEntityBoard tileEntityBoard, ItemStack clicked, EntityPlayer player)
     {
-        return false;
+        return clicked.getItem() == KitchenItems.knife;
     }
 
     @Override
     public boolean canBeRemoved(TileEntityBoard tileEntityBoard, ItemStack topMostItem, EntityPlayer player)
     {
-        return false;
+        return true;
     }
 
     @Override
     public ItemStack onRemoved(TileEntityBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
     {
-        return null;
+        return removed;
     }
 }

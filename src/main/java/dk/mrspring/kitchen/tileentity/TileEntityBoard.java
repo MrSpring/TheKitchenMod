@@ -38,7 +38,7 @@ public class TileEntityBoard extends TileEntity
             IBoardItemHandler itemHandler = BoardEventRegistry.instance().getHandlerFor(this, clicked, player);
             if (layers.size() > 0)
             {
-                ItemStack topItem = layers.get(layers.size() - 1);
+                ItemStack topItem = getTopItem();
                 IBoardItemHandler topHandler = BoardEventRegistry.instance().getHandlerFor(this, topItem, player);
                 if (!topHandler.onRightClicked(this, clicked, player))
                     return true;
@@ -48,6 +48,20 @@ public class TileEntityBoard extends TileEntity
             {
                 this.resetSpecialInfo();
                 layers.add(itemHandler.onAdded(this, clicked, player));
+                return true;
+            } else return false;
+        } else if (this.getLayerCount() > 0)
+        {
+            System.out.println("Trying to remove!");
+            ItemStack topItem = getTopItem();
+            IBoardItemHandler topHandler = BoardEventRegistry.instance().getHandlerFor(this, topItem, player);
+            if (topHandler.canBeRemoved(this, topItem, player))
+            {
+                System.out.println("Removing!");
+                ItemStack removedStack = layers.remove(layers.size() - 1);
+                ItemStack dropping = topHandler.onRemoved(this, removedStack, player);
+                if (dropping != null)
+                    this.spawnItemInWorld(dropping);
                 return true;
             } else return false;
         } else return false;
