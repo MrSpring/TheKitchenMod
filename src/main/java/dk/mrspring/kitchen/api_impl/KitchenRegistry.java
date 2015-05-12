@@ -1,50 +1,48 @@
-package dk.mrspring.kitchen.api;
+package dk.mrspring.kitchen.api_impl;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
+import dk.mrspring.kitchen.api.IKitchenRegistry;
+import dk.mrspring.kitchen.api.RecipeType;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 /**
  * Created by MrSpring on 03-11-2014 for TheKitchenMod.
  */
-public class KitchenRegistry
+public class KitchenRegistry implements IKitchenRegistry
 {
-    /*public static void registerOnAddedToBoardEvent(Item item, IBoardEvent eventHandler)
+    @Override
+    public void makeSandwichable(String itemName, int healthAmount, boolean isBread, boolean hideInformation, boolean dropItem)
     {
-        BoardEventRegistry.registerOnAddedEvent(item, eventHandler);
+        ModConfig.getSandwichConfig().makeSandwichable(new SandwichableConfig.SandwichableEntry(itemName, healthAmount, isBread, hideInformation, dropItem));
     }
 
-    public static void registerOnAddedToBoardEvent(Block block, IBoardEvent eventHandler)
+    @Override
+    public String addJam(String jamName, Item jamItem, int jamColor)
     {
-        BoardEventRegistry.registerOnAddedEvent(block, eventHandler);
+        return "";
     }
 
-
-    public static void registerOnBoardRightClickEvent(Item item, IBoardEvent eventHandler)
+    @Override
+    public void linkItemToIngredient(String ingredientName, ItemStack linked)
     {
-        BoardEventRegistry.registerOnRightClickedEvent(item, eventHandler);
+
     }
 
-    public static void registerOnBoardRightClickEvent(Block block, IBoardEvent eventHandler)
+    @Override
+    public void addRecipe(String recipeType, ItemStack input, ItemStack output)
     {
-        BoardEventRegistry.registerOnRightClickedEvent(block, eventHandler);
+
     }
 
-
-    public static void registerTopItemBoardEvent(Item item, IBoardEvent eventHandler)
+    @Override
+    public void addRecipe(RecipeType type, ItemStack input, ItemStack output)
     {
-        BoardEventRegistry.registerTopItemEvent(item, eventHandler);
+
     }
-
-    public static void registerTopItemBoardEvent(Block block, IBoardEvent eventHandler)
-    {
-        BoardEventRegistry.registerTopItemEvent(block, eventHandler);
-    }*/
-
-
-    public static void makeSandwichable(SandwichableConfig.SandwichableEntry entry)
+    /*public static void makeSandwichable(SandwichableConfig.SandwichableEntry entry)
     {
         ModConfig.getSandwichConfig().makeSandwichable(entry);
     }
@@ -76,5 +74,5 @@ public class KitchenRegistry
     public static void linkItemToIngredient(Item item, String ingredientName)
     {
         linkItemToIngredient(item, -1, ingredientName);
-    }
+    }*/
 }

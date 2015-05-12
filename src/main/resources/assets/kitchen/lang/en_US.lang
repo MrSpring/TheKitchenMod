@@ -23,6 +23,7 @@ tile.vanilla_crop.name=Vanilla Crop
 tile.wild_vanilla.name=Wild Vanilla
 tile.casserole.name=Casserole
 tile.casserole.contents=Contains
+tile.crafting_cabinet.name=Crafting Kitchen Cabinet
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
@@ -51,7 +52,7 @@ item.burnt_meat.name=Burnt Meat
 item.butter.name=Butter
 item.butter_knife.name=Butter Knife
 item.sandwichable.sandwichable_msg=Sandwichable
-item.sandwichable.sandwichable_stats_msg=Hold §3%s§7 for stats...
+item.sandwichable.sandwichable_stats_msg=Hold §3%1$s§7 for stats...
 item.sandwichable.stats.heal_amount=Heal Amount
 item.sandwichable.stats.is_bread=Is Bread
 item.sandwichable.stats.show_info=Show Info
@@ -99,6 +100,8 @@ item.dirty_hand_mixer.desc=Wash with some Water
 item.meat_hammer.name=Meat Hammer
 item.raw_meat_patty.name=Raw Meat Patty
 item.cooked_meat_patty.name=Meat Patty
+item.slicable.short=Slice to get
+item.slicable.long=Slice on a Cutting Board to get
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT

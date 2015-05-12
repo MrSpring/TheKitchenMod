@@ -134,6 +134,13 @@ public class SandwichableConfig extends BaseConfig
         boolean hide_information = false;
         boolean drop_item = true;
 
+        public SandwichableEntry(String name, int healAmount, boolean isBread, boolean hideInformation, boolean dropItem)
+        {
+            this(name, healAmount, isBread);
+            this.hide_information = hideInformation;
+            this.drop_item = dropItem;
+        }
+
         public SandwichableEntry(String name, int healAmount, boolean isBread)
         {
             this.item_name = name;

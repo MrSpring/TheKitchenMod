@@ -38,7 +38,7 @@ public class ModEventHandler
             {
                 event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_msg"));
                 if (!isModifierKeyDown)
-                    event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_stats_msg").replace("%s", GameSettings.getKeyDisplayString(key)));
+                    event.toolTip.add(StatCollector.translateToLocalFormatted("item.sandwichable.sandwichable_stats_msg", GameSettings.getKeyDisplayString(key)));
                 else
                 {
                     event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.stats.heal_amount") + ": §3" + String.valueOf(entry.getHealAmount()));
