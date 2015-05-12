@@ -160,10 +160,10 @@ item.cooking_book.pages.contents.toast=Toast
 item.cooking_book.pages.contents.timer=Timer
 
 item.cooking_book.pages.sandwiches.title=§l§nSandwiches
-item.cooking_book.pages.sandwiches.text01=There are a few things that you'll need to make your sandwiches.\nFirst thing is a Knife, crafted like so:
-item.cooking_book.pages.sandwiches.text02=The knife is used to slice up the ingredients you'll need to make your sandwiches. Simply put the knife in a crafting table with an item, and it will result in the items sliced up counterpart (If it has one).
-item.cooking_book.pages.sandwiches.text03=After that you're gonna need a Cutting Board, crafted like so:
-item.cooking_book.pages.sandwiches.text04
+item.cooking_book.pages.sandwiches.text01=There are a few things that you'll need to make your sandwiches.\nOne thing is a Knife, crafted like so:
+item.cooking_book.pages.sandwiches.text02=The knife is used to slice up the ingredients you'll need to make your sandwiches. Simply put the item you want to slice up on the Cutting Board, and right-click the Cutting Board with a knife a couple of times.
+item.cooking_book.pages.sandwiches.text03=And you're also gonna need the Cutting Board, crafted like so:
+item.cooking_book.pages.sandwiches.text04=To make a Sandwich, all you need to do is right-click the Cutting Board with a sandwichable item. Sandwichable items will say that they are sandwichable below their names. A Sandwich needs a good base and top, so make sure to use some kind of Bread at the top and bottom of your sandwich. When you're satisfied with your sandwich, all you have to do is right-click the Cutting Board, while crouching, to pop off your sandwich.
 
 item.cooking_book.pages.oven.title=§l§nThe Oven
 item.cooking_book.pages.oven.text01=The Oven is an elegant and efficient way to cook your food.\nIt uses less coal than a regular furnace; one piece of coal can cook up to 16 items.\nThe Oven is crafted like so:

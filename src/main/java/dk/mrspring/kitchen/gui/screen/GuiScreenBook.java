@@ -1,14 +1,14 @@
 package dk.mrspring.kitchen.gui.screen;
 
 import com.google.gson.Gson;
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.*;
 import dk.mrspring.kitchen.config.wrapper.JsonItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -26,323 +26,23 @@ import java.util.List;
  */
 public class GuiScreenBook extends GuiScreen
 {
-    private interface Page
-    {
-        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY);
-    }
-
-    private class SimplePage implements Page
-    {
-        List<Element> elements;
-
-        public SimplePage(Element element)
-        {
-            this.elements = new ArrayList<Element>();
-            this.elements.add(element);
-        }
-
-        public SimplePage(List<Element> elements)
-        {
-            this.elements = new ArrayList<Element>(elements);
-        }
-
-        @Override
-        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
-        {
-            GL11.glPushMatrix();
-
-            RenderHelper.enableGUIStandardItemLighting();
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-            GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-            GL11.glEnable(GL11.GL_LIGHTING);
-
-            int relativeMouseY = mouseY;
-
-            for (Element element : elements)
-            {
-                element.draw(minecraft, maxWidth, mouseX, relativeMouseY);
-                int height = element.getHeight(minecraft, maxWidth);
-                relativeMouseY += height;
-                GL11.glTranslatef(0, height, 0);
-            }
-            GL11.glPopMatrix();
-        }
-    }
-
-    private interface Splittable
-    {
-        /**
-         * Splits the element into to parts, one in the specified height, and the other the remains.
-         *
-         * @param toHeight The height if which the first element is being capped to.
-         * @return Returns an array of 2 elements.
-         */
-        public Element[] split(int toHeight);
-    }
-
-    private interface Element
-    {
-        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY);
-
-        public int getHeight(Minecraft minecraft, int maxWidth);
-    }
-
-    private class ImageElement implements Element
-    {
-        ResourceLocation location;
-        int u, v;
-        int width, height;
-
-        public ImageElement(ResourceLocation image, int u, int v, int width, int height)
-        {
-            this.location = image;
-            this.u = u;
-            this.v = v;
-            this.width = width;
-            this.height = height;
-        }
-
-        @Override
-        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
-        {
-            GL11.glPushMatrix();
-            GL11.glColor4f(1, 1, 1, 1);
-            minecraft.getTextureManager().bindTexture(location);
-            int x = (maxWidth / 2) - (width / 2);
-            drawTexturedModalRect(x, 2, u, v, width, height);
-            GL11.glPopMatrix();
-        }
-
-        @Override
-        public int getHeight(Minecraft minecraft, int maxWidth)
-        {
-            return height + 4;
-        }
-    }
-
-    private class SpacerElement implements Element, Splittable
-    {
-        int height = 0;
-
-        public SpacerElement(int height)
-        {
-            this.height = height;
-        }
-
-        @Override
-        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
-        {
-        }
-
-        @Override
-        public int getHeight(Minecraft minecraft, int maxWidth)
-        {
-            return this.height;
-        }
-
-        @Override
-        public Element[] split(int toHeight)
-        {
-            return new Element[]{
-                    new SpacerElement(Math.min(this.height, toHeight)),
-                    new SpacerElement(0)
-            };
-        }
-    }
-
-    private class TextElement implements Element, Splittable
-    {
-        List<String> lines;
-        boolean center = false;
-
-        public TextElement(String text)
-        {
-            lines = mc.fontRenderer.listFormattedStringToWidth(text, 120);
-        }
-
-        public TextElement(List<String> lines)
-        {
-//            this.lines = new ArrayList<String>(lines);
-            this.lines = new ArrayList<String>();
-            for (String line : lines)
-                this.lines.addAll(mc.fontRenderer.listFormattedStringToWidth(line, 120));
-        }
-
-        public TextElement center()
-        {
-            this.center = true;
-            return this;
-        }
-
-        public TextElement setCenter(boolean center)
-        {
-            this.center = center;
-            return this;
-        }
-
-        @Override
-        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
-        {
-            for (int i = 0; i < this.lines.size(); i++)
-            {
-                String line = this.lines.get(i);
-                int textX = 3;
-                if (center)
-                    textX += maxWidth / 2 - (minecraft.fontRenderer.getStringWidth(line) / 2);//int lineWidth = minecraft.fontRenderer.getStringWidth(line);
-
-                minecraft.fontRenderer.drawString(line, textX, (i * 9), 0x4C1C06, false);
-                // TODO: Center String
-            }
-        }
-
-        @Override
-        public int getHeight(Minecraft minecraft, int maxWidth)
-        {
-            int height = 0;
-            for (String line : lines)
-            {
-                int wrappedLines = minecraft.fontRenderer.listFormattedStringToWidth(line, maxWidth).size();
-                height += (wrappedLines * 9);
-            }
-            return height;
-        }
-
-        @Override
-        public Element[] split(int toHeight)
-        {
-            int linesWithinHeight = 0;
-            for (int i = 1; i < lines.size(); i++)
-            {
-                if (i * 9 > toHeight)
-                    break;
-                else linesWithinHeight = i;
-            }
-
-            List<String> linesInOne = lines.subList(0, linesWithinHeight);
-            List<String> linesInTwo = lines.subList(linesWithinHeight, lines.size());
-
-            return new Element[]{
-                    new TextElement(linesInOne).setCenter(center),
-                    new TextElement(linesInTwo).setCenter(center)
-            };
-        }
-    }
-
-    private class Recipe
-    {
-        public ItemStack[] input;
-        public ItemStack output;
-
-        public Recipe(ItemStack output, ItemStack... input)
-        {
-            this.input = input;
-            this.output = output;
-        }
-    }
-
-    private class CraftingElement implements Element
-    {
-        Recipe recipe;
-
-        public CraftingElement(ItemStack output, List<ItemStack> input)
-        {
-            this(output, input.toArray(new ItemStack[input.size()]));
-        }
-
-        public CraftingElement(ItemStack output, ItemStack... input)
-        {
-            this(new Recipe(output, input));
-        }
-
-        public CraftingElement(Recipe recipe)
-        {
-            this.recipe = recipe;
-        }
-
-        @Override
-        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
-        {
-            GL11.glPushMatrix();
-
-            final int X_OFFSET = (maxWidth - 97) / 2;
-
-            GL11.glColor4f(1, 1, 1, 1);
-            mc.getTextureManager().bindTexture(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"));
-            drawTexturedModalRect(X_OFFSET, 0, 0, 0, 97, 62);
-
-            for (int i = 0; i < recipe.input.length; i++)
-            {
-                ItemStack stack = recipe.input[i];
-                if (stack != null)
-                {
-                    GL11.glPushMatrix();
-
-                    int x = 0, y = 0;
-                    switch (i)
-                    {
-                        case 0:
-                            x = 0;
-                            y = 0;
-                            break;
-                        case 1:
-                            x = 1;
-                            y = 0;
-                            break;
-                        case 2:
-                            x = 2;
-                            y = 0;
-                            break;
-                        case 3:
-                            x = 0;
-                            y = 1;
-                            break;
-                        case 4:
-                            x = 1;
-                            y = 1;
-                            break;
-                        case 5:
-                            x = 2;
-                            y = 1;
-                            break;
-                        case 6:
-                            x = 0;
-                            y = 2;
-                            break;
-                        case 7:
-                            x = 1;
-                            y = 2;
-                            break;
-                        case 8:      // TODO: Clean up code
-                            x = 2;   // TODO: Support 2x2 and 3x3 recipes
-                            y = 2;
-                            break;
-                    }
-
-                    itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16 + 7 + X_OFFSET, y * 16 + 7);
-
-                    GL11.glPopMatrix();
-                    GL11.glColor4f(1, 1, 1, 1);
-                }
-            }
-
-            itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), recipe.output, 74 + X_OFFSET, 23);
-
-            GL11.glColor4f(1, 1, 1, 1);
-            GL11.glPopMatrix();
-        }
-
-        @Override
-        public int getHeight(Minecraft minecraft, int maxWidth)
-        {
-            return 62;
-        }
-    }
-
-
+    private static final String START_CRAFTING = "$C_START$"; // TODO: Replace with enum?
+    private static final String STOP_CRAFTING = "$C_STOP$";
+    private static final String START_TEXT = "$T_START$";
+    private static final String STOP_TEXT = "$T_STOP$";
+    private static final String CENTER_TEXT = "$T_CENTER$";
+    private static final String DONT_TRANSLATE_TEXT = "$T_DT$";
+    private static final String START_IMAGE = "$I_START$";
+    private static final String STOP_IMAGE = "$I_STOP$";
+    private static final String ADD_SPACE = "$SPACE$";
     int pageSet = 0;
     List<Page> pages;
     int[] pageIndex;
+
+    static boolean isMouseHovering(int mouseX, int mouseY, int posX, int posY, int width, int height)
+    {
+        return mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
+    }
 
     private void evenOutPages()
     {
@@ -364,7 +64,7 @@ public class GuiScreenBook extends GuiScreen
 
         this.addTableOfContent();
 
-        /*pageIndex = new int[]{ // TODO: Finish book.
+        pageIndex = new int[]{ // TODO: Finish book.
                 this.addChapter("item.cooking_book.pages.sandwiches.title", 0, 99, 0,
                         START_TEXT,
                         "item.cooking_book.pages.sandwiches.text01",
@@ -389,7 +89,6 @@ public class GuiScreenBook extends GuiScreen
                         Blocks.wooden_slab,
                         STOP_CRAFTING,
                         START_TEXT,
-                        CENTER_TEXT,
                         "item.cooking_book.pages.sandwiches.text04",
                         STOP_TEXT),
 
@@ -460,7 +159,7 @@ public class GuiScreenBook extends GuiScreen
                 this.addChapter("item.cooking_book.pages.timer.title", 1, 99, 0,
                         START_TEXT,
                         "item.cooking_book.pages.timer.text01",
-                        STOP_TEXT)};*/
+                        STOP_TEXT)};
     }
 
     private String translate(String text)
@@ -475,74 +174,6 @@ public class GuiScreenBook extends GuiScreen
             translated.add(translate(line));
         return translated;
     }
-
-    private static final String START_CRAFTING = "$C_START$"; // TODO: Replace with enum?
-    private static final String STOP_CRAFTING = "$C_STOP$";
-
-    private static final String START_TEXT = "$T_START$";
-    private static final String STOP_TEXT = "$T_STOP$";
-    private static final String CENTER_TEXT = "$T_CENTER$";
-    private static final String DONT_TRANSLATE_TEXT = "$T_DT$";
-
-    private static final String START_IMAGE = "$I_START$";
-    private static final String STOP_IMAGE = "$I_STOP$";
-
-    private static final String ADD_SPACE = "$SPACE$";
-
-    /*private Object[] convertStringToObjects(String string)
-    {
-        List<Object> objects = new ArrayList<Object>();
-        String[] split = string.split("$");
-        Iterator<String> iterator = Arrays.asList(split).iterator();
-        while (iterator.hasNext())
-        {
-            String next = iterator.next();
-            if (next.equals(START_CRAFTING))
-            {
-                String recipe = iterator.next();
-                String[] fullRecipe = recipe.split(",");
-                ItemStack[] actualRecipe = new ItemStack[fullRecipe.length];
-                try
-                {
-                    Gson gson = new Gson();
-                    JsonItemStack output = gson.fromJson(fullRecipe[0], JsonItemStack.class);
-                    actualRecipe[0] = output.toItemStack();
-                    for (int i = 1; i < fullRecipe.length; i++)
-                    {
-                        String stack = fullRecipe[i];
-                        if (stack.equals("null"))
-                            actualRecipe[i] = null;
-                        else
-                        {
-                            JsonItemStack jsonStack = gson.fromJson(stack, JsonItemStack.class);
-                            if (jsonStack != null)
-                                actualRecipe[i] = jsonStack.toItemStack();
-                        }
-                    }
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            } else if (next.equals(START_TEXT))
-            {
-
-            } else if (next.equals(START_IMAGE))
-            {
-
-            } else if (next.equals(ADD_SPACE))
-            {
-                String spaceAmount = iterator.next();
-                try
-                {
-                    int height = Integer.valueOf(spaceAmount);
-                    objects.add(new SpacerElement(height));
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/
 
     private int addChapter(String title, int textureIndex, int logoU, int logoV, Object... content)
     {
@@ -844,8 +475,316 @@ public class GuiScreenBook extends GuiScreen
             this.pageSet--;
     }
 
-    static boolean isMouseHovering(int mouseX, int mouseY, int posX, int posY, int width, int height)
+    private interface Page
     {
-        return mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY);
+    }
+
+    private interface Splittable
+    {
+        /**
+         * Splits the element into to parts, one in the specified height, and the other the remains.
+         *
+         * @param toHeight The height if which the first element is being capped to.
+         * @return Returns an array of 2 elements.
+         */
+        public Element[] split(int toHeight);
+    }
+
+    private interface Element
+    {
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY);
+
+        public int getHeight(Minecraft minecraft, int maxWidth);
+    }
+
+    private class SimplePage implements Page
+    {
+        List<Element> elements;
+
+        public SimplePage(Element element)
+        {
+            this.elements = new ArrayList<Element>();
+            this.elements.add(element);
+        }
+
+        public SimplePage(List<Element> elements)
+        {
+            this.elements = new ArrayList<Element>(elements);
+        }
+
+        @Override
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
+        {
+            GL11.glPushMatrix();
+
+            RenderHelper.enableGUIStandardItemLighting();
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+            GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+            GL11.glEnable(GL11.GL_LIGHTING);
+
+            int relativeMouseY = mouseY;
+
+            for (Element element : elements)
+            {
+                element.draw(minecraft, maxWidth, mouseX, relativeMouseY);
+                int height = element.getHeight(minecraft, maxWidth);
+                relativeMouseY += height;
+                GL11.glTranslatef(0, height, 0);
+            }
+            GL11.glPopMatrix();
+        }
+    }
+
+    private class ImageElement implements Element
+    {
+        ResourceLocation location;
+        int u, v;
+        int width, height;
+
+        public ImageElement(ResourceLocation image, int u, int v, int width, int height)
+        {
+            this.location = image;
+            this.u = u;
+            this.v = v;
+            this.width = width;
+            this.height = height;
+        }
+
+        @Override
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
+        {
+            GL11.glPushMatrix();
+            GL11.glColor4f(1, 1, 1, 1);
+            minecraft.getTextureManager().bindTexture(location);
+            int x = (maxWidth / 2) - (width / 2);
+            drawTexturedModalRect(x, 2, u, v, width, height);
+            GL11.glPopMatrix();
+        }
+
+        @Override
+        public int getHeight(Minecraft minecraft, int maxWidth)
+        {
+            return height + 4;
+        }
+    }
+
+    private class SpacerElement implements Element, Splittable
+    {
+        int height = 0;
+
+        public SpacerElement(int height)
+        {
+            this.height = height;
+        }
+
+        @Override
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
+        {
+        }
+
+        @Override
+        public int getHeight(Minecraft minecraft, int maxWidth)
+        {
+            return this.height;
+        }
+
+        @Override
+        public Element[] split(int toHeight)
+        {
+            return new Element[]{
+                    new SpacerElement(Math.min(this.height, toHeight)),
+                    new SpacerElement(0)
+            };
+        }
+    }
+
+    private class TextElement implements Element, Splittable
+    {
+        List<String> lines;
+        boolean center = false;
+
+        public TextElement(String text)
+        {
+            lines = mc.fontRenderer.listFormattedStringToWidth(text, 120);
+        }
+
+        public TextElement(List<String> lines)
+        {
+//            this.lines = new ArrayList<String>(lines);
+            this.lines = new ArrayList<String>();
+            for (String line : lines)
+                this.lines.addAll(mc.fontRenderer.listFormattedStringToWidth(line, 120));
+        }
+
+        public TextElement center()
+        {
+            this.center = true;
+            return this;
+        }
+
+        public TextElement setCenter(boolean center)
+        {
+            this.center = center;
+            return this;
+        }
+
+        @Override
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
+        {
+            for (int i = 0; i < this.lines.size(); i++)
+            {
+                String line = this.lines.get(i);
+                int textX = 3;
+                if (center)
+                    textX += maxWidth / 2 - (minecraft.fontRenderer.getStringWidth(line) / 2);//int lineWidth = minecraft.fontRenderer.getStringWidth(line);
+
+                minecraft.fontRenderer.drawString(line, textX, (i * 9), 0x4C1C06, false);
+                // TODO: Center String
+            }
+        }
+
+        @Override
+        public int getHeight(Minecraft minecraft, int maxWidth)
+        {
+            int height = 0;
+            for (String line : lines)
+            {
+                int wrappedLines = minecraft.fontRenderer.listFormattedStringToWidth(line, maxWidth).size();
+                height += (wrappedLines * 9);
+            }
+            return height;
+        }
+
+        @Override
+        public Element[] split(int toHeight)
+        {
+            int linesWithinHeight = 0;
+            for (int i = 1; i < lines.size(); i++)
+            {
+                if (i * 9 > toHeight)
+                    break;
+                else linesWithinHeight = i;
+            }
+
+            List<String> linesInOne = lines.subList(0, linesWithinHeight);
+            List<String> linesInTwo = lines.subList(linesWithinHeight, lines.size());
+
+            return new Element[]{
+                    new TextElement(linesInOne).setCenter(center),
+                    new TextElement(linesInTwo).setCenter(center)
+            };
+        }
+    }
+
+    private class Recipe
+    {
+        public ItemStack[] input;
+        public ItemStack output;
+
+        public Recipe(ItemStack output, ItemStack... input)
+        {
+            this.input = input;
+            this.output = output;
+        }
+    }
+
+    private class CraftingElement implements Element
+    {
+        Recipe recipe;
+
+        public CraftingElement(ItemStack output, List<ItemStack> input)
+        {
+            this(output, input.toArray(new ItemStack[input.size()]));
+        }
+
+        public CraftingElement(ItemStack output, ItemStack... input)
+        {
+            this(new Recipe(output, input));
+        }
+
+        public CraftingElement(Recipe recipe)
+        {
+            this.recipe = recipe;
+        }
+
+        @Override
+        public void draw(Minecraft minecraft, int maxWidth, int mouseX, int mouseY)
+        {
+            GL11.glPushMatrix();
+
+            final int X_OFFSET = (maxWidth - 97) / 2;
+
+            GL11.glColor4f(1, 1, 1, 1);
+            mc.getTextureManager().bindTexture(new ResourceLocation("kitchen", "textures/gui/cooking_book.png"));
+            drawTexturedModalRect(X_OFFSET, 0, 0, 0, 97, 62);
+
+            for (int i = 0; i < recipe.input.length; i++)
+            {
+                ItemStack stack = recipe.input[i];
+                if (stack != null)
+                {
+                    GL11.glPushMatrix();
+
+                    int x = 0, y = 0;
+                    switch (i)
+                    {
+                        case 0:
+                            x = 0;
+                            y = 0;
+                            break;
+                        case 1:
+                            x = 1;
+                            y = 0;
+                            break;
+                        case 2:
+                            x = 2;
+                            y = 0;
+                            break;
+                        case 3:
+                            x = 0;
+                            y = 1;
+                            break;
+                        case 4:
+                            x = 1;
+                            y = 1;
+                            break;
+                        case 5:
+                            x = 2;
+                            y = 1;
+                            break;
+                        case 6:
+                            x = 0;
+                            y = 2;
+                            break;
+                        case 7:
+                            x = 1;
+                            y = 2;
+                            break;
+                        case 8:      // TODO: Clean up code
+                            x = 2;   // TODO: Support 2x2 and 3x3 recipes
+                            y = 2;
+                            break;
+                    }
+
+                    itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16 + 7 + X_OFFSET, y * 16 + 7);
+
+                    GL11.glPopMatrix();
+                    GL11.glColor4f(1, 1, 1, 1);
+                }
+            }
+
+            itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), recipe.output, 74 + X_OFFSET, 23);
+
+            GL11.glColor4f(1, 1, 1, 1);
+            GL11.glPopMatrix();
+        }
+
+        @Override
+        public int getHeight(Minecraft minecraft, int maxWidth)
+        {
+            return 62;
+        }
     }
 }
