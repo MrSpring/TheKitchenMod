@@ -29,7 +29,8 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
             ItemStack layer = layers.get(i);
             IBoardRenderingHandler renderingHandler = BoardRenderingRegistry.getInstance().getHandlerFor(layers, i, specialTag, layer);
             renderingHandler.render(layers, i, specialTag, layer);
-            yOffset += renderingHandler.getModelHeight(layers, i, specialTag, layer);
+            double scale = 0.032D;
+            yOffset += renderingHandler.getModelHeight(layers, i, specialTag, layer)*scale;
             GL11.glPopMatrix();
         }
     }

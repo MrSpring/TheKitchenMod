@@ -21,6 +21,7 @@ public class BoardRenderingRegistry implements IBoardRenderingRegistry
 
     private BoardRenderingRegistry()
     {
+        registerRenderingHandler();
     }
 
     public static BoardRenderingRegistry getInstance()

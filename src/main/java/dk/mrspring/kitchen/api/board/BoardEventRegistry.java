@@ -36,10 +36,10 @@ public class BoardEventRegistry // TODO: Move to api_impl
     {
         for (IBoardItemHandler handler : handlers)
         {
-//            System.out.println("Checking if handler matches. Class: " + handler.getClass().getName());
+            System.out.println("Checking if handler matches. Class: " + handler.getClass().getName());
             if (handler.isForItem(board, item, player))
             {
-//                System.out.println("Returning handler of type: " + handler.getClass().getName());
+                System.out.println("Returning handler of type: " + handler.getClass().getName());
                 return handler;
             }
         }

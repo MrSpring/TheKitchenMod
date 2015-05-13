@@ -17,6 +17,7 @@ import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
 import dk.mrspring.kitchen.api.stack.LinkedMixingBowlStack;
 import dk.mrspring.kitchen.api.stack.MixingBowlStack;
 import dk.mrspring.kitchen.api.stack.Stack;
+import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.comp.nei.NEIKitchenConfig;
 import dk.mrspring.kitchen.event.ModEventHandler;
@@ -254,6 +255,8 @@ public class Kitchen
                 ModLogger.print(ModLogger.ERROR, "Failed loading compatibility with NEI:", e);
             }
         }
+
+        SandwichableRegistry.getInstance().loadFromConfig(ModConfig.getSandwichConfig());
     }
 
     @EventHandler
