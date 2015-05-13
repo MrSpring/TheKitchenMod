@@ -35,12 +35,11 @@ public class BoardItemRenderingHandler implements IBoardRenderingHandler
         RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, -0.08385D, 0.0F, 0.0F);
         RenderItem.renderInFrame = false;
         GL11.glPopMatrix();
-        // TODO: Render. See SandwichRender
     }
 
     @Override
     public double getModelHeight(List<ItemStack> layers, int indexInList, NBTTagCompound specialTagInfo, ItemStack rendering)
     {
-        return 1; // TODO: Return height. See SandwichRender
+        return 0.0325;
     }
 }

@@ -24,13 +24,14 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
         double yOffset = 0;
         for (int i = 0; i < layers.size(); i++)
         {
+//            System.out.println("yOffset = " + yOffset);
             GL11.glPushMatrix();
             GL11.glTranslated(0, yOffset, 0);
             ItemStack layer = layers.get(i);
             IBoardRenderingHandler renderingHandler = BoardRenderingRegistry.getInstance().getHandlerFor(layers, i, specialTag, layer);
             renderingHandler.render(layers, i, specialTag, layer);
-            double scale = 0.032D;
-            yOffset += renderingHandler.getModelHeight(layers, i, specialTag, layer)*scale;
+            double scale = 0.0325D;
+            yOffset += renderingHandler.getModelHeight(layers, i, specialTag, layer);
             GL11.glPopMatrix();
         }
     }
@@ -114,20 +115,5 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
         } else SandwichRender.renderSandwich(layers, specialInfo);
         //GL11.glDisable(GL11.GL_CLIP_PLANE5);
         GL11.glPopMatrix();*/
-    }
-
-    private void enableClipPlane(int pixels, boolean flip, int plane)
-    {
-        double pixel = 0.0418;
-
-        DoubleBuffer buffer = BufferUtils.createDoubleBuffer(8).put(new double[]{flip ? -1 : 1/*(pixels - 8) >= 0 ? 1 : -1*/, 0, 0, 0.001 + (pixel * (pixels - 8))});
-        buffer.flip();
-        GL11.glClipPlane(plane, buffer);
-        GL11.glEnable(plane);
-    }
-
-    private void disableClipPlane(int plane)
-    {
-        GL11.glDisable(plane);
     }
 }
