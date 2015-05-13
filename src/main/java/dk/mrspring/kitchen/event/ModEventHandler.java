@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import net.minecraft.client.settings.GameSettings;
@@ -32,9 +33,10 @@ public class ModEventHandler
         int key = ModConfig.getKitchenConfig().show_stats_key;
         boolean isModifierKeyDown = Keyboard.isKeyDown(key);
 
-        SandwichableConfig.SandwichableEntry entry = ModConfig.getSandwichConfig().findEntry(stack);
+//        SandwichableConfig.SandwichableEntry entry = ModConfig.getSandwichConfig().findEntry(stack);
+        SandwichableRegistry.Sandwichable entry = SandwichableRegistry.getInstance().getSandwichableForItem(stack);
         if (entry != null)
-            if (entry.showInformation() || ModConfig.getKitchenConfig().show_item_debug_info)
+            if (entry.getShowInformation() || ModConfig.getKitchenConfig().show_item_debug_info)
             {
                 event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.sandwichable_msg"));
                 if (!isModifierKeyDown)
@@ -44,7 +46,7 @@ public class ModEventHandler
                     event.toolTip.add(StatCollector.translateToLocal("item.sandwichable.stats.heal_amount") + ": §3" + String.valueOf(entry.getHealAmount()));
                     {
                         String line = StatCollector.translateToLocal("item.sandwichable.stats.is_bread") + ": ";
-                        if (entry.isBread())
+                        if (entry.getIsBread())
                             line += "§3" + StatCollector.translateToLocal("waila.true");
                         else line += "§c" + StatCollector.translateToLocal("waila.false");
                         event.toolTip.add(line);
@@ -53,13 +55,13 @@ public class ModEventHandler
                     if (ModConfig.getKitchenConfig().show_item_debug_info)
                     {
                         String line = StatCollector.translateToLocal("item.sandwichable.stats.show_info") + ": ";
-                        if (entry.showInformation())
+                        if (entry.getShowInformation())
                             line += "§3" + StatCollector.translateToLocal("waila.true");
                         else line += "§c" + StatCollector.translateToLocal("waila.false");
                         event.toolTip.add(line);
 
                         line = StatCollector.translateToLocal("item.sandwichable.stats.drop_item") + ": ";
-                        if (entry.dropItem())
+                        if (entry.getDropItem())
                             line += "§3" + StatCollector.translateToLocal("waila.true");
                         else line += "§c" + StatCollector.translateToLocal("waila.false");
                         event.toolTip.add(line);
@@ -82,7 +84,8 @@ public class ModEventHandler
             String line;
             if (isModifierKeyDown)
                 line = StatCollector.translateToLocal("item.slicable.long") + ": §3" + output.getDisplayName();// Slice on a Cutting Board to get: ITEM
-            else line = StatCollector.translateToLocal("item.slicable.short") + ": §3" + output.getDisplayName(); // Slice to get: ITEM
+            else
+                line = StatCollector.translateToLocal("item.slicable.short") + ": §3" + output.getDisplayName(); // Slice to get: ITEM
             event.toolTip.add(line);
         }
     }

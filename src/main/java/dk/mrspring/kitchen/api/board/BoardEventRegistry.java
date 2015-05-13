@@ -1,25 +1,16 @@
-package dk.mrspring.kitchen.api.event;
+package dk.mrspring.kitchen.api.board;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.pan.Jam;
-import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Konrad on 30-09-2014 for TheKitchenMod.
  */
-public class BoardEventRegistry
+public class BoardEventRegistry // TODO: Move to api_impl
 {
     private static final BoardEventRegistry instance = new BoardEventRegistry();
     private List<IBoardItemHandler> handlers = new ArrayList<IBoardItemHandler>();

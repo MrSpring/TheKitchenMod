@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.item;
+package dk.mrspring.kitchen.item.food;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;

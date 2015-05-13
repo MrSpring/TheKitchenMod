@@ -3,8 +3,10 @@ package dk.mrspring.kitchen;
 import com.google.gson.Gson;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
+import dk.mrspring.kitchen.config.wrapper.JsonItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -45,7 +47,7 @@ public class IMCHandler
 
     public static void handleLinkMessage(FMLInterModComms.IMCMessage message) // TODO: Fix using IngredientRegistry
     {
-        /*if (message.isStringMessage())
+        /*if (message.isStringMessage())dpj
         {
             String messageText = message.getStringValue();
             if (messageText.contains(","))
@@ -62,7 +64,7 @@ public class IMCHandler
             String itemName;
             if (infoCompound.hasKey("IngredientName", 8))
             {
-                ingredientName = infoCompound.getString("IngredientName");
+                ingredientName = infoCompound.getString("IngredientName");this aodewdhgoirejhduiwhjd  fjieodi
             } else return;
 
             if (infoCompound.hasKey("Item", 8))
@@ -96,26 +98,29 @@ public class IMCHandler
 
             Gson gson = new Gson();
             SandwichableConfig.SandwichableEntry entry = gson.fromJson(jsonCode, SandwichableConfig.SandwichableEntry.class);
-            ModConfig.getSandwichConfig().makeSandwichable(entry);
+            SandwichableRegistry.getInstance().makeItemSandwichable(entry.getInput().toItemStack(), entry.getHealAmount(), entry.isBread(), entry.showInformation(), entry.dropItem());
         } else if (message.isNBTMessage())
         {
             NBTTagCompound entryCompound = message.getNBTValue();
-            String itemName;
+//            String itemName;
+            ItemStack stack;
             int healAmount;
             boolean isBread = false;
             boolean hideInformation = false;
             if (entryCompound.hasKey("Item", 8))
             {
-                itemName = entryCompound.getString("Item");
+                String itemName = entryCompound.getString("Item");
+                if (!itemName.contains(":"))
+                    return;
+                stack = new ItemStack(GameRegistry.findItem(itemName.split(":")[0], itemName.split(":")[1]));
             } else if (entryCompound.hasKey("Item", 10))
             {
                 NBTTagCompound itemCompound = entryCompound.getCompoundTag("Item");
                 if (itemCompound == null)
                     return;
-                ItemStack compoundItem = ItemStack.loadItemStackFromNBT(itemCompound);
-                if (compoundItem == null)
+                stack = ItemStack.loadItemStackFromNBT(itemCompound);
+                if (stack == null)
                     return;
-                itemName = GameRegistry.findUniqueIdentifierFor(compoundItem.getItem()).toString();
             } else return;
 
             if (entryCompound.hasKey("HealAmount", 3))
@@ -126,10 +131,7 @@ public class IMCHandler
             if (entryCompound.hasKey("HideInformation", 1))
                 hideInformation = entryCompound.getBoolean("HideInformation");
 
-            SandwichableConfig.SandwichableEntry entry = new SandwichableConfig.SandwichableEntry(itemName, healAmount, isBread);
-            if (hideInformation)
-                entry.hideInformation();
-            ModConfig.getSandwichConfig().makeSandwichable(entry);
+            SandwichableRegistry.getInstance().makeItemSandwichable(stack, healAmount, isBread, !hideInformation, true);
         }
     }
 

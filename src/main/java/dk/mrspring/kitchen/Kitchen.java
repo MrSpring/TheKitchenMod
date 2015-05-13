@@ -10,11 +10,13 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.api.ingredient.Ingredient;
 import dk.mrspring.kitchen.api.ingredient.IngredientMixingBowl;
 import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
+import dk.mrspring.kitchen.api.stack.LinkedMixingBowlStack;
+import dk.mrspring.kitchen.api.stack.MixingBowlStack;
+import dk.mrspring.kitchen.api.stack.Stack;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.comp.nei.NEIKitchenConfig;
 import dk.mrspring.kitchen.event.ModEventHandler;
@@ -142,12 +144,12 @@ public class Kitchen
 
         MinecraftForge.EVENT_BUS.register(new ModEventHandler());
 
-        Jam.registerJam(new Jam("empty", 000000, "null"));
-        Jam.registerJam(new Jam("strawberry", 16196364, "kitchen:strawberry_jam"));
-        Jam.registerJam(new Jam("apple", 14415786, "kitchen:apple_jam"));
-        Jam.registerJam(new Jam("peanut", 9659689, "kitchen:peanut_jam"));
-        Jam.registerJam(new Jam("cocoa", 0x895836, "kitchen:cocoa_jam"));
-        Jam.registerJam(new Jam("ketchup", 0xFF3200, "kitchen:ketchup_jam"));
+        Jam.registerJam(new Jam("empty", 000000, null));
+        Jam.registerJam(new Jam("strawberry", 16196364, KitchenItems.jam_strawberry/*"kitchen:strawberry_jam"*/));
+        Jam.registerJam(new Jam("apple", 14415786, KitchenItems.jam_apple/*"kitchen:apple_jam"*/));
+        Jam.registerJam(new Jam("peanut", 9659689, KitchenItems.jam_peanut/*"kitchen:peanut_jam"*/));
+        Jam.registerJam(new Jam("cocoa", 0x895836, KitchenItems.jam_cocoa/*"kitchen:cocoa_jam"*/));
+        Jam.registerJam(new Jam("ketchup", 0xFF3200, KitchenItems.jam_ketchup/*"kitchen:ketchup_jam"*/));
 
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
@@ -231,14 +233,14 @@ public class Kitchen
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_bacon, "bacon");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.peanut, "peanut");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
-        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("pancake_dough", "pancake_dough"));
-        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.Stack(Items.dye, 3), "cocoa");
+        IngredientRegistry.getInstance().linkToIngredient(new LinkedMixingBowlStack("pancake_dough", -2, "pancake_dough"));
+        IngredientRegistry.getInstance().linkToIngredient(new Stack(Items.dye, 3), "cocoa");
         IngredientRegistry.getInstance().linkToIngredient(Items.egg, "fried_egg");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_cut_fish, "sliced_fish");
         IngredientRegistry.getInstance().linkToIngredient(Items.fish, "vanilla_fish");
         IngredientRegistry.getInstance().linkToIngredient(Items.porkchop, "vanilla_porkchop");
         IngredientRegistry.getInstance().linkToIngredient(Items.beef, "vanilla_beef");
-        IngredientRegistry.getInstance().linkToIngredient(new IngredientRegistry.MixingBowlStack("scrambled_eggs", "scrambled_eggs"));
+        IngredientRegistry.getInstance().linkToIngredient(new LinkedMixingBowlStack("scrambled_eggs", -2, "scrambled_eggs"));
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.tomato_slice, "ketchup");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_meat_patty, "meat_patty");
 

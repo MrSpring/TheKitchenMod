@@ -2,6 +2,7 @@ package dk.mrspring.kitchen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
+import dk.mrspring.kitchen.item.food.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -59,37 +60,28 @@ public class KitchenItems
 
     public static final Item cheese = new ItemFoodBase("cheese", 3, false, Kitchen.instance.foodTab);
     public static final Item cheese_slice = new ItemBase("cheese_slice", Kitchen.instance.foodTab);
-
-    public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[]{new ItemStack(bread_slice, 1, 0), new ItemStack(raw_bacon, 1, 0), new ItemStack(bread_slice, 1, 0)});
-
     public static final Item jam_strawberry = new ItemBase("strawberry_jam", false).setLocalizableName("jam.strawberry.name");
     public static final Item jam_apple = new ItemBase("apple_jam", false).setLocalizableName("jam.apple.name");
     public static final Item jam_peanut = new ItemBase("peanut_jam", false).setLocalizableName("jam.peanut.name");
     public static final Item jam_cocoa = new ItemBase("cocoa_jam", false).setLocalizableName("jam.cocoa.name");
     public static final Item jam_ketchup = new ItemBase("ketchup_jam", false).setLocalizableName("jam.ketchup.name");
-
-//    public static final Item waffle = new ItemIceCreamableBase("waffle", 5, false, Kitchen.instance.foodTab);
-    public static final Item waffle = new ItemWaffle();
+    //    public static final Item waffle = new ItemIceCreamableBase("waffle", 5, false, Kitchen.instance.foodTab);
+    public static final Item waffle = new ItemWearableIceCreamable("waffle", 5, ModInfo.toTexture("textures/empty.png"), 0);
     public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false, Kitchen.instance.foodTab);
-    public static final Item pancake = new ItemIceCreamableBase("pancake", 4, false, Kitchen.instance.foodTab);
+    public static final Item pancake = new ItemWearableIceCreamable("pancake", 5, ModInfo.toTexture("textures/empty.png"), 0);//new ItemIceCreamableBase("pancake", 4, false, Kitchen.instance.foodTab);
     public static final Item ice_cream_cone = new ItemIceCreamableBase("ice_cream_cone", 8, false, Kitchen.instance.foodTab);
-
     public static final Item butter = new ItemBase("butter", Kitchen.instance.foodTab);
     public static final Item burnt_meat = new ItemFoodBase("burnt_meat", 1, false, Kitchen.instance.foodTab);
     public static final Item chicken_leg = new ItemFoodBase("chicken_leg", 4, true, Kitchen.instance.foodTab);
     public static final Item timer = new ItemBase("timer", true);
     public static final Item cooking_book = new ItemCookingBook();
-
     public static final Item crushed_ice = new ItemBase("crushed_ice", Kitchen.instance.foodTab);
-
     public static final Item raw_vanilla = new ItemSeedBase("raw_vanilla", KitchenBlocks.vanilla_crop, Kitchen.instance.foodTab);
     public static final Item dried_vanilla = new ItemFoodBase("dried_vanilla", 3, false).setCreativeTab(Kitchen.instance.foodTab);
     public static final Item crushed_vanilla = new ItemFoodBase("crushed_vanilla", 1, false).setCreativeTab(Kitchen.instance.foodTab);
-
     public static final Item raw_burger_bun = new ItemBase("raw_burger_bun", Kitchen.instance.foodTab);
     public static final Item burger_bun = new ItemFoodBase("burger_bun", 2, false, Kitchen.instance.foodTab);
     public static final Item sliced_burger_bun = new ItemFoodBase("sliced_burger_bun", 1, false, Kitchen.instance.foodTab);
-
     public static final Item fried_egg = new ItemFoodBase("fried_egg", 3, false, Kitchen.instance.foodTab);
     public static final Item raw_cut_fish = new ItemFoodBase("raw_cut_fish", 2, false, Kitchen.instance.foodTab);
     public static final Item cooked_cut_fish = new ItemFoodBase("cut_fish", 4, false, Kitchen.instance.foodTab);
@@ -97,10 +89,9 @@ public class KitchenItems
     public static final Item raw_ham = new ItemFoodWeaponBase("raw_ham_bone", 4, true, 3, Kitchen.instance.foodTab);
     public static final Item ham_slice = new ItemFoodBase("ham_slice", 4, false, Kitchen.instance.foodTab);
     public static final Item scrambled_eggs = new ItemFoodBase("scrambled_eggs", 5, false, Kitchen.instance.foodTab).setMaxStackSize(16);
-
     public static final Item raw_meat_patty = new ItemFoodBase("raw_meat_patty", 1, true, Kitchen.instance.foodTab);
     public static final Item cooked_meat_patty = new ItemFoodBase("cooked_meat_patty", 4, true, Kitchen.instance.foodTab);
-
+    public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[]{new ItemStack(bread_slice, 1, 0), new ItemStack(raw_bacon, 1, 0), new ItemStack(bread_slice, 1, 0)});
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.
     private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)

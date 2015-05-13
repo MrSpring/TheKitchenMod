@@ -1,8 +1,7 @@
-package dk.mrspring.kitchen.item;
+package dk.mrspring.kitchen.item.food;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -10,63 +9,31 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Konrad on 13-05-2015.
  */
-public class ItemWaffle extends ItemArmor
+public class ItemWearableIceCreamable extends ItemFoodArmorBase
 {
-    private static final ArmorMaterial MATERIAL = EnumHelper.addArmorMaterial("WAFFLE", 20, new int[]{0, 0, 0, 0}, 0);
-
-    public ItemWaffle()
+    public ItemWearableIceCreamable(String name, String textureName, int baseHealAmount, String armorTexture, int armorType)
     {
-        super(MATERIAL, 0, 0);
+        super(name, textureName, baseHealAmount, armorTexture, armorType);
+    }
 
-        this.setUnlocalizedName("waffle");
-        this.setTextureName(ModInfo.toTexture("waffle"));
+    public ItemWearableIceCreamable(String name, int baseHealAmount, String armorTexture, int armorType)
+    {
+        super(name, baseHealAmount, armorTexture, armorType);
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack p_77626_1_)
+    public int getHealAmount(ItemStack stack)
     {
-        return 32;
-    }
-
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
-    {
-        if (player.canEat(false))
-            player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-        return stack;
-    }
-
-    @Override
-    public EnumAction getItemUseAction(ItemStack stack)
-    {
-        return EnumAction.eat;
-    }
-
-    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player)
-    {
-        --stack.stackSize;
-        int healAmount = 5;
+        int healBase = super.getHealAmount(stack);
         if (stack.hasTagCompound())
-            healAmount += (stack.getTagCompound().getTagList("IceCream", 8).tagCount());
-        player.getFoodStats().addStats(healAmount, 0.6F);//func_151686_a(this, stack);
-        world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-        return stack;
-    }
-
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-    {
-        return ModInfo.toTexture("textures/empty.png");
+            healBase += (stack.getTagCompound().getTagList("IceCream", 8).tagCount());
+        return healBase;
     }
 
     @SideOnly(Side.CLIENT)

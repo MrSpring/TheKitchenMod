@@ -1,5 +1,6 @@
-package dk.mrspring.kitchen.item;
+package dk.mrspring.kitchen.item.food;
 
+import dk.mrspring.kitchen.item.food.ItemFoodBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 

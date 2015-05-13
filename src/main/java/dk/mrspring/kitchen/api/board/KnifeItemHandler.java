@@ -1,6 +1,5 @@
-package dk.mrspring.kitchen.api.event;
+package dk.mrspring.kitchen.api.board;
 
-import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;

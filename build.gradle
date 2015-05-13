@@ -9,15 +9,20 @@ buildscript {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+        maven {
+            name = "applecore"
+            url = "http://ryanliptak.com/maven/"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+//        compile "applecore:AppleCore:1.7.10-1.1.0:deobf"
     }
 }
 
 apply plugin: 'forge'
 
-version = "1.4.0-0002-PRE-1.7.2-10"
+version = "1.4.0-0005-PRE-1.7.2-10"
 group= "dk.mrspring.kitchen" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TheKitchenMod"
 

@@ -1,12 +1,7 @@
 package dk.mrspring.kitchen.tileentity;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.api.event.BoardEventRegistry;
-import dk.mrspring.kitchen.api.event.IBoardItemHandler;
-import dk.mrspring.kitchen.config.ComboConfig;
-import dk.mrspring.kitchen.config.SandwichableConfig;
+import dk.mrspring.kitchen.api.board.BoardEventRegistry;
+import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -122,7 +117,6 @@ public class TileEntityBoard extends TileEntity
 
     public void spawnItemInWorld(ItemStack stack)
     {
-        // TODO: Spawn
         Random random = new Random();
 
         float xRandPos = random.nextFloat() * 0.8F + 0.1F;
@@ -170,7 +164,7 @@ public class TileEntityBoard extends TileEntity
 
     public ItemStack finishSandwich()
     {
-        if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
+        /*if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
             return null;
 
         NBTTagList layersList = new NBTTagList();
@@ -198,7 +192,8 @@ public class TileEntityBoard extends TileEntity
 
         this.resetLayers();
 
-        return sandwich;
+        return sandwich;*/
+        return null;
     }
 
     public void resetLayers()

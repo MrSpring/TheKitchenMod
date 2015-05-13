@@ -1,8 +1,13 @@
 package dk.mrspring.kitchen.util;
 
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
+import dk.mrspring.kitchen.item.render.SandwichRender;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +23,7 @@ public class SandwichUtils
     public static boolean isAllSandwichable(ItemStack[] layers)
     {
         for (ItemStack stack : layers)
-            if (!isSandwichable(stack))
+            if (!SandwichableRegistry.getInstance().isSandwichable(stack))
                 return false;
         return true;
     }
@@ -28,8 +33,21 @@ public class SandwichUtils
         return isAllSandwichable(layers.toArray(new ItemStack[layers.size()]));
     }
 
-    public static boolean isSandwichable(ItemStack stack)
+    public static List<ItemStack> getSandwichAsLayerList(ItemStack sandwich)
     {
-        return ModConfig.getSandwichConfig().canAdd(stack);
+        List<ItemStack> layers = new ArrayList<ItemStack>();
+
+        if (sandwich.getTagCompound() != null)
+        {
+            NBTTagList layersTagList = sandwich.getTagCompound().getTagList("SandwichLayers", 10);
+            if (layersTagList != null)
+                for (int i = 0; i < layersTagList.tagCount(); i++)
+                {
+                    NBTTagCompound layerCompound = layersTagList.getCompoundTagAt(i);
+                    ItemStack layer = ItemStack.loadItemStackFromNBT(layerCompound);
+                    layers.add(layer);
+                }
+        }
+        return layers;
     }
 }

@@ -2,6 +2,8 @@ package dk.mrspring.kitchen.tileentity.renderer;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
+import dk.mrspring.kitchen.api_impl.client.BoardRenderingRegistry;
 import dk.mrspring.kitchen.item.render.SandwichRender;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -17,6 +19,21 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
 {
+    public static void renderLayers(List<ItemStack> layers, NBTTagCompound specialTag)
+    {
+        double yOffset = 0;
+        for (int i = 0; i < layers.size(); i++)
+        {
+            GL11.glPushMatrix();
+            GL11.glTranslated(0, yOffset, 0);
+            ItemStack layer = layers.get(i);
+            IBoardRenderingHandler renderingHandler = BoardRenderingRegistry.getInstance().getHandlerFor(layers, i, specialTag, layer);
+            renderingHandler.render(layers, i, specialTag, layer);
+            yOffset += renderingHandler.getModelHeight(layers, i, specialTag, layer);
+            GL11.glPopMatrix();
+        }
+    }
+
     @Override
     public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float var8)
     {
@@ -25,16 +42,21 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
         TileEntityBoard tileEntity = (TileEntityBoard) var1;
         GL11.glTranslated(x, y + 1.56, z);
         int metadata = tileEntity.getBlockMetadata();
-        double sandwichHeight = 0.0625;
+        double boardHeight = 0.0625;
         if (metadata == 0)
-            GL11.glTranslated(.5, sandwichHeight, .5);
+            GL11.glTranslated(.5, boardHeight, .5);
         else
         {
             GL11.glRotatef(90, 0, 1, 0);
-            GL11.glTranslated(-.5, sandwichHeight, .5);
+            GL11.glTranslated(-.5, boardHeight, .5);
         }
 
         List<ItemStack> layers = tileEntity.getLayers();
+        NBTTagCompound specialInfo = tileEntity.getSpecialInfo();
+
+        renderLayers(layers, specialInfo);
+
+        GL11.glPopMatrix();
 
         /*double pixel = 0.0418;
 
@@ -43,8 +65,7 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
         GL11.glClipPlane(GL11.GL_CLIP_PLANE5, buffer);
         GL11.glEnable(GL11.GL_CLIP_PLANE5);*/
 
-        NBTTagCompound specialInfo = tileEntity.getSpecialInfo();
-        if (specialInfo.hasKey("SliceCount") && specialInfo.getInteger("SliceCount") > 0)
+        /*if (specialInfo.hasKey("SliceCount") && specialInfo.getInteger("SliceCount") > 0)
         {
             int sliceCount = specialInfo.getInteger("SliceCount");
             float distance = 0.0425F;
@@ -91,7 +112,7 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
             }
         } else SandwichRender.renderSandwich(layers, specialInfo);
         //GL11.glDisable(GL11.GL_CLIP_PLANE5);
-        GL11.glPopMatrix();
+        GL11.glPopMatrix();*/
     }
 
     private void enableClipPlane(int pixels, boolean flip, int plane)

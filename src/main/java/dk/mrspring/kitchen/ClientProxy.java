@@ -31,7 +31,7 @@ public class ClientProxy extends CommonProxy
 
         ItemIceCreamableRenderer.load();
 
-        SandwichRender.loadRenderingHandlers();
+//        SandwichRender.loadRenderingHandlers();
         ItemMixingBowlRenderer.initColors();
 
         try

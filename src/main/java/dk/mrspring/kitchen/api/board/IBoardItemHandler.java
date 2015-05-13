@@ -1,10 +1,8 @@
-package dk.mrspring.kitchen.api.event;
+package dk.mrspring.kitchen.api.board;
 
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-
-import java.util.List;
 
 /**
  * Created by Konrad on 10-05-2015.

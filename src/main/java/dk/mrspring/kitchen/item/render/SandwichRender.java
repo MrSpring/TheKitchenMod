@@ -1,8 +1,8 @@
 package dk.mrspring.kitchen.item.render;
 
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.api.sandwichable.ISandwichableRenderingHandler;
-import dk.mrspring.kitchen.api.sandwichable.SandwichableRenderingRegistry;
+import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
+import dk.mrspring.kitchen.api_impl.client.BoardRenderingRegistry;
 import dk.mrspring.kitchen.model.*;
 import dk.mrspring.kitchen.model.butter.ModelButter0;
 import dk.mrspring.kitchen.model.butter.ModelButter1;
@@ -15,10 +15,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +25,9 @@ import java.util.List;
  */
 public class SandwichRender
 {
-    public static void loadRenderingHandlers()
+    /*public static void loadRenderingHandlers()
     {
-        SandwichableRenderingRegistry.registerRenderingHandler(KitchenItems.bread_slice, new ISandwichableRenderingHandler()
+        BoardRenderingRegistry.registerRenderingHandler(KitchenItems.bread_slice, new IBoardRenderingHandler()
         {
             @Override
             public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
@@ -45,7 +43,7 @@ public class SandwichRender
                 return 2 * 0.0625;
             }
         });
-        SandwichableRenderingRegistry.registerRenderingHandler(KitchenItems.sliced_burger_bun, new ISandwichableRenderingHandler()
+        BoardRenderingRegistry.registerRenderingHandler(KitchenItems.sliced_burger_bun, new IBoardRenderingHandler()
         {
             @Override
             public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
@@ -61,7 +59,7 @@ public class SandwichRender
                 return 2 * 0.0625;
             }
         });
-        SandwichableRenderingRegistry.registerRenderingHandler(KitchenItems.bacon, new ISandwichableRenderingHandler()
+        BoardRenderingRegistry.registerRenderingHandler(KitchenItems.bacon, new IBoardRenderingHandler()
         {
             @Override
             public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
@@ -75,7 +73,7 @@ public class SandwichRender
                 return 2 * 0.0625;
             }
         });
-        SandwichableRenderingRegistry.registerRenderingHandler(KitchenItems.raw_bacon, new ISandwichableRenderingHandler()
+        BoardRenderingRegistry.registerRenderingHandler(KitchenItems.raw_bacon, new IBoardRenderingHandler()
         {
             @Override
             public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
@@ -89,7 +87,7 @@ public class SandwichRender
                 return 0.0625;
             }
         });
-        SandwichableRenderingRegistry.registerRenderingHandler(KitchenItems.butter, new ISandwichableRenderingHandler()
+        BoardRenderingRegistry.registerRenderingHandler(KitchenItems.butter, new IBoardRenderingHandler()
         {
             @Override
             public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound specialTagInfo)
@@ -156,7 +154,7 @@ public class SandwichRender
 
             ItemStack toRender = list.get(i);
 
-            ISandwichableRenderingHandler renderingHandler = SandwichableRenderingRegistry.getRenderingHandlerFor(toRender);
+            IBoardRenderingHandler renderingHandler = BoardRenderingRegistry.getRenderingHandlerFor(toRender);
             ModelBase model;
 
             model = renderingHandler.getModel(list, i, infoCompound);
@@ -190,5 +188,5 @@ public class SandwichRender
         }
 
         GL11.glPopMatrix();
-    }
+    }*/
 }

@@ -121,7 +121,7 @@ public class ComboConfig extends BaseConfig
 
         public boolean matches(ItemStack sandwich)
         {
-            ArrayList<SandwichableConfig.SandwichableEntry> layersInSandwich = new ArrayList<SandwichableConfig.SandwichableEntry>();
+            /*ArrayList<SandwichableConfig.SandwichableEntry> layersInSandwich = new ArrayList<SandwichableConfig.SandwichableEntry>();
             NBTTagList layersList = sandwich.stackTagCompound.getTagList("SandwichLayers", 10);
 
             for (int i = 0; i < layersList.tagCount(); ++i)
@@ -132,7 +132,8 @@ public class ComboConfig extends BaseConfig
 
                 layersInSandwich.add(ModConfig.getSandwichConfig().findEntry(name));
             }
-            return layersInSandwich.containsAll(this.getLayers()) && this.getLayers().containsAll(layersInSandwich);
+            return layersInSandwich.containsAll(this.getLayers()) && this.getLayers().containsAll(layersInSandwich);*/
+            return false; // TODO: FIX
         }
 
         public int getExtraHealth()

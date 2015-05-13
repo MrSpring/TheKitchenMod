@@ -93,12 +93,12 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 
     private void renderSadwich(ItemStack item)
     {
-        GL11.glPushMatrix();
+        /*GL11.glPushMatrix();
         float scale = 1.0F;
         GL11.glScalef(scale, scale, scale);
         GL11.glRotatef(180, 0, 0, 1);
         GL11.glTranslatef(0, 0F, 0F);
         SandwichRender.renderSandwich(item, null);
-        GL11.glPopMatrix();
+        GL11.glPopMatrix();*/ // TODO: FIX
     }
 }

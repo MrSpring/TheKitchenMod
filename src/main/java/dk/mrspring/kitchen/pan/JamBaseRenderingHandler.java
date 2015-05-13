@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.pan;
 
 import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.api.ingredient.Ingredient;
+import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import dk.mrspring.kitchen.model.jam.ModelJam0;
 import dk.mrspring.kitchen.model.jam.ModelJam1;
 import dk.mrspring.kitchen.model.jam.ModelJam2;
@@ -19,6 +20,11 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
     ModelJam1 modelJam1;
     ModelJam2 modelJam2;
     ModelJam3 modelJam3;
+
+    public JamBaseRenderingHandler(int color)
+    {
+        this(ItemMixingBowlRenderer.intAsFloatArray(color));
+    }
 
     public JamBaseRenderingHandler(float[] colors)
     {

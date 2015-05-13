@@ -1,32 +1,37 @@
-package dk.mrspring.kitchen.api.event;
+package dk.mrspring.kitchen.api.board;
 
+import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-
-import java.util.List;
 
 /**
  * Created by Konrad on 10-05-2015.
  */
-public class BasicItemHandler implements IBoardItemHandler
+public class SandwichableItemHandler implements IBoardItemHandler
 {
     @Override
-    public boolean isForItem(TileEntityBoard board, ItemStack stack, EntityPlayer player)
+    public boolean isForItem(TileEntityBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
     {
-        return false;
+        return SandwichableRegistry.getInstance().isSandwichable(stack) &&
+                (tileEntityBoard.getLayerCount() <= 0 || SandwichUtils.isAllSandwichable(tileEntityBoard.getLayers()));
     }
 
     @Override
     public boolean canAdd(TileEntityBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
     {
-        return false;
+        return true;
     }
 
     @Override
     public ItemStack onAdded(TileEntityBoard tileEntityBoard, ItemStack added, EntityPlayer player)
     {
-        return null;
+        ItemStack copy = added.copy();
+        copy.stackSize = 1;
+        added.stackSize--;
+        return copy;
     }
 
     @Override
@@ -38,12 +43,12 @@ public class BasicItemHandler implements IBoardItemHandler
     @Override
     public boolean canBeRemoved(TileEntityBoard tileEntityBoard, ItemStack topMostItem, EntityPlayer player)
     {
-        return false;
+        return true;
     }
 
     @Override
     public ItemStack onRemoved(TileEntityBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
     {
-        return null;
+        return removed;
     }
 }

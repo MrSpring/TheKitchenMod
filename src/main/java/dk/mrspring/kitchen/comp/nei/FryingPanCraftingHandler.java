@@ -5,6 +5,7 @@ import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.ingredient.Ingredient;
 import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
+import dk.mrspring.kitchen.api.stack.Stack;
 import net.minecraft.item.ItemStack;
 
 import java.util.Map;
@@ -52,8 +53,8 @@ public class FryingPanCraftingHandler extends NEIKitchenCraftingHandler
         Ingredient[] inputs = IngredientRegistry.getInstance().getInputsForItemStack(result);
         for (Ingredient ingredient : inputs)
         {
-            IngredientRegistry.Stack[] inputStacks = IngredientRegistry.getInstance().getInputs(ingredient);
-            for (IngredientRegistry.Stack stack : inputStacks)
+            Stack[] inputStacks = IngredientRegistry.getInstance().getInputs(ingredient);
+            for (Stack stack : inputStacks)
                 arecipes.add(new RecipePair(stack.toItemStack(), result));
         }
     }
