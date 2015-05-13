@@ -173,16 +173,6 @@ public class ItemIceCreamableRenderer implements IItemRenderer
 
             ItemStack toRender = stack.copy();
             toRender.stackSize = 1;
-
-            /*if (specialItemModels.containsKey(toRender.getItem()))
-            {
-                ICustomModel customModel = specialItemModels.get(toRender.getItem());
-                ModelBase itemModel = customModel.getModel(stack);
-                GL11.glTranslated(xOffset, yOffset, zOffset);
-                customModel.preRender(stack);
-                itemModel.render(null, 0F, 0F, 0F, 0F, 0F, 0.0625F);
-            } else
-            {*/
             GL11.glScalef(1, 2, 1);
             GL11.glTranslated(xOffset, yOffset, zOffset);
             EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, toRender);
@@ -193,7 +183,6 @@ public class ItemIceCreamableRenderer implements IItemRenderer
             GL11.glTranslatef(0, 0, .1F);
             RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
             RenderItem.renderInFrame = false;
-            //}
 
             GL11.glPopMatrix();
         }

@@ -68,7 +68,8 @@ public class KitchenItems
     public static final Item jam_cocoa = new ItemBase("cocoa_jam", false).setLocalizableName("jam.cocoa.name");
     public static final Item jam_ketchup = new ItemBase("ketchup_jam", false).setLocalizableName("jam.ketchup.name");
 
-    public static final Item waffle = new ItemIceCreamableBase("waffle", 5, false, Kitchen.instance.foodTab);
+//    public static final Item waffle = new ItemIceCreamableBase("waffle", 5, false, Kitchen.instance.foodTab);
+    public static final Item waffle = new ItemWaffle();
     public static final Item burnt_waffle = new ItemFoodBase("burnt_waffle", 1, false, Kitchen.instance.foodTab);
     public static final Item pancake = new ItemIceCreamableBase("pancake", 4, false, Kitchen.instance.foodTab);
     public static final Item ice_cream_cone = new ItemIceCreamableBase("ice_cream_cone", 8, false, Kitchen.instance.foodTab);
