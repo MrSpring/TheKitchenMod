@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.api_impl.client;
 import dk.mrspring.kitchen.api.board.BoardItemRenderingHandler;
 import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
 import dk.mrspring.kitchen.api.board.IBoardRenderingRegistry;
+import dk.mrspring.kitchen.api_impl.client.board.BreadSliceRenderingHandler;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,7 +22,7 @@ public class BoardRenderingRegistry implements IBoardRenderingRegistry
 
     private BoardRenderingRegistry()
     {
-        registerRenderingHandler();
+        registerRenderingHandler(new BreadSliceRenderingHandler());
     }
 
     public static BoardRenderingRegistry getInstance()

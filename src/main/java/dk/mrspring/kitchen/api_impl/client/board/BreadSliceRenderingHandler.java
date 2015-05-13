@@ -27,7 +27,8 @@ public class BreadSliceRenderingHandler implements IBoardRenderingHandler
     public void render(List<ItemStack> layers, int indexInList, NBTTagCompound specialTagCompound, ItemStack rendering)
     {
         if (indexInList + 1 >= layers.size())
-            top.render(null, 0, 0, 0, 0, 0, 0);
+            top.render(null, 0, 0, 0, 0, 0, 0.0625F);
+        else bottom.render(null, 0, 0, 0, 0, 0, 0.0625F);
     }
 
     @Override
