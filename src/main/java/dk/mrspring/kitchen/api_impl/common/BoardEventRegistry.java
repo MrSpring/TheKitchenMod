@@ -1,6 +1,9 @@
 package dk.mrspring.kitchen.api_impl.common;
 
 import dk.mrspring.kitchen.api.board.*;
+import dk.mrspring.kitchen.api_impl.common.board.BasicItemHandler;
+import dk.mrspring.kitchen.api_impl.common.board.KnifeItemHandler;
+import dk.mrspring.kitchen.api_impl.common.board.SandwichableItemHandler;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
