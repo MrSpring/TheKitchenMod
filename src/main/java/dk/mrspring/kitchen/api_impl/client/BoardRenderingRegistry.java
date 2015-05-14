@@ -1,11 +1,11 @@
 package dk.mrspring.kitchen.api_impl.client;
 
-import dk.mrspring.kitchen.api.board.BoardItemRenderingHandler;
+import dk.mrspring.kitchen.api_impl.client.board.ItemRenderingHandler;
 import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
 import dk.mrspring.kitchen.api.board.IBoardRenderingRegistry;
+import dk.mrspring.kitchen.api_impl.client.board.BaconRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.board.BreadSliceRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.board.SlicingRenderingHandler;
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -18,13 +18,14 @@ import java.util.List;
 public class BoardRenderingRegistry implements IBoardRenderingRegistry
 {
     private static BoardRenderingRegistry ourInstance = new BoardRenderingRegistry();
-    private static IBoardRenderingHandler defaultHandler = new BoardItemRenderingHandler();
+    private static IBoardRenderingHandler defaultHandler = new ItemRenderingHandler();
     private List<IBoardRenderingHandler> registeredHandlers = new ArrayList<IBoardRenderingHandler>();
 
     private BoardRenderingRegistry()
     {
         registerRenderingHandler(new BreadSliceRenderingHandler());
         registerRenderingHandler(new SlicingRenderingHandler());
+        registerRenderingHandler(new BaconRenderingHandler());
     }
 
     public static BoardRenderingRegistry getInstance()

@@ -1,7 +1,9 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.api.board.BoardEventRegistry;
+import dk.mrspring.kitchen.api_impl.common.BoardEventRegistry;
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
+import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
+import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -42,9 +44,15 @@ public class TileEntityBoard extends TileEntity
             if (itemHandler.canAdd(this, clicked, player))
             {
                 this.resetSpecialInfo();
-                layers.add(itemHandler.onAdded(this, clicked, player));
+                layers.add(itemHandler.onAdded(this, clicked, player)); // TODO: Set maximum layers. Maybe 20? 15? 10?
                 return true;
             } else return false;
+        } else if (player.isSneaking())
+        {
+            ItemStack finished = this.finishSandwich();
+            if (finished != null)
+                spawnItemInWorld(finished);
+            return true;
         } else if (this.getLayerCount() > 0)
         {
             System.out.println("Trying to remove!");
@@ -164,6 +172,29 @@ public class TileEntityBoard extends TileEntity
 
     public ItemStack finishSandwich()
     {
+        System.out.println("Finishing!");
+        if (SandwichUtils.isAllSandwichable(getLayers()))
+        {
+            System.out.println("All are sandwichable!");
+            SandwichableRegistry.Sandwichable temp = SandwichableRegistry.getInstance().getSandwichableForItem(getTopItem());
+            System.out.println(temp != null);
+            if (temp != null)
+            {
+                System.out.println(temp.getIsBread());
+                System.out.println(temp.getStack().toString());
+            }
+            if (temp != null && temp.getIsBread())
+            {
+                System.out.println("Top is bread!");
+                temp = SandwichableRegistry.getInstance().getSandwichableForItem(getLayers().get(0));
+                if (temp != null && temp.getIsBread())
+                {
+                    System.out.println("Bottom is bread!");
+                    ItemStack finishedSandwich = SandwichUtils.makeSandwich(getLayers().toArray(new ItemStack[getLayerCount()]));
+                    return finishedSandwich;
+                }
+            }
+        }
         /*if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
             return null;
 

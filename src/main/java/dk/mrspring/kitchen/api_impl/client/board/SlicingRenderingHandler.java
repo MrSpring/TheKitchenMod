@@ -1,9 +1,5 @@
 package dk.mrspring.kitchen.api_impl.client.board;
 
-import dk.mrspring.kitchen.api.board.BoardItemRenderingHandler;
-import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
-import dk.mrspring.kitchen.item.render.SandwichRender;
-import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.lwjgl.BufferUtils;
@@ -15,7 +11,7 @@ import java.util.List;
 /**
  * Created by Konrad on 13-05-2015.
  */
-public class SlicingRenderingHandler extends BoardItemRenderingHandler
+public class SlicingRenderingHandler extends ItemRenderingHandler
 {
     @Override
     public boolean shouldBeUsed(List<ItemStack> layers, int indexInList, NBTTagCompound specialTagCompound, ItemStack rendering)
@@ -39,7 +35,7 @@ public class SlicingRenderingHandler extends BoardItemRenderingHandler
                 disableClipPlane(GL11.GL_CLIP_PLANE0);
                 GL11.glPopMatrix();
 
-                GL11.glPushMatrix();
+                GL11.glPushMatrix(); // TODO: Fix clip planes
                 GL11.glTranslatef(-distance / 2F, 0, 0);
                 enableClipPlane(5, true, GL11.GL_CLIP_PLANE0);
                 super.render(layers, indexInList, specialTagCompound, rendering);

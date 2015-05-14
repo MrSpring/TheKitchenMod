@@ -1,6 +1,8 @@
 package dk.mrspring.kitchen.util;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.item.render.SandwichRender;
 import net.minecraft.item.ItemStack;
@@ -17,7 +19,19 @@ public class SandwichUtils
 {
     public static ItemStack makeSandwich(ItemStack[] layers)
     {
-        return null; // TODO: Make Sandwich from layers
+        NBTTagList layersList = new NBTTagList();
+        ItemStack finishedSandwich = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
+
+        for (ItemStack layer : layers)
+        {
+            NBTTagCompound layerCompound = new NBTTagCompound();
+            layer.writeToNBT(layerCompound);
+            layersList.appendTag(layerCompound);
+        }
+
+        finishedSandwich.setTagInfo("SandwichLayers", layersList);
+        return finishedSandwich;
+        //return null; // TODO: Determine combo/Fix combo system
     }
 
     public static boolean isAllSandwichable(ItemStack[] layers)

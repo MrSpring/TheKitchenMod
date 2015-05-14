@@ -56,7 +56,7 @@ public class Stack
     @Override
     public String toString()
     {
-        return item + ":" + String.valueOf(metadata);
+        return item.getUnlocalizedName() + ":" + String.valueOf(metadata);
     }
 
     /**
@@ -77,7 +77,7 @@ public class Stack
     {
         if (that instanceof Stack)
         {
-            ModLogger.print(ModLogger.DEBUG, "Comparing: \"" + this.toString() + "\" to: \"" + that.toString() + "\"");
+//            ModLogger.print(ModLogger.DEBUG, "Comparing: \"" + this.toString() + "\" to: \"" + that.toString() + "\"");
             Stack objStack = (Stack) that;
             return ((objStack.metadata == -1 || this.metadata == -1) || objStack.metadata == this.metadata) &&
                     objStack.item == this.item;

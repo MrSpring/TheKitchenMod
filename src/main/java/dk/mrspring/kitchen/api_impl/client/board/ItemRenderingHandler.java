@@ -1,5 +1,6 @@
-package dk.mrspring.kitchen.api.board;
+package dk.mrspring.kitchen.api_impl.client.board;
 
+import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by Konrad on 13-05-2015.
  */
-public class BoardItemRenderingHandler implements IBoardRenderingHandler
+public class ItemRenderingHandler implements IBoardRenderingHandler
 {
 
     @Override
