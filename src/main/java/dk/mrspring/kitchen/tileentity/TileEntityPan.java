@@ -1,12 +1,9 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModLogger;
-import dk.mrspring.kitchen.api.ingredient.Ingredient;
-import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
-import dk.mrspring.kitchen.pan.Jam;
+import dk.mrspring.kitchen.api.pan.IFryingPan;
+import dk.mrspring.kitchen.api.pan.IIngredient;
+import dk.mrspring.kitchen.api_impl.common.IngredientRegistry;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,23 +12,144 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 
+import java.util.Random;
+
 /**
  * Created by MrSpring on 09-10-2014 for TheKitchenMod.
  */
-public class TileEntityPan extends TileEntityTimeable
+public class TileEntityPan extends TileEntityTimeable implements IFryingPan // TODO: Rewrite
 {
-    Ingredient ingredient = IngredientRegistry.getInstance().getIngredient("empty");
+    IIngredient ingredient = null;
+    int cookTime = 0;
+    private NBTTagCompound specialInfo = new NBTTagCompound();
+
+    @Override
+    public boolean rightClicked(ItemStack clicked, EntityPlayer player)
+    {
+        if (clicked != null)
+        {
+            if (this.getIngredient() != null)
+                this.getIngredient().onRightClicked();
+            IIngredient ingredient = IngredientRegistry.getInstance().getIngredientFor(this, clicked, player);
+            if (ingredient.canAdd(this, clicked, player))
+            {
+                this.ingredient = ingredient;
+                this.cookTime = 0;
+            }
+        } else if (getIngredient() != null && this.isFinished())
+        {
+            if (ingredient.canBeRemoved(this, player))
+            {
+                ItemStack result = ingredient.onRemoved(this, null, player);
+                if (result != null)
+                    spawnItemInWorld(result);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean setIngredient(IIngredient ingredient)
+    {
+        if (this.ingredient == null)
+            return false;
+        this.ingredient = ingredient;
+        return true;
+    }
+
+    @Override
+    public IIngredient replaceIngredient(IIngredient newIngredient)
+    {
+        IIngredient old = this.getIngredient();
+        this.ingredient = newIngredient;
+        return old;
+    }
+
+    @Override
+    public IIngredient getIngredient()
+    {
+        return ingredient;
+    }
+
+    @Override
+    public NBTTagCompound getSpecialInfo()
+    {
+        if (specialInfo == null)
+            this.specialInfo = new NBTTagCompound();
+        return specialInfo;
+    }
+
+    @Override
+    public NBTTagCompound resetSpecialInfo()
+    {
+        NBTTagCompound old = (NBTTagCompound) this.getSpecialInfo().copy();
+        this.specialInfo = new NBTTagCompound();
+        return old;
+    }
+
+    @Override
+    public NBTTagCompound setSpecialInfo(NBTTagCompound specialInfo)
+    {
+        NBTTagCompound old = (NBTTagCompound) this.getSpecialInfo().copy();
+        this.specialInfo = specialInfo;
+        return old;
+    }
+
+    @Override
+    public boolean isCooking()
+    {
+        return this.cookTime > 0;
+    }
+
+    @Override
+    public int getCookTime()
+    {
+        return cookTime;
+    }
+
+    @Override
+    public int getDoneTime()
+    {
+        return this.getIngredient() != null ? this.getIngredient().getCookTime(this) : 1;
+    }
+
+    @Override
+    public boolean isFinished()
+    {
+        return getCookTime() > getDoneTime();
+    }
+
+    @Override
+    public EntityItem spawnItemInWorld(ItemStack stack)
+    {
+        Random random = new Random();
+
+        float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+        float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+
+        EntityItem entityItem = new EntityItem(worldObj, xCoord + xRandPos, yCoord + 1, zCoord + zRandPos, stack);
+
+        entityItem.motionX = random.nextGaussian() * 0.005F;
+        entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
+        entityItem.motionZ = random.nextGaussian() * 0.005F;
+
+        worldObj.spawnEntityInWorld(entityItem);
+        return entityItem;
+    }
+
+    @Override
+    public int getTime()
+    {
+        return this.getCookTime();
+    }
+
+    /*Ingredient ingredient = IngredientRegistry.getInstance().getIngredient("empty");
     int cookTime = 0;
     boolean isFunctional = true, firstRun = true;
 
-    /**
-     * Handles the block being right-clicked. Adds the item if the pan is
-     * empty, finishes the current ingredient if it's ready and clicked
-     * is null.
-     *
-     * @param clicked The ItemStack the block is being right-clicked with.
-     * @return Returns true if clicked's stack-size should be subtracted.
-     */
+    */
+
+    /*
     public boolean rightClicked(ItemStack clicked, EntityPlayer player)
     {
         if (clicked != null)
@@ -82,12 +200,6 @@ public class TileEntityPan extends TileEntityTimeable
         }
     }
 
-    /**
-     * Sets the pan's ingredient to whatever the item links to.
-     *
-     * @param clicked The item the pan is being clicked with.
-     * @return Returns true if the ingredient was set successfully.
-     */
     private boolean setIngredient(ItemStack clicked)
     {
         if (this.ingredient == IngredientRegistry.getInstance().getIngredient("empty") && this.cookTime == 0)
@@ -146,15 +258,17 @@ public class TileEntityPan extends TileEntityTimeable
     public Ingredient getIngredient()
     {
         return ingredient;
-    }
-
+    }*/
     @Override
     public void writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
 
-        compound.setString("Ingredient", this.getIngredient().getName());
+        if (getIngredient() != null)
+            compound.setString("Ingredient", this.getIngredient().getName());
         compound.setInteger("CookTime", this.getCookTime());
+        if (this.specialInfo != null)
+            compound.setTag("SpecialInfo", this.specialInfo);
     }
 
     @Override
@@ -163,15 +277,18 @@ public class TileEntityPan extends TileEntityTimeable
         super.readFromNBT(compound);
 
         String string = compound.getString("Ingredient");
-        try
-        {
-            this.ingredient = IngredientRegistry.getInstance().getIngredient(string);
-        } catch (IllegalArgumentException e)
-        {
-            ModLogger.print(ModLogger.WARNING, "There was a problem loading pan @ X:" + this.xCoord + ", Y:" + this.yCoord + ", Z:" + this.zCoord + ", the ingredient " + string + " could not be found!");
-            e.printStackTrace();
-        }
+        if (string != null && !string.isEmpty())
+            try
+            {
+                this.ingredient = IngredientRegistry.getInstance().getIngredientFromName(string);
+            } catch (Exception e)
+            {
+                ModLogger.print(ModLogger.WARNING, "There was a problem loading pan @ X:" + this.xCoord + ", Y:" + this.yCoord + ", Z:" + this.zCoord + ", the ingredient " + string + " could not be found!");
+                e.printStackTrace();
+            }
         this.cookTime = compound.getInteger("CookTime");
+        if (compound.hasKey("SpecialInfo", 10))
+            this.setSpecialInfo(compound.getCompoundTag("SpecialInfo"));
     }
 
     @Override
@@ -188,7 +305,7 @@ public class TileEntityPan extends TileEntityTimeable
         this.readFromNBT(pkt.func_148857_g());
     }
 
-    @Override
+    /*@Override
     public int getTime()
     {
         return this.cookTime;
@@ -199,4 +316,10 @@ public class TileEntityPan extends TileEntityTimeable
     {
         return 250;
     }
+
+    @Override
+    public Ingredient replaceIngredient(IIngredient newIngredient)
+    {
+        return null;
+    }*/
 }

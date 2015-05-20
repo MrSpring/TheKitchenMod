@@ -16,15 +16,23 @@ public class Stack
 {
     public int metadata;
     public Item item;
+    public int amount;
 
     /**
      * @param item     The item associated with this Stack.
      * @param metadata The metadata associated with this Stack. Use -1 if any can be used.
+     * @param amount   The amount stored in this Stack.
      */
-    public Stack(Item item, int metadata)
+    public Stack(Item item, int metadata, int amount)
     {
         this.metadata = metadata;
         this.item = item;
+        this.amount = amount;
+    }
+
+    public Stack(Item item, int metadata)
+    {
+        this(item, metadata, 1);
     }
 
     /**
@@ -64,7 +72,7 @@ public class Stack
      */
     public ItemStack toItemStack()
     {
-        return new ItemStack(item, 1, metadata);
+        return new ItemStack(item, amount, metadata);
     }
 
     public JsonItemStack toJsonStack()
@@ -72,7 +80,42 @@ public class Stack
         return new JsonItemStack(this.toItemStack());
     }
 
-    @Override
+    /**
+     * @param that  The stack to compare this to.
+     * @param types What the two stacks should be compared to.
+     * @return Returns true if the two Stacks are the same based on the set types.
+     */
+    public boolean areStacksEqual(Stack that, Type... types)
+    {
+        for (Type type : types)
+        {
+            switch (type)
+            {
+                case ITEM:
+                    if (this.item != that.item)
+                        return false;
+                    break;
+                case METADATA:
+                    if (!((that.metadata == -1 || this.metadata == -1) || that.metadata == this.metadata))
+                        return false;
+                    break;
+                case AMOUNT:
+                    if (this.amount != that.amount)
+                        return false;
+                    break;
+            }
+        }
+        return true;
+    }
+
+    public enum Type
+    {
+        ITEM,
+        METADATA,
+        AMOUNT
+    }
+
+    /*@Override
     public boolean equals(Object that)
     {
         if (that instanceof Stack)
@@ -82,5 +125,5 @@ public class Stack
             return ((objStack.metadata == -1 || this.metadata == -1) || objStack.metadata == this.metadata) &&
                     objStack.item == this.item;
         } else return super.equals(that);
-    }
+    }*/
 }

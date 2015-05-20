@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.api.board.ICuttingBoard;
 import dk.mrspring.kitchen.api_impl.common.BoardEventRegistry;
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityBoard extends TileEntity
+public class TileEntityBoard extends TileEntity implements ICuttingBoard
 {
     private List<ItemStack> layers = new ArrayList<ItemStack>();
     private NBTTagCompound specialInfo = new NBTTagCompound();
@@ -28,6 +29,7 @@ public class TileEntityBoard extends TileEntity
      * @param player  The player adding the ItemStack to the Cutting Board.
      * @return Returns true if the ItemStack was added, false if not.
      */
+    @Override
     public boolean rightClicked(ItemStack clicked, EntityPlayer player)
     {
         if (clicked != null)
@@ -44,12 +46,12 @@ public class TileEntityBoard extends TileEntity
             if (itemHandler.canAdd(this, clicked, player))
             {
                 this.resetSpecialInfo();
-                layers.add(itemHandler.onAdded(this, clicked, player)); // TODO: Set maximum layers. Maybe 20? 15? 10?
+                this.addLayer/*layers.add*/(itemHandler.onAdded(this, clicked, player)); // TODO: Set maximum layers. Maybe 20? 15? 10? Do through SandwichableItemHandler
                 return true;
             } else return false;
         } else if (player.isSneaking())
         {
-            ItemStack finished = this.finishSandwich();
+            ItemStack finished = this.finishBoard();
             if (finished != null)
                 spawnItemInWorld(finished);
             return true;
@@ -105,17 +107,27 @@ public class TileEntityBoard extends TileEntity
         return false;*/
     }
 
-    public void resetSpecialInfo()
+    @Override
+    public boolean addLayer(ItemStack layer)
     {
-        this.setSpecialInfo(new NBTTagCompound());
+        this.getLayers().add(layer);
+        return true;
     }
 
+    @Override
+    public NBTTagCompound resetSpecialInfo()
+    {
+        return this.setSpecialInfo(new NBTTagCompound());
+    }
+
+    @Override
     public void clearBoard()
     {
         this.resetLayers();
         this.resetSpecialInfo();
     }
 
+    @Override
     public ItemStack getTopItem()
     {
         if (this.getLayers().size() > 0)
@@ -123,7 +135,16 @@ public class TileEntityBoard extends TileEntity
         else return null;
     }
 
-    public void spawnItemInWorld(ItemStack stack)
+    @Override
+    public ItemStack getBottomItem()
+    {
+        if (getLayerCount() > 0)
+            return getLayers().get(0);
+        else return null;
+    }
+
+    @Override
+    public EntityItem spawnItemInWorld(ItemStack stack)
     {
         Random random = new Random();
 
@@ -137,8 +158,10 @@ public class TileEntityBoard extends TileEntity
         entityItem.motionZ = random.nextGaussian() * 0.005F;
 
         worldObj.spawnEntityInWorld(entityItem);
+        return entityItem;
     }
 
+    @Override
     public NBTTagCompound getSpecialInfo()
     {
         if (specialInfo == null)
@@ -147,30 +170,40 @@ public class TileEntityBoard extends TileEntity
         return specialInfo;
     }
 
-    public void setSpecialInfo(NBTTagCompound specialInfo)
+    @Override
+    public NBTTagCompound setSpecialInfo(NBTTagCompound specialInfo)
     {
+        NBTTagCompound old = (NBTTagCompound) this.getSpecialInfo().copy();
         this.specialInfo = specialInfo;
+        return old;
     }
 
-    public ItemStack removeTopItem()
+    @Override
+    public ItemStack removeTopItem(EntityPlayer player)
     {
-        /*if (this.layers.size() > 0)
+        if (getLayerCount() > 0)
         {
-            ItemStack removed = this.layers.remove(this.layers.size() - 1);
-            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(removed);
-            SandwichableConfig.SandwichableEntry itemEntry = ModConfig.getSandwichConfig().findEntry(removed);
-            if (itemEntry.dropItem())
-                return topItemEvent.getDroppeditem(this.layers, removed, this.getSpecialInfo());
-        }*/
+            ItemStack topItem = getTopItem();
+            IBoardItemHandler itemHandler = BoardEventRegistry.instance().getHandlerFor(this, topItem, player);
+            if (itemHandler.canBeRemoved(this, topItem, player))
+            {
+                ItemStack removed = itemHandler.onRemoved(this, topItem, player);
+                getLayers().remove(topItem);
+                spawnItemInWorld(removed);
+                return topItem;
+            }
+        }
         return null;
     }
 
+    @Override
     public List<ItemStack> getLayers()
     {
         return layers;
     }
 
-    public ItemStack finishSandwich()
+    @Override
+    public ItemStack finishBoard()
     {
         System.out.println("Finishing!");
         if (SandwichUtils.isAllSandwichable(getLayers()))
@@ -227,6 +260,7 @@ public class TileEntityBoard extends TileEntity
         return null;
     }
 
+    @Override
     public void resetLayers()
     {
         this.layers = new ArrayList<ItemStack>();
@@ -286,6 +320,7 @@ public class TileEntityBoard extends TileEntity
         this.readFromNBT(pkt.func_148857_g());
     }
 
+    @Override
     public int getLayerCount()
     {
         return getLayers().size();

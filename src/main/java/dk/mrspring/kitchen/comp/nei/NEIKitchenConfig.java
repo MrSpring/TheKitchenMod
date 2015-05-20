@@ -68,8 +68,8 @@ public class NEIKitchenConfig implements IConfigureNEI
                 };
             }
         });
-        API.registerRecipeHandler(new FryingPanCraftingHandler());
-        API.registerUsageHandler(new FryingPanCraftingHandler());
+//        API.registerRecipeHandler(new FryingPanCraftingHandler()); // TODO: Re-enable when fixed
+//        API.registerUsageHandler(new FryingPanCraftingHandler()); // TODO: Add NEI handler interface to for Ingredients
 
         API.registerRecipeHandler(new OvenCraftingHandler());
         API.registerUsageHandler(new OvenCraftingHandler());

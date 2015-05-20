@@ -1,6 +1,5 @@
 package dk.mrspring.kitchen.api.board;
 
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -13,7 +12,7 @@ public interface IBoardItemHandler
      * @param stack ItemStack being tested.
      * @return Returns true if this handler should be used for the ItemStack's Item.
      */
-    boolean isForItem(TileEntityBoard tileEntityBoard, ItemStack stack, EntityPlayer player);
+    boolean isForItem(ICuttingBoard tileEntityBoard, ItemStack stack, EntityPlayer player);
 
     /**
      * Gets called before #onAdded but after #onRightClicked through the top-most item's handler.
@@ -23,7 +22,7 @@ public interface IBoardItemHandler
      * @param player          The Player trying to add an item to the Cutting Board.
      * @return Returns true if the item can be added to the Cutting Board. False if not.
      */
-    boolean canAdd(TileEntityBoard tileEntityBoard, ItemStack adding, EntityPlayer player);
+    boolean canAdd(ICuttingBoard tileEntityBoard, ItemStack adding, EntityPlayer player);
 
     /**
      * Gets called when the item is successfully placed on the Cutting Board.
@@ -33,7 +32,7 @@ public interface IBoardItemHandler
      * @param player          The Player that added the Item to the Cutting Board.
      * @return Returns the ItemStack that should be added to the List of layers. Usually, stackSize should be 1.
      */
-    ItemStack onAdded(TileEntityBoard tileEntityBoard, ItemStack added, EntityPlayer player);
+    ItemStack onAdded(ICuttingBoard tileEntityBoard, ItemStack added, EntityPlayer player);
 
     /**
      * Gets called when this item handler is on top of the layer stack, and the Cutting Board is right-clicked.
@@ -44,14 +43,15 @@ public interface IBoardItemHandler
      * @return Returns true if the item can be placed on top of the current item handler. False will not allow the item
      * to be placed.
      */
-    boolean onRightClicked(TileEntityBoard tileEntityBoard, ItemStack clicked, EntityPlayer player);
+    boolean onRightClicked(ICuttingBoard tileEntityBoard, ItemStack clicked, EntityPlayer player);
 
     /**
      * @param tileEntityBoard The Cutting Board's TileEntity. Use getLayers() to get layers on the board.
+     * @param topMostItem     The ItemStack that is being removed. Same as ICuttingBoard#getTipItem.
      * @param player          The Player that is trying to remove the Item from the Cutting Board.
      * @return Returns true if the top-most item can be removed. False if not.
      */
-    boolean canBeRemoved(TileEntityBoard tileEntityBoard, ItemStack topMostItem, EntityPlayer player);
+    boolean canBeRemoved(ICuttingBoard tileEntityBoard, ItemStack topMostItem, EntityPlayer player);
 
     /**
      * Gets called after #canBeRemoved and determines what Item shall be spawned in the world.
@@ -61,5 +61,5 @@ public interface IBoardItemHandler
      * @param player          The Player that removed the Item to the Cutting Board.
      * @return Returns the ItemStack that will be given back to the player. Null if nothing is left.
      */
-    ItemStack onRemoved(TileEntityBoard tileEntityBoard, ItemStack removed, EntityPlayer player);
+    ItemStack onRemoved(ICuttingBoard tileEntityBoard, ItemStack removed, EntityPlayer player);
 }

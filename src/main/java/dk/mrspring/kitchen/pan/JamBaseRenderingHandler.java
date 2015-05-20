@@ -1,7 +1,8 @@
 package dk.mrspring.kitchen.pan;
 
-import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
-import dk.mrspring.kitchen.api.ingredient.Ingredient;
+import dk.mrspring.kitchen.api.pan.IFryingPan;
+import dk.mrspring.kitchen.api.pan.IIngredient;
+import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import dk.mrspring.kitchen.model.jam.ModelJam0;
 import dk.mrspring.kitchen.model.jam.ModelJam1;
@@ -14,7 +15,18 @@ import net.minecraft.client.model.ModelBase;
  */
 public class JamBaseRenderingHandler implements IIngredientRenderingHandler
 {
-    float[] baseColor;
+    @Override
+    public boolean shouldBeUsed(IFryingPan fryingPan, IIngredient ingredient)
+    {
+        return false;
+    }
+
+    @Override
+    public void render(IFryingPan fryingPan, IIngredient ingredient)
+    {
+
+    }
+    /*float[] baseColor;
 
     ModelJam0 modelJam0;
     ModelJam1 modelJam1;
@@ -63,5 +75,5 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
     public boolean scaleOnPan(int boilTime, Ingredient ingredient)
     {
         return false;
-    }
+    }*/
 }

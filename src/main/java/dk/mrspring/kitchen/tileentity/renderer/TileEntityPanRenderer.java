@@ -2,13 +2,9 @@ package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
-import dk.mrspring.kitchen.api.ingredient.Ingredient;
-import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
 import dk.mrspring.kitchen.model.ModelPan;
 import dk.mrspring.kitchen.tileentity.TileEntityPan;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -57,9 +53,9 @@ public class TileEntityPanRenderer extends TileEntityTimeableRenderer
         Minecraft.getMinecraft().renderEngine.bindTexture(this.textureLocation);
         model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 
-        TileEntityPan pan = (TileEntityPan) tileEntity;
+        TileEntityPan pan = (TileEntityPan) tileEntity; // TODO: Rewrite using new API
 
-        Ingredient ingredient = pan.getIngredient();
+        /*Ingredient ingredient = pan.getIngredient();
         if (ingredient != null)
             if (ingredient != IngredientRegistry.getInstance().getIngredient("empty"))
             {
@@ -77,7 +73,7 @@ public class TileEntityPanRenderer extends TileEntityTimeableRenderer
                 }
                 ingredientModel.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
             }
-
+*/
         GL11.glPopMatrix();
 
         GL11.glPopMatrix();

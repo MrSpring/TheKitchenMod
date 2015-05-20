@@ -96,8 +96,8 @@ public class BlockFryingPan extends BlockContainerBase
     @Override
     public void onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ)
     {
-        TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
-        tileEntityPan.checkIsFunctional();
+//        TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
+//        tileEntityPan.checkIsFunctional();
     }
 
     @Override
@@ -109,7 +109,7 @@ public class BlockFryingPan extends BlockContainerBase
             if (tileEntityPan.rightClicked(player.getCurrentEquippedItem(), player))
             {
 //                player.getCurrentEquippedItem().stackSize--;
-                tileEntityPan.checkIsFunctional();
+//                tileEntityPan.checkIsFunctional();
                 world.markBlockForUpdate(x, y, z);
                 return true;
             }

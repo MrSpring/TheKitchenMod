@@ -1,6 +1,5 @@
 package dk.mrspring.kitchen.api.board;
 
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -24,5 +23,5 @@ public interface IBoardEventRegistry
      * @param player The player interacting with the Cutting Board.
      * @return Returns the matching IBoardItemHandler.
      */
-    IBoardItemHandler getHandlerFor(TileEntityBoard board, ItemStack item, EntityPlayer player);
+    IBoardItemHandler getHandlerFor(ICuttingBoard board, ItemStack item, EntityPlayer player);
 }

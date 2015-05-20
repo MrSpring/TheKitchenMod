@@ -1,7 +1,5 @@
 package dk.mrspring.kitchen.api.board;
 
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

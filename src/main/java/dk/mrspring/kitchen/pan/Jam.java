@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by MrSpring on 25-09-2014 for ModJam4.
  */
-public class Jam
+public class Jam // TODO: Move to API, rewrite
 {
     public static Map<String, Jam> jams = new HashMap<String, Jam>();
     final String name;

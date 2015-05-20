@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.api_impl.common.board;
 
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
+import dk.mrspring.kitchen.api.board.ICuttingBoard;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ public class KnifeItemHandler implements IBoardItemHandler
     public static int maxSliceCount = 3;
 
     @Override
-    public boolean isForItem(TileEntityBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
+    public boolean isForItem(ICuttingBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
     {
         System.out.println("Has output: " + String.valueOf(KnifeRecipes.instance().hasOutput(stack)) + ", layer count: " + tileEntityBoard.getLayerCount() + ", item: " + stack.getDisplayName());
         int lc = tileEntityBoard.getLayerCount();
@@ -25,7 +26,7 @@ public class KnifeItemHandler implements IBoardItemHandler
     }
 
     @Override
-    public boolean canAdd(TileEntityBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
+    public boolean canAdd(ICuttingBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
     {
         if (adding.getItem() == KitchenItems.knife)
         {
@@ -45,7 +46,7 @@ public class KnifeItemHandler implements IBoardItemHandler
     }
 
     @Override
-    public ItemStack onAdded(TileEntityBoard tileEntityBoard, ItemStack added, EntityPlayer player)
+    public ItemStack onAdded(ICuttingBoard tileEntityBoard, ItemStack added, EntityPlayer player)
     {
         ItemStack copy = added.copy();
         copy.stackSize = 1;
@@ -54,19 +55,19 @@ public class KnifeItemHandler implements IBoardItemHandler
     }
 
     @Override
-    public boolean onRightClicked(TileEntityBoard tileEntityBoard, ItemStack clicked, EntityPlayer player)
+    public boolean onRightClicked(ICuttingBoard tileEntityBoard, ItemStack clicked, EntityPlayer player)
     {
         return clicked.getItem() == KitchenItems.knife;
     }
 
     @Override
-    public boolean canBeRemoved(TileEntityBoard tileEntityBoard, ItemStack topMostItem, EntityPlayer player)
+    public boolean canBeRemoved(ICuttingBoard tileEntityBoard, ItemStack topMostItem, EntityPlayer player)
     {
         return true;
     }
 
     @Override
-    public ItemStack onRemoved(TileEntityBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
+    public ItemStack onRemoved(ICuttingBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
     {
         return removed;
     }

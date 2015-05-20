@@ -16,7 +16,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-//        compile "applecore:AppleCore:1.7.10-1.1.0:deobf"
+//
     }
 }
 
@@ -36,6 +36,7 @@ dependencies {
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
+    //compile "applecore:AppleCore:1.7.10-1.1.0:deobf"
 
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

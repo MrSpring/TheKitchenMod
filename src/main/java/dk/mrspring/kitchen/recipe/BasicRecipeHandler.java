@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class BasicRecipeHandler
 {
-    List<BasicRecipe> recipes = new ArrayList<BasicRecipe>();
+    List<IRecipe> recipes = new ArrayList<IRecipe>();
 
     public void load()
     {
@@ -32,33 +32,27 @@ public class BasicRecipeHandler
         }
     }
 
-    protected void addAll(BasicRecipe[] array)
+    protected void addAll(IRecipe[] array)
     {
-//        Collections.addAll(recipes, array);
-        for (BasicRecipe recipe : array)
-        {
+        for (IRecipe recipe : array)
             if (recipe.isValid())
                 this.recipes.add(recipe);
-        }
     }
 
-    public List<BasicRecipe> getRecipes()
+    public List<IRecipe> getRecipes()
     {
         return recipes;
     }
 
     /**
-     * @param input1 The ItemStack to get result of.
+     * @param input The ItemStack to get result of.
      * @return Returns the result of the item stack when cooked in the Oven. Returns null when nothing was found
      */
-    public ItemStack getOutputFor(ItemStack input1)
+    public ItemStack getOutputFor(ItemStack input)
     {
-        for (BasicRecipe recipe : recipes)
-        {
-            ItemStack input2 = recipe.getInput();
-            if (input1.isItemEqual(input2))
-                return recipe.getOutput().copy();
-        }
+        for (IRecipe recipe : recipes)
+            if (recipe.doesInputMatch(input))
+                return recipe.getOutput(input);
 
         return null;
     }
@@ -66,9 +60,7 @@ public class BasicRecipeHandler
     public void addRecipe(ItemStack input, ItemStack output)
     {
         if (input != null && output != null)
-        {
             recipes.add(new BasicRecipe(input, output));
-        }
     }
 
     public boolean hasOutput(ItemStack toAdd)

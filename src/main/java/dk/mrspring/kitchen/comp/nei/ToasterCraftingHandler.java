@@ -1,9 +1,7 @@
 package dk.mrspring.kitchen.comp.nei;
 
 import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.recipe.BasicRecipe;
-import dk.mrspring.kitchen.recipe.OvenRecipes;
-import dk.mrspring.kitchen.recipe.ToasterRecipes;
+import dk.mrspring.kitchen.recipe.*;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
@@ -34,18 +32,24 @@ public class ToasterCraftingHandler extends NEIKitchenCraftingHandler
     @Override
     protected void loadAllRecipes()
     {
-        List<BasicRecipe> recipes = ToasterRecipes.instance().getRecipes();
-        for (BasicRecipe recipe : recipes)
-            arecipes.add(new RecipePair(recipe.getInput().copy(), recipe.getOutput().copy()));
+        List<IRecipe> recipes = ToasterRecipes.instance().getRecipes();
+        for (IRecipe recipe : recipes)
+            if (recipe instanceof INEIRecipeHelper)
+            {
+                INEIRecipeHelper recipeHelper = (INEIRecipeHelper) recipe;
+                arecipes.add(new RecipePair(recipeHelper.getExpectedInput(), recipeHelper.getExpectedOutput()));
+            }
     }
 
     @Override
     protected void loadRecipeFor(ItemStack result)
     {
-        List<BasicRecipe> recipes = ToasterRecipes.instance().getRecipes();
-        for (BasicRecipe recipe : recipes)
-            if (recipe.getOutput().isItemEqual(result) && recipe.getOutput().getItemDamage() == result.getItemDamage())
-                arecipes.add(new RecipePair(recipe.getInput().copy(), recipe.getOutput().copy()));
+        List<IRecipe> recipes = ToasterRecipes.instance().getRecipes();
+        for (IRecipe recipe : recipes)
+        {
+            INEIRecipeHelper recipeHelper = (INEIRecipeHelper) recipe;
+            arecipes.add(new RecipePair(recipeHelper.getExpectedInput(result), result));
+        }
     }
 
     @Override

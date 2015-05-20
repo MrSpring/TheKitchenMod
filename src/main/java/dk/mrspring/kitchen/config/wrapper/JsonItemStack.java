@@ -1,6 +1,8 @@
 package dk.mrspring.kitchen.config.wrapper;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.api.stack.Stack;
+import dk.mrspring.kitchen.util.StackUtils;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -71,5 +73,11 @@ public class JsonItemStack
                 return stack;
             } else return null;
         } else return null;
+    }
+
+    public Stack toStack()
+    {
+        ItemStack asItemStack = this.toItemStack();
+        return StackUtils.fromItemStack(asItemStack);
     }
 }

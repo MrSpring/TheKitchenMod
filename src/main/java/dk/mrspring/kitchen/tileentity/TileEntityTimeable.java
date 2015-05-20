@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * Created by MrSpring on 11-12-2014 for TheKitchenMod.
  */
-public abstract class TileEntityTimeable extends TileEntity implements ITimeable
+public abstract class TileEntityTimeable extends TileEntity
 {
     private boolean hasDinged = false;
     private boolean hasTimer = false;
@@ -29,9 +29,7 @@ public abstract class TileEntityTimeable extends TileEntity implements ITimeable
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
-        if (compound.hasKey("HasTimer"))
-            this.hasTimer = compound.getBoolean("HasTimer");
-        else this.hasTimer = false;
+        this.hasTimer = compound.getBoolean("HasTimer");
     }
 
     @Override
@@ -41,13 +39,17 @@ public abstract class TileEntityTimeable extends TileEntity implements ITimeable
         compound.setBoolean("HasTimer", this.hasTimer);
     }
 
+    public boolean getHasTimer()
+    {
+        return hasTimer;
+    }
+
     public void setHasTimer(boolean hasTimer)
     {
         this.hasTimer = hasTimer;
     }
 
-    public boolean getHasTimer()
-    {
-        return hasTimer;
-    }
+    public abstract int getTime();
+
+    public abstract int getDoneTime();
 }

@@ -1,18 +1,7 @@
 package dk.mrspring.kitchen.api_impl.common;
 
-import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.api.IKitchenRegistry;
 import dk.mrspring.kitchen.api.RecipeType;
-import dk.mrspring.kitchen.api.ingredient.Ingredient;
-import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
-import dk.mrspring.kitchen.api.stack.LinkedStack;
-import dk.mrspring.kitchen.config.SandwichableConfig;
-import dk.mrspring.kitchen.pan.Jam;
-import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
-import dk.mrspring.kitchen.recipe.KnifeRecipes;
-import dk.mrspring.kitchen.recipe.OvenRecipes;
-import dk.mrspring.kitchen.recipe.ToasterRecipes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -21,7 +10,36 @@ import net.minecraft.item.ItemStack;
  */
 public class KitchenRegistry implements IKitchenRegistry
 {
-    String registrant;
+    @Override
+    public void makeSandwichable(ItemStack item, int healthAmount, boolean isBread, boolean hideInformation, boolean dropItem)
+    {
+
+    }
+
+    @Override
+    public String addJam(String jamName, Item jamItem, int jamColor)
+    {
+        return null;
+    }
+
+    @Override
+    public void linkItemToIngredient(String ingredientName, ItemStack linked)
+    {
+
+    }
+
+    @Override
+    public void addRecipe(String recipeType, ItemStack input, ItemStack output)
+    {
+
+    }
+
+    @Override
+    public void addRecipe(RecipeType type, ItemStack input, ItemStack output)
+    {
+
+    }
+/*    String registrant;
 
     public KitchenRegistry(String modThatIsRegistering)
     {
@@ -85,7 +103,7 @@ public class KitchenRegistry implements IKitchenRegistry
             default:
                 ModLogger.print(ModLogger.WARNING, "Unknown recipe type: " + type.toString());
         }
-    }
+    }*/
     /*public static void makeSandwichable(SandwichableConfig.SandwichableEntry entry)
     {
         ModConfig.getSandwichConfig().makeSandwichable(entry);

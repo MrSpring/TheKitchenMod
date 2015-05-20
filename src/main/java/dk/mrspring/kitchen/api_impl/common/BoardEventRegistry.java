@@ -1,10 +1,10 @@
 package dk.mrspring.kitchen.api_impl.common;
 
+import dk.mrspring.kitchen.api.board.ICuttingBoard;
 import dk.mrspring.kitchen.api.board.*;
 import dk.mrspring.kitchen.api_impl.common.board.BasicItemHandler;
 import dk.mrspring.kitchen.api_impl.common.board.KnifeItemHandler;
 import dk.mrspring.kitchen.api_impl.common.board.SandwichableItemHandler;
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -17,6 +17,7 @@ import java.util.List;
 public class BoardEventRegistry implements IBoardEventRegistry
 {
     private static final BoardEventRegistry instance = new BoardEventRegistry();
+    private static final IBoardItemHandler defaultHandler = new BasicItemHandler();
     private List<IBoardItemHandler> handlers = new ArrayList<IBoardItemHandler>();
 
     private BoardEventRegistry()
@@ -38,7 +39,7 @@ public class BoardEventRegistry implements IBoardEventRegistry
     }
 
     @Override
-    public IBoardItemHandler getHandlerFor(TileEntityBoard board, ItemStack item, EntityPlayer player)
+    public IBoardItemHandler getHandlerFor(ICuttingBoard board, ItemStack item, EntityPlayer player)
     {
         for (IBoardItemHandler handler : handlers)
         {
@@ -49,6 +50,6 @@ public class BoardEventRegistry implements IBoardEventRegistry
                 return handler;
             }
         }
-        return new BasicItemHandler();
+        return defaultHandler;
     }
 }

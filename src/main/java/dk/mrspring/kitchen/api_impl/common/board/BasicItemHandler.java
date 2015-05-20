@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.api_impl.common.board;
 
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
+import dk.mrspring.kitchen.api.board.ICuttingBoard;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,37 +12,37 @@ import net.minecraft.item.ItemStack;
 public class BasicItemHandler implements IBoardItemHandler
 {
     @Override
-    public boolean isForItem(TileEntityBoard board, ItemStack stack, EntityPlayer player)
+    public boolean isForItem(ICuttingBoard board, ItemStack stack, EntityPlayer player)
     {
         return false;
     }
 
     @Override
-    public boolean canAdd(TileEntityBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
+    public boolean canAdd(ICuttingBoard board, ItemStack adding, EntityPlayer player)
     {
         return false;
     }
 
     @Override
-    public ItemStack onAdded(TileEntityBoard tileEntityBoard, ItemStack added, EntityPlayer player)
+    public ItemStack onAdded(ICuttingBoard board, ItemStack added, EntityPlayer player)
     {
         return null;
     }
 
     @Override
-    public boolean onRightClicked(TileEntityBoard tileEntityBoard, ItemStack clicked, EntityPlayer player)
+    public boolean onRightClicked(ICuttingBoard board, ItemStack clicked, EntityPlayer player)
     {
         return true;
     }
 
     @Override
-    public boolean canBeRemoved(TileEntityBoard tileEntityBoard, ItemStack topMostItem, EntityPlayer player)
+    public boolean canBeRemoved(ICuttingBoard board, ItemStack topMostItem, EntityPlayer player)
     {
         return false;
     }
 
     @Override
-    public ItemStack onRemoved(TileEntityBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
+    public ItemStack onRemoved(ICuttingBoard board, ItemStack removed, EntityPlayer player)
     {
         return null;
     }

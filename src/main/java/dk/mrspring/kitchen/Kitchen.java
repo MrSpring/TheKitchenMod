@@ -10,35 +10,17 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
-import dk.mrspring.kitchen.api.ingredient.Ingredient;
-import dk.mrspring.kitchen.api.ingredient.IngredientMixingBowl;
-import dk.mrspring.kitchen.api.ingredient.IngredientRegistry;
-import dk.mrspring.kitchen.api.stack.LinkedMixingBowlStack;
-import dk.mrspring.kitchen.api.stack.MixingBowlStack;
-import dk.mrspring.kitchen.api.stack.Stack;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.comp.nei.NEIKitchenConfig;
 import dk.mrspring.kitchen.event.ModEventHandler;
 import dk.mrspring.kitchen.gui.GuiHandler;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.model.ModelBaconCooked;
-import dk.mrspring.kitchen.model.ModelBaconRaw;
-import dk.mrspring.kitchen.model.ModelPancakeCooked;
-import dk.mrspring.kitchen.model.ModelPancakeUncooked;
-import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
 import dk.mrspring.kitchen.pan.Jam;
-import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
-import dk.mrspring.kitchen.recipe.KnifeRecipes;
-import dk.mrspring.kitchen.recipe.OvenRecipes;
-import dk.mrspring.kitchen.recipe.RecipeRegistry;
-import dk.mrspring.kitchen.recipe.ToasterRecipes;
+import dk.mrspring.kitchen.recipe.*;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -136,6 +118,7 @@ public class Kitchen
         instance.ovenRecipes.load();
         instance.toasterRecipes.load();
         instance.knifeRecipes.load();
+//        instance.panRecipes.load(); // TODO: Register default pan recipes
 
         TileEntityWaffleIron.load();
 
@@ -145,14 +128,14 @@ public class Kitchen
 
         MinecraftForge.EVENT_BUS.register(new ModEventHandler());
 
-        Jam.registerJam(new Jam("empty", 000000, null));
+        Jam.registerJam(new Jam("empty", 0x000000, null));
         Jam.registerJam(new Jam("strawberry", 16196364, KitchenItems.jam_strawberry/*"kitchen:strawberry_jam"*/));
         Jam.registerJam(new Jam("apple", 14415786, KitchenItems.jam_apple/*"kitchen:apple_jam"*/));
         Jam.registerJam(new Jam("peanut", 9659689, KitchenItems.jam_peanut/*"kitchen:peanut_jam"*/));
         Jam.registerJam(new Jam("cocoa", 0x895836, KitchenItems.jam_cocoa/*"kitchen:cocoa_jam"*/));
         Jam.registerJam(new Jam("ketchup", 0xFF3200, KitchenItems.jam_ketchup/*"kitchen:ketchup_jam"*/));
 
-        IngredientRegistry.getInstance().registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
+        /*IngredientRegistry.getInstance().registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("apple", new JamBaseRenderingHandler(new float[]{224, 255, 163}), "apple"));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}), "peanut"));
@@ -227,9 +210,9 @@ public class Kitchen
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("vanilla_beef", new ItemBaseRenderingHandler(Items.beef, Items.cooked_beef), new ItemStack(Items.cooked_beef)));
         IngredientRegistry.getInstance().registerIngredient(new IngredientMixingBowl("scrambled_eggs", new JamBaseRenderingHandler(new float[]{255, 243, 86}), new ItemStack(KitchenItems.scrambled_eggs), "scrambled_eggs"));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("ketchup", new JamBaseRenderingHandler(new float[]{255, 50, 0}), "ketchup"));
-        IngredientRegistry.getInstance().registerIngredient(new Ingredient("meat_patty", new ItemBaseRenderingHandler(KitchenItems.raw_meat_patty, KitchenItems.cooked_meat_patty), new ItemStack(KitchenItems.cooked_meat_patty)));
+        IngredientRegistry.getInstance().registerIngredient(new Ingredient("meat_patty", new ItemBaseRenderingHandler(KitchenItems.raw_meat_patty, KitchenItems.cooked_meat_patty), new ItemStack(KitchenItems.cooked_meat_patty)));*/
 
-        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
+        /*IngredientRegistry.getInstance().linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.cut_apple, "apple");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_bacon, "bacon");
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.peanut, "peanut");
@@ -243,7 +226,7 @@ public class Kitchen
         IngredientRegistry.getInstance().linkToIngredient(Items.beef, "vanilla_beef");
         IngredientRegistry.getInstance().linkToIngredient(new LinkedMixingBowlStack("scrambled_eggs", -2, "scrambled_eggs"));
         IngredientRegistry.getInstance().linkToIngredient(KitchenItems.tomato_slice, "ketchup");
-        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_meat_patty, "meat_patty");
+        IngredientRegistry.getInstance().linkToIngredient(KitchenItems.raw_meat_patty, "meat_patty");*/
 
         if (Loader.isModLoaded("NotEnoughItems"))
         {

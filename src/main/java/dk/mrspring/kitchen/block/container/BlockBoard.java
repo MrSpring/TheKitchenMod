@@ -83,7 +83,7 @@ public class BlockBoard extends BlockContainerBase
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
     {
-        TileEntityBoard tileEntityBoard = (TileEntityBoard) world.getTileEntity(x, y, z);
+        /*TileEntityBoard tileEntityBoard = (TileEntityBoard) world.getTileEntity(x, y, z);
 
         if (tileEntityBoard != null)
         {
@@ -108,7 +108,7 @@ public class BlockBoard extends BlockContainerBase
                     world.spawnEntityInWorld(entityItem);
                 }
             }
-        }
+        }*/ // TODO: Drop items
 
         super.breakBlock(world, x, y, z, block, p_149749_6_);
     }

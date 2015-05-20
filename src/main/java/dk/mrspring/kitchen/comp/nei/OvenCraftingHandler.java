@@ -2,6 +2,8 @@ package dk.mrspring.kitchen.comp.nei;
 
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.recipe.BasicRecipe;
+import dk.mrspring.kitchen.recipe.INEIRecipeHelper;
+import dk.mrspring.kitchen.recipe.IRecipe;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import net.minecraft.item.ItemStack;
 
@@ -33,26 +35,34 @@ public class OvenCraftingHandler extends NEIKitchenCraftingHandler
     @Override
     protected void loadAllRecipes()
     {
-        List<BasicRecipe> recipes = OvenRecipes.instance().getRecipes();
-        for (BasicRecipe recipe : recipes)
-            arecipes.add(new RecipePair(recipe.getInput().copy(), recipe.getOutput().copy()));
+        List<IRecipe> recipes = OvenRecipes.instance().getRecipes();
+        for (IRecipe recipe : recipes)
+            if (recipe instanceof INEIRecipeHelper)
+            {
+                INEIRecipeHelper recipeHelper = (INEIRecipeHelper) recipe;
+                arecipes.add(new RecipePair(recipeHelper.getExpectedInput(), recipeHelper.getExpectedOutput()));
+            }
     }
 
     @Override
     protected void loadRecipeFor(ItemStack result)
     {
-        List<BasicRecipe> recipes = OvenRecipes.instance().getRecipes();
-        for (BasicRecipe recipe : recipes)
-            if (recipe.getOutput().isItemEqual(result) && recipe.getOutput().getItemDamage() == result.getItemDamage())
-                arecipes.add(new RecipePair(recipe.getInput().copy(), recipe.getOutput().copy()));
+        List<IRecipe> recipes = OvenRecipes.instance().getRecipes();
+        for (IRecipe recipe : recipes)
+            if (recipe instanceof INEIRecipeHelper)
+            {
+                INEIRecipeHelper recipeHelper = (INEIRecipeHelper) recipe;
+                arecipes.add(new RecipePair(recipeHelper.getExpectedInput(result), result));
+            }
     }
 
     @Override
     protected void loadRecipesFrom(ItemStack input)
     {
-        ItemStack output = OvenRecipes.instance().getOutputFor(input);
-        if (output != null)
-            arecipes.add(new RecipePair(input, output));
+        List<IRecipe> recipes = OvenRecipes.instance().getRecipes();
+//        ItemStack output = OvenRecipes.instance().getOutputFor(input);
+//        if (output != null)
+//            arecipes.add(new RecipePair(input, output));
     }
 
     @Override

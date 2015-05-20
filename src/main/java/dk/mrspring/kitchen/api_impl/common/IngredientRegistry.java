@@ -1,27 +1,56 @@
-package dk.mrspring.kitchen.api.ingredient;
+package dk.mrspring.kitchen.api_impl.common;
 
-import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.api.stack.LinkedStack;
-import dk.mrspring.kitchen.api.stack.Stack;
-import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
-import net.minecraft.item.Item;
+import dk.mrspring.kitchen.api.pan.IFryingPan;
+import dk.mrspring.kitchen.api.pan.IIngredient;
+import dk.mrspring.kitchen.api.pan.IIngredientRegistry;
+import dk.mrspring.kitchen.api_impl.common.pan.BasicIngredient;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Konrad on 25-03-2015.
  */
-public class IngredientRegistry // TODO: Move to api_impl
+public class IngredientRegistry implements IIngredientRegistry
 {
-    private static IngredientRegistry ourInstance = new IngredientRegistry();
+    private static final IngredientRegistry ourInstance = new IngredientRegistry();
+    private static final IIngredient defaultIngredient = new BasicIngredient();
+    private List<IIngredient> ingredients = new ArrayList<IIngredient>();
+
+    public static IngredientRegistry getInstance()
+    {
+        return ourInstance;
+    }
+
+    @Override
+    public void registerIngredient(IIngredient ingredient)
+    {
+        if (ingredient != null)
+            ingredients.add(ingredient);
+    }
+
+    @Override
+    public IIngredient getIngredientFor(IFryingPan fryingPan, ItemStack stack, EntityPlayer player)
+    {
+        for (IIngredient ingredient : ingredients)
+            if (ingredient.isForItem(fryingPan, stack, player))
+                return ingredient;
+        return defaultIngredient; // TODO: Default, non-null ingredient
+    }
+
+    @Override
+    public IIngredient getIngredientFromName(String ingredientName)
+    {
+        for (IIngredient ingredient : ingredients)
+            if (ingredient.getName().equals(ingredientName))
+                return ingredient;
+        return null; // Returns null cause it's not from an item.
+    }
+
     //    private final Map<Stack, String> ingredientRelations = new TreeMap<Stack, String>();
-    private final List<LinkedStack> ingredientRelations = new ArrayList<LinkedStack>();
+    /*private final List<LinkedStack> ingredientRelations = new ArrayList<LinkedStack>();
     private final Map<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
 
     private IngredientRegistry()
@@ -226,5 +255,5 @@ public class IngredientRegistry // TODO: Move to api_impl
     public boolean isIngredientRegistered(String ingredient)
     {
         return ingredient != null && this.getIngredients().containsKey(ingredient);
-    }
+    }*/
 }

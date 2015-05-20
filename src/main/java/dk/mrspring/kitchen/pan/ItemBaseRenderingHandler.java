@@ -1,7 +1,8 @@
 package dk.mrspring.kitchen.pan;
 
-import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
-import dk.mrspring.kitchen.api.ingredient.Ingredient;
+import dk.mrspring.kitchen.api.pan.IFryingPan;
+import dk.mrspring.kitchen.api.pan.IIngredient;
+import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.model.ModelItemBase;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
@@ -10,9 +11,20 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by MrSpring on 04-11-2014.
  */
-public class ItemBaseRenderingHandler implements IIngredientRenderingHandler
+public class ItemBaseRenderingHandler implements IIngredientRenderingHandler // TODO: Fix
 {
-    ModelBase preFried;
+    @Override
+    public boolean shouldBeUsed(IFryingPan fryingPan, IIngredient ingredient)
+    {
+        return false;
+    }
+
+    @Override
+    public void render(IFryingPan fryingPan, IIngredient ingredient)
+    {
+
+    }
+    /*ModelBase preFried;
     ModelBase postFried;
 
     public ItemBaseRenderingHandler(Item pre, Item post)
@@ -60,5 +72,5 @@ public class ItemBaseRenderingHandler implements IIngredientRenderingHandler
     public boolean scaleOnPan(int boilTime, Ingredient ingredient)
     {
         return false;
-    }
+    }*/
 }
