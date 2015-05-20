@@ -14,7 +14,7 @@ public class BaconIngredient implements IIngredient
     @Override
     public String getName()
     {
-        return "bacon";
+        return "kitchen:raw_bacon";
     }
 
     @Override
@@ -26,13 +26,21 @@ public class BaconIngredient implements IIngredient
     @Override
     public boolean isForItem(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
+        System.out.println("Clicked with: "+clicked.getDisplayName());
         return clicked.getItem() == KitchenItems.raw_bacon;
     }
 
     @Override
     public boolean canAdd(IFryingPan pan, ItemStack adding, EntityPlayer player)
     {
+        System.out.println("Clicked with: "+adding.getDisplayName());
         return adding.getItem() == KitchenItems.raw_bacon && pan.getIngredient() == null;
+    }
+
+    @Override
+    public void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player)
+    {
+
     }
 
     @Override

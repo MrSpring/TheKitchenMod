@@ -26,15 +26,17 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan // T
     @Override
     public boolean rightClicked(ItemStack clicked, EntityPlayer player)
     {
+        if (getIngredient() != null)
+            getIngredient().onRightClicked(this, clicked, player);
+
         if (clicked != null)
         {
-            if (this.getIngredient() != null)
-                this.getIngredient().onRightClicked();
             IIngredient ingredient = IngredientRegistry.getInstance().getIngredientFor(this, clicked, player);
-            if (ingredient.canAdd(this, clicked, player))
+            if (getIngredient() == null && ingredient.canAdd(this, clicked, player))
             {
                 this.ingredient = ingredient;
                 this.cookTime = 0;
+                getIngredient().onAdded(this, clicked, player);
             }
         } else if (getIngredient() != null && this.isFinished())
         {

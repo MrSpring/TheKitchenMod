@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.api_impl.common;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.api.pan.IIngredientRegistry;
+import dk.mrspring.kitchen.api_impl.common.pan.BaconIngredient;
 import dk.mrspring.kitchen.api_impl.common.pan.BasicIngredient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,11 @@ public class IngredientRegistry implements IIngredientRegistry
     private static final IngredientRegistry ourInstance = new IngredientRegistry();
     private static final IIngredient defaultIngredient = new BasicIngredient();
     private List<IIngredient> ingredients = new ArrayList<IIngredient>();
+
+    private IngredientRegistry()
+    {
+        registerIngredient(new BaconIngredient());
+    }
 
     public static IngredientRegistry getInstance()
     {
@@ -37,7 +43,7 @@ public class IngredientRegistry implements IIngredientRegistry
         for (IIngredient ingredient : ingredients)
             if (ingredient.isForItem(fryingPan, stack, player))
                 return ingredient;
-        return defaultIngredient; // TODO: Default, non-null ingredient
+        return defaultIngredient;
     }
 
     @Override

@@ -34,6 +34,15 @@ public interface IIngredient
     boolean canAdd(IFryingPan pan, ItemStack adding, EntityPlayer player);
 
     /**
+     * Gets called after the ingredient has been set on the pan, and the cook time has been reset.
+     *
+     * @param pan    The Frying Pan this ingredient was put on.
+     * @param added  The ItemStack that was used to set this ingredient.
+     * @param player The player that right-clicked the frying pan.
+     */
+    void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player);
+
+    /**
      * Called before any other method. Called when this ingredient is on the Frying Pan, and it is right-clicked.
      *
      * @param pan     The Frying Pan this ingredient is on.

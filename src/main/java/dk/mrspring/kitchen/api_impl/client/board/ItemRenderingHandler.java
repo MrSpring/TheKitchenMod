@@ -17,7 +17,6 @@ import java.util.List;
  */
 public class ItemRenderingHandler implements IBoardRenderingHandler
 {
-
     @Override
     public boolean shouldBeUsed(List<ItemStack> layers, int indexInList, NBTTagCompound specialTagCompound, ItemStack rendering)
     {

@@ -35,6 +35,12 @@ public class BasicIngredient implements IIngredient
     }
 
     @Override
+    public void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player)
+    {
+
+    }
+
+    @Override
     public void onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
 
