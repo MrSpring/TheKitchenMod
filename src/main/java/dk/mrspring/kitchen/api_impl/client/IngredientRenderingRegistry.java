@@ -6,6 +6,7 @@ import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.api.pan.IIngredientRenderingRegistry;
 import dk.mrspring.kitchen.api_impl.client.ingredient.BaconRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.ingredient.FallbackIngredientRenderingHandler;
+import dk.mrspring.kitchen.api_impl.client.ingredient.RecipeIngredientRenderingHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,8 @@ public class IngredientRenderingRegistry implements IIngredientRenderingRegistry
 
     private IngredientRenderingRegistry()
     {
-        registerRenderingHandler(new BaconRenderingHandler());
+//        registerRenderingHandler(new BaconRenderingHandler());
+        registerRenderingHandler(new RecipeIngredientRenderingHandler());
     }
 
     public static IngredientRenderingRegistry getInstance()

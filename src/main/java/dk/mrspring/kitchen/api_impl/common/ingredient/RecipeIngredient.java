@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class RecipeIngredient implements IIngredient
 {
     public static final String RECIPE_INPUT = "RecipeInput";
+    public static final String RECIPE_OUTPUT = "RecipeOutput";
 
     @Override
     public String getName()
@@ -42,9 +43,12 @@ public class RecipeIngredient implements IIngredient
     public void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player)
     {
         NBTTagCompound compound = pan.getSpecialInfo();
-        NBTTagCompound itemCompound = new NBTTagCompound();
-        added.writeToNBT(itemCompound);
-        compound.setTag(RECIPE_INPUT, itemCompound);
+        NBTTagCompound inputCompound = new NBTTagCompound();
+        added.writeToNBT(inputCompound);
+        NBTTagCompound outputCompound = new NBTTagCompound();
+        FryingPanRecipes.instance().getOutputFor(added).writeToNBT(outputCompound);
+        compound.setTag(RECIPE_INPUT, inputCompound);
+        compound.setTag(RECIPE_OUTPUT, outputCompound);
         added.stackSize--;
     }
 
