@@ -1,46 +1,43 @@
-package dk.mrspring.kitchen.api_impl.common.pan;
+package dk.mrspring.kitchen.api_impl.common.ingredient;
 
-import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 /**
- * Created by Konrad on 20-05-2015.
+ * Created by Konrad on 14-05-2015.
  */
-public class BaconIngredient implements IIngredient
+public class BasicIngredient implements IIngredient
 {
     @Override
     public String getName()
     {
-        return "kitchen:raw_bacon";
+        return "empty";
     }
 
     @Override
     public String getLocalizedName()
     {
-        return "Bacon";
+        return "Empty";
     }
 
     @Override
     public boolean isForItem(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-        System.out.println("Clicked with: " + clicked.getDisplayName());
-        return clicked.getItem() == KitchenItems.raw_bacon;
+        return false;
     }
 
     @Override
     public boolean canAdd(IFryingPan pan, ItemStack adding, EntityPlayer player)
     {
-        System.out.println("Clicked with: " + adding.getDisplayName());
-        return adding.getItem() == KitchenItems.raw_bacon && pan.getIngredient() == null;
+        return false;
     }
 
     @Override
     public void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player)
     {
-        added.stackSize--;
+
     }
 
     @Override
@@ -58,18 +55,18 @@ public class BaconIngredient implements IIngredient
     @Override
     public boolean canBeRemoved(IFryingPan pan, EntityPlayer player)
     {
-        return pan.isFinished();
+        return false;
     }
 
     @Override
     public ItemStack onRemoved(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-        return new ItemStack(KitchenItems.bacon);
+        return null;
     }
 
     @Override
     public boolean readyToCook(IFryingPan pan)
     {
-        return true;
+        return false;
     }
 }

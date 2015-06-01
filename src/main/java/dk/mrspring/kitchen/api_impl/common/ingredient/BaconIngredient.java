@@ -1,43 +1,46 @@
-package dk.mrspring.kitchen.api_impl.common.pan;
+package dk.mrspring.kitchen.api_impl.common.ingredient;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 /**
- * Created by Konrad on 14-05-2015.
+ * Created by Konrad on 20-05-2015.
  */
-public class BasicIngredient implements IIngredient
+public class BaconIngredient implements IIngredient
 {
     @Override
     public String getName()
     {
-        return "empty";
+        return "kitchen:raw_bacon";
     }
 
     @Override
     public String getLocalizedName()
     {
-        return "Empty";
+        return "Bacon";
     }
 
     @Override
     public boolean isForItem(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-        return false;
+        System.out.println("Clicked with: " + clicked.getDisplayName());
+        return clicked.getItem() == KitchenItems.raw_bacon;
     }
 
     @Override
     public boolean canAdd(IFryingPan pan, ItemStack adding, EntityPlayer player)
     {
-        return false;
+        System.out.println("Clicked with: " + adding.getDisplayName());
+        return adding.getItem() == KitchenItems.raw_bacon && pan.getIngredient() == null;
     }
 
     @Override
     public void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player)
     {
-
+        added.stackSize--;
     }
 
     @Override
@@ -55,18 +58,18 @@ public class BasicIngredient implements IIngredient
     @Override
     public boolean canBeRemoved(IFryingPan pan, EntityPlayer player)
     {
-        return false;
+        return pan.isFinished();
     }
 
     @Override
     public ItemStack onRemoved(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-        return null;
+        return new ItemStack(KitchenItems.bacon);
     }
 
     @Override
     public boolean readyToCook(IFryingPan pan)
     {
-        return false;
+        return true;
     }
 }

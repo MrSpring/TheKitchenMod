@@ -33,18 +33,15 @@ public class Kitchen
 {
     @Instance(ModInfo.modid)
     public static Kitchen instance;
-
-    private GuiHandler guiHandler = new GuiHandler();
-
     @SidedProxy(serverSide = "dk.mrspring.kitchen.CommonProxy", clientSide = "dk.mrspring.kitchen.ClientProxy")
     public static CommonProxy proxy;
-
     public CreativeTabs tab;
     public CreativeTabs foodTab;
-
     public OvenRecipes ovenRecipes;
     public ToasterRecipes toasterRecipes;
     public KnifeRecipes knifeRecipes;
+    public FryingPanRecipes fryingPanRecipes;
+    private GuiHandler guiHandler = new GuiHandler();
 
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
@@ -114,10 +111,12 @@ public class Kitchen
         instance.ovenRecipes = new OvenRecipes();
         instance.toasterRecipes = new ToasterRecipes();
         instance.knifeRecipes = new KnifeRecipes();
+        instance.fryingPanRecipes = new FryingPanRecipes();
 
         instance.ovenRecipes.load();
         instance.toasterRecipes.load();
         instance.knifeRecipes.load();
+        instance.fryingPanRecipes.load();
 //        instance.panRecipes.load(); // TODO: Register default pan recipes
 
         TileEntityWaffleIron.load();
@@ -242,14 +241,6 @@ public class Kitchen
         SandwichableRegistry.getInstance().loadFromConfig(ModConfig.getSandwichConfig());
     }
 
-    @EventHandler
-    public void interCommHandler(FMLInterModComms.IMCEvent event)
-    {
-        for (FMLInterModComms.IMCMessage message : event.getMessages())
-            if (message != null)
-                IMCHandler.handleMessage(message);
-    }
-
     public static ItemStack getJamJarItemStack(Jam jam, int usesLeft)
     {
         ItemStack jamStack = new ItemStack(KitchenItems.jam_jar, 1, usesLeft);
@@ -280,5 +271,13 @@ public class Kitchen
             bowl.setTagCompound(tagCompound);
         }
         return bowl;
+    }
+
+    @EventHandler
+    public void interCommHandler(FMLInterModComms.IMCEvent event)
+    {
+        for (FMLInterModComms.IMCMessage message : event.getMessages())
+            if (message != null)
+                IMCHandler.handleMessage(message);
     }
 }
