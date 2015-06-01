@@ -63,4 +63,10 @@ public class BasicIngredient implements IIngredient
     {
         return null;
     }
+
+    @Override
+    public boolean readyToCook(IFryingPan pan)
+    {
+        return false;
+    }
 }

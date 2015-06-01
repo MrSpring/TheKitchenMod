@@ -76,4 +76,6 @@ public interface IIngredient
      * @return Returns the ItemStack that will be given to the player.
      */
     ItemStack onRemoved(IFryingPan pan, ItemStack clicked, EntityPlayer player);
+
+    boolean readyToCook(IFryingPan pan);
 }

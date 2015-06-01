@@ -110,6 +110,7 @@ public class BlockFryingPan extends BlockContainerBase
             {
 //                player.getCurrentEquippedItem().stackSize--;
 //                tileEntityPan.checkIsFunctional();
+                System.out.println("Marking for update");
                 world.markBlockForUpdate(x, y, z);
                 return true;
             }

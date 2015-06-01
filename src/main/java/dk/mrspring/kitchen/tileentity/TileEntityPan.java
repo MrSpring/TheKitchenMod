@@ -37,14 +37,19 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan // T
                 this.ingredient = ingredient;
                 this.cookTime = 0;
                 getIngredient().onAdded(this, clicked, player);
+                return true;
             }
         } else if (getIngredient() != null && this.isFinished())
         {
+            System.out.println("Removing");
             if (ingredient.canBeRemoved(this, player))
             {
+                System.out.println("Getting result");
                 ItemStack result = ingredient.onRemoved(this, null, player);
                 if (result != null)
                     spawnItemInWorld(result);
+                this.replaceIngredient(null);
+                return true;
             }
         }
         return false;
@@ -118,7 +123,20 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan // T
     @Override
     public boolean isFinished()
     {
-        return getCookTime() > getDoneTime();
+        return getCookTime() >= getDoneTime();
+    }
+
+    @Override
+    public void updateEntity()
+    {
+        super.updateEntity();
+
+        if (ingredient != null && this.ingredient.readyToCook(this))
+        {
+            if (cookTime < getDoneTime())
+                cookTime++;
+        } else cookTime = 0;
+//        System.out.println(cookTime);
     }
 
     @Override
@@ -288,6 +306,7 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan // T
                 ModLogger.print(ModLogger.WARNING, "There was a problem loading pan @ X:" + this.xCoord + ", Y:" + this.yCoord + ", Z:" + this.zCoord + ", the ingredient " + string + " could not be found!");
                 e.printStackTrace();
             }
+        else this.ingredient = null;
         this.cookTime = compound.getInteger("CookTime");
         if (compound.hasKey("SpecialInfo", 10))
             this.setSpecialInfo(compound.getCompoundTag("SpecialInfo"));

@@ -26,21 +26,21 @@ public class BaconIngredient implements IIngredient
     @Override
     public boolean isForItem(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-        System.out.println("Clicked with: "+clicked.getDisplayName());
+        System.out.println("Clicked with: " + clicked.getDisplayName());
         return clicked.getItem() == KitchenItems.raw_bacon;
     }
 
     @Override
     public boolean canAdd(IFryingPan pan, ItemStack adding, EntityPlayer player)
     {
-        System.out.println("Clicked with: "+adding.getDisplayName());
+        System.out.println("Clicked with: " + adding.getDisplayName());
         return adding.getItem() == KitchenItems.raw_bacon && pan.getIngredient() == null;
     }
 
     @Override
     public void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player)
     {
-
+        added.stackSize--;
     }
 
     @Override
@@ -52,18 +52,24 @@ public class BaconIngredient implements IIngredient
     @Override
     public int getCookTime(IFryingPan pan)
     {
-        return 0;
+        return 200;
     }
 
     @Override
     public boolean canBeRemoved(IFryingPan pan, EntityPlayer player)
     {
-        return false;
+        return pan.isFinished();
     }
 
     @Override
     public ItemStack onRemoved(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-        return null;
+        return new ItemStack(KitchenItems.bacon);
+    }
+
+    @Override
+    public boolean readyToCook(IFryingPan pan)
+    {
+        return true;
     }
 }

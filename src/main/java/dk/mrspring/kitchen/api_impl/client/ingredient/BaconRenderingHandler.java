@@ -29,7 +29,7 @@ public class BaconRenderingHandler implements IIngredientRenderingHandler
         GL11.glTranslatef(0, 0.84F, 0);
         float s = 0.4F;
         GL11.glScalef(s, s, s);
-        if (!fryingPan.isFinished())
+        if (fryingPan.isFinished())
             cooked.render(null, 0, 0, 0, 0, 0, 0.0625F);
         else raw.render(null, 0, 0, 0, 0, 0, 0.0625F);
         GL11.glPopMatrix();
