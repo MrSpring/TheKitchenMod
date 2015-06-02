@@ -80,6 +80,7 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityPan.class, "tileEntityFryingPan");
         GameRegistry.registerTileEntity(TileEntityWaffleIron.class, "tileEntityWaffleIron");
         GameRegistry.registerTileEntity(TileEntityToaster.class, "tileEntityToaster");
+        GameRegistry.registerTileEntity(TileEntityGrinder.class, "tkm:tileEntityGrinder");
 
 
         // Loading Blocks and Items

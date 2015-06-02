@@ -4,7 +4,6 @@ import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.api.pan.IIngredientRenderingRegistry;
-import dk.mrspring.kitchen.api_impl.client.ingredient.BaconRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.ingredient.FallbackIngredientRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.ingredient.RecipeIngredientRenderingHandler;
 
@@ -22,7 +21,6 @@ public class IngredientRenderingRegistry implements IIngredientRenderingRegistry
 
     private IngredientRenderingRegistry()
     {
-//        registerRenderingHandler(new BaconRenderingHandler());
         registerRenderingHandler(new RecipeIngredientRenderingHandler());
     }
 
