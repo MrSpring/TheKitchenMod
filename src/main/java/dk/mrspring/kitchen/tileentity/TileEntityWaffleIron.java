@@ -63,7 +63,7 @@ public class TileEntityWaffleIron extends TileEntityTimeable
     {
         super.updateEntity();
 
-        if (this.isOpen())
+        if (this.isOpen()) // TODO: Only do on Client
         {
             if (this.lidAngle + 0.1F < 1.0)
                 this.lidAngle += 0.1F;

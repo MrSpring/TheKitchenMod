@@ -17,7 +17,7 @@ import java.util.Random;
 /**
  * Created by MrSpring on 09-10-2014 for TheKitchenMod.
  */
-public class TileEntityPan extends TileEntityTimeable implements IFryingPan // TODO: Rewrite
+public class TileEntityPan extends TileEntityTimeable implements IFryingPan
 {
     IIngredient ingredient = null;
     int cookTime = 0;
