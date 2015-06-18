@@ -224,7 +224,7 @@ public class ItemIceCreamableRenderer implements IItemRenderer
         }
     }
 
-    public class IceCream
+    public class IceCream // TODO: Strawberry jam on top of IceCream
     {
         String name;
         float[] color;

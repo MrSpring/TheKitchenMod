@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.api_impl.common.ingredient;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.recipe.FryingPanRecipes;
@@ -55,7 +56,17 @@ public class RecipeIngredient implements IIngredient
     @Override
     public void onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-
+        if (this.canBeRemoved(pan, player) && clicked != null)
+        {
+            NBTTagCompound outputCompound = pan.getSpecialInfo().getCompoundTag(RECIPE_OUTPUT);
+            ItemStack output = ItemStack.loadItemStackFromNBT(outputCompound);
+            if (output.getItem() == KitchenItems.jam_jar && clicked.getItem() == KitchenItems.jam_jar)
+            {
+                clicked.stackSize--;
+                pan.spawnItemInWorld(output);
+                pan.replaceIngredient(null);
+            }
+        }
     }
 
     @Override
@@ -67,6 +78,14 @@ public class RecipeIngredient implements IIngredient
     @Override
     public boolean canBeRemoved(IFryingPan pan, EntityPlayer player)
     {
+        NBTTagCompound compound = pan.getSpecialInfo();
+        NBTTagCompound outputCompound = compound.getCompoundTag(RECIPE_OUTPUT);
+        if (outputCompound != null)
+        {
+            ItemStack output = ItemStack.loadItemStackFromNBT(outputCompound);
+            if (output.getItem() == KitchenItems.jam_jar)
+                return false;
+        }
         return pan.isFinished();
     }
 

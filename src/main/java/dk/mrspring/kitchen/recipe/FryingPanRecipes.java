@@ -1,6 +1,8 @@
 package dk.mrspring.kitchen.recipe;
 
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.pan.Jam;
+import net.minecraft.item.ItemStack;
 
 import static dk.mrspring.kitchen.KitchenItems.*;
 
@@ -26,7 +28,7 @@ public class FryingPanRecipes extends BasicRecipeHandler
 
     private void addDefaultRecipes()
     {
-        addAll(new BasicRecipe[]{
+        addAll(new IRecipe[]{
                 new BasicRecipe(raw_bacon, bacon),
                 new BasicRecipe(raw_chicken_fillet, chicken_fillet),
                 new BasicRecipe(raw_cut_fish, cooked_cut_fish),
@@ -36,6 +38,8 @@ public class FryingPanRecipes extends BasicRecipeHandler
                 new BasicRecipe(beef, cooked_beef),
                 new BasicRecipe(raw_roast_beef, roast_beef),
                 new BasicRecipe(porkchop, cooked_porkchop), // TODO: Add the rest of the recipes
+//                new BasicRecipe(new ItemStack(peanut), Kitchen.getJamJarItemStack(Jam.getJam("peanut"), 3))
+                new JamRecipe(peanut, "peanut")
         });
     }
 }

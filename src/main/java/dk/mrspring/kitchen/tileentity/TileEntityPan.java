@@ -24,7 +24,7 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
     private NBTTagCompound specialInfo = new NBTTagCompound();
 
     @Override
-    public boolean rightClicked(ItemStack clicked, EntityPlayer player)
+    public boolean rightClicked(ItemStack clicked, EntityPlayer player) // TODO: Rewrite
     {
         if (getIngredient() != null)
             getIngredient().onRightClicked(this, clicked, player);
@@ -69,6 +69,7 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
     {
         IIngredient old = this.getIngredient();
         this.ingredient = newIngredient;
+        worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
         return old;
     }
 

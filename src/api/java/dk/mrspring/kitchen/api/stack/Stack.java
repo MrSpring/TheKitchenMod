@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.config.wrapper.JsonItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * Created by Konrad on 13-05-2015.
@@ -64,7 +65,7 @@ public class Stack
     @Override
     public String toString()
     {
-        return item.getUnlocalizedName() + ":" + String.valueOf(metadata);
+        return item.getUnlocalizedName() + ":" + String.valueOf(metadata) + "x" + String.valueOf(amount);
     }
 
     /**
