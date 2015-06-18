@@ -20,7 +20,6 @@ public class KnifeItemHandler implements IBoardItemHandler
     @Override
     public boolean isForItem(ICuttingBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
     {
-        System.out.println("Has output: " + String.valueOf(KnifeRecipes.instance().hasOutput(stack)) + ", layer count: " + tileEntityBoard.getLayerCount() + ", item: " + stack.getDisplayName());
         int lc = tileEntityBoard.getLayerCount();
         return (KnifeRecipes.instance().hasOutput(stack) && (lc == 0 || lc == 1)) || (stack.getItem() == KitchenItems.knife && lc == 1);
     }
