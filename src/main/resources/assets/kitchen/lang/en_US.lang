@@ -101,6 +101,7 @@ item.dirty_hand_mixer.desc=Wash with some Water
 item.meat_hammer.name=Meat Hammer
 item.raw_meat_patty.name=Raw Meat Patty
 item.cooked_meat_patty.name=Meat Patty
+item.scrambled_eggs.namd=Scrambled Eggs
 item.slicable.short=Slice to get
 item.slicable.long=Slice on a Cutting Board to get
 
