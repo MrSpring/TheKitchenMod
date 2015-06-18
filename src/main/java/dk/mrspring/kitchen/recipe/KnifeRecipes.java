@@ -38,12 +38,13 @@ public class KnifeRecipes extends BasicRecipeHandler
                 new BasicRecipe(new ItemStack(chicken), new ItemStack(raw_chicken_fillet, 3)),
                 new BasicRecipe(new ItemStack(cooked_chicken), new ItemStack(chicken_leg, 2)),
                 new BasicRecipe(new ItemStack(cheese), new ItemStack(cheese_slice, 2)),
-                new BasicRecipe(new ItemStack(strawberry), new ItemStack(cut_strawberry,2)),
+                new BasicRecipe(new ItemStack(strawberry), new ItemStack(cut_strawberry, 2)),
                 new BasicRecipe(new ItemStack(apple), new ItemStack(cut_apple, 2)),
                 new BasicRecipe(new ItemStack(burger_bun), new ItemStack(sliced_burger_bun, 2)),
                 new BasicRecipe(new ItemStack(fish), new ItemStack(raw_cut_fish, 2)),
                 new BasicRecipe(new ItemStack(cooked_fished), new ItemStack(cooked_cut_fish, 2)),
-                new BasicRecipe(new ItemStack(cooked_ham), new ItemStack(ham_slice, 4))
+                new BasicRecipe(new ItemStack(cooked_ham), new ItemStack(ham_slice, 4)),
+                new BasicRecipe(new ItemStack(onion), new ItemStack(onion_slice, 3))
         });
     }
 }
