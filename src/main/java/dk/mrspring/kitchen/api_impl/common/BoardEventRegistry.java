@@ -42,14 +42,8 @@ public class BoardEventRegistry implements IBoardEventRegistry
     public IBoardItemHandler getHandlerFor(ICuttingBoard board, ItemStack item, EntityPlayer player)
     {
         for (IBoardItemHandler handler : handlers)
-        {
-            System.out.println("Checking if handler matches. Class: " + handler.getClass().getName());
             if (handler.isForItem(board, item, player))
-            {
-                System.out.println("Returning handler of type: " + handler.getClass().getName());
                 return handler;
-            }
-        }
         return defaultHandler;
     }
 }
