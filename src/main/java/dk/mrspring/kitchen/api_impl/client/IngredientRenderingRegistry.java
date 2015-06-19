@@ -1,9 +1,9 @@
 package dk.mrspring.kitchen.api_impl.client;
 
-import dk.mrspring.kitchen.api.pan.IFryingPan;
-import dk.mrspring.kitchen.api.pan.IIngredient;
-import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
-import dk.mrspring.kitchen.api.pan.IIngredientRenderingRegistry;
+import dk.mrspring.kitchen.api.ingredient.IFryingPan;
+import dk.mrspring.kitchen.api.ingredient.IIngredient;
+import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
+import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingRegistry;
 import dk.mrspring.kitchen.api_impl.client.ingredient.FallbackIngredientRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.ingredient.RecipeIngredientRenderingHandler;
 

@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.api_impl.common.ingredient;
 
-import dk.mrspring.kitchen.api.pan.IFryingPan;
-import dk.mrspring.kitchen.api.pan.IIngredient;
+import dk.mrspring.kitchen.api.ingredient.IFryingPan;
+import dk.mrspring.kitchen.api.ingredient.IIngredient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 

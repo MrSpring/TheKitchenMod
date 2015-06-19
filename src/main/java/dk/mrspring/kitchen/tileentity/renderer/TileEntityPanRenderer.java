@@ -2,12 +2,11 @@ package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.api.pan.IFryingPan;
-import dk.mrspring.kitchen.api.pan.IIngredient;
-import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
+import dk.mrspring.kitchen.api.ingredient.IFryingPan;
+import dk.mrspring.kitchen.api.ingredient.IIngredient;
+import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.IngredientRenderingRegistry;
 import dk.mrspring.kitchen.model.ModelPan;
-import dk.mrspring.kitchen.tileentity.TileEntityPan;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;

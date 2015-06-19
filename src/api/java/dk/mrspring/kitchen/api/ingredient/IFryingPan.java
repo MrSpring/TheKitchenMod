@@ -1,10 +1,9 @@
-package dk.mrspring.kitchen.api.pan;
+package dk.mrspring.kitchen.api.ingredient;
 
 import dk.mrspring.kitchen.api.ISpecialTagInfo;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * Created by Konrad on 14-05-2015.

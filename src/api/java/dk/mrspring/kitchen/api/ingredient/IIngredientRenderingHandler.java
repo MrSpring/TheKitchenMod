@@ -1,6 +1,4 @@
-package dk.mrspring.kitchen.api.pan;
-
-import net.minecraft.client.model.ModelBase;
+package dk.mrspring.kitchen.api.ingredient;
 
 /**
  * Created by MrSpring on 27-10-2014 for TheKitchenMod.

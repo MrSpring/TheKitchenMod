@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.api.pan;
+package dk.mrspring.kitchen.api.ingredient;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

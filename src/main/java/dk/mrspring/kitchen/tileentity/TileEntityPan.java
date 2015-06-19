@@ -1,10 +1,9 @@
 package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.ModLogger;
-import dk.mrspring.kitchen.api.pan.IFryingPan;
-import dk.mrspring.kitchen.api.pan.IIngredient;
+import dk.mrspring.kitchen.api.ingredient.IFryingPan;
+import dk.mrspring.kitchen.api.ingredient.IIngredient;
 import dk.mrspring.kitchen.api_impl.common.IngredientRegistry;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

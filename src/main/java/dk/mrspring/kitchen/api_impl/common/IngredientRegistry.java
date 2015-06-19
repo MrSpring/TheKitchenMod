@@ -1,8 +1,8 @@
 package dk.mrspring.kitchen.api_impl.common;
 
-import dk.mrspring.kitchen.api.pan.IFryingPan;
-import dk.mrspring.kitchen.api.pan.IIngredient;
-import dk.mrspring.kitchen.api.pan.IIngredientRegistry;
+import dk.mrspring.kitchen.api.ingredient.IFryingPan;
+import dk.mrspring.kitchen.api.ingredient.IIngredient;
+import dk.mrspring.kitchen.api.ingredient.IIngredientRegistry;
 import dk.mrspring.kitchen.api_impl.common.ingredient.BasicIngredient;
 import dk.mrspring.kitchen.api_impl.common.ingredient.JamIngredient;
 import dk.mrspring.kitchen.api_impl.common.ingredient.RecipeIngredient;
