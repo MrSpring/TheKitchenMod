@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen;
 
+import net.minecraft.util.ResourceLocation;
+
 public class ModInfo
 {
     // The mod-id of the Mod
@@ -12,5 +14,10 @@ public class ModInfo
     public static String toTexture(String name)
     {
         return modid + ":" + name;
+    }
+
+    public static ResourceLocation toResource(String name)
+    {
+        return new ResourceLocation(toTexture(name));
     }
 }

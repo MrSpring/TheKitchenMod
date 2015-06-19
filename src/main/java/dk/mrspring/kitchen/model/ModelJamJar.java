@@ -72,7 +72,7 @@ public class ModelJamJar extends ModelBase
 		setRotation(top, 0F, 0F, 0F);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean isEmpty, int color, int jamHeight)
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int color, int metadata)
 	{
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
@@ -83,11 +83,11 @@ public class ModelJamJar extends ModelBase
 		side4.render(f5);
 		lid.render(f5);
 		top.render(f5);
-		if (!isEmpty && jamHeight != 0)
+		if (metadata > 0)
 		{
 			jam = new ModelRenderer(this, 0, 0);
-			jam.addBox(-0F, 0F, 0F, 6, jamHeight, 6);
-			jam.setRotationPoint(-3F, 23 - jamHeight, -3F);
+			jam.addBox(-0F, 0F, 0F, 6, metadata, 6);
+			jam.setRotationPoint(-3F, 23 - metadata, -3F);
 			jam.setTextureSize(16, 16);
 			jam.mirror = true;
 			setRotation(jam, 0F, 0F, 0F);

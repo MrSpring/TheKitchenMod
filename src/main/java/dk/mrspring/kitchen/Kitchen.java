@@ -16,17 +16,12 @@ import dk.mrspring.kitchen.comp.nei.NEIKitchenConfig;
 import dk.mrspring.kitchen.event.ModEventHandler;
 import dk.mrspring.kitchen.gui.GuiHandler;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.pan.Jam;
 import dk.mrspring.kitchen.recipe.*;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
-
-import static dk.mrspring.kitchen.KitchenItems.mixing_bowl;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
 public class Kitchen
@@ -129,12 +124,12 @@ public class Kitchen
 
         MinecraftForge.EVENT_BUS.register(new ModEventHandler());
 
-        Jam.registerJam(new Jam("empty", 0x000000, null));
-        Jam.registerJam(new Jam("strawberry", 16196364, KitchenItems.jam_strawberry/*"kitchen:strawberry_jam"*/));
-        Jam.registerJam(new Jam("apple", 14415786, KitchenItems.jam_apple/*"kitchen:apple_jam"*/));
-        Jam.registerJam(new Jam("peanut", 9659689, KitchenItems.jam_peanut/*"kitchen:peanut_jam"*/));
-        Jam.registerJam(new Jam("cocoa", 0x895836, KitchenItems.jam_cocoa/*"kitchen:cocoa_jam"*/));
-        Jam.registerJam(new Jam("ketchup", 0xFF3200, KitchenItems.jam_ketchup/*"kitchen:ketchup_jam"*/));
+//        Jam.registerJam(new Jam("empty", 0x000000, null));
+//        Jam.registerJam(new Jam("strawberry", 16196364, KitchenItems.jam_strawberry/*"kitchen:strawberry_jam"*/));
+//        Jam.registerJam(new Jam("apple", 14415786, KitchenItems.jam_apple/*"kitchen:apple_jam"*/));
+//        Jam.registerJam(new Jam("peanut", 9659689, KitchenItems.jam_peanut/*"kitchen:peanut_jam"*/));
+//        Jam.registerJam(new Jam("cocoa", 0x895836, KitchenItems.jam_cocoa/*"kitchen:cocoa_jam"*/));
+//        Jam.registerJam(new Jam("ketchup", 0xFF3200, KitchenItems.jam_ketchup/*"kitchen:ketchup_jam"*/));
 
         /*IngredientRegistry.getInstance().registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
         IngredientRegistry.getInstance().registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
@@ -241,38 +236,6 @@ public class Kitchen
         }
 
         SandwichableRegistry.getInstance().loadFromConfig(ModConfig.getSandwichConfig());
-    }
-
-    public static ItemStack getJamJarItemStack(Jam jam, int usesLeft)
-    {
-        ItemStack jamStack = new ItemStack(KitchenItems.jam_jar, 1, usesLeft);
-
-        if (jam == Jam.getJam("empty"))
-        {
-            jamStack.setItemDamage(0);
-            return jamStack;
-        } else
-        {
-            String jamName = jam.getName();
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setString("JamType", jamName);
-            compound.setInteger("UsesLeft", usesLeft);
-
-            jamStack.setTagInfo("JamInfo", compound);
-            return jamStack;
-        }
-    }
-
-    public static ItemStack getMixingBowlStack(String mixType, int usesLeft)
-    {
-        ItemStack bowl = new ItemStack(mixing_bowl, 1, usesLeft);
-        if (mixType != null)
-        {
-            NBTTagCompound tagCompound = new NBTTagCompound();
-            tagCompound.setString("MixType", mixType);
-            bowl.setTagCompound(tagCompound);
-        }
-        return bowl;
     }
 
     @EventHandler

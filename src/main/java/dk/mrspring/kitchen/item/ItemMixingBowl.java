@@ -1,18 +1,21 @@
 package dk.mrspring.kitchen.item;
 
 import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
+import dk.mrspring.kitchen.item.render.ItemRenderMixingBowl;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
 import java.util.List;
 import java.util.Map;
+
+import static dk.mrspring.kitchen.KitchenItems.mixing_bowl;
 
 /**
  * Created by MrSpring on 09-12-2014 for TheKitchenMod.
@@ -25,6 +28,41 @@ public class ItemMixingBowl extends ItemBase
     {
         super(name, true);
         this.setMaxStackSize(1);
+    }
+
+    public static boolean isIceCream(ItemStack mixingBowlStack)
+    {
+        String mixType = getMixTypeFromStack(mixingBowlStack);
+        return !(mixType == null || mixType.isEmpty()) && mixType.toLowerCase().contains("ice_cream");
+    }
+
+    public static String getMixTypeFromStack(ItemStack mixingBowlStack)
+    {
+        if (mixingBowlStack.getTagCompound() != null)
+            return mixingBowlStack.getTagCompound().getString("MixType");
+        else return null;
+    }
+
+    public static void reduceUsesLeft(ItemStack mixingBowlStack, int amount)
+    {
+        if (mixingBowlStack.getItemDamage() > 0)
+        {
+            mixingBowlStack.setItemDamage(mixingBowlStack.getItemDamage() - amount);
+            if (mixingBowlStack.getItemDamage() == 0 && mixingBowlStack.hasTagCompound())
+                mixingBowlStack.getTagCompound().removeTag("MixType");
+        }
+    }
+
+    public static ItemStack getMixingBowlStack(String mixType, int usesLeft)
+    {
+        ItemStack bowl = new ItemStack(mixing_bowl, 1, usesLeft);
+        if (mixType != null)
+        {
+            NBTTagCompound tagCompound = new NBTTagCompound();
+            tagCompound.setString("MixType", mixType);
+            bowl.setTagCompound(tagCompound);
+        }
+        return bowl;
     }
 
     @Override
@@ -63,7 +101,7 @@ public class ItemMixingBowl extends ItemBase
         super.getSubItems(p_150895_1_, p_150895_2_, list);
 
         if (ModConfig.getKitchenConfig().show_different_mixing_bowls_in_creative_tab)
-            for (Map.Entry<String, Integer> entry : ItemMixingBowlRenderer.mixColors.entrySet())
+            for (Map.Entry<String, Integer> entry : ItemRenderMixingBowl.mixColors.entrySet())
             {
                 ItemStack stack = new ItemStack(p_150895_1_, 1, 3);
                 stack.setTagInfo("MixType", new NBTTagString(entry.getKey()));
@@ -92,7 +130,7 @@ public class ItemMixingBowl extends ItemBase
             return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
         else if (itemStack.getTagCompound() != null)
             if (itemStack.getTagCompound().hasKey("MixType"))
-                return StatCollector.translateToLocal("mix." + getMixType(itemStack) + ".name") + " " + StatCollector.translateToLocal("item.mixing_bowl.full.name");
+                return StatCollector.translateToLocal("mix." + getMixTypeFromStack(itemStack) + ".name") + " " + StatCollector.translateToLocal("item.mixing_bowl.full.name");
         return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
     }
 
@@ -110,7 +148,7 @@ public class ItemMixingBowl extends ItemBase
     public int getColorFromItemStack(ItemStack stack, int renderPass)
     {
         if (renderPass == 1)
-            return ItemMixingBowlRenderer.getColorAsInteger(stack);
+            return ItemRenderMixingBowl.getColorAsInteger(stack);
         else return super.getColorFromItemStack(stack, renderPass);
     }
 
@@ -122,30 +160,5 @@ public class ItemMixingBowl extends ItemBase
         else if (damage > 0 && damage < 4)
             return icons[damage];
         else return icons[0];
-    }
-
-    public static boolean isIceCream(ItemStack mixingBowlStack)
-    {
-        String mixType = getMixType(mixingBowlStack);
-        if (mixType == null || mixType.isEmpty())
-            return false;
-        return mixType.toLowerCase().contains("ice_cream");
-    }
-
-    public static String getMixType(ItemStack mixingBowlStack)
-    {
-        if (mixingBowlStack.getTagCompound() != null)
-            return mixingBowlStack.getTagCompound().getString("MixType");
-        else return null;
-    }
-
-    public static void reduceUsesLeft(ItemStack mixingBowlStack, int amount)
-    {
-        if (mixingBowlStack.getItemDamage() > 0)
-        {
-            mixingBowlStack.setItemDamage(mixingBowlStack.getItemDamage() - amount);
-            if (mixingBowlStack.getItemDamage() == 0 && mixingBowlStack.hasTagCompound())
-                mixingBowlStack.getTagCompound().removeTag("MixType");
-        }
     }
 }

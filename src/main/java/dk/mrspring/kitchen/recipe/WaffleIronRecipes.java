@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.recipe;
 
 import dk.mrspring.kitchen.item.ItemMixingBowl;
-import dk.mrspring.kitchen.item.render.ItemMixingBowlRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -145,7 +144,7 @@ public class WaffleIronRecipes
         @Override
         public boolean add(ItemStack input)
         {
-            String inputMixType = ItemMixingBowl.getMixType(input);
+            String inputMixType = ItemMixingBowl.getMixTypeFromStack(input);
             if (inputMixType != null)
                 if (!inputMixType.equals(""))
                     return inputMixType.equals(this.mixType);

@@ -20,8 +20,8 @@ import org.lwjgl.opengl.GL11;
 public class RecipeIngredientRenderingHandler implements IIngredientRenderingHandler
 {
     @Override
-    public boolean shouldBeUsed(IFryingPan fryingPan, IIngredient ingredient)
-    {
+    public boolean shouldBeUsed(IFryingPan fryingPan, IIngredient ingredient) // TODO: Fix jam recipes
+    { // TODO: Remove Jam classes, replace with Mixing Bowl style rendering, ie. register string, color pairs
         return ingredient instanceof RecipeIngredient;
     }
 
@@ -32,6 +32,7 @@ public class RecipeIngredientRenderingHandler implements IIngredientRenderingHan
         NBTTagCompound compound = fryingPan.getSpecialInfo();
         NBTTagCompound itemCompound = compound.getCompoundTag(fryingPan.isFinished() ? RECIPE_OUTPUT : RECIPE_INPUT);
         ItemStack rendering = ItemStack.loadItemStackFromNBT(itemCompound);
+        rendering.stackSize = 1;
 
         GL11.glTranslatef(0, -1.36F, -0.143F);
         float s = 0.7F;

@@ -144,7 +144,7 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                 String iceCreamName = iceCreamsCompound.getStringTagAt(i);
                 if (iceCreamName != null)
                 {
-                    int color = ItemMixingBowlRenderer.getColorAsInteger(iceCreamName);
+                    int color = ItemRenderMixingBowl.getColorAsInteger(iceCreamName);
                     iceCreams.add(new IceCream(iceCreamName, color));
                 }
             }
@@ -243,7 +243,7 @@ public class ItemIceCreamableRenderer implements IItemRenderer
         public IceCream(String name, int color)
         {
             this.name = name;
-            this.color = ItemMixingBowlRenderer.intAsFloatArray(color);
+            this.color = ItemRenderMixingBowl.intAsFloatArray(color);
         }
     }
 }

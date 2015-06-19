@@ -1,8 +1,6 @@
 package dk.mrspring.kitchen.recipe;
 
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.pan.Jam;
-import net.minecraft.item.ItemStack;
 
 import static dk.mrspring.kitchen.KitchenItems.*;
 

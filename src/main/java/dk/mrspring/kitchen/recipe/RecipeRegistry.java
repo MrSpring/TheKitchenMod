@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static dk.mrspring.kitchen.KitchenItems.*;
+import static dk.mrspring.kitchen.item.ItemMixingBowl.getMixingBowlStack;
 import static java.lang.Character.valueOf;
 import static net.minecraft.init.Blocks.*;
 import static net.minecraft.init.Items.*;
@@ -56,16 +57,15 @@ public class RecipeRegistry
 
 
         // Mixing Bowl recipes
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("waffle_dough", 3), Kitchen.getMixingBowlStack(null, 0), egg, Items.wheat, milk_bucket, sugar);
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("pancake_dough", 3), Kitchen.getMixingBowlStack(null, 0), egg, flour, milk_bucket, sugar, butter);
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("burger_bun_dough", 3), Kitchen.getMixingBowlStack(null, 0), egg, flour, milk_bucket, butter, wheat_seeds);
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("vanilla_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar);
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("strawberry_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar, cut_strawberry);
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("strawberry_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_ice, crushed_vanilla, jammable_strawberry);
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("chocolate_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_ice, new ItemStack(dye, 1, 3));
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("apple_ice_cream", 3), Kitchen.getMixingBowlStack(null, 0), milk_bucket, crushed_vanilla, crushed_ice, cut_apple);
-        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("scrambled_eggs", 3), Kitchen.getMixingBowlStack(null, 0), Items.egg, hand_mixer);
-//        GameRegistry.addShapelessRecipe(Kitchen.getMixingBowlStack("pasta_dough", 3), Kitchen.getMixingBowlStack(null, 0), water_bucket, egg, flour);
+        GameRegistry.addShapelessRecipe(GMBS("waffle_dough", 3), GMBS(null, 0), egg, Items.wheat, milk_bucket, sugar);
+        GameRegistry.addShapelessRecipe(GMBS("pancake_dough", 3), GMBS(null, 0), egg, flour, milk_bucket, sugar, butter);
+        GameRegistry.addShapelessRecipe(GMBS("burger_bun_dough", 3), GMBS(null, 0), egg, flour, milk_bucket, butter, wheat_seeds);
+        GameRegistry.addShapelessRecipe(GMBS("vanilla_ice_cream", 3), GMBS(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar);
+        GameRegistry.addShapelessRecipe(GMBS("strawberry_ice_cream", 3), GMBS(null, 0), milk_bucket, crushed_ice, crushed_vanilla, sugar, cut_strawberry);
+        GameRegistry.addShapelessRecipe(GMBS("strawberry_ice_cream", 3), GMBS(null, 0), milk_bucket, crushed_ice, crushed_vanilla, jammable_strawberry);
+        GameRegistry.addShapelessRecipe(GMBS("chocolate_ice_cream", 3), GMBS(null, 0), milk_bucket, crushed_ice, new ItemStack(dye, 1, 3));
+        GameRegistry.addShapelessRecipe(GMBS("apple_ice_cream", 3), GMBS(null, 0), milk_bucket, crushed_vanilla, crushed_ice, cut_apple);
+        GameRegistry.addShapelessRecipe(GMBS("scrambled_eggs", 3), GMBS(null, 0), Items.egg, hand_mixer);
 
         /**
          * Knife recipes
@@ -124,7 +124,7 @@ public class RecipeRegistry
                 if (!bowlStack.hasTagCompound())
                     return false;
 
-                return ItemMixingBowl.getMixType(bowlStack).equals("burger_bun_dough");
+                return ItemMixingBowl.getMixTypeFromStack(bowlStack).equals("burger_bun_dough");
             }
 
             @Override
@@ -226,6 +226,11 @@ public class RecipeRegistry
         GameRegistry.addShapelessRecipe(new ItemStack(hand_mixer), new ItemStack(dirty_hand_mixer), new ItemStack(water_bucket));
     }
 
+    private static ItemStack GMBS(String mixType, int usesLeft)
+    {
+        return getMixingBowlStack(mixType, usesLeft);
+    }
+
     private static void addIceCreamRecipe(final Item targetItem)
     {
         GameRegistry.addRecipe(new IRecipe()
@@ -255,7 +260,7 @@ public class RecipeRegistry
                 if (iceCreamableStack == null || bowlStack == null)
                     return false;
 
-                String bowlMixType = ItemMixingBowl.getMixType(bowlStack);
+                String bowlMixType = ItemMixingBowl.getMixTypeFromStack(bowlStack);
                 int iceCreamAlreadyOnPancake = 0;
 
                 if (iceCreamableStack.hasTagCompound())
@@ -290,7 +295,7 @@ public class RecipeRegistry
                 if (iceCreamableStack.stackTagCompound == null)
                     iceCreamableStack.stackTagCompound = new NBTTagCompound();
 
-                String iceCream = ItemMixingBowl.getMixType(bowlStack);
+                String iceCream = ItemMixingBowl.getMixTypeFromStack(bowlStack);
 
                 if (!iceCreamableStack.getTagCompound().hasKey("IceCream", 9))
                     iceCreamableStack.getTagCompound().setTag("IceCream", new NBTTagList());

@@ -4,7 +4,7 @@ import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
-import dk.mrspring.kitchen.pan.Jam;
+import dk.mrspring.kitchen.item.ItemJamJar;
 import dk.mrspring.kitchen.recipe.FryingPanJamRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -66,7 +66,7 @@ public class JamIngredient implements IIngredient
             if (jamOutput == null)
                 jamOutput = compound.getString(JAM_RECIPE_OUTPUT);
             clicked.stackSize--;
-            ItemStack output = jamOutput != null ? Kitchen.getJamJarItemStack(Jam.getJam(jamOutput), 6) : null;
+            ItemStack output = ItemJamJar.getJamJarStack(jamOutput, 6);
             pan.spawnItemInWorld(output);
             pan.replaceIngredient(null);
             return true;

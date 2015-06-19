@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.recipe;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.api.stack.JamJarStack;
 import dk.mrspring.kitchen.api.stack.Stack;
-import dk.mrspring.kitchen.pan.Jam;
+import dk.mrspring.kitchen.item.ItemJamJar;
 import dk.mrspring.kitchen.util.StackUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -47,7 +47,7 @@ public class JamRecipe implements IRecipe
     @Override
     public ItemStack getOutput(ItemStack stack)
     {
-        return Kitchen.getJamJarItemStack(Jam.getJam(jamOutput), 6);
+        return ItemJamJar.getJamJarStack(jamOutput, 6);
     }
 
     @Override

@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.api.stack;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.item.ItemMixingBowl;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -41,7 +42,7 @@ public class MixingBowlStack extends Stack
     @Override
     public ItemStack toItemStack()
     {
-        return Kitchen.getMixingBowlStack(mixType, Math.min(0, metadata));
+        return ItemMixingBowl.getMixingBowlStack(mixType, Math.min(0, metadata));
     }
 
     @Override

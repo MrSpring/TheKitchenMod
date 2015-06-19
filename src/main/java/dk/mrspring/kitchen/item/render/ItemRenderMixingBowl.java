@@ -1,17 +1,20 @@
 package dk.mrspring.kitchen.item.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.ItemMixingBowl;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by MrSpring on 10-12-2014 for TheKitchenMod.
  */
-public class ItemMixingBowlRenderer
+@SideOnly(Side.CLIENT)
+public class ItemRenderMixingBowl
 {
-    public static HashMap<String, Integer> mixColors = new LinkedHashMap<String, Integer>();
+    public static Map<String, Integer> mixColors = new HashMap<String, Integer>();
 
     public static int getColorAsInteger(String mixType)
     {
@@ -37,7 +40,7 @@ public class ItemMixingBowlRenderer
 
     public static int getColorAsInteger(ItemStack mixingBowlStack)
     {
-        String mixType = ItemMixingBowl.getMixType(mixingBowlStack);
+        String mixType = ItemMixingBowl.getMixTypeFromStack(mixingBowlStack);
         return getColorAsInteger(mixType);
     }
 

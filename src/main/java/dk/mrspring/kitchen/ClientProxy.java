@@ -32,15 +32,16 @@ public class ClientProxy extends CommonProxy
         ItemIceCreamableRenderer.load();
 
 //        SandwichRender.loadRenderingHandlers();
-        ItemMixingBowlRenderer.initColors();
+        ItemRenderMixingBowl.initColors();
+        ItemRenderJamJar.initColors();
 
-        try
+        /*try
         {
             InputStream inputStream = new URL("http://mrspring.dk/mods/kitchen/update_highlights.php?version=" + ModInfo.version).openStream();
             versionHighlights = IOUtils.toString(inputStream);
         } catch (Exception e)
         {
             ModLogger.print(ModLogger.DEBUG, "Failed to download the version highlights, they will not be listed in the book!");
-        }
+        }*/
     }
 }
