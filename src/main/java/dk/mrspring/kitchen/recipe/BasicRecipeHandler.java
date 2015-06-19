@@ -50,10 +50,15 @@ public class BasicRecipeHandler
      */
     public ItemStack getOutputFor(ItemStack input)
     {
+        IRecipe forInput = getRecipeFor(input);
+        return forInput != null ? forInput.getOutput(input) : null;
+    }
+
+    public IRecipe getRecipeFor(ItemStack input)
+    {
         for (IRecipe recipe : recipes)
             if (recipe.doesInputMatch(input))
-                return recipe.getOutput(input);
-
+                return recipe;
         return null;
     }
 

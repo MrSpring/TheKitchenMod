@@ -41,51 +41,37 @@ public class RecipeIngredient implements IIngredient
     }
 
     @Override
-    public void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player)
+    public void onAdded(IFryingPan pan, ItemStack input, EntityPlayer player)
     {
+        ItemStack output = FryingPanRecipes.instance().getOutputFor(input);
         NBTTagCompound compound = pan.getSpecialInfo();
+
         NBTTagCompound inputCompound = new NBTTagCompound();
-        added.writeToNBT(inputCompound);
         NBTTagCompound outputCompound = new NBTTagCompound();
-        FryingPanRecipes.instance().getOutputFor(added).writeToNBT(outputCompound);
+        input.writeToNBT(inputCompound);
+        output.writeToNBT(outputCompound);
+
         compound.setTag(RECIPE_INPUT, inputCompound);
         compound.setTag(RECIPE_OUTPUT, outputCompound);
-        added.stackSize--;
+
+        input.stackSize--;
     }
 
     @Override
-    public void onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player)
+    public boolean onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-        if (this.canBeRemoved(pan, player) && clicked != null)
-        {
-            NBTTagCompound outputCompound = pan.getSpecialInfo().getCompoundTag(RECIPE_OUTPUT);
-            ItemStack output = ItemStack.loadItemStackFromNBT(outputCompound);
-            if (output.getItem() == KitchenItems.jam_jar && clicked.getItem() == KitchenItems.jam_jar)
-            {
-                clicked.stackSize--;
-                pan.spawnItemInWorld(output);
-                pan.replaceIngredient(null);
-            }
-        }
+        return false;
     }
 
     @Override
     public int getCookTime(IFryingPan pan)
     {
-        return 200;
+        return 150;
     }
 
     @Override
     public boolean canBeRemoved(IFryingPan pan, EntityPlayer player)
     {
-        NBTTagCompound compound = pan.getSpecialInfo();
-        NBTTagCompound outputCompound = compound.getCompoundTag(RECIPE_OUTPUT);
-        if (outputCompound != null)
-        {
-            ItemStack output = ItemStack.loadItemStackFromNBT(outputCompound);
-            if (output.getItem() == KitchenItems.jam_jar)
-                return false;
-        }
         return pan.isFinished();
     }
 
@@ -93,7 +79,7 @@ public class RecipeIngredient implements IIngredient
     public ItemStack onRemoved(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
         NBTTagCompound compound = pan.getSpecialInfo();
-        NBTTagCompound itemCompound = compound.getCompoundTag(RECIPE_INPUT);
+        NBTTagCompound itemCompound = compound.getCompoundTag(RECIPE_OUTPUT);
         if (itemCompound == null)
             return null;
         ItemStack recipeInput = ItemStack.loadItemStackFromNBT(itemCompound);

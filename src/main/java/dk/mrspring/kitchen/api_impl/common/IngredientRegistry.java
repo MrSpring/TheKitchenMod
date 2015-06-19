@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.api.pan.IIngredientRegistry;
 import dk.mrspring.kitchen.api_impl.common.ingredient.BasicIngredient;
+import dk.mrspring.kitchen.api_impl.common.ingredient.JamIngredient;
 import dk.mrspring.kitchen.api_impl.common.ingredient.RecipeIngredient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,8 +23,8 @@ public class IngredientRegistry implements IIngredientRegistry
 
     private IngredientRegistry()
     {
-//        registerIngredient(new BaconIngredient());
         registerIngredient(new RecipeIngredient());
+        registerIngredient(new JamIngredient());
     }
 
     public static IngredientRegistry getInstance()

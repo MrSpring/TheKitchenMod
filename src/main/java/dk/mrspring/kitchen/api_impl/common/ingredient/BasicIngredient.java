@@ -41,9 +41,9 @@ public class BasicIngredient implements IIngredient
     }
 
     @Override
-    public void onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player)
+    public boolean onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-
+        return false;
     }
 
     @Override

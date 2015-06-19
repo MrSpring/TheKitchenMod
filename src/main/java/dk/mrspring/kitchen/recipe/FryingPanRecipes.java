@@ -38,8 +38,6 @@ public class FryingPanRecipes extends BasicRecipeHandler
                 new BasicRecipe(beef, cooked_beef),
                 new BasicRecipe(raw_roast_beef, roast_beef),
                 new BasicRecipe(porkchop, cooked_porkchop), // TODO: Add the rest of the recipes
-//                new BasicRecipe(new ItemStack(peanut), Kitchen.getJamJarItemStack(Jam.getJam("peanut"), 3))
-                new JamRecipe(peanut, "peanut")
         });
     }
 }

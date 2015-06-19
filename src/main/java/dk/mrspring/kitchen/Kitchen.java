@@ -41,6 +41,7 @@ public class Kitchen
     public ToasterRecipes toasterRecipes;
     public KnifeRecipes knifeRecipes;
     public FryingPanRecipes fryingPanRecipes;
+    public FryingPanJamRecipes fryingPanJamRecipes;
     private GuiHandler guiHandler = new GuiHandler();
 
     @EventHandler
@@ -112,12 +113,13 @@ public class Kitchen
         instance.toasterRecipes = new ToasterRecipes();
         instance.knifeRecipes = new KnifeRecipes();
         instance.fryingPanRecipes = new FryingPanRecipes();
+        instance.fryingPanJamRecipes = new FryingPanJamRecipes();
 
         instance.ovenRecipes.load();
         instance.toasterRecipes.load();
         instance.knifeRecipes.load();
         instance.fryingPanRecipes.load();
-//        instance.panRecipes.load(); // TODO: Register default pan recipes
+        instance.fryingPanJamRecipes.load();
 
         TileEntityWaffleIron.load();
 

@@ -48,8 +48,9 @@ public interface IIngredient
      * @param pan     The Frying Pan this ingredient is on.
      * @param clicked The ItemStack that was right-clicked with.
      * @param player  The Player that right-clicked the Frying Pan.
+     * @return Return true to skip other pan right-click functions, and mark the block for an update.
      */
-    void onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player);
+    boolean onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player);
 
     /**
      * @param pan The Frying Pan this ingredient is on.

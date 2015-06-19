@@ -57,10 +57,10 @@ public class BlockFryingPan extends BlockContainerBase
         float pixel = 0.06125F;
         TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
 
-        if (tileEntityPan.getCookTime() >= 400)
+        if (tileEntityPan.isFinished())
             switch (metadata)
             {
-                case 0:
+                case 0: // TODO: Position
                     world.spawnParticle("smoke",
                             x + 2 * pixel + (random.nextDouble() * (8 * pixel)),
                             y + 2 * pixel,

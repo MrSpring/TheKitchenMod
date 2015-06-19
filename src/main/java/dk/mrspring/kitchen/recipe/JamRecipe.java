@@ -61,4 +61,9 @@ public class JamRecipe implements IRecipe
     {
         return jamOutput != null && !jamOutput.equals("empty");
     }
+
+    public String getJamOutput(ItemStack input)
+    {
+        return this.jamOutput;
+    }
 }

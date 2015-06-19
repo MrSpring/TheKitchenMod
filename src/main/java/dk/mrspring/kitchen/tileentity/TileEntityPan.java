@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.api_impl.common.IngredientRegistry;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,8 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
     public boolean rightClicked(ItemStack clicked, EntityPlayer player) // TODO: Rewrite
     {
         if (getIngredient() != null)
-            getIngredient().onRightClicked(this, clicked, player);
+            if (getIngredient().onRightClicked(this, clicked, player))
+                return true;
 
         if (clicked != null)
         {
@@ -69,7 +71,6 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
     {
         IIngredient old = this.getIngredient();
         this.ingredient = newIngredient;
-        worldObj.markBlockForUpdate(xCoord,yCoord,zCoord);
         return old;
     }
 
@@ -137,25 +138,28 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
             if (cookTime < getDoneTime())
                 cookTime++;
         } else cookTime = 0;
-//        System.out.println(cookTime);
     }
 
     @Override
     public EntityItem spawnItemInWorld(ItemStack stack)
     {
-        Random random = new Random();
+        if (stack != null)
+        {
+            Random random = new Random();
 
-        float xRandPos = random.nextFloat() * 0.8F + 0.1F;
-        float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+            float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+            float zRandPos = random.nextFloat() * 0.8F + 0.1F;
 
-        EntityItem entityItem = new EntityItem(worldObj, xCoord + xRandPos, yCoord + 1, zCoord + zRandPos, stack);
+            EntityItem entityItem = new EntityItem(worldObj, xCoord + xRandPos, yCoord + 1, zCoord + zRandPos, stack);
 
-        entityItem.motionX = random.nextGaussian() * 0.005F;
-        entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
-        entityItem.motionZ = random.nextGaussian() * 0.005F;
+            entityItem.motionX = random.nextGaussian() * 0.005F;
+            entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
+            entityItem.motionZ = random.nextGaussian() * 0.005F;
 
-        worldObj.spawnEntityInWorld(entityItem);
-        return entityItem;
+            worldObj.spawnEntityInWorld(entityItem);
+            return entityItem;
+        }
+        return null;
     }
 
     @Override
