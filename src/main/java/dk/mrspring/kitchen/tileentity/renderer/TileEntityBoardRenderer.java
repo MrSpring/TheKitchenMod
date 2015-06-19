@@ -21,13 +21,11 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
         double yOffset = 0;
         for (int i = 0; i < layers.size(); i++)
         {
-//            System.out.println("yOffset = " + yOffset);
             GL11.glPushMatrix();
             GL11.glTranslated(0, yOffset, 0);
             ItemStack layer = layers.get(i);
             IBoardRenderingHandler renderingHandler = BoardRenderingRegistry.getInstance().getHandlerFor(layers, i, specialTag, layer);
             renderingHandler.render(layers, i, specialTag, layer);
-            double scale = 0.0325D;
             yOffset += renderingHandler.getModelHeight(layers, i, specialTag, layer);
             GL11.glPopMatrix();
         }
@@ -56,61 +54,5 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
         renderLayers(layers, specialInfo);
 
         GL11.glPopMatrix();
-
-        /*double pixel = 0.0418;
-
-        DoubleBuffer buffer = BufferUtils.createDoubleBuffer(8).put(new double[]{1, 0, 0, 0.001 + (pixel * 3)});
-        buffer.flip();
-        GL11.glClipPlane(GL11.GL_CLIP_PLANE5, buffer);
-        GL11.glEnable(GL11.GL_CLIP_PLANE5);*/
-
-        /*if (specialInfo.hasKey("SliceCount") && specialInfo.getInteger("SliceCount") > 0)
-        {
-            int sliceCount = specialInfo.getInteger("SliceCount");
-            float distance = 0.0425F;
-            switch (sliceCount)
-            {
-                case 1:
-                    GL11.glPushMatrix();
-                    GL11.glTranslatef(distance / 2F, 0, 0);
-                    enableClipPlane(11, false, GL11.GL_CLIP_PLANE0);
-                    SandwichRender.renderSandwich(layers, specialInfo);
-                    disableClipPlane(GL11.GL_CLIP_PLANE0);
-                    GL11.glPopMatrix();
-
-                    GL11.glPushMatrix();
-                    GL11.glTranslatef(-distance / 2F, 0, 0);
-                    enableClipPlane(5, true, GL11.GL_CLIP_PLANE0);
-                    SandwichRender.renderSandwich(layers, specialInfo);
-                    disableClipPlane(GL11.GL_CLIP_PLANE0);
-                    GL11.glPopMatrix();
-                    break;
-                case 2:
-                    GL11.glPushMatrix();
-                    enableClipPlane(11, false, GL11.GL_CLIP_PLANE0);
-                    enableClipPlane(11, true, GL11.GL_CLIP_PLANE1);
-                    SandwichRender.renderSandwich(layers, specialInfo);
-                    disableClipPlane(GL11.GL_CLIP_PLANE0);
-                    disableClipPlane(GL11.GL_CLIP_PLANE1);
-                    GL11.glPopMatrix();
-
-                    GL11.glPushMatrix();
-                    GL11.glTranslatef(-distance, 0, 0);
-                    enableClipPlane(5, true, GL11.GL_CLIP_PLANE0);
-                    SandwichRender.renderSandwich(layers, specialInfo);
-                    disableClipPlane(GL11.GL_CLIP_PLANE0);
-                    GL11.glPopMatrix();
-
-                    GL11.glPushMatrix();
-                    GL11.glTranslatef(distance, 0, 0);
-                    enableClipPlane(5, false, GL11.GL_CLIP_PLANE0);
-                    SandwichRender.renderSandwich(layers, specialInfo);
-                    disableClipPlane(GL11.GL_CLIP_PLANE0);
-                    GL11.glPopMatrix();
-                    break;
-            }
-        } else SandwichRender.renderSandwich(layers, specialInfo);
-        //GL11.glDisable(GL11.GL_CLIP_PLANE5);
-        GL11.glPopMatrix();*/
     }
 }

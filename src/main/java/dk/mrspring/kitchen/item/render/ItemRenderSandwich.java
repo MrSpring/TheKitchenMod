@@ -1,8 +1,12 @@
 package dk.mrspring.kitchen.item.render;
 
+import dk.mrspring.kitchen.tileentity.renderer.TileEntityBoardRenderer;
+import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public class ItemRenderSandwich implements IItemRenderer
 {
@@ -47,13 +51,12 @@ public class ItemRenderSandwich implements IItemRenderer
                 GL11.glPushMatrix();
 
                 GL11.glRotatef(-60, 1, 0, 0);
-                GL11.glRotatef(20, 0, 0, 1);
-                GL11.glTranslatef(.4F, 1.2F, .125F);
-                float f = 1.1F;
+                GL11.glTranslatef(.4F, 2.3F, .3F);
+                float f = 1.5F;
                 GL11.glScalef(f, f, f);
 
-//				SandwichRender.renderSandwich(item, null);
-                // TODO: FIX
+                List<ItemStack> layers = SandwichUtils.getSandwichAsLayerList(item);
+                TileEntityBoardRenderer.renderLayers(layers, null);
 
                 GL11.glPopMatrix();
 
@@ -63,16 +66,16 @@ public class ItemRenderSandwich implements IItemRenderer
             {
                 GL11.glPushMatrix();
 
-                //GL11.glTranslatef(-1F, 0F, 0F);
-                GL11.glTranslatef(.35F, 1.3F, -0.2F);
+                GL11.glTranslatef(.2F, 1.8F, -0.2F);
                 GL11.glRotatef(90, 0, 1, 0);
                 GL11.glRotatef(-10, 1, 0, 0);
 
-                float scale = 0.7F;
+                float scale = 1F;
                 GL11.glScalef(scale, scale, scale);
 
-//				SandwichRender.renderSandwich(item, null);
-                // TODO: FIX
+                List<ItemStack> layers = SandwichUtils.getSandwichAsLayerList(item);
+                TileEntityBoardRenderer.renderLayers(layers, null);
+
                 GL11.glPopMatrix();
 
                 break;
@@ -81,13 +84,12 @@ public class ItemRenderSandwich implements IItemRenderer
             {
                 GL11.glPushMatrix();
 
-                GL11.glTranslatef(0F, 2F, 0F);
+                GL11.glTranslatef(0F, 2.15F, 0F);
                 float f = 1.5F;
                 GL11.glScalef(f, f, f);
 
-
-//                SandwichRender.renderSandwich(item, null);
-                // TODO: FIX
+                List<ItemStack> layers = SandwichUtils.getSandwichAsLayerList(item);
+                TileEntityBoardRenderer.renderLayers(layers, null);
 
                 GL11.glPopMatrix();
 
