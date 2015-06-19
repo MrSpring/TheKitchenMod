@@ -4,16 +4,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.BoardRenderingRegistry;
-import dk.mrspring.kitchen.item.render.SandwichRender;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import java.nio.DoubleBuffer;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)

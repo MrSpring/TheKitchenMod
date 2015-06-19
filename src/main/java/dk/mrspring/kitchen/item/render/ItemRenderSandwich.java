@@ -6,9 +6,6 @@ import org.lwjgl.opengl.GL11;
 
 public class ItemRenderSandwich implements IItemRenderer
 {
-    protected ItemStack[] items;
-    protected boolean readData = true;
-
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {

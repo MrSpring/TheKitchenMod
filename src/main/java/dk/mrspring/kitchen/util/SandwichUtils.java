@@ -1,11 +1,9 @@
 package dk.mrspring.kitchen.util;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
-import dk.mrspring.kitchen.item.render.SandwichRender;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
