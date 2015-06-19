@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.util;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.item.render.SandwichRender;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class SandwichUtils
 {
-    public static ItemStack makeSandwich(ItemStack[] layers)
+    public static ItemStack makeSandwich(ItemStack[] layers) // TODO: Re-implement Combo system
     {
         NBTTagList layersList = new NBTTagList();
         ItemStack finishedSandwich = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
@@ -63,5 +64,16 @@ public class SandwichUtils
                 }
         }
         return layers;
+    }
+
+    public static boolean isSandwichReady(List<ItemStack> layers)
+    {
+        if (isAllSandwichable(layers))
+        {
+            int lc = layers.size();
+            ISandwichable bottom = SandwichableRegistry.getInstance().getSandwichableForItem(layers.get(0));
+            ISandwichable top = SandwichableRegistry.getInstance().getSandwichableForItem(layers.get(lc - 1));
+            return bottom.getIsBread() && top.getIsBread();
+        } else return false;
     }
 }

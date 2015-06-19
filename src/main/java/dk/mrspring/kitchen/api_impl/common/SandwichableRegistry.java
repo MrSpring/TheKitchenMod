@@ -9,6 +9,7 @@ import dk.mrspring.kitchen.config.wrapper.JsonItemStack;
 
 import static dk.mrspring.kitchen.KitchenItems.*;
 
+import dk.mrspring.kitchen.util.StackUtils;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -97,7 +98,7 @@ public class SandwichableRegistry implements ISandwichableRegistry
     public Sandwichable getSandwichableForItem(Stack stack)
     {
         for (Sandwichable sandwichable : sandwichableItems)
-            if (sandwichable.getStack().equals(stack))
+            if (sandwichable.getStack().areStacksEqual(stack, Stack.Type.ITEM, Stack.Type.METADATA))
                 return sandwichable;
         return null;
     }
@@ -115,7 +116,7 @@ public class SandwichableRegistry implements ISandwichableRegistry
 
     public boolean isSandwichable(ItemStack stack)
     {
-        return this.isSandwichable(new Stack(stack));
+        return this.isSandwichable(StackUtils.fromItemStack(stack));
     }
 
     /**

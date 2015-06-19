@@ -203,60 +203,15 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
     }
 
     @Override
-    public ItemStack finishBoard()
+    public ItemStack finishBoard() // TODO: Replace with call to Board handler
     {
         System.out.println("Finishing!");
-        if (SandwichUtils.isAllSandwichable(getLayers()))
+        if (SandwichUtils.isSandwichReady(getLayers())/*isAllSandwichable(getLayers())*/)
         {
-            System.out.println("All are sandwichable!");
-            SandwichableRegistry.Sandwichable temp = SandwichableRegistry.getInstance().getSandwichableForItem(getTopItem());
-            System.out.println(temp != null);
-            if (temp != null)
-            {
-                System.out.println(temp.getIsBread());
-                System.out.println(temp.getStack().toString());
-            }
-            if (temp != null && temp.getIsBread())
-            {
-                System.out.println("Top is bread!");
-                temp = SandwichableRegistry.getInstance().getSandwichableForItem(getLayers().get(0));
-                if (temp != null && temp.getIsBread())
-                {
-                    System.out.println("Bottom is bread!");
-                    ItemStack finishedSandwich = SandwichUtils.makeSandwich(getLayers().toArray(new ItemStack[getLayerCount()]));
-                    return finishedSandwich;
-                }
-            }
+            ItemStack finishedSandwich = SandwichUtils.makeSandwich(getLayers().toArray(new ItemStack[getLayerCount()]));
+            this.clearBoard();
+            return finishedSandwich;
         }
-        /*if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
-            return null;
-
-        NBTTagList layersList = new NBTTagList();
-        ItemStack sandwich = GameRegistry.findItemStack(ModInfo.modid, "sandwich", 1);
-
-        for (ItemStack layer : this.layers)
-        {
-            NBTTagCompound layerCompound = new NBTTagCompound();
-            layer.writeToNBT(layerCompound);
-            layersList.appendTag(layerCompound);
-        }
-
-        sandwich.setTagInfo("SandwichLayers", layersList);
-
-
-        NBTTagCompound comboCompound = new NBTTagCompound();
-        ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getComboMatching(sandwich);
-        String comboName = "none";
-
-        if (combo != null)
-            comboName = combo.getUnlocalizedName();
-
-        comboCompound.setString("ComboName", comboName);
-        sandwich.setTagInfo("Combo", comboCompound);
-
-        this.resetLayers();
-
-        return sandwich;*/
         return null;
     }
 
