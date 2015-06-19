@@ -59,7 +59,7 @@ public class Stack
      */
     public Stack(ItemStack stack, boolean copyMetadata)
     {
-        this(stack.getItem(), copyMetadata ? stack.getItemDamage() : -1);
+        this(stack.getItem(), copyMetadata ? stack.getItemDamage() : -1, stack.stackSize);
     }
 
     @Override
