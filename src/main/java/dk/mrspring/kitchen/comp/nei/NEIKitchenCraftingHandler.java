@@ -5,6 +5,8 @@ import codechicken.nei.recipe.FurnaceRecipeHandler;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
@@ -103,20 +105,6 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
         return getName();
     }
 
-    public class RecipePair extends SmeltingPair
-    {
-        public RecipePair(ItemStack ingred, ItemStack result)
-        {
-            super(ingred, result);
-        }
-
-        @Override
-        public PositionedStack getOtherStack()
-        {
-            return new PositionedStack(getBlockDisplayStack(), 51, 42, false);
-        }
-    }
-
     private void drawTexturedModalRect(int x, int y, int u, int v, int width, int height)
     {
         float f = 0.00390625F;
@@ -128,5 +116,19 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
         tessellator.addVertexWithUV((double) (x + width), (double) (y), 1, (double) ((float) (u + width) * f), (double) ((float) (v) * f1));
         tessellator.addVertexWithUV((double) (x), (double) (y), 1, (double) ((float) (u) * f), (double) ((float) (v) * f1));
         tessellator.draw();
+    }
+
+    public class RecipePair extends SmeltingPair
+    {
+        public RecipePair(ItemStack input, ItemStack output)
+        {
+            super(input, output);
+        }
+
+        @Override
+        public PositionedStack getOtherStack()
+        {
+            return new PositionedStack(getBlockDisplayStack(), 51, 42, false);
+        }
     }
 }

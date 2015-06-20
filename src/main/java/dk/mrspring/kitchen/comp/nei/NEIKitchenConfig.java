@@ -2,9 +2,13 @@ package dk.mrspring.kitchen.comp.nei;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
+import codechicken.nei.api.IOverlayHandler;
 import codechicken.nei.api.ItemFilter;
+import codechicken.nei.recipe.IRecipeHandler;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -68,8 +72,16 @@ public class NEIKitchenConfig implements IConfigureNEI
                 };
             }
         });
-//        API.registerRecipeHandler(new FryingPanCraftingHandler()); // TODO: Re-enable when fixed
-//        API.registerUsageHandler(new FryingPanCraftingHandler()); // TODO: Add NEI handler interface to for Ingredients
+        API.registerRecipeHandler(new FryingPanCraftingHandler()); // TODO: Re-enable when fixed
+        API.registerUsageHandler(new FryingPanCraftingHandler()); // TODO: Add NEI handler interface to for Ingredients
+        API.registerGuiOverlayHandler(GuiFurnace.class, new IOverlayHandler()
+        {
+            @Override
+            public void overlayRecipe(GuiContainer guiContainer, IRecipeHandler iRecipeHandler, int i, boolean b)
+            {
+
+            }
+        }, "frying_pan");
 
         API.registerRecipeHandler(new OvenCraftingHandler());
         API.registerUsageHandler(new OvenCraftingHandler());

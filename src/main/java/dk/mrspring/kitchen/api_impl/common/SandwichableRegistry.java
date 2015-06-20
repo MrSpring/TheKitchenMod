@@ -29,38 +29,39 @@ public class SandwichableRegistry implements ISandwichableRegistry
     private SandwichableRegistry()
     {
         // Adds all default Sandwichable items.
-        this.makeItemSandwichable(new ItemStack(bread_slice), 0, true);
-        this.makeItemSandwichable(new ItemStack(sliced_burger_bun), 1, true);
-        this.makeItemSandwichable(new ItemStack(toast), 0, true);
-        this.makeItemSandwichable(new ItemStack(toasted_toast), 1, true);
-        this.makeItemSandwichable(new ItemStack(bacon), 2, false);
-        this.makeItemSandwichable(new ItemStack(raw_bacon), 1, false);
-        this.makeItemSandwichable(new ItemStack(tomato_slice), 1, false);
-        this.makeItemSandwichable(new ItemStack(lettuce_leaf), 2, false);
-        this.makeItemSandwichable(new ItemStack(potato_slice), 2, false);
-        this.makeItemSandwichable(new ItemStack(carrot_slice), 2, false);
-        this.makeItemSandwichable(new ItemStack(roast_beef), 4, false);
-        this.makeItemSandwichable(new ItemStack(raw_roast_beef), 1, false);
-        this.makeItemSandwichable(new ItemStack(chicken_fillet), 4, false);
-        this.makeItemSandwichable(new ItemStack(raw_chicken_fillet), 1, false);
-        this.makeItemSandwichable(new ItemStack(cheese_slice), 3, false);
-        this.makeItemSandwichable(new ItemStack(butter), 1, false); // TODO: Add butter board handler
-        this.makeItemSandwichable(new ItemStack(jam_strawberry), 2, false, false, false);
-        this.makeItemSandwichable(new ItemStack(jam_apple), 2, false, false, false);
-        this.makeItemSandwichable(new ItemStack(jam_peanut), 2, false, false, false);
-        this.makeItemSandwichable(new ItemStack(jam_cocoa), 2, false, false, false);
-        this.makeItemSandwichable(new ItemStack(jam_ketchup), 2, false, false, false);
-        this.makeItemSandwichable(new ItemStack(raw_cut_fish), 1, false);
-        this.makeItemSandwichable(new ItemStack(cooked_cut_fish), 3, false);
-        this.makeItemSandwichable(new ItemStack(ham_slice), 3, false);
-        this.makeItemSandwichable(new ItemStack(onion_slice), 2, false);
-        this.makeItemSandwichable(new ItemStack(raw_meat_patty), 1, false);
-        this.makeItemSandwichable(new ItemStack(cooked_meat_patty), 4, false);
+        this.makeItemSandwichable(bread_slice, 0, true);
+        this.makeItemSandwichable(sliced_burger_bun, 1, true);
+        this.makeItemSandwichable(toast, 0, true);
+        this.makeItemSandwichable(toasted_toast, 1, true);
+        this.makeItemSandwichable(bacon, 2, false);
+        this.makeItemSandwichable(raw_bacon, 1, false);
+        this.makeItemSandwichable(tomato_slice, 1, false);
+        this.makeItemSandwichable(lettuce_leaf, 2, false);
+        this.makeItemSandwichable(potato_slice, 2, false);
+        this.makeItemSandwichable(carrot_slice, 2, false);
+        this.makeItemSandwichable(roast_beef, 4, false);
+        this.makeItemSandwichable(raw_roast_beef, 1, false);
+        this.makeItemSandwichable(chicken_fillet, 4, false);
+        this.makeItemSandwichable(raw_chicken_fillet, 1, false);
+        this.makeItemSandwichable(cheese_slice, 3, false);
+        this.makeItemSandwichable(butter, 1, false); // TODO: Add butter board handler
+        this.makeItemSandwichable(jam_strawberry, 2, false, false, false);
+        this.makeItemSandwichable(jam_apple, 2, false, false, false);
+        this.makeItemSandwichable(jam_peanut, 2, false, false, false);
+        this.makeItemSandwichable(jam_cocoa, 2, false, false, false);
+        this.makeItemSandwichable(jam_ketchup, 2, false, false, false);
+        this.makeItemSandwichable(raw_cut_fish, 1, false);
+        this.makeItemSandwichable(cooked_cut_fish, 3, false);
+        this.makeItemSandwichable(ham_slice, 3, false);
+        this.makeItemSandwichable(onion_slice, 2, false);
+        this.makeItemSandwichable(raw_meat_patty, 1, false);
+        this.makeItemSandwichable(cooked_meat_patty, 4, false);
         this.registerSandwichable(new JamSandwichable(jam_strawberry, "strawberry", 2));
         this.registerSandwichable(new JamSandwichable(jam_apple, "apple", 2));
         this.registerSandwichable(new JamSandwichable(jam_peanut, "peanut", 2));
         this.registerSandwichable(new JamSandwichable(jam_cocoa, "cocoa", 2));
         this.registerSandwichable(new JamSandwichable(jam_ketchup, "ketchup", 2));
+        this.makeItemSandwichable(fried_egg, 3, false);
     }
 
     public static SandwichableRegistry getInstance()
@@ -101,16 +102,24 @@ public class SandwichableRegistry implements ISandwichableRegistry
         return this.makeItemSandwichable(StackUtils.fromItemStack(stack), heal, isBread, showInformation, dropItem);
     }
 
+    public ISandwichable makeItemSandwichable(Item item, int heal, boolean isBread, boolean showInformation, boolean dropItem)
+    {
+        return this.makeItemSandwichable(new ItemStack(item), heal, isBread, showInformation, dropItem);
+    }
+
     public ISandwichable makeItemSandwichable(ItemStack stack, int heal, boolean isBread)
     {
         return this.makeItemSandwichable(stack, heal, isBread, true, true);
     }
 
+    public ISandwichable makeItemSandwichable(Item item, int heal, boolean isBread)
+    {
+        return this.makeItemSandwichable(new ItemStack(item), heal, isBread);
+    }
+
     @Override
     public ISandwichable getSandwichableForItem(Stack stack)
     {
-        if (stack instanceof JamJarStack)
-            System.out.println("Getting sandwichable from: " + stack.toString());
         for (ISandwichable sandwichable : sandwichableItems)
             if (sandwichable.doesStackMatch(stack))
                 return sandwichable;

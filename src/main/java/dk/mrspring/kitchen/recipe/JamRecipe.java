@@ -11,10 +11,11 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by Konrad on 19-06-2015.
  */
-public class JamRecipe implements IRecipe
+public class JamRecipe implements IRecipe, INEIRecipeHelper
 {
     Stack input;
     String jamOutput;
+    int amount = 6;
 
     public JamRecipe(Item input, String jam)
     {
@@ -32,6 +33,17 @@ public class JamRecipe implements IRecipe
         this.jamOutput = jam;
     }
 
+    public int getAmount()
+    {
+        return amount;
+    }
+
+    public JamRecipe setAmount(int amount)
+    {
+        this.amount = amount;
+        return this;
+    }
+
     @Override
     public boolean doesInputMatch(Stack stack)
     {
@@ -47,13 +59,13 @@ public class JamRecipe implements IRecipe
     @Override
     public ItemStack getOutput(ItemStack stack)
     {
-        return ItemJamJar.getJamJarStack(jamOutput, 6);
+        return ItemJamJar.getJamJarStack(jamOutput, getAmount());
     }
 
     @Override
     public Stack getOutput(Stack stack)
     {
-        return new JamJarStack(this.jamOutput, 6);
+        return new JamJarStack(this.jamOutput, getAmount());
     }
 
     @Override
@@ -65,5 +77,41 @@ public class JamRecipe implements IRecipe
     public String getJamOutput(ItemStack input)
     {
         return this.jamOutput;
+    }
+
+    @Override
+    public ItemStack getExpectedInput(ItemStack output)
+    {
+        return getExpectedInput();
+    }
+
+    @Override
+    public ItemStack getExpectedInput()
+    {
+        return input.toItemStack();
+    }
+
+    @Override
+    public ItemStack getExpectedOutput(ItemStack input)
+    {
+        return getExpectedOutput();
+    }
+
+    @Override
+    public ItemStack getExpectedOutput()
+    {
+        return ItemJamJar.getJamJarStack(jamOutput, getAmount());
+    }
+
+    @Override
+    public boolean doesExpectedInputMatch(ItemStack otherInput)
+    {
+        return getExpectedInput().isItemEqual(otherInput);
+    }
+
+    @Override
+    public boolean doesExpectedOutputMatch(ItemStack otherOutput)
+    {
+        return jamOutput.equals(ItemJamJar.getJamFromStack(otherOutput));
     }
 }
