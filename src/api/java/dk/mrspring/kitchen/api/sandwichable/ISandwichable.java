@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.api.sandwichable;
 
 import dk.mrspring.kitchen.api.stack.Stack;
+import net.minecraft.item.ItemStack;
 
 /**
  * Created by Konrad on 13-05-2015.
@@ -30,4 +31,12 @@ public interface ISandwichable
     boolean getDropItem();
 
     ISandwichable setDropItem(boolean dropItem);
+
+    boolean doesStackMatch(Stack stack);
+
+    ItemStack getBoardStack(ItemStack original);
+
+    void onAdded(ItemStack added);
+
+    // TODO: Add missing methods. See SandwichableRegistry and SandwichableItemHandler
 }

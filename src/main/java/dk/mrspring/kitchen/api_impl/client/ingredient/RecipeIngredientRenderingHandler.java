@@ -20,8 +20,8 @@ import org.lwjgl.opengl.GL11;
 public class RecipeIngredientRenderingHandler implements IIngredientRenderingHandler
 {
     @Override
-    public boolean shouldBeUsed(IFryingPan fryingPan, IIngredient ingredient) // TODO: Fix jam recipes
-    { // TODO: Remove Jam classes, replace with Mixing Bowl style rendering, ie. register string, color pairs
+    public boolean shouldBeUsed(IFryingPan fryingPan, IIngredient ingredient)
+    {
         return ingredient instanceof RecipeIngredient;
     }
 

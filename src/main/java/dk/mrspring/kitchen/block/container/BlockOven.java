@@ -18,7 +18,6 @@ public class BlockOven extends BlockContainerBase
     {
         super(Material.iron, "oven", TileEntityOven.class);
 
-        this.setTickRandomly(true);
         this.setHardness(4.0F);
         this.setStepSound(Block.soundTypePiston);
     }

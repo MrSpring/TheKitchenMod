@@ -49,6 +49,16 @@ public class ItemJamJar extends ItemBase
         return jamStack;
     }
 
+    public static void reduceUsesLeft(ItemStack jamStack, int amount)
+    {
+        if (jamStack.getItemDamage() > 0)
+        {
+            jamStack.setItemDamage(jamStack.getItemDamage() - amount);
+            if (jamStack.getItemDamage() == 0 && jamStack.hasTagCompound())
+                jamStack.getTagCompound().removeTag(JAM_TYPE);
+        }
+    }
+
     @Override
     public boolean requiresMultipleRenderPasses()
     {

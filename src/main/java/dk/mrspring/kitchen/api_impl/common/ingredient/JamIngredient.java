@@ -56,7 +56,7 @@ public class JamIngredient implements IIngredient
     @Override
     public boolean onRightClicked(IFryingPan pan, ItemStack clicked, EntityPlayer player)
     {
-        if (pan.isFinished() && clicked.getItem() == KitchenItems.jam_jar)
+        if (pan.isFinished() && clicked != null && clicked.getItem() == KitchenItems.jam_jar)
         {
             NBTTagCompound compound = pan.getSpecialInfo();
             NBTTagCompound inputCompound = compound.getCompoundTag(JAM_RECIPE_INPUT);

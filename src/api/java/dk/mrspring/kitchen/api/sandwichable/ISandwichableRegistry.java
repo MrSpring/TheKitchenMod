@@ -33,4 +33,6 @@ public interface ISandwichableRegistry
      * @return Returns the Sandwichable for the item that was made Sandwichable.
      */
     ISandwichable makeItemSandwichable(Stack stack, int heal, boolean isBread, boolean showInformation, boolean dropItem);
+
+    void registerSandwichable(ISandwichable sandwichable);
 }

@@ -1,10 +1,9 @@
 package dk.mrspring.kitchen.api_impl.common.board;
 
-import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api.board.ICuttingBoard;
+import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,7 +18,7 @@ public class SandwichableItemHandler implements IBoardItemHandler
     {
         return SandwichableRegistry.getInstance().isSandwichable(stack) &&
                 (tileEntityBoard.getLayerCount() <= 0 || SandwichUtils.isAllSandwichable(tileEntityBoard.getLayers()));
-    }
+    } // TODO: Fix for jam
 
     @Override
     public boolean canAdd(ICuttingBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
@@ -30,16 +29,17 @@ public class SandwichableItemHandler implements IBoardItemHandler
     @Override
     public ItemStack onAdded(ICuttingBoard tileEntityBoard, ItemStack added, EntityPlayer player)
     {
-        ItemStack copy = added.copy();
-        copy.stackSize = 1;
-        added.stackSize--;
-        return copy;
+        ISandwichable sandwichable = SandwichableRegistry.getInstance().getSandwichableForItem(added);
+        ItemStack stack = sandwichable.getBoardStack(added);
+        sandwichable.onAdded(added);
+        stack.stackSize = 1;
+        return stack;
     }
 
     @Override
     public boolean onRightClicked(ICuttingBoard tileEntityBoard, ItemStack clicked, EntityPlayer player)
     {
-        return true;
+        return false;
     }
 
     @Override
@@ -51,6 +51,7 @@ public class SandwichableItemHandler implements IBoardItemHandler
     @Override
     public ItemStack onRemoved(ICuttingBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
     {
-        return removed;
+        ISandwichable sandwichable = SandwichableRegistry.getInstance().getSandwichableForItem(removed);
+        return sandwichable.getDropItem() ? removed : null;
     }
 }

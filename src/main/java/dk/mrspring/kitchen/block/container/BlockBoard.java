@@ -31,51 +31,17 @@ public class BlockBoard extends BlockContainerBase
     }
 
     @Override
-    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer activator, int p_149727_6_, float clickX, float clickY, float clickZ)
+    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer activator, int side, float clickX, float clickY, float clickZ)
     {
-        TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z); // TODO: Make the TileEntity take care of all the stuff
-
+        TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
         if (!world.isRemote)
-        {
-            entity.rightClicked(activator.getCurrentEquippedItem(), activator);
-            world.markBlockForUpdate(x, y, z);
-            /*if (!activator.isSneaking())
-            {
-                if (activator.getCurrentEquippedItem() != null)
-                {
-                    if (entity.rightClicked(activator.getCurrentEquippedItem(), true))
-                    {
-                        --activator.getCurrentEquippedItem().stackSize;
-                        world.markBlockForUpdate(x, y, z);
-                        return true;
-                    } else world.markBlockForUpdate(x, y, z);
-                } else
-                {
-                    ItemStack removedItemStack = entity.removeTopItem();
-                    if (removedItemStack != null)
-                    {
-                        world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, removedItemStack));
-                        world.markBlockForUpdate(x, y, z);
-                        return true;
-                    } else world.markBlockForUpdate(x, y, z);
-                }
-            } else
-            {
-                ItemStack sandwich = entity.finishSandwich();
-                if (sandwich != null)
-                {
-                    world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, sandwich));
-                    world.markBlockForUpdate(x, y, z);
-                    return true;
-                }
-            }*/
-        }
-
+            if (entity.rightClicked(activator.getCurrentEquippedItem(), activator))
+                world.markBlockForUpdate(x, y, z);
         return false;
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
     {
         return null;
     }
@@ -83,32 +49,12 @@ public class BlockBoard extends BlockContainerBase
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
     {
-        /*TileEntityBoard tileEntityBoard = (TileEntityBoard) world.getTileEntity(x, y, z);
+        TileEntityBoard tileEntityBoard = (TileEntityBoard) world.getTileEntity(x, y, z);
 
         if (tileEntityBoard != null)
         {
-            for (int i = 0; i < tileEntityBoard.getLayers().size(); i++)
-            {
-                ItemStack item = tileEntityBoard.removeTopItem();
 
-                if (item != null)
-                {
-                    Random random = new Random();
-
-                    float xRandPos = random.nextFloat() * 0.8F + 0.1F;
-                    float yRandPos = random.nextFloat() * 0.8F + 0.1F;
-                    float zRandPos = random.nextFloat() * 0.8F + 0.1F;
-
-                    EntityItem entityItem = new EntityItem(world, x + xRandPos, y + yRandPos, z + zRandPos, item);
-
-                    entityItem.motionX = random.nextGaussian() * 0.05F;
-                    entityItem.motionY = random.nextGaussian() * 0.05F + 0.2F;
-                    entityItem.motionZ = random.nextGaussian() * 0.05F;
-
-                    world.spawnEntityInWorld(entityItem);
-                }
-            }
-        }*/ // TODO: Drop items
+        } // TODO: Drop items
 
         super.breakBlock(world, x, y, z, block, p_149749_6_);
     }
@@ -137,7 +83,6 @@ public class BlockBoard extends BlockContainerBase
 
         if (direction == 0 || direction == 2)
             world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-
         else if (direction == 1 || direction == 3)
             world.setBlockMetadataWithNotify(x, y, z, 1, 2);
 

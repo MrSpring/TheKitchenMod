@@ -24,14 +24,10 @@ public class StackUtils
             return new MixingBowlStack(mixType, usesLeft);
         } else if (stack.getItem() == KitchenItems.jam_jar)
         {
-            int usesLeft = 0;
+            int usesLeft = stack.getItemDamage();
             String jam = "";
-            if (stack.hasTagCompound())
-            {
-                NBTTagCompound jamInfo = stack.getTagCompound().getCompoundTag("JamInfo");
-                usesLeft = jamInfo.getInteger("UsesLeft");
-                jam = jamInfo.getString("JamType");
-            }
+            if (stack.getTagCompound() != null)
+                jam = stack.getTagCompound().getString("JamType");
             return new JamJarStack(jam, usesLeft);
         } else return new Stack(stack);
     }

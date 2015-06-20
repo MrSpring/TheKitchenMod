@@ -1,9 +1,11 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.api.ingredient.IFryingPan;
 import dk.mrspring.kitchen.api.ingredient.IIngredient;
 import dk.mrspring.kitchen.api_impl.common.IngredientRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -21,6 +23,7 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
 {
     IIngredient ingredient = null;
     int cookTime = 0;
+    boolean isOnOven = false;
     private NBTTagCompound specialInfo = new NBTTagCompound();
 
     @Override
@@ -137,6 +140,13 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
             if (cookTime < getDoneTime())
                 cookTime++;
         } else cookTime = 0;
+    }
+
+    @Override
+    public boolean checkIsFunctional()
+    {
+        Block below = worldObj.getBlock(xCoord, yCoord - 1, zCoord);
+        return this.isOnOven = below == KitchenBlocks.oven;
     }
 
     @Override

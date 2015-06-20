@@ -39,7 +39,7 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
             {
                 ItemStack topItem = getTopItem();
                 IBoardItemHandler topHandler = BoardEventRegistry.instance().getHandlerFor(this, topItem, player);
-                if (!topHandler.onRightClicked(this, clicked, player))
+                if (topHandler.onRightClicked(this, clicked, player))
                     return true;
             }
 
@@ -57,54 +57,17 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
             return true;
         } else if (this.getLayerCount() > 0)
         {
-            System.out.println("Trying to remove!");
             ItemStack topItem = getTopItem();
             IBoardItemHandler topHandler = BoardEventRegistry.instance().getHandlerFor(this, topItem, player);
             if (topHandler.canBeRemoved(this, topItem, player))
             {
-                System.out.println("Removing!");
-                ItemStack removedStack = layers.remove(layers.size() - 1);
-                ItemStack dropping = topHandler.onRemoved(this, removedStack, player);
+                ItemStack dropping = topHandler.onRemoved(this, topItem, player);
+                getLayers().remove(topItem);
                 if (dropping != null)
                     this.spawnItemInWorld(dropping);
                 return true;
             } else return false;
         } else return false;
-        /*if (toAdd != null)
-        {
-            IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
-            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTopItem());
-
-            if (!callEvents)
-            {
-                onAddedToBoardEvent = BoardEventRegistry.getDefaultOnAddedToBoardEvent();
-                topItemEvent = BoardEventRegistry.getDefaultTopItemEvent();
-            }
-
-            NBTTagCompound compoundCopy = this.getSpecialInfo();
-
-            if (ModConfig.getSandwichConfig().canAdd(toAdd) && topItemEvent.canAddItemOnTop(this.getLayers(), toAdd, compoundCopy) && onAddedToBoardEvent.canAdd(this.getLayers(), toAdd, compoundCopy))
-            {
-                ItemStack temp = onAddedToBoardEvent.addedToBoard(this.getLayers(), toAdd, this.getSpecialInfo());
-                temp.stackSize = 1;
-                this.layers.add(temp);
-                this.setSpecialInfo(new NBTTagCompound());
-                compoundCopy = this.getSpecialInfo();
-                onAddedToBoardEvent.onAdded(this.getLayers(), toAdd, compoundCopy);
-                this.setSpecialInfo(compoundCopy);
-                return onAddedToBoardEvent.decrementStackSize(this.getLayers(), toAdd, this.getSpecialInfo());
-            } else
-            {
-                IOnBoardRightClickedEvent onBoardRightClickedEvent = (IOnBoardRightClickedEvent) BoardEventRegistry.getOnBoardRightClickedEventFor(toAdd.getItem());
-                if (!callEvents)
-                    onBoardRightClickedEvent = BoardEventRegistry.getDefaultOnBoardRightClickedEvent();
-                compoundCopy = this.getSpecialInfo();
-                onBoardRightClickedEvent.onRightClicked(this.getLayers(), toAdd, compoundCopy);
-                this.setSpecialInfo(compoundCopy);
-                return false;
-            }
-        }
-        return false;*/
     }
 
     @Override
@@ -150,6 +113,8 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
 
         float xRandPos = random.nextFloat() * 0.8F + 0.1F;
         float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+
+        System.out.println("Spawning: " + stack);
 
         EntityItem entityItem = new EntityItem(worldObj, xCoord + xRandPos, yCoord + 1, zCoord + zRandPos, stack);
 

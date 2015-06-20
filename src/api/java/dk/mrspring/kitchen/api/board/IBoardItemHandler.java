@@ -40,8 +40,7 @@ public interface IBoardItemHandler
      * @param tileEntityBoard The Cutting Board's TileEntity. Use getLayers() to get layers on the board.
      * @param clicked         The ItemStack that was right-clicked with.
      * @param player          The Player that right-clicked the Cutting Board.
-     * @return Returns true if the item can be placed on top of the current item handler. False will not allow the item
-     * to be placed.
+     * @return Return true to bypass other right-click functionality.
      */
     boolean onRightClicked(ICuttingBoard tileEntityBoard, ItemStack clicked, EntityPlayer player);
 

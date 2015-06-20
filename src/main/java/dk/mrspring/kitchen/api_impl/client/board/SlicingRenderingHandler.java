@@ -22,7 +22,6 @@ public class SlicingRenderingHandler extends ItemRenderingHandler
     @Override
     public void render(List<ItemStack> layers, int indexInList, NBTTagCompound specialTagCompound, ItemStack rendering)
     {
-//        super.render(layers, indexInList, specialTagCompound, rendering);
         int sliceCount = specialTagCompound.getInteger("SliceCount");
         float distance = 0.0425F;
         switch (sliceCount)
@@ -70,7 +69,7 @@ public class SlicingRenderingHandler extends ItemRenderingHandler
 
     private void enableClipPlane(int pixels, boolean flip, int plane)
     {
-        double pixel = 0.0418;
+        double pixel = 0.0428;
 
         DoubleBuffer buffer = BufferUtils.createDoubleBuffer(8).put(new double[]{flip ? -1 : 1/*(pixels - 8) >= 0 ? 1 : -1*/, 0, 0, 0.001 + (pixel * (pixels - 8))});
         buffer.flip();

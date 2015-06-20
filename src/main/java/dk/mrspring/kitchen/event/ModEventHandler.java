@@ -2,11 +2,15 @@ package dk.mrspring.kitchen.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
+import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+import net.minecraft.block.Block;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -14,9 +18,11 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.util.Random;
@@ -34,7 +40,7 @@ public class ModEventHandler
         boolean isModifierKeyDown = Keyboard.isKeyDown(key);
 
 //        SandwichableConfig.SandwichableEntry entry = ModConfig.getSandwichConfig().findEntry(stack);
-        SandwichableRegistry.Sandwichable entry = SandwichableRegistry.getInstance().getSandwichableForItem(stack);
+        ISandwichable entry = SandwichableRegistry.getInstance().getSandwichableForItem(stack);
         if (entry != null)
             if (entry.getShowInformation() || ModConfig.getKitchenConfig().show_item_debug_info)
             {
@@ -113,7 +119,7 @@ public class ModEventHandler
             }
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
@@ -121,6 +127,24 @@ public class ModEventHandler
         {
             player.getEntityData().setBoolean("HasGottenCookingBook", true);
             player.inventory.addItemStackToInventory(new ItemStack(KitchenItems.cooking_book));
+        }
+    }*/
+
+    @SubscribeEvent
+    public void onBlockBreak(BlockEvent.BreakEvent event)
+    {
+        int x = event.x, y = event.y, z = event.z;
+        Block block = event.world.getBlock(x, y, z);
+        if (block == KitchenBlocks.board)
+        {
+            System.out.println("Break");
+            TileEntity tileEntity = event.world.getTileEntity(x, y, z);
+            if (tileEntity instanceof TileEntityBoard)
+            {
+                TileEntityBoard entityBoard = (TileEntityBoard) tileEntity;
+                while (entityBoard.getLayerCount() > 0)
+                    entityBoard.removeTopItem(event.getPlayer());
+            }
         }
     }
 }

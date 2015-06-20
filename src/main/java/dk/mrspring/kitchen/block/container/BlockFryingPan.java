@@ -53,38 +53,44 @@ public class BlockFryingPan extends BlockContainerBase
     {
         super.randomDisplayTick(world, x, y, z, random);
 
-        int metadata = world.getBlockMetadata(x, y, z);
+        int metadata = world.getBlockMetadata(x, y - 1, z);
         float pixel = 0.06125F;
         TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
 
         if (tileEntityPan.isFinished())
-            switch (metadata)
-            {
-                case 0: // TODO: Position
-                    world.spawnParticle("smoke",
-                            x + 2 * pixel + (random.nextDouble() * (8 * pixel)),
-                            y + 2 * pixel,
-                            z + 0 + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
-                    break;
-                case 1:
-                    world.spawnParticle("smoke",
-                            x + 0.5F + pixel + (random.nextDouble() * (8 * pixel)),
-                            y + 2 * pixel,
-                            z + 0.5F - (random.nextDouble() * (8 * pixel)), 0, 0, 0);
-                    break;
-                case 2:
-                    world.spawnParticle("smoke",
-                            x + 0.5F + pixel + (random.nextDouble() * (8 * pixel)),
-                            y + 2 * pixel,
-                            z + 0.5F + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
-                    break;
-                case 3:
-                    world.spawnParticle("smoke",
-                            x + 2 * pixel + (random.nextDouble() * (8 * pixel)),
-                            y + 2 * pixel,
-                            z + 0.5F + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
-                    break;
-            }
+            if (world.getBlock(x, y - 1, z) != KitchenBlocks.oven)
+                world.spawnParticle("smoke",
+                        x + 4 * pixel + (random.nextDouble() * (8 * pixel)),
+                        y + 2 * pixel,
+                        z + 4 * pixel + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+            else
+                switch (metadata)
+                {
+                    case 0:
+                        world.spawnParticle("smoke",
+                                x + 0.5F + (random.nextDouble() * (8 * pixel)),
+                                y + 3 * pixel,
+                                z + 2 * pixel + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+                        break;
+                    case 1:
+                        world.spawnParticle("smoke",
+                                x + 0.5F - (2 * pixel) + (random.nextDouble() * (8 * pixel)),
+                                y + 3 * pixel,
+                                z + 0.5F + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+                        break;
+                    case 2:
+                        world.spawnParticle("smoke",
+                                x + (random.nextDouble() * (8 * pixel)),
+                                y + 3 * pixel,
+                                z + 0.5F - (2 * pixel) + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+                        break;
+                    case 3:
+                        world.spawnParticle("smoke",
+                                x + 2 * pixel + (random.nextDouble() * (8 * pixel)),
+                                y + 3 * pixel,
+                                z + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
+                        break;
+                }
     }
 
     @Override
@@ -94,23 +100,29 @@ public class BlockFryingPan extends BlockContainerBase
     }
 
     @Override
-    public void onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ)
+    public void updateTick(World world, int x, int y, int z, Random rand)
     {
-//        TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
-//        tileEntityPan.checkIsFunctional();
+        super.updateTick(world, x, y, z, rand);
+        TileEntityPan pan = (TileEntityPan) world.getTileEntity(x, y, z);
+        pan.checkIsFunctional();
     }
 
     @Override
-    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float clickX, float clickY, float clickZ)
+    public void onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ)
+    {
+        TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
+        tileEntityPan.checkIsFunctional();
+    }
+
+    @Override
+    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer player, int side, float clickX, float clickY, float clickZ)
     {
         TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
 
         if (tileEntityPan != null && !world.isRemote)
             if (tileEntityPan.rightClicked(player.getCurrentEquippedItem(), player))
             {
-//                player.getCurrentEquippedItem().stackSize--;
-//                tileEntityPan.checkIsFunctional();
-                System.out.println("Marking for update");
+                tileEntityPan.checkIsFunctional();
                 world.markBlockForUpdate(x, y, z);
                 return true;
             }
@@ -122,15 +134,6 @@ public class BlockFryingPan extends BlockContainerBase
     public boolean canPlaceBlockAt(World world, int x, int y, int z)
     {
         return world.getBlock(x, y - 1, z) == KitchenBlocks.oven;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack placed)
-    {
-        int rotation = (MathHelper.floor_double((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3);
-        super.onBlockPlacedBy(world, x, y, z, placer, placed);
-
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 0);
     }
 
     @Override

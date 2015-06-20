@@ -4,7 +4,6 @@ import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api.board.ICuttingBoard;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,8 +13,8 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class KnifeItemHandler implements IBoardItemHandler
 {
+    public static final int MAX_SLICE_COUNT = 3;
     private static final String SLICE_COUNT = "SliceCount";
-    public static int maxSliceCount = 3;
 
     @Override
     public boolean isForItem(ICuttingBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
@@ -27,21 +26,22 @@ public class KnifeItemHandler implements IBoardItemHandler
     @Override
     public boolean canAdd(ICuttingBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
     {
-        if (adding.getItem() == KitchenItems.knife)
+        /*if (adding.getItem() == KitchenItems.knife) // TODO: Cleanup
         {
             NBTTagCompound compound = tileEntityBoard.getSpecialInfo();
             int sliceCount = 0;
             if (compound.hasKey(SLICE_COUNT))
                 sliceCount = compound.getInteger(SLICE_COUNT);
             sliceCount++;
-            if (sliceCount >= maxSliceCount)
+            if (sliceCount >= MAX_SLICE_COUNT)
             {
                 ItemStack output = KnifeRecipes.instance().getOutputFor(tileEntityBoard.getTopItem());
                 tileEntityBoard.spawnItemInWorld(output);
                 tileEntityBoard.clearBoard();
             } else compound.setInteger(SLICE_COUNT, sliceCount);
             return false;
-        } else return tileEntityBoard.getLayerCount() == 0;
+        } else */
+        return tileEntityBoard.getLayerCount() <= 0;
     }
 
     @Override
@@ -56,7 +56,22 @@ public class KnifeItemHandler implements IBoardItemHandler
     @Override
     public boolean onRightClicked(ICuttingBoard tileEntityBoard, ItemStack clicked, EntityPlayer player)
     {
-        return clicked.getItem() == KitchenItems.knife;
+//        return clicked.getItem() == KitchenItems.knife;
+        if (clicked.getItem() == KitchenItems.knife)
+        {
+            NBTTagCompound compound = tileEntityBoard.getSpecialInfo();
+            int sliceCount = 0;
+            if (compound.hasKey(SLICE_COUNT))
+                sliceCount = compound.getInteger(SLICE_COUNT);
+            sliceCount++;
+            if (sliceCount >= MAX_SLICE_COUNT)
+            {
+                ItemStack output = KnifeRecipes.instance().getOutputFor(tileEntityBoard.getTopItem());
+                tileEntityBoard.spawnItemInWorld(output);
+                tileEntityBoard.clearBoard();
+            } else compound.setInteger(SLICE_COUNT, sliceCount);
+            return true;
+        } else return false;
     }
 
     @Override

@@ -22,6 +22,8 @@ import static dk.mrspring.kitchen.KitchenItems.mixing_bowl;
  */
 public class ItemMixingBowl extends ItemBase
 {
+    public static final String MIX_TYPE = "MixType";
+
     IIcon[] icons;
 
     public ItemMixingBowl(String name)
@@ -39,7 +41,7 @@ public class ItemMixingBowl extends ItemBase
     public static String getMixTypeFromStack(ItemStack mixingBowlStack)
     {
         if (mixingBowlStack.getTagCompound() != null)
-            return mixingBowlStack.getTagCompound().getString("MixType");
+            return mixingBowlStack.getTagCompound().getString(MIX_TYPE);
         else return null;
     }
 
@@ -49,7 +51,7 @@ public class ItemMixingBowl extends ItemBase
         {
             mixingBowlStack.setItemDamage(mixingBowlStack.getItemDamage() - amount);
             if (mixingBowlStack.getItemDamage() == 0 && mixingBowlStack.hasTagCompound())
-                mixingBowlStack.getTagCompound().removeTag("MixType");
+                mixingBowlStack.getTagCompound().removeTag(MIX_TYPE);
         }
     }
 
@@ -59,7 +61,7 @@ public class ItemMixingBowl extends ItemBase
         if (mixType != null)
         {
             NBTTagCompound tagCompound = new NBTTagCompound();
-            tagCompound.setString("MixType", mixType);
+            tagCompound.setString(MIX_TYPE, mixType);
             bowl.setTagCompound(tagCompound);
         }
         return bowl;
@@ -77,7 +79,7 @@ public class ItemMixingBowl extends ItemBase
         ItemStack stack = itemStack.copy();
         stack.setItemDamage(stack.getItemDamage() - 1);
         if (stack.getItemDamage() == 0)
-            stack.getTagCompound().removeTag("MixType");
+            stack.getTagCompound().removeTag(MIX_TYPE);
         return stack;
     }
 
@@ -104,7 +106,7 @@ public class ItemMixingBowl extends ItemBase
             for (Map.Entry<String, Integer> entry : ItemRenderMixingBowl.mixColors.entrySet())
             {
                 ItemStack stack = new ItemStack(p_150895_1_, 1, 3);
-                stack.setTagInfo("MixType", new NBTTagString(entry.getKey()));
+                stack.setTagInfo(MIX_TYPE, new NBTTagString(entry.getKey()));
                 list.add(stack);
             }
     }
@@ -129,7 +131,7 @@ public class ItemMixingBowl extends ItemBase
         if (itemStack.getItemDamage() == 0)
             return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
         else if (itemStack.getTagCompound() != null)
-            if (itemStack.getTagCompound().hasKey("MixType"))
+            if (itemStack.getTagCompound().hasKey(MIX_TYPE))
                 return StatCollector.translateToLocal("mix." + getMixTypeFromStack(itemStack) + ".name") + " " + StatCollector.translateToLocal("item.mixing_bowl.full.name");
         return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
     }

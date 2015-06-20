@@ -23,7 +23,9 @@ public class JamJarStack extends Stack
         if (that instanceof JamJarStack)
         {
             JamJarStack jarStack = (JamJarStack) that;
-            return jarStack.usesLeft == this.usesLeft && jarStack.jam.equals(this.jam) && super.areStacksEqual(that, types);
+            System.out.println("this: "+this.toString());
+            System.out.println("that: "+that.toString());
+            return ((this.usesLeft == -2 && jarStack.usesLeft > 0) || (jarStack.usesLeft == this.usesLeft)) && jarStack.jam.equals(this.jam);
         } else return super.areStacksEqual(that, types);
     }
 

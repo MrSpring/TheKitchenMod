@@ -27,4 +27,6 @@ public interface IFryingPan extends ISpecialTagInfo
     boolean isFinished();
 
     EntityItem spawnItemInWorld(ItemStack stack);
+
+    boolean checkIsFunctional();
 }

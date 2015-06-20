@@ -32,7 +32,7 @@ public class BasicItemHandler implements IBoardItemHandler
     @Override
     public boolean onRightClicked(ICuttingBoard board, ItemStack clicked, EntityPlayer player)
     {
-        return true;
+        return false;
     }
 
     @Override
