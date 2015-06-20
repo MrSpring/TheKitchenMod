@@ -61,9 +61,9 @@ public class BlockOven extends BlockContainerBase
 
         if (!world.isRemote)
         {
-            TileEntityOven tileEntity = (TileEntityOven) world.getTileEntity(x, y, z);
+            TileEntityOven tileEntity = (TileEntityOven) world.getTileEntity(x, y, z); // TODO: Re write oven, make API
 
-            if (!activator.isSneaking())
+            if (!activator.isSneaking()) // TODO: Make the TileEntity take care of all this
                 if (tileEntity.isOpen())
                     if (activator.getCurrentEquippedItem() != null)
                         return tileEntity.addItemStack(activator.getCurrentEquippedItem());

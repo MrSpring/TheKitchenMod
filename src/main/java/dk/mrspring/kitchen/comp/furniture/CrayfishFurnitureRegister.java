@@ -4,6 +4,9 @@ import com.mrcrayfish.furniture.api.IRecipeRegistry;
 import com.mrcrayfish.furniture.api.RecipeVariables;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModLogger;
+import dk.mrspring.kitchen.recipe.INEIRecipeHelper;
+import dk.mrspring.kitchen.recipe.IRecipe;
+import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -17,7 +20,20 @@ public class CrayfishFurnitureRegister
     {
         ModLogger.print(ModLogger.INFO, "Loading Crayfish Furniture Mod compatibility..."); // TODO: Use new KnifeRecipes registry
 
-        RecipeVariables variables = new RecipeVariables();
+        for (IRecipe recipe : KnifeRecipes.instance().getRecipes())
+        {
+            if (recipe instanceof INEIRecipeHelper)
+            {
+                INEIRecipeHelper recipeHelper = (INEIRecipeHelper) recipe;
+                RecipeVariables variables = new RecipeVariables();
+                ItemStack input = recipeHelper.getExpectedInput();
+                variables.addValue("input", input);
+                variables.addValue("output", recipeHelper.getExpectedOutput(input));
+                registryComm.registerRecipe("choppingboard", variables);
+            }
+        }
+
+        /*RecipeVariables variables = new RecipeVariables();
         variables.addValue("input", new ItemStack(Items.porkchop));
         variables.addValue("output", new ItemStack(KitchenItems.raw_bacon));
         registryComm.registerRecipe("choppingboard", variables);
@@ -65,10 +81,10 @@ public class CrayfishFurnitureRegister
         variables = new RecipeVariables();
         variables.addValue("input", new ItemStack(KitchenItems.strawberry));
         variables.addValue("output", new ItemStack(KitchenItems.cut_strawberry));
-        registryComm.registerRecipe("choppingboard", variables);
+        registryComm.registerRecipe("choppingboard", variables);*/
 
 
-        variables = new RecipeVariables();
+        RecipeVariables variables = new RecipeVariables();
         variables.addValue("name", "Strawberry Smoothie");
         variables.addValue("heal", 6);
         variables.addValue("ingredients", new ItemStack[]{new ItemStack(KitchenItems.cut_strawberry, 8), new ItemStack(Items.sugar, 4), new ItemStack(Blocks.ice, 1)});
