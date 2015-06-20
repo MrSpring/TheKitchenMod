@@ -46,22 +46,10 @@ public class ItemWearableIceCreamable extends ItemFoodArmorBase
             public void render(Entity entity, float p_78088_2_, float p_78088_3_, float p_78088_4_, float headRotateX, float headRotateY, float p_78088_7_)
             {
                 super.render(entity, p_78088_2_, p_78088_3_, p_78088_4_, headRotateX, headRotateY, p_78088_7_);
-
-//                this.bipedHead.rotateAngleY = p_78087_4_ / (180F / (float)Math.PI);
-//                this.bipedHead.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
-
                 GL11.glPushMatrix();
                 EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, itemStack);
-//                System.out.println(entity.getRotationYawHead());
-//                float yaw = entity.getRotationYawHead();
-//                System.out.println(entity.getClass().getName());
-//                float rotateX = headRotateX / (180F / (float) Math.PI);
-//                float rotateY = headRotateY / (180F / (float) Math.PI);
-//                System.out.println("X: " + rotateX + ", Y: " + rotateY); One: 45 degrees
-//                System.out.println("X: " + this.bipedHead.rotateAngleX + ", Y: " + this.bipedHead.rotateAngleY);
-//                System.out.println(entity.getClass().getSimpleName());
                 GL11.glRotatef((float) Math.toDegrees((double) this.bipedHead.rotateAngleY), 0, 1, 0);
-                GL11.glRotatef((float) Math.toDegrees((double) this.bipedHead.rotateAngleX), 1, 0, 0);
+                GL11.glRotatef((float) Math.toDegrees((double) this.bipedHead.rotateAngleX), 1, 0, 0); // TODO: Fix when no ice cream is on the item
                 GL11.glPushMatrix();
                 float s = 1.4F;
                 GL11.glScalef(s, s, s);

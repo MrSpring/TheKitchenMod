@@ -34,12 +34,9 @@ public class ItemIceCreamableRenderer implements IItemRenderer
 
         specialItemModels.put(KitchenItems.ice_cream_cone, new SimpleCustomModel(new ModelIceCreamCone())
         {
-        /*.setPositionOffset(0, 0.1F, 0)*/
-
             @Override
             public void preRender(ItemStack rendering, ItemRenderType renderType)
             {
-                //super.preRender(rendering);
                 if (renderType == ItemRenderType.ENTITY)
                 {
                     GL11.glScalef(0.75F, 0.75F, 0.75F);
