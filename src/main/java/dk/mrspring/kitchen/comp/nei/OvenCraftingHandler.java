@@ -33,49 +33,9 @@ public class OvenCraftingHandler extends NEIKitchenCraftingHandler
     }
 
     @Override
-    protected void loadAllRecipes()
+    protected List<IRecipe> getRecipes()
     {
-        List<IRecipe> recipes = OvenRecipes.instance().getRecipes();
-        for (IRecipe iRecipe : recipes)
-            if (iRecipe instanceof INEIRecipeHelper)
-            {
-                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
-                ItemStack input = recipe.getExpectedInput();
-                ItemStack output = recipe.getExpectedOutput(input);
-                arecipes.add(new RecipePair(input, output));
-            }
-    }
-
-    @Override
-    protected void loadRecipeFor(ItemStack output)
-    {
-        List<IRecipe> recipes = OvenRecipes.instance().getRecipes();
-        for (IRecipe iRecipe : recipes)
-            if (iRecipe instanceof INEIRecipeHelper)
-            {
-                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
-                if (!recipe.doesExpectedOutputMatch(output))
-                    continue;
-                ItemStack input = recipe.getExpectedInput(output);
-                arecipes.add(new RecipePair(input, output));
-            }
-    }
-
-    @Override
-    protected void loadRecipesFrom(ItemStack input)
-    {
-        List<IRecipe> recipes = OvenRecipes.instance().getRecipes();
-        for (IRecipe iRecipe : recipes)
-        {
-            if (iRecipe instanceof INEIRecipeHelper)
-            {
-                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
-                if (!recipe.doesExpectedInputMatch(input))
-                    continue;
-                ItemStack output = recipe.getExpectedOutput(input);
-                arecipes.add(new RecipePair(input, output));
-            }
-        }
+        return OvenRecipes.instance().getRecipes();
     }
 
     @Override

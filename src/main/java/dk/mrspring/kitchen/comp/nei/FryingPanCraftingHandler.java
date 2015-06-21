@@ -38,75 +38,10 @@ public class FryingPanCraftingHandler extends NEIKitchenCraftingHandler
     }
 
     @Override
-    protected void loadAllRecipes() // TODO: Fix
+    protected List<IRecipe> getRecipes()
     {
-        List<IRecipe> recipeList = new ArrayList<IRecipe>(FryingPanRecipes.instance().getRecipes());
-        recipeList.addAll(FryingPanJamRecipes.instance().getRecipes());
-        for (IRecipe iRecipe : recipeList)
-        {
-            if (iRecipe instanceof INEIRecipeHelper)
-            {
-                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
-                ItemStack input = recipe.getExpectedInput();
-                ItemStack output = recipe.getExpectedOutput(input);
-                RecipePair pair = new RecipePair(input, output);
-                arecipes.add(pair);
-            }
-        }
-    }
-
-    @Override
-    protected void loadRecipeFor(ItemStack output) // TODO: Fix
-    {
-        List<IRecipe> recipeList = new ArrayList<IRecipe>(FryingPanRecipes.instance().getRecipes());
-        recipeList.addAll(FryingPanJamRecipes.instance().getRecipes());
-        for (IRecipe iRecipe : recipeList)
-        {
-            if (iRecipe instanceof INEIRecipeHelper)
-            {
-                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
-                if (!recipe.doesExpectedOutputMatch(output))
-                    continue;
-                ItemStack input = recipe.getExpectedInput(output);
-                RecipePair pair = new RecipePair(input, output);
-                arecipes.add(pair);
-            }
-        }
-        /*Ingredient[] inputs = IngredientRegistry.getInstance().getInputsForItemStack(result);
-        for (Ingredient ingredient : inputs)
-        {
-            Stack[] inputStacks = IngredientRegistry.getInstance().getInputs(ingredient);
-            for (Stack stack : inputStacks)
-                arecipes.add(new RecipePair(stack.toItemStack(), result));
-        }*/
-    }
-
-    @Override
-    protected void loadRecipesFrom(ItemStack input) // TODO: Fix
-    {
-        System.out.println("Getting recipes for: " + input.toString());
-        List<IRecipe> recipeList = FryingPanRecipes.instance().getRecipes();
-        recipeList.addAll(FryingPanJamRecipes.instance().getRecipes());
-        for (IRecipe iRecipe : recipeList)
-        {
-            if (iRecipe instanceof INEIRecipeHelper)
-            {
-                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
-                if (!recipe.doesExpectedInputMatch(input))
-                    continue;
-                ItemStack output = recipe.getExpectedInput(input);
-                RecipePair pair = new RecipePair(input, output);
-                arecipes.add(pair);
-            }
-        }
-        /*Ingredient ingredient = IngredientRegistry.getInstance().getOutput(input);
-        if (ingredient != null && ingredient.canAdd(input))
-        {
-            ItemStack result;
-            if (ingredient.isJam())
-                result = Kitchen.getJamJarItemStack(ingredient.getJamResult(), 3);
-            else result = ingredient.getItemResult();
-            arecipes.add(new RecipePair(input, result));
-        }*/
+        List<IRecipe> recipes = new ArrayList<IRecipe>(FryingPanRecipes.instance().getRecipes());
+        recipes.addAll(FryingPanJamRecipes.instance().getRecipes());
+        return recipes;
     }
 }

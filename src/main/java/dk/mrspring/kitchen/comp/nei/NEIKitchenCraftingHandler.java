@@ -3,14 +3,15 @@ package dk.mrspring.kitchen.comp.nei;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.FurnaceRecipeHandler;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.recipe.INEIRecipeHelper;
+import dk.mrspring.kitchen.recipe.IRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 import java.awt.*;
+import java.util.List;
 
 /**
  * Created by Konrad on 12-04-2015.
@@ -23,11 +24,50 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
 
     protected abstract String getID();
 
-    protected abstract void loadAllRecipes();
+    protected abstract List<IRecipe> getRecipes();
 
-    protected abstract void loadRecipeFor(ItemStack result);
+    protected void loadAllRecipes()
+    {
+        java.util.List<IRecipe> recipes = getRecipes();
+        for (IRecipe iRecipe : recipes)
+            if (iRecipe instanceof INEIRecipeHelper)
+            {
+                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
+                ItemStack input = recipe.getExpectedInput();
+                ItemStack output = recipe.getExpectedOutput(input);
+                arecipes.add(new RecipePair(input, output));
+            }
+    }
 
-    protected abstract void loadRecipesFrom(ItemStack input);
+    protected void loadRecipeFor(ItemStack output)
+    {
+        java.util.List<IRecipe> recipes = getRecipes();
+        for (IRecipe iRecipe : recipes)
+            if (iRecipe instanceof INEIRecipeHelper)
+            {
+                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
+                if (!recipe.doesExpectedOutputMatch(output))
+                    continue;
+                ItemStack input = recipe.getExpectedInput(output);
+                arecipes.add(new RecipePair(input, output));
+            }
+    }
+
+    protected void loadRecipesFrom(ItemStack input)
+    {
+        java.util.List<IRecipe> recipes = getRecipes();
+        for (IRecipe iRecipe : recipes)
+        {
+            if (iRecipe instanceof INEIRecipeHelper)
+            {
+                INEIRecipeHelper recipe = (INEIRecipeHelper) iRecipe;
+                if (!recipe.doesExpectedInputMatch(input))
+                    continue;
+                ItemStack output = recipe.getExpectedOutput(input);
+                arecipes.add(new RecipePair(input, output));
+            }
+        }
+    }
 
     protected boolean drawMouse()
     {
