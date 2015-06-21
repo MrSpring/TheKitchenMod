@@ -1,8 +1,6 @@
 package dk.mrspring.kitchen.comp.nei;
 
 import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.recipe.BasicRecipe;
-import dk.mrspring.kitchen.recipe.INEIRecipeHelper;
 import dk.mrspring.kitchen.recipe.IRecipe;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import net.minecraft.item.ItemStack;

@@ -1,12 +1,8 @@
 package dk.mrspring.kitchen.comp.nei;
 
-import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.api_impl.common.IngredientRegistry;
-import dk.mrspring.kitchen.api.stack.Stack;
 import dk.mrspring.kitchen.recipe.FryingPanJamRecipes;
 import dk.mrspring.kitchen.recipe.FryingPanRecipes;
-import dk.mrspring.kitchen.recipe.INEIRecipeHelper;
 import dk.mrspring.kitchen.recipe.IRecipe;
 import net.minecraft.item.ItemStack;
 
