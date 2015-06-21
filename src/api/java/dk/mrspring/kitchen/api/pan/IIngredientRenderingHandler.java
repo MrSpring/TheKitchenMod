@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.api.ingredient;
+package dk.mrspring.kitchen.api.pan;
 
 /**
  * Created by MrSpring on 27-10-2014 for TheKitchenMod.

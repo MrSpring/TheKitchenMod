@@ -1,11 +1,11 @@
 package dk.mrspring.kitchen.api_impl.client.ingredient;
 
-import static dk.mrspring.kitchen.api_impl.common.ingredient.RecipeIngredient.*;
+import static dk.mrspring.kitchen.api_impl.common.pan.RecipeIngredient.*;
 
-import dk.mrspring.kitchen.api.ingredient.IFryingPan;
-import dk.mrspring.kitchen.api.ingredient.IIngredient;
-import dk.mrspring.kitchen.api.ingredient.IIngredientRenderingHandler;
-import dk.mrspring.kitchen.api_impl.common.ingredient.RecipeIngredient;
+import dk.mrspring.kitchen.api.pan.IFryingPan;
+import dk.mrspring.kitchen.api.pan.IIngredient;
+import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
+import dk.mrspring.kitchen.api_impl.common.pan.RecipeIngredient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;

@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.api.ingredient;
+package dk.mrspring.kitchen.api.pan;
 
 import dk.mrspring.kitchen.api.ISpecialTagInfo;
 import net.minecraft.entity.item.EntityItem;
