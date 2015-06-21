@@ -61,4 +61,6 @@ public interface IBoardItemHandler
      * @return Returns the ItemStack that will be given back to the player. Null if nothing is left.
      */
     ItemStack onRemoved(ICuttingBoard tileEntityBoard, ItemStack removed, EntityPlayer player);
+
+    String[] getWailaMessages(ICuttingBoard tileEntityBoard, ItemStack top, EntityPlayer player);
 }

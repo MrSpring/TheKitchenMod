@@ -136,6 +136,7 @@ option.show_toaster_status=Show Toaster Status
 option.show_waffle_iron_status=Show Waffle Iron Status
 
 waila.is_sandwich_ready=Is Sandwich Ready
+waila.slicing_result=Slicing Result
 waila.oven_items=Oven Items
 waila.oven_has_coal=Has Coal
 waila.pan_making=Making

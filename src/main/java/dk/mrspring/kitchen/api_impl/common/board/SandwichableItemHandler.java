@@ -7,6 +7,7 @@ import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 /**
  * Created by Konrad on 10-05-2015.
@@ -53,5 +54,12 @@ public class SandwichableItemHandler implements IBoardItemHandler
     {
         ISandwichable sandwichable = SandwichableRegistry.getInstance().getSandwichableForItem(removed);
         return sandwichable.getDropItem() ? removed : null;
+    }
+
+    @Override
+    public String[] getWailaMessages(ICuttingBoard tileEntityBoard, ItemStack top, EntityPlayer player)
+    {
+        boolean isReady = SandwichUtils.isSandwichReady(tileEntityBoard.getLayers());
+        return new String[]{StatCollector.translateToLocal("waila.is_sandwich_ready") + ": " + StatCollector.translateToLocal("waila." + isReady)};
     }
 }

@@ -1,6 +1,9 @@
 package dk.mrspring.kitchen.comp.waila;
 
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.api.board.IBoardItemHandler;
+import dk.mrspring.kitchen.api.board.ICuttingBoard;
+import dk.mrspring.kitchen.api_impl.common.BoardEventRegistry;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -13,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,14 +39,20 @@ public class WailaBoardDataProvider implements IWailaDataProvider
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> strings, IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
-        TileEntityBoard tileEntity = (TileEntityBoard) accessor.getTileEntity();
-        if (config.getConfig("show_is_sandwich_ready",true)&&tileEntity.getLayers().size()>1)
+        ICuttingBoard cuttingBoard = (TileEntityBoard) accessor.getTileEntity();
+        if (config.getConfig("show_board_status", true) && cuttingBoard.getLayerCount() >= 1)
         {
-            String toAdd = StatCollector.translateToLocal("waila.is_sandwich_ready")+": ";
-            if (SandwichableRegistry.getInstance().getSandwichableForItem(tileEntity.getTopItem()).getIsBread() && SandwichableRegistry.getInstance().getSandwichableForItem(tileEntity.getLayers().get(0)).getIsBread())
-                toAdd += StatCollector.translateToLocal("waila.true");
-            else toAdd += StatCollector.translateToLocal("waila.false");
-            strings.add(toAdd);
+            ItemStack top = cuttingBoard.getTopItem();
+            IBoardItemHandler handler = BoardEventRegistry.instance().getHandlerFor(cuttingBoard, top, accessor.getPlayer());
+            String[] wailaMessages = handler != null ? handler.getWailaMessages(cuttingBoard, top, accessor.getPlayer()) : null;
+            if (wailaMessages != null)
+                Collections.addAll(strings, wailaMessages);
+//            String toAdd = StatCollector.translateToLocal("waila.is_sandwich_ready") + ": ";
+//            if (SandwichableRegistry.getInstance().getSandwichableForItem(tileEntity.getTopItem()).getIsBread() && SandwichableRegistry.getInstance().getSandwichableForItem(tileEntity.getLayers().get(0)).getIsBread())
+//                toAdd += StatCollector.translateToLocal("waila.true");
+//            else toAdd += StatCollector.translateToLocal("waila.false");
+//            strings.add(toAdd);
+
         }
         return strings;
     }

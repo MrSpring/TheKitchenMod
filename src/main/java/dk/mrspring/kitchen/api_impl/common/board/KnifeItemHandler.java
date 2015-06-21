@@ -7,6 +7,7 @@ import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 /**
  * Created by Konrad on 10-05-2015.
@@ -26,21 +27,6 @@ public class KnifeItemHandler implements IBoardItemHandler
     @Override
     public boolean canAdd(ICuttingBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
     {
-        /*if (adding.getItem() == KitchenItems.knife) // TODO: Cleanup
-        {
-            NBTTagCompound compound = tileEntityBoard.getSpecialInfo();
-            int sliceCount = 0;
-            if (compound.hasKey(SLICE_COUNT))
-                sliceCount = compound.getInteger(SLICE_COUNT);
-            sliceCount++;
-            if (sliceCount >= MAX_SLICE_COUNT)
-            {
-                ItemStack output = KnifeRecipes.instance().getOutputFor(tileEntityBoard.getTopItem());
-                tileEntityBoard.spawnItemInWorld(output);
-                tileEntityBoard.clearBoard();
-            } else compound.setInteger(SLICE_COUNT, sliceCount);
-            return false;
-        } else */
         return tileEntityBoard.getLayerCount() <= 0;
     }
 
@@ -56,7 +42,6 @@ public class KnifeItemHandler implements IBoardItemHandler
     @Override
     public boolean onRightClicked(ICuttingBoard tileEntityBoard, ItemStack clicked, EntityPlayer player)
     {
-//        return clicked.getItem() == KitchenItems.knife;
         if (clicked.getItem() == KitchenItems.knife)
         {
             NBTTagCompound compound = tileEntityBoard.getSpecialInfo();
@@ -84,5 +69,12 @@ public class KnifeItemHandler implements IBoardItemHandler
     public ItemStack onRemoved(ICuttingBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
     {
         return removed;
+    }
+
+    @Override
+    public String[] getWailaMessages(ICuttingBoard tileEntityBoard, ItemStack slicing, EntityPlayer player)
+    {
+        ItemStack result = KnifeRecipes.instance().getOutputFor(slicing);
+        return new String[]{StatCollector.translateToLocal("waila.slicing_result") + ": " + result.getDisplayName()};
     }
 }

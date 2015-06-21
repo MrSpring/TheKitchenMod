@@ -46,4 +46,10 @@ public class BasicItemHandler implements IBoardItemHandler
     {
         return null;
     }
+
+    @Override
+    public String[] getWailaMessages(ICuttingBoard tileEntityBoard, ItemStack top, EntityPlayer player)
+    {
+        return null;
+    }
 }

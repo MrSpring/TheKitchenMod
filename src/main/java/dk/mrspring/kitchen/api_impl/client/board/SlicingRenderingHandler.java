@@ -14,9 +14,10 @@ import java.util.List;
 public class SlicingRenderingHandler extends ItemRenderingHandler
 {
     @Override
-    public boolean shouldBeUsed(List<ItemStack> layers, int indexInList, NBTTagCompound specialTagCompound, ItemStack rendering)
+    public boolean shouldBeUsed(List<ItemStack> layers, int indexInList, NBTTagCompound tag, ItemStack rendering)
     {
-        return layers.size() == 1 && specialTagCompound.getInteger("SliceCount") > 0;
+        int slice = tag != null ? tag.getInteger("SliceCount") : 0;
+        return layers.size() == 1 && slice > 0;
     }
 
     @Override
