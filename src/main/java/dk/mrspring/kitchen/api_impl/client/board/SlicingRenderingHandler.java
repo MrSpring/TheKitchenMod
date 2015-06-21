@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.api_impl.client.board;
 
+import dk.mrspring.kitchen.api_impl.common.board.KnifeItemHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.lwjgl.BufferUtils;
@@ -7,6 +8,8 @@ import org.lwjgl.opengl.GL11;
 
 import java.nio.DoubleBuffer;
 import java.util.List;
+
+import static dk.mrspring.kitchen.api_impl.common.board.KnifeItemHandler.*;
 
 /**
  * Created by Konrad on 13-05-2015.
@@ -16,14 +19,14 @@ public class SlicingRenderingHandler extends ItemRenderingHandler
     @Override
     public boolean shouldBeUsed(List<ItemStack> layers, int indexInList, NBTTagCompound tag, ItemStack rendering)
     {
-        int slice = tag != null ? tag.getInteger("SliceCount") : 0;
+        int slice = tag != null ? tag.getInteger(SLICE_COUNT) : 0;
         return layers.size() == 1 && slice > 0;
     }
 
     @Override
     public void render(List<ItemStack> layers, int indexInList, NBTTagCompound specialTagCompound, ItemStack rendering)
     {
-        int sliceCount = specialTagCompound.getInteger("SliceCount");
+        int sliceCount = specialTagCompound.getInteger(SLICE_COUNT);
         float distance = 0.0425F;
         switch (sliceCount)
         {
@@ -35,7 +38,7 @@ public class SlicingRenderingHandler extends ItemRenderingHandler
                 disableClipPlane(GL11.GL_CLIP_PLANE0);
                 GL11.glPopMatrix();
 
-                GL11.glPushMatrix(); // TODO: Fix clip planes
+                GL11.glPushMatrix();
                 GL11.glTranslatef(-distance / 2F, 0, 0);
                 enableClipPlane(5, true, GL11.GL_CLIP_PLANE0);
                 super.render(layers, indexInList, specialTagCompound, rendering);

@@ -15,7 +15,7 @@ import net.minecraft.util.StatCollector;
 public class KnifeItemHandler implements IBoardItemHandler
 {
     public static final int MAX_SLICE_COUNT = 3;
-    private static final String SLICE_COUNT = "SliceCount";
+    public static final String SLICE_COUNT = "SliceCount";
 
     @Override
     public boolean isForItem(ICuttingBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
