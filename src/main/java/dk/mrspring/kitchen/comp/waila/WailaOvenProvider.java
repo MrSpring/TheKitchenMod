@@ -33,7 +33,7 @@ public class WailaOvenProvider implements IWailaDataProvider
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config)
     {
-        TileEntityOven tileEntityOven = (TileEntityOven) accessor.getTileEntity();
+        /*TileEntityOven tileEntityOven = (TileEntityOven) accessor.getTileEntity();
 
         if (config.getConfig("show_oven_contents"))
             if (tileEntityOven.getOvenItems()[0] != null)
@@ -53,7 +53,7 @@ public class WailaOvenProvider implements IWailaDataProvider
 
         if (config.getConfig("show_oven_status"))
             currentTip.add(StatCollector.translateToLocal("waila.oven_has_coal") + ": " + StatCollector.translateToLocal("waila." + tileEntityOven.hasCoal()));
-
+*/
         return currentTip;
     }
 

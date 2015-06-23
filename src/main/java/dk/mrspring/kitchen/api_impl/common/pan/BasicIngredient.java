@@ -17,7 +17,7 @@ public class BasicIngredient implements IIngredient
     }
 
     @Override
-    public String getLocalizedName()
+    public String getDisplayName()
     {
         return "Empty";
     }

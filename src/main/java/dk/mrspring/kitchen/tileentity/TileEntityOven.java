@@ -1,18 +1,300 @@
 package dk.mrspring.kitchen.tileentity;
 
-import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.recipe.OvenRecipes;
-import net.minecraft.init.Items;
+import dk.mrspring.kitchen.api.oven.IOven;
+import dk.mrspring.kitchen.api.oven.IOvenItem;
+import dk.mrspring.kitchen.api_impl.common.OvenRegistry;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import org.apache.commons.lang3.ArrayUtils;
 
-public class TileEntityOven extends TileEntityTimeable
+import java.util.ArrayList;
+import java.util.List;
+
+public class TileEntityOven extends TileEntityTimeable implements IOven
 {
-    protected ItemStack[] ovenItems = new ItemStack[4];
+    public static String FILLED_SLOTS = "FilledSlots";
+
+    IOvenItem[] items = new IOvenItem[4];
+    NBTTagCompound[] tags = new NBTTagCompound[items.length];
+    boolean open = false;
+    boolean fuel = false;
+    int cookTime = 0;
+
+    public boolean[] getFreeSlots()
+    {
+        boolean[] booleans = new boolean[items.length];
+        for (int i = 0; i < items.length; i++) booleans[i] = items[i] == null;
+        return booleans;
+    }
+
+    @Override
+    public boolean rightClicked(ItemStack clicked, EntityPlayer player)
+    {
+        for (IOvenItem item : items)
+            if (item != null)
+                if (item.onRightClicked(this, clicked, player))
+                    return true;
+        if (clicked == null && player.isSneaking())
+        {
+            this.toggleOpen();
+            return true;
+        }
+
+        if (isOpen())
+        {
+            if (this.isFinished())
+            {
+                for (int i = 0; i < items.length; i++)
+                {
+                    IOvenItem item = items[i];
+                    if (item != null && item.canBeRemoved(this, clicked, player))
+                    {
+                        removeItemAt(i);
+                        ItemStack drop = item.onRemoved(this, clicked, player);
+                        spawnItemInWorld(drop);
+                        return true;
+                    }
+                }
+                return false;
+            } else
+            {
+                IOvenItem item = OvenRegistry.getInstance().getOvenItemFor(this, clicked, player);
+                if (item.canAdd(this, clicked, player, getFreeSlots()))
+                    if (this.addItem(item))
+                    {
+                        item.onAdded(this, clicked, player);
+                        return true;
+                    }
+                return false;
+            }
+        } else return false;
+    }
+
+    private boolean addItem(IOvenItem item)
+    {
+        boolean[] spaced = spaceItem(item.getSize(this), item.consecutive(this));
+        if (!spaced[0])
+            return false;
+        NBTTagCompound compound = new NBTTagCompound();
+        List<Integer> fills = new ArrayList<Integer>();
+        for (int i = 1; i < spaced.length; i++)
+            if (spaced[i])
+                fills.add(i - 1);
+
+        compound.setIntArray(FILLED_SLOTS, ArrayUtils.toPrimitive(fills.toArray(new Integer[fills.size()])));
+        for (int i = 1, j = 0; i < spaced.length; i = 1 + (j++))
+            if (spaced[i])
+            {
+                items[j] = item;
+                setSpecialInfo(j, (NBTTagCompound) compound.copy());
+            }
+        return true;
+    }
+
+    private boolean[] spaceItem(int size, boolean cons)
+    {
+        if (size > items.length)
+            return new boolean[items.length + 1];
+        int empty = 0;
+        boolean[] slots = new boolean[items.length + 1];
+        for (int i = 0; i < items.length; i++)
+        {
+            IOvenItem item = items[i];
+            if (empty >= size)
+                break;
+            else if (item == null)
+            {
+                empty++;
+                slots[i + 1] = true;
+            } else if (cons && empty > 0)
+            {
+                empty = 0;
+                slots = new boolean[items.length + 1];
+            }
+        }
+        if (empty >= size)
+        {
+            slots[0] = true;
+            return slots;
+        } else return new boolean[items.length + 1];
+    }
+
+    @Override
+    public void updateEntity()
+    {
+        if (!isOpen() && readyToCook())
+        {
+            cookTime++;
+        }
+    }
+
+    private boolean readyToCook()
+    {
+        for (int i = 0; i < items.length; i++)
+        {
+            IOvenItem item = items[i];
+            if (!item.readyToCook(this, i))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean hasSpace(int size, boolean cons)
+    {
+        return spaceItem(size, cons)[0];
+    }
+
+    @Override
+    public boolean hasFuel()
+    {
+        return fuel;
+    }
+
+    @Override
+    public void addFuel()
+    {
+        this.fuel = true;
+    }
+
+    public void toggleOpen()
+    {
+        if (isOpen())
+            closeAndStartCooking();
+        else openAndStopCooking();
+    }
+
+    private void openAndStopCooking()
+    {
+        if (isCooking())
+            fuel = false;
+        open = true;
+    }
+
+    private void closeAndStartCooking()
+    {
+        this.open = false;
+        for (int i = 0; i < items.length; i++)
+        {
+            IOvenItem item = items[i];
+            if (item != null && !item.readyToCook(this, i))
+                return;
+        }
+        cookTime = 0;
+    }
+
+    @Override
+    public IOvenItem getItemAt(int slot)
+    {
+        return items[slot];
+    }
+
+    @Override
+    public IOvenItem removeItemAt(int slot)
+    {
+        int[] associatedSlots = getAssociatedSlots(slot);
+        IOvenItem last = null;
+        for (int i : associatedSlots)
+        {
+            last = items[i];
+            items[i] = null;
+        }
+        return last;
+    }
+
+    private int[] getAssociatedSlots(int slot)
+    {
+        NBTTagCompound slotCompound = getSpecialInfo(slot);
+        int[] slots = slotCompound.getIntArray(FILLED_SLOTS);
+        return slots == null ? new int[0] : slots;
+    }
+
+    @Override
+    public boolean addOvenItem(IOvenItem item)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean addOvenItemAt(IOvenItem item, int slot)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isSlotFree(int slot)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isOpen()
+    {
+        return open;
+    }
+
+    @Override
+    public EntityItem spawnItemInWorld(ItemStack stack)
+    {
+        return null;
+    }
+
+    @Override
+    public boolean isCooking()
+    {
+        return getCookTime() > 0 && !isOpen();
+    }
+
+    @Override
+    public int getCookTime()
+    {
+        return cookTime;
+    }
+
+    @Override
+    public int getTime()
+    {
+        return getCookTime();
+    }
+
+    @Override
+    public int getDoneTime()
+    {
+        int highest = 0;
+        for (IOvenItem item : items) highest = Math.max(highest, item.getCookTime(this));
+        return highest;
+    }
+
+    @Override
+    public boolean isFinished()
+    {
+        return getCookTime() >= getDoneTime() && isCooking();
+    }
+
+    @Override
+    public NBTTagCompound getSpecialInfo(int slot)
+    {
+        if (tags[slot] == null)
+            tags[slot] = new NBTTagCompound();
+        return tags[slot];
+    }
+
+    @Override
+    public NBTTagCompound setSpecialInfo(int slot, NBTTagCompound compound)
+    {
+        NBTTagCompound old = (NBTTagCompound) getSpecialInfo(slot).copy();
+        tags[slot] = compound;
+        return old;
+    }
+
+    @Override
+    public NBTTagCompound resetSpecialInfo(int slot)
+    {
+        return setSpecialInfo(slot, new NBTTagCompound());
+    }
+    /*protected ItemStack[] ovenItems = new ItemStack[4];
     protected int burnTime = 0;
     protected int itemState = 0;
     protected boolean isCooking = false;
@@ -330,5 +612,5 @@ public class TileEntityOven extends TileEntityTimeable
     public int getDoneTime()
     {
         return 400;
-    }
+    }*/
 }

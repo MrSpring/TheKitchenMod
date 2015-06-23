@@ -22,7 +22,7 @@ public class RecipeIngredient implements IIngredient
     }
 
     @Override
-    public String getLocalizedName()
+    public String getDisplayName()
     {
         return "Recipe";
     }

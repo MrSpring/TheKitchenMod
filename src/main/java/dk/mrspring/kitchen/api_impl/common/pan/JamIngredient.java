@@ -24,7 +24,7 @@ public class JamIngredient implements IIngredient
     }
 
     @Override
-    public String getLocalizedName()
+    public String getDisplayName()
     {
         return "Jam";
     }

@@ -10,7 +10,7 @@ public interface IIngredient
 {
     String getName();
 
-    String getLocalizedName(); // TODO: Add IFryingPan to parameters
+    String getDisplayName(); // TODO: Add IFryingPan to parameters
 
     /**
      * Is used to determine if this Ingredient should be used for the Item that was right-clicked with.

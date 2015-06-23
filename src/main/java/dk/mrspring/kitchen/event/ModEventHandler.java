@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
@@ -93,6 +94,17 @@ public class ModEventHandler
             else
                 line = StatCollector.translateToLocal("item.slicable.short") + ": §3" + output.getDisplayName(); // Slice to get: ITEM
             event.toolTip.add(line);
+        }
+
+        if (ModConfig.getKitchenConfig().show_item_name)
+        {
+            int[] keys = ModConfig.getKitchenConfig().show_item_name_key_combo;
+            for (int i : keys)
+                if (!Keyboard.isKeyDown(i))
+                    return;
+            GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(stack.getItem());
+            String name = identifier.toString();
+            event.toolTip.add(name);
         }
     }
 
