@@ -35,6 +35,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     boolean fuel = false;
     int cookTime = 0;
 
+    @Override
     public boolean[] getFreeSlots()
     {
         boolean[] booleans = new boolean[items.length];
@@ -75,17 +76,14 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
             {
                 IOvenItem item = OvenRegistry.getInstance().getOvenItemFor(this, clicked, player);
                 if (item.canAdd(this, clicked, player, getFreeSlots()))
-                    if (this.addItem(item))
-                    {
-                        item.onAdded(this, clicked, player);
+                    if (this.addItem(item, clicked, player))
                         return true;
-                    }
                 return false;
             }
         } else return false;
     }
 
-    private boolean addItem(IOvenItem item)
+    private boolean addItem(IOvenItem item, ItemStack added, EntityPlayer player)
     {
         boolean[] spaced = spaceItem(item.getSize(this), item.consecutive(this));
         if (!spaced[0])
@@ -96,13 +94,15 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
             if (spaced[i])
                 fills.add(i - 1);
 
-        compound.setIntArray(FILLED_SLOTS, ArrayUtils.toPrimitive(fills.toArray(new Integer[fills.size()])));
+        int[] slots = ArrayUtils.toPrimitive(fills.toArray(new Integer[fills.size()]));
+        compound.setIntArray(FILLED_SLOTS, slots);
         for (int i = 1, j = 0; i < spaced.length; i = 1 + (j++))
             if (spaced[i])
             {
                 items[j] = item;
                 setSpecialInfo(j, (NBTTagCompound) compound.copy());
             }
+        item.onAdded(this, added, player, slots);
         return true;
     }
 

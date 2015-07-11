@@ -2,36 +2,40 @@ package dk.mrspring.kitchen.api_impl.common.oven;
 
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
+import dk.mrspring.kitchen.recipe.OvenRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 /**
  * Created by Konrad on 11-07-2015.
  */
-public class BasicOvenItem implements IOvenItem
+public class RecipeOvenItem implements IOvenItem
 {
+    public static final String RECIPE_INPUT = "RecipeInput";
+    public static final String RECIPE_OUTPUT = "RecipeOutput";
+
     @Override
     public String getName()
     {
-        return "empty";
+        return "basic_recipe";
     }
 
     @Override
     public String getDisplayName()
     {
-        return "Empty";
+        return "Recipe";
     }
 
     @Override
     public boolean isForItem(IOven oven, ItemStack item, EntityPlayer player, boolean[] freeSlots)
     {
-        return false;
+        return OvenRecipes.instance().hasOutput(item);
     }
 
     @Override
     public boolean canAdd(IOven oven, ItemStack adding, EntityPlayer player, boolean[] freeSlots)
     {
-        return false;
+        return true;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class BasicOvenItem implements IOvenItem
     @Override
     public int getSize(IOven oven)
     {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -61,7 +65,7 @@ public class BasicOvenItem implements IOvenItem
     @Override
     public int getCookTime(IOven oven)
     {
-        return 0;
+        return 200;
     }
 
     @Override

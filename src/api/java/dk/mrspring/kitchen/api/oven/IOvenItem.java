@@ -16,7 +16,7 @@ public interface IOvenItem
 
     boolean canAdd(IOven oven, ItemStack adding, EntityPlayer player, boolean[] freeSlots);
 
-    void onAdded(IOven oven, ItemStack added, EntityPlayer player);
+    void onAdded(IOven oven, ItemStack added, EntityPlayer player, int[] slots);
 
     boolean readyToCook(IOven oven, int slot);
 
