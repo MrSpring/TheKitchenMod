@@ -35,13 +35,13 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
     {
         super.renderTileEntityAt(var1, x, y, z, var8);
 
-        TileEntityOven tileEntityOven = (TileEntityOven) var1;
+        TileEntityOven tileEntity = (TileEntityOven) var1;
 
         GL11.glPushMatrix();
 
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 
-        if (tileEntityOven.getBurnTime() > 0)
+        if (tileEntity.getCookTime() > 0)
             Minecraft.getMinecraft().renderEngine.bindTexture(activeTexture);
         else
             Minecraft.getMinecraft().renderEngine.bindTexture(inactiveTexture);
@@ -52,16 +52,17 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
 
         GL11.glPushMatrix();
         int metadata;
-        metadata = tileEntityOven.getBlockMetadata();
+        metadata = tileEntity.getBlockMetadata();
 
         GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
 
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tileEntityOven.getLidAngle());
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tileEntity.isOpen() ? 1 : 0);
         GL11.glPopMatrix();
 
         itemStacks = new ItemStack[4];
 
-        itemStacks = tileEntityOven.getOvenItems();
+        // TODO: Fix rendering items using IOvenItemRenderer
+        /*itemStacks = tileEntityOven.getOvenItems();
 
         double d = 0.2;
 
@@ -87,7 +88,7 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
                         break;
                 }
             }
-        }
+        }*/
 
         GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
 

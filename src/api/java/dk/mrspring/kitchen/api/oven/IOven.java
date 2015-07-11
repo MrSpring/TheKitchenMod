@@ -39,4 +39,6 @@ public interface IOven extends ICooking
     void addFuel();
 
     EntityItem spawnItemInWorld(ItemStack stack);
+
+    boolean[] getFreeSlots();
 }

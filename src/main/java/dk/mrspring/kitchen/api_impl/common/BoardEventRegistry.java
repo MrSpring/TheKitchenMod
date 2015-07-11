@@ -34,16 +34,14 @@ public class BoardEventRegistry implements IBoardEventRegistry
     @Override
     public void registerHandler(IBoardItemHandler handler)
     {
-        if (handler != null)
-            handlers.add(handler);
+        if (handler != null) handlers.add(handler);
     }
 
     @Override
     public IBoardItemHandler getHandlerFor(ICuttingBoard board, ItemStack item, EntityPlayer player)
     {
         for (IBoardItemHandler handler : handlers)
-            if (handler.isForItem(board, item, player))
-                return handler;
+            if (handler.isForItem(board, item, player)) return handler;
         return defaultHandler;
     }
 }

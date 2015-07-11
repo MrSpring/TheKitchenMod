@@ -7,6 +7,10 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -14,7 +18,16 @@ import java.util.List;
 
 public class TileEntityOven extends TileEntityTimeable implements IOven
 {
-    public static String FILLED_SLOTS = "FilledSlots";
+    public static final String IS_OPEN = "IsOpen";
+    public static final String FILLED_SLOTS = "FilledSlots";
+    public static final String HAS_FUEL = "HasFuel";
+    public static final String COOK_TIME = "CookTime";
+    public static final String ITEM_INDEX = "Index";
+    public static final String ITEM_NAME = "ItemName";
+    public static final String ITEM_LIST = "OvenItems";
+    public static final String ITEM_INFO = "ItemTagInfo";
+    public static final String ITEM_INFO_INDEX = "Index";
+    public static final String ITEM_INFO_LIST = "OvenItemInfo";
 
     IOvenItem[] items = new IOvenItem[4];
     NBTTagCompound[] tags = new NBTTagCompound[items.length];
@@ -135,7 +148,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         for (int i = 0; i < items.length; i++)
         {
             IOvenItem item = items[i];
-            if (!item.readyToCook(this, i))
+            if (item != null && !item.readyToCook(this, i))
                 return false;
         }
         return true;
@@ -263,7 +276,8 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     public int getDoneTime()
     {
         int highest = 0;
-        for (IOvenItem item : items) highest = Math.max(highest, item.getCookTime(this));
+        for (IOvenItem item : items)
+            if (item != null) highest = Math.max(highest, item.getCookTime(this));
         return highest;
     }
 
@@ -294,6 +308,98 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     {
         return setSpecialInfo(slot, new NBTTagCompound());
     }
+
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound compound = new NBTTagCompound();
+        this.writeToNBT(compound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+        this.readFromNBT(pkt.func_148857_g());
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
+
+        compound.setBoolean(IS_OPEN, isOpen());
+        compound.setBoolean(HAS_FUEL, hasFuel());
+        compound.setInteger(COOK_TIME, getCookTime());
+
+        NBTTagList itemList = new NBTTagList();
+        for (int i = 0; i < items.length; i++)
+        {
+            IOvenItem item = getItemAt(i);
+            if (item != null)
+            {
+                NBTTagCompound itemCompound = new NBTTagCompound();
+                itemCompound.setInteger(ITEM_INDEX, i);
+                itemCompound.setString(ITEM_NAME, item.getName());
+                itemList.appendTag(itemCompound);
+            }
+        }
+        compound.setTag(ITEM_LIST, itemList);
+        NBTTagList tagList = new NBTTagList();
+        for (int i = 0; i < tags.length; i++)
+        {
+            NBTTagCompound c = tags[i];
+            if (c != null)
+            {
+                NBTTagCompound c1 = new NBTTagCompound();
+                c1.setTag(ITEM_INFO, c);
+                c1.setInteger(ITEM_INFO_INDEX, i);
+                tagList.appendTag(c1);
+            }
+        }
+        compound.setTag(ITEM_INFO_LIST, tagList);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+
+        open = compound.getBoolean(IS_OPEN);
+        fuel = compound.getBoolean(HAS_FUEL);
+        cookTime = compound.getInteger(COOK_TIME);
+
+        if (compound.hasKey(ITEM_LIST, 9))
+        {
+            items = new IOvenItem[4];
+            NBTTagList items = compound.getTagList(ITEM_LIST, 10);
+            for (int i = 0; i < items.tagCount(); i++)
+            {
+                NBTTagCompound itemCompound = items.getCompoundTagAt(i);
+                String itemName = itemCompound.getString(ITEM_NAME);
+                if (itemName == null) continue;
+                IOvenItem ovenItem = OvenRegistry.getInstance().getOvenItemFromName(itemName);
+                if (ovenItem == null) continue;
+                int index = itemCompound.getInteger(ITEM_INDEX);
+                this.items[index] = ovenItem;
+            }
+        }
+
+        if (compound.hasKey(ITEM_INFO_LIST))
+        {
+            tags = new NBTTagCompound[4];
+            NBTTagList info = compound.getTagList(ITEM_INFO_LIST, 10);
+            for (int i = 0; i < info.tagCount(); i++)
+            {
+                NBTTagCompound infoCompound = info.getCompoundTagAt(i);
+                NBTTagCompound tag = infoCompound.getCompoundTag(ITEM_INFO);
+                if (tag == null) continue;
+                int index = infoCompound.getInteger(ITEM_INFO_INDEX);
+                tags[index] = tag;
+            }
+        }
+    }
+
     /*protected ItemStack[] ovenItems = new ItemStack[4];
     protected int burnTime = 0;
     protected int itemState = 0;

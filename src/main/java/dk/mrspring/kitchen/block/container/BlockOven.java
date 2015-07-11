@@ -26,8 +26,8 @@ public class BlockOven extends BlockContainerBase
     public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
     {
         TileEntityOven tileEntityBoard = (TileEntityOven) world.getTileEntity(x, y, z);
-
-        if (tileEntityBoard != null)
+        // TODO: Drop items when broken
+        /*if (tileEntityBoard != null)
         {
             ItemStack[] stacks = tileEntityBoard.getDroppedItems();
 
@@ -49,7 +49,7 @@ public class BlockOven extends BlockContainerBase
                     world.spawnEntityInWorld(entityItem);
                 }
             }
-        }
+        }*/
 
         super.breakBlock(world, x, y, z, block, p_149749_6_);
     }
@@ -62,8 +62,12 @@ public class BlockOven extends BlockContainerBase
         if (!world.isRemote)
         {
             TileEntityOven tileEntity = (TileEntityOven) world.getTileEntity(x, y, z); // TODO: Re write oven, make API
+            if (tileEntity.rightClicked(activator.getCurrentEquippedItem(), activator))
+                world.markBlockForUpdate(x, y, z);
+            else return false;
+            return true;
 
-            if (!activator.isSneaking()) // TODO: Make the TileEntity take care of all this
+            /*if (!activator.isSneaking()) // TODO: Make the TileEntity take care of all this
                 if (tileEntity.isOpen())
                     if (activator.getCurrentEquippedItem() != null)
                         return tileEntity.addItemStack(activator.getCurrentEquippedItem());
@@ -99,7 +103,7 @@ public class BlockOven extends BlockContainerBase
             {
                 this.updateBlockState(world, x, y, z);
                 return true;
-            }
+            }*/
         } else
             return true;
     }
@@ -116,7 +120,8 @@ public class BlockOven extends BlockContainerBase
     @Override
     public void randomDisplayTick(World world, int x, int y, int z, Random random)
     {
-        TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
+        // TODO
+        /*TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
 
         boolean isOpen = tileEntityOven.isOpen();
         boolean hasCoal = tileEntityOven.hasCoal();
@@ -177,17 +182,7 @@ public class BlockOven extends BlockContainerBase
                 }
                 break;
             }
-        }
-    }
-
-    public void updateBlockState(World world, int x, int y, int z)
-    {
-        TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
-
-        if (tileEntityOven.isOpen())
-            tileEntityOven.setClosed();
-        else
-            tileEntityOven.setOpen();
+        }*/
     }
 
     @Override

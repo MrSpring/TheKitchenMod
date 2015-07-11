@@ -43,8 +43,7 @@ public class IngredientRegistry implements IIngredientRegistry
     public IIngredient getIngredientFor(IFryingPan fryingPan, ItemStack stack, EntityPlayer player)
     {
         for (IIngredient ingredient : ingredients)
-            if (ingredient.isForItem(fryingPan, stack, player))
-                return ingredient;
+            if (ingredient.isForItem(fryingPan, stack, player)) return ingredient;
         return defaultIngredient;
     }
 
@@ -52,8 +51,7 @@ public class IngredientRegistry implements IIngredientRegistry
     public IIngredient getIngredientFromName(String ingredientName)
     {
         for (IIngredient ingredient : ingredients)
-            if (ingredient.getName().equals(ingredientName))
-                return ingredient;
-        return null; // Returns null because it's not from an item.
+            if (ingredient.getName().equals(ingredientName)) return ingredient;
+        return null;
     }
 }
