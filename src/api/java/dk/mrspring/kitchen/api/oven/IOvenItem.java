@@ -26,9 +26,9 @@ public interface IOvenItem
 
     int getCookTime(IOven oven);
 
-    boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player);
+    boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player, int slot);
 
-    boolean canBeRemoved(IOven oven, ItemStack clicked, EntityPlayer player);
+    boolean canBeRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot);
 
-    ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player);
+    ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot);
 }

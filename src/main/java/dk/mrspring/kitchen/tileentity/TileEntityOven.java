@@ -46,10 +46,11 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     @Override
     public boolean rightClicked(ItemStack clicked, EntityPlayer player)
     {
-        for (IOvenItem item : items)
-            if (item != null)
-                if (item.onRightClicked(this, clicked, player))
-                    return true;
+        for (int slot = 0; slot < items.length; slot++)
+        {
+            IOvenItem item = items[slot];
+            if (item != null && item.onRightClicked(this, clicked, player, slot)) return true;
+        }
         if (clicked == null && player.isSneaking())
         {
             this.toggleOpen();
@@ -63,10 +64,10 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
                 for (int i = 0; i < items.length; i++)
                 {
                     IOvenItem item = items[i];
-                    if (item != null && item.canBeRemoved(this, clicked, player))
+                    if (item != null && item.canBeRemoved(this, clicked, player, i))
                     {
+                        ItemStack drop = item.onRemoved(this, clicked, player, i);
                         removeItemAt(i);
-                        ItemStack drop = item.onRemoved(this, clicked, player);
                         spawnItemInWorld(drop);
                         return true;
                     }

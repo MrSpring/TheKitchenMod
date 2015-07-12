@@ -41,13 +41,13 @@ public class RecipeOvenItem implements IOvenItem
     @Override
     public void onAdded(IOven oven, ItemStack added, EntityPlayer player, int[] slots)
     {
-
+        int slot = slots[0];
     }
 
     @Override
     public boolean readyToCook(IOven oven, int slot)
     {
-        return false;
+        return true;
     }
 
     @Override
@@ -69,19 +69,19 @@ public class RecipeOvenItem implements IOvenItem
     }
 
     @Override
-    public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player)
+    public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
-        return false;
+        return true;
     }
 
     @Override
-    public boolean canBeRemoved(IOven oven, ItemStack clicked, EntityPlayer player)
+    public boolean canBeRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
-        return false;
+        return true;
     }
 
     @Override
-    public ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player)
+    public ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
         return null;
     }

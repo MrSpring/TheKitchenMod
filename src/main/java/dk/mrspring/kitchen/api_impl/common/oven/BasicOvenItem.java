@@ -65,19 +65,19 @@ public class BasicOvenItem implements IOvenItem
     }
 
     @Override
-    public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player)
+    public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
         return false;
     }
 
     @Override
-    public boolean canBeRemoved(IOven oven, ItemStack clicked, EntityPlayer player)
+    public boolean canBeRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
         return false;
     }
 
     @Override
-    public ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player)
+    public ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
         return null;
     }
