@@ -5,6 +5,7 @@ import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * Created by Konrad on 11-07-2015.
@@ -39,9 +40,18 @@ public class RecipeOvenItem implements IOvenItem
     }
 
     @Override
-    public void onAdded(IOven oven, ItemStack added, EntityPlayer player, int[] slots)
+    public void onAdded(IOven oven, ItemStack input, EntityPlayer player, int[] slots)
     {
         int slot = slots[0];
+        NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
+        ItemStack output = OvenRecipes.instance().getOutputFor(input);
+        NBTTagCompound outputCompound = new NBTTagCompound(), inputCompound = new NBTTagCompound();
+        input.writeToNBT(inputCompound);
+        output.writeToNBT(outputCompound);
+        slotCompound.setTag(RECIPE_INPUT, inputCompound);
+        slotCompound.setTag(RECIPE_OUTPUT, outputCompound);
+        input.stackSize--;
+        System.out.println("On added");
     }
 
     @Override
@@ -71,7 +81,7 @@ public class RecipeOvenItem implements IOvenItem
     @Override
     public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
-        return true;
+        return false;
     }
 
     @Override
@@ -83,6 +93,9 @@ public class RecipeOvenItem implements IOvenItem
     @Override
     public ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
-        return null;
+        NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
+        boolean done = oven.isFinished();
+        NBTTagCompound resultCompound = slotCompound.getCompoundTag(done ? RECIPE_OUTPUT : RECIPE_INPUT);
+        return ItemStack.loadItemStackFromNBT(resultCompound);
     }
 }

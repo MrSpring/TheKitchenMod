@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by MrSpring on 09-12-2014 for TheKitchenMod.
  */
-public class TileEntityWaffleIron extends TileEntityTimeable
+public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite using IWaffleIron and IDough
 {
     static Map<String, ItemStack[]> recipes;
 

@@ -87,8 +87,12 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     private boolean addItem(IOvenItem item, ItemStack added, EntityPlayer player)
     {
         boolean[] spaced = spaceItem(item.getSize(this), item.consecutive(this));
-        if (!spaced[0])
-            return false;
+        if (!spaced[0]) return false;
+        if (spaced.length == 1)
+        {
+            item.onAdded(this, added, player, new int[0]);
+            return true;
+        }
         NBTTagCompound compound = new NBTTagCompound();
         List<Integer> fills = new ArrayList<Integer>();
         for (int i = 1; i < spaced.length; i++)
@@ -109,6 +113,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
 
     private boolean[] spaceItem(int size, boolean cons)
     {
+        if (size == 0) return new boolean[]{true};
         if (size > items.length)
             return new boolean[items.length + 1];
         int empty = 0;
@@ -142,17 +147,24 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         {
             cookTime++;
         }
+        System.out.println("cookTime = " + cookTime);
     }
 
     private boolean readyToCook()
     {
+        if (!hasFuel()) return false;
+        boolean bool = false;
         for (int i = 0; i < items.length; i++)
         {
             IOvenItem item = items[i];
-            if (item != null && !item.readyToCook(this, i))
-                return false;
+            if (item != null)
+            {
+                bool = true;
+                if (!item.readyToCook(this, i))
+                    return false;
+            }
         }
-        return true;
+        return bool;
     }
 
     @Override

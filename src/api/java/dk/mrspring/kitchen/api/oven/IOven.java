@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.api.oven;
 
 import dk.mrspring.kitchen.api.ICooking;
+import dk.mrspring.kitchen.api.ISpawner;
 import dk.mrspring.kitchen.api.ISpecialTagInfo;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 /**
  * Created by Konrad on 21-06-2015.
  */
-public interface IOven extends ICooking
+public interface IOven extends ICooking, ISpawner
 {
     boolean rightClicked(ItemStack clicked, EntityPlayer player);
 
@@ -37,8 +38,6 @@ public interface IOven extends ICooking
     boolean hasFuel();
 
     void addFuel();
-
-    EntityItem spawnItemInWorld(ItemStack stack);
 
     boolean[] getFreeSlots();
 }

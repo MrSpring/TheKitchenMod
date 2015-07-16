@@ -1,9 +1,9 @@
 package dk.mrspring.kitchen.config.wrapper;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.api.stack.Stack;
-import dk.mrspring.kitchen.util.StackUtils;
 import net.minecraft.item.ItemStack;
+
+import java.util.Map;
 
 /**
  * Created by MrSpring on 15-12-2014 for TheKitchenMod.
@@ -13,6 +13,7 @@ public class JsonItemStack
     String item_name = "";
     int stack_size = 1;
     int metadata = 0;
+    Map<String, Object> tag = null;
 
     public JsonItemStack(String itemName, int stackSize, int metadata)
     {
@@ -70,14 +71,11 @@ public class JsonItemStack
             if (stack != null)
             {
                 stack.setItemDamage(metadata);
-                return stack;
+                if (tag!=null)
+                {
+
+                }
             } else return null;
         } else return null;
-    }
-
-    public Stack toStack()
-    {
-        ItemStack asItemStack = this.toItemStack();
-        return StackUtils.fromItemStack(asItemStack);
     }
 }

@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +37,14 @@ public class ItemJamJar extends ItemBase
         if (jamJarStack.getTagCompound() != null)
             return jamJarStack.getTagCompound().getString(JAM_TYPE);
         else return null;
+    }
+
+    public static boolean isJamEqual(ItemStack stack1, ItemStack stack2)
+    {
+        if (!ItemUtils.item(stack1, KitchenItems.jam_jar) || !ItemUtils.item(stack1, KitchenItems.jam_jar))
+            return false;
+        String type1 = getJamFromStack(stack1), type2 = getJamFromStack(stack2);
+        return !(type1 == null || type2 == null) && type1.equals(type2);
     }
 
     public static ItemStack getJamJarStack(String jam, int usesLeft)

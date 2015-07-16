@@ -1,7 +1,9 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.item.render.ItemRenderMixingBowl;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +38,14 @@ public class ItemMixingBowl extends ItemBase
     {
         String mixType = getMixTypeFromStack(mixingBowlStack);
         return !(mixType == null || mixType.isEmpty()) && mixType.toLowerCase().contains("ice_cream");
+    }
+
+    public static boolean areBowlsEqual(ItemStack stack1, ItemStack stack2)
+    {
+        if (!ItemUtils.item(stack1, KitchenItems.mixing_bowl) || ItemUtils.item(stack2, KitchenItems.mixing_bowl))
+            return false;
+        String mix1 = getMixTypeFromStack(stack1), mix2 = getMixTypeFromStack(stack2);
+        return !(mix1 == null || mix2 == null) && mix1.equals(mix2);
     }
 
     public static String getMixTypeFromStack(ItemStack mixingBowlStack)

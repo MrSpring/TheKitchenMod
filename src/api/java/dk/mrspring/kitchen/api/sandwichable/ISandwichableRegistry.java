@@ -1,6 +1,6 @@
 package dk.mrspring.kitchen.api.sandwichable;
 
-import dk.mrspring.kitchen.api.stack.Stack;
+import net.minecraft.item.ItemStack;
 
 /**
  * Created by Konrad on 13-05-2015.
@@ -11,7 +11,7 @@ public interface ISandwichableRegistry
      * @param stack The Stack to get the Sandwichable instance for.
      * @return Returns the Sandwichable instance for the ItemStack passed through. Null if the item is not Sandwichable.
      */
-    ISandwichable getSandwichableForItem(Stack stack);
+    ISandwichable getSandwichableForItem(ItemStack stack);
 
     /**
      * Checks if the Stack is Sandwichable. In most cases it's best to do this manually using #getSandwichableForItem
