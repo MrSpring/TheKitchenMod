@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.config;
 
-import dk.mrspring.kitchen.api.stack.Stack;
 import dk.mrspring.kitchen.config.wrapper.JsonItemStack;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -157,9 +157,8 @@ public class SandwichableConfig extends BaseConfig
 
         public boolean matches(ItemStack stack)
         {
-            Stack stackStack = new Stack(stack);
-            Stack inputStack = new Stack(input);
-            return stackStack.equals(inputStack);
+            ItemStack inputStack = input.toItemStack();
+            return ItemUtils.areStacksEqual(stack, inputStack, true);
         }
 
         public SandwichableEntry hideInformation()

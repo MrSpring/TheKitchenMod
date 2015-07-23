@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api.board.ICuttingBoard;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
+import dk.mrspring.kitchen.util.ItemUtils;
 import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,8 +18,8 @@ public class SandwichableItemHandler implements IBoardItemHandler
     @Override
     public boolean isForItem(ICuttingBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
     {
-        return SandwichableRegistry.getInstance().isSandwichable(stack) &&
-                (tileEntityBoard.getLayerCount() <= 0 || SandwichUtils.isAllSandwichable(tileEntityBoard.getLayers()));
+        System.out.println("Testing: "+ ItemUtils.name(stack));
+        return (tileEntityBoard.getLayerCount() <= 0 || SandwichUtils.isAllSandwichable(tileEntityBoard.getLayers())) && SandwichableRegistry.getInstance().isSandwichable(stack);
     } // TODO: Fix for jam
 
     @Override

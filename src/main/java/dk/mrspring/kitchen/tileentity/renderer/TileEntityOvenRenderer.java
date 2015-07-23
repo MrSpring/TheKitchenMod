@@ -1,6 +1,9 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.api.oven.IOvenItem;
+import dk.mrspring.kitchen.api.oven.IOvenItemRenderingHandler;
+import dk.mrspring.kitchen.api_impl.client.OvenRenderingRegistry;
 import dk.mrspring.kitchen.model.ModelOven;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.client.Minecraft;
@@ -35,13 +38,13 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
     {
         super.renderTileEntityAt(var1, x, y, z, var8);
 
-        TileEntityOven tileEntity = (TileEntityOven) var1;
+        TileEntityOven oven = (TileEntityOven) var1;
 
         GL11.glPushMatrix();
 
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 
-        if (tileEntity.getCookTime() > 0)
+        if (oven.getCookTime() > 0)
             Minecraft.getMinecraft().renderEngine.bindTexture(activeTexture);
         else
             Minecraft.getMinecraft().renderEngine.bindTexture(inactiveTexture);
@@ -52,14 +55,35 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
 
         GL11.glPushMatrix();
         int metadata;
-        metadata = tileEntity.getBlockMetadata();
+        metadata = oven.getBlockMetadata();
 
         GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
 
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, tileEntity.isOpen() ? 1 : 0);
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, oven.isOpen() ? 1 : 0);
+
+        GL11.glPushMatrix();
+
+        GL11.glTranslatef(0, 2, 0);
+
+        IOvenItem previousItem = null;
+        for (int i = 0; i < oven.getSlotCount(); i++)
+        {
+            IOvenItem item = oven.getItemAt(i);
+            boolean first = previousItem == null || previousItem == item;
+            if (item != null)
+            {
+                IOvenItemRenderingHandler handler = OvenRenderingRegistry.getInstance().getHandlerFor(oven, item, i, first);
+                GL11.glTranslatef(1, 0, 0);
+                handler.render(oven, item, i, first);
+            }
+            previousItem = item;
+        }
+
         GL11.glPopMatrix();
 
-        itemStacks = new ItemStack[4];
+        GL11.glPopMatrix();
+
+//        itemStacks = new ItemStack[4];
 
         // TODO: Fix rendering items using IOvenItemRenderer
         /*itemStacks = tileEntityOven.getOvenItems();

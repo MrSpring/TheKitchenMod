@@ -1,7 +1,9 @@
 package dk.mrspring.kitchen.config.wrapper;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.javanbt.NBTJsonDecompile;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.Map;
 
@@ -71,10 +73,12 @@ public class JsonItemStack
             if (stack != null)
             {
                 stack.setItemDamage(metadata);
-                if (tag!=null)
+                if (tag != null)
                 {
-
+                    NBTTagCompound compound = NBTJsonDecompile.createFromJsonObject(tag);
+                    stack.setTagCompound(compound);
                 }
+                return stack;
             } else return null;
         } else return null;
     }

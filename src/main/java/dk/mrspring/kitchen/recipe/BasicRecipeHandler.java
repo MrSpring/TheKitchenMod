@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.recipe;
 
 import dk.mrspring.kitchen.config.wrapper.JsonBasicRecipe;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;

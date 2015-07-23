@@ -2,8 +2,6 @@ package dk.mrspring.kitchen.api.oven;
 
 import dk.mrspring.kitchen.api.ICooking;
 import dk.mrspring.kitchen.api.ISpawner;
-import dk.mrspring.kitchen.api.ISpecialTagInfo;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -40,4 +38,6 @@ public interface IOven extends ICooking, ISpawner
     void addFuel();
 
     boolean[] getFreeSlots();
+
+    int[] getOccupyingSlots(int baseSlot);
 }

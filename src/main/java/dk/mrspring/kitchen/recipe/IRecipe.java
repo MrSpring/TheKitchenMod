@@ -1,6 +1,5 @@
 package dk.mrspring.kitchen.recipe;
 
-import dk.mrspring.kitchen.api.stack.Stack;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -8,13 +7,9 @@ import net.minecraft.item.ItemStack;
  */
 public interface IRecipe
 {
-    boolean doesInputMatch(Stack stack);
-
     boolean doesInputMatch(ItemStack stack);
 
-    ItemStack getOutput(ItemStack stack);
-
-    Stack getOutput(Stack stack);
+    ItemStack getOutput(ItemStack input);
 
     boolean isValid();
 }

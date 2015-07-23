@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.recipe;
 
 import dk.mrspring.kitchen.Kitchen;
-import dk.mrspring.kitchen.api.stack.Stack;
 import net.minecraft.item.ItemStack;
 
 import static dk.mrspring.kitchen.KitchenItems.*;
@@ -31,7 +30,7 @@ public class FryingPanJamRecipes extends BasicRecipeHandler
                 new JamRecipe(peanut, "peanut"),
                 new JamRecipe(jammable_strawberry, "strawberry"),
                 new JamRecipe(cut_apple, "apple"),
-                new JamRecipe(new Stack(dye, 3), "cocoa"),
+                new JamRecipe(new ItemStack(dye, 3), "cocoa"),
                 new JamRecipe(tomato_slice, "ketchup")
         });
     }

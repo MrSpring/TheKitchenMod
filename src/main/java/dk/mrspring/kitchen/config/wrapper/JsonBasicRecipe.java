@@ -23,7 +23,7 @@ public class JsonBasicRecipe
     public BasicRecipe toBasicRecipe()
     {
         if (this.isValid())
-            return new BasicRecipe(input.toStack(), output.toStack());
+            return new BasicRecipe(input.toItemStack(), output.toItemStack());
         else return null;
     }
 

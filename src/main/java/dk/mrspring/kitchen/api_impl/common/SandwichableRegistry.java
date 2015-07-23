@@ -3,20 +3,17 @@ package dk.mrspring.kitchen.api_impl.common;
 import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichableRegistry;
-import dk.mrspring.kitchen.api.stack.JamJarStack;
-import dk.mrspring.kitchen.api.stack.Stack;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import dk.mrspring.kitchen.config.wrapper.JsonItemStack;
-
-import static dk.mrspring.kitchen.KitchenItems.*;
-
 import dk.mrspring.kitchen.item.ItemJamJar;
-import dk.mrspring.kitchen.util.StackUtils;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static dk.mrspring.kitchen.KitchenItems.*;
 
 /**
  * Created by Konrad on 13-05-2015.
@@ -78,12 +75,12 @@ public class SandwichableRegistry implements ISandwichableRegistry
             JsonItemStack itemStack = entry.getInput();
             ItemStack asItemStack = itemStack.toItemStack();
             if (asItemStack != null)
-                this.makeItemSandwichable(new Stack(asItemStack), entry.getHealAmount(), entry.isBread(), entry.showInformation(), entry.dropItem());
+                this.makeItemSandwichable(asItemStack, entry.getHealAmount(), entry.isBread(), entry.showInformation(), entry.dropItem());
         }
     }
 
     @Override
-    public ISandwichable makeItemSandwichable(Stack stack, int heal, boolean isBread, boolean showInformation, boolean dropItem)
+    public ISandwichable makeItemSandwichable(ItemStack stack, int heal, boolean isBread, boolean showInformation, boolean dropItem)
     {
         Sandwichable entry = new Sandwichable(stack, heal, isBread, !showInformation, dropItem);
         sandwichableItems.add(entry);
@@ -95,11 +92,6 @@ public class SandwichableRegistry implements ISandwichableRegistry
     public void registerSandwichable(ISandwichable sandwichable)
     {
         this.sandwichableItems.add(sandwichable);
-    }
-
-    public ISandwichable makeItemSandwichable(ItemStack stack, int heal, boolean isBread, boolean showInformation, boolean dropItem)
-    {
-        return this.makeItemSandwichable(StackUtils.fromItemStack(stack), heal, isBread, showInformation, dropItem);
     }
 
     public ISandwichable makeItemSandwichable(Item item, int heal, boolean isBread, boolean showInformation, boolean dropItem)
@@ -118,7 +110,7 @@ public class SandwichableRegistry implements ISandwichableRegistry
     }
 
     @Override
-    public ISandwichable getSandwichableForItem(Stack stack)
+    public ISandwichable getSandwichableForItem(ItemStack stack)
     {
         for (ISandwichable sandwichable : sandwichableItems)
             if (sandwichable.doesStackMatch(stack))
@@ -126,20 +118,10 @@ public class SandwichableRegistry implements ISandwichableRegistry
         return null;
     }
 
-    public ISandwichable getSandwichableForItem(ItemStack stack)
-    {
-        return this.getSandwichableForItem(StackUtils.fromItemStack(stack));
-    }
-
     @Override
-    public boolean isSandwichable(Stack stack)
-    {
-        return getSandwichableForItem(stack) != null;
-    }
-
     public boolean isSandwichable(ItemStack stack)
     {
-        return this.isSandwichable(StackUtils.fromItemStack(stack));
+        return getSandwichableForItem(stack) != null;
     }
 
     /**
@@ -147,11 +129,11 @@ public class SandwichableRegistry implements ISandwichableRegistry
      */
     public static class Sandwichable implements ISandwichable
     {
-        public Stack stack;
+        public ItemStack stack;
         public int healAmount;
         public boolean isBread, hideInformation, dropItem;
 
-        public Sandwichable(Stack stack, int healAmount, boolean isBread, boolean hideInformation, boolean dropItem)
+        public Sandwichable(ItemStack stack, int healAmount, boolean isBread, boolean hideInformation, boolean dropItem)
         {
             this.stack = stack;
             this.healAmount = healAmount;
@@ -160,7 +142,7 @@ public class SandwichableRegistry implements ISandwichableRegistry
             this.dropItem = dropItem;
         }
 
-        public Sandwichable(Stack stack)
+        public Sandwichable(ItemStack stack)
         {
             this.stack = stack;
         }
@@ -231,25 +213,26 @@ public class SandwichableRegistry implements ISandwichableRegistry
         }
 
         @Override
-        public boolean doesStackMatch(Stack stack)
+        public boolean doesStackMatch(ItemStack stack)
         {
-            return getStack().areStacksEqual(stack, Stack.Type.ITEM, Stack.Type.METADATA);
+            System.out.println("Comparing: " + ItemUtils.name(stack) + ", with: " + ItemUtils.name(getStack()));
+            return ItemUtils.areStacksEqual(stack, getStack(), false);
         }
 
         @Override
         public ItemStack getBoardStack(ItemStack original)
         {
-            return getStack().toItemStack();
+            return getStack();
         }
 
         @Override
-        public Stack getStack()
+        public ItemStack getStack()
         {
             return this.stack;
         }
 
         @Override
-        public Sandwichable setStack(Stack newStack)
+        public Sandwichable setStack(ItemStack newStack)
         {
             this.stack = newStack;
             return this;
@@ -274,46 +257,21 @@ public class SandwichableRegistry implements ISandwichableRegistry
 
         public JamSandwichable(Item boardItem, String jam, int heal)
         {
-            this(boardItem, new JamJarStack(jam, -2));
-            this.setHealAmount(heal);
+            this(new ItemStack(boardItem), jam, heal);
         }
 
-        public JamSandwichable(Item boardItem, String jam)
+        public JamSandwichable(ItemStack boardStack, String jam, int heal)
         {
-            this(boardItem, new JamJarStack(jam, -2));
+            this(boardStack, ItemJamJar.getJamJarStack(jam, 1), heal);
         }
 
-        public JamSandwichable(Item boardItem, Item stackItem)
-        {
-            this(boardItem, new ItemStack(stackItem, 1, 0));
-        }
-
-        public JamSandwichable(ItemStack boardStack, Item stackItem)
-        {
-            this(boardStack, new ItemStack(stackItem, 1, 0));
-        }
-
-        public JamSandwichable(Item board, ItemStack stack)
-        {
-            this(new ItemStack(board, 1, 0), stack);
-        }
-
-        public JamSandwichable(Item board, Stack stack)
-        {
-            this(new ItemStack(board, 1, 0), stack);
-        }
-
-        public JamSandwichable(ItemStack boardStack, ItemStack stack)
-        {
-            this(boardStack, StackUtils.fromItemStack(stack));
-        }
-
-        public JamSandwichable(ItemStack boardStack, Stack stack)
+        public JamSandwichable(ItemStack boardStack, ItemStack stack, int heal)
         {
             super(stack);
             this.boardStack = boardStack;
             this.setHideInformation(true);
             this.setDropItem(false);
+            this.setHealAmount(heal);
         }
 
         @Override

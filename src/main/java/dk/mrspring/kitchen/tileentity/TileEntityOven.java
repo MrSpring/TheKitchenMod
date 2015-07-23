@@ -220,7 +220,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     @Override
     public IOvenItem removeItemAt(int slot)
     {
-        int[] associatedSlots = getAssociatedSlots(slot);
+        int[] associatedSlots = getOccupyingSlots(slot);
         IOvenItem last = null;
         for (int i : associatedSlots)
         {
@@ -230,7 +230,8 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         return last;
     }
 
-    private int[] getAssociatedSlots(int slot)
+    @Override
+    public int[] getOccupyingSlots(int slot)
     {
         NBTTagCompound slotCompound = getSpecialInfo(slot);
         int[] slots = slotCompound.getIntArray(FILLED_SLOTS);
@@ -411,6 +412,11 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
                 tags[index] = tag;
             }
         }
+    }
+
+    public int getSlotCount()
+    {
+        return this.items.length;
     }
 
     /*protected ItemStack[] ovenItems = new ItemStack[4];

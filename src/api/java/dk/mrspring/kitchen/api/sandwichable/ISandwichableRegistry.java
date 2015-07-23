@@ -20,7 +20,7 @@ public interface ISandwichableRegistry
      * @param stack The {@link Stack} to check if it is Sandwichable.
      * @return Returns true if the Stack is associated with any Sandwichable instances.
      */
-    boolean isSandwichable(Stack stack);
+    boolean isSandwichable(ItemStack stack);
 
     /**
      * Makes an Item able to be used in a Sandwich
@@ -32,7 +32,7 @@ public interface ISandwichableRegistry
      * @param dropItem        Whether or not the player will get back the item when it's taken off the Cutting Board.
      * @return Returns the Sandwichable for the item that was made Sandwichable.
      */
-    ISandwichable makeItemSandwichable(Stack stack, int heal, boolean isBread, boolean showInformation, boolean dropItem);
+    ISandwichable makeItemSandwichable(ItemStack stack, int heal, boolean isBread, boolean showInformation, boolean dropItem);
 
     void registerSandwichable(ISandwichable sandwichable);
 }

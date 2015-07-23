@@ -1,6 +1,5 @@
 package dk.mrspring.kitchen.api.sandwichable;
 
-import dk.mrspring.kitchen.api.stack.Stack;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -12,9 +11,9 @@ public interface ISandwichable
 
     ISandwichable setHealAmount(int healAmount);
 
-    Stack getStack();
+    ItemStack getStack();
 
-    ISandwichable setStack(Stack stack);
+    ISandwichable setStack(ItemStack stack);
 
     boolean getIsBread();
 
@@ -32,7 +31,7 @@ public interface ISandwichable
 
     ISandwichable setDropItem(boolean dropItem);
 
-    boolean doesStackMatch(Stack stack);
+    boolean doesStackMatch(ItemStack stack);
 
     ItemStack getBoardStack(ItemStack original);
 
