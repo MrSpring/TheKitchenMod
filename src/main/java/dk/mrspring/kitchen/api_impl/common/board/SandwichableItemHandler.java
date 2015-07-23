@@ -18,7 +18,6 @@ public class SandwichableItemHandler implements IBoardItemHandler
     @Override
     public boolean isForItem(ICuttingBoard tileEntityBoard, ItemStack stack, EntityPlayer player)
     {
-        System.out.println("Testing: "+ ItemUtils.name(stack));
         return (tileEntityBoard.getLayerCount() <= 0 || SandwichUtils.isAllSandwichable(tileEntityBoard.getLayers())) && SandwichableRegistry.getInstance().isSandwichable(stack);
     } // TODO: Fix for jam
 

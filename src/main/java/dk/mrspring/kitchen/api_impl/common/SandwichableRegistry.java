@@ -215,7 +215,6 @@ public class SandwichableRegistry implements ISandwichableRegistry
         @Override
         public boolean doesStackMatch(ItemStack stack)
         {
-            System.out.println("Comparing: " + ItemUtils.name(stack) + ", with: " + ItemUtils.name(getStack()));
             return ItemUtils.areStacksEqual(stack, getStack(), false);
         }
 
