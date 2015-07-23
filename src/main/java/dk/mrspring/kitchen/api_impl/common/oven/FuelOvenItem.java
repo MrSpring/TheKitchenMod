@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.api_impl.common.oven;
 
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,7 @@ public class FuelOvenItem implements IOvenItem
     @Override
     public boolean isForItem(IOven oven, ItemStack item, EntityPlayer player, boolean[] freeSlots)
     {
-        return item.getItem() == Items.coal;
+        return ItemUtils.item(item, Items.coal);
     }
 
     @Override
