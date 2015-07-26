@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.tileentity.renderer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
-import dk.mrspring.kitchen.api_impl.client.BoardRenderingRegistry;
+import dk.mrspring.kitchen.api_impl.client.board.BoardRenderingRegistry;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;

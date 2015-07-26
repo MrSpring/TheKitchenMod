@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.api_impl.common.oven;
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -40,9 +41,11 @@ public class RecipeOvenItem implements IOvenItem
     }
 
     @Override
-    public void onAdded(IOven oven, ItemStack input, EntityPlayer player, int[] slots)
+    public void onAdded(IOven oven, ItemStack clicked, EntityPlayer player, int[] slots)
     {
         int slot = slots[0];
+        ItemStack input = clicked.copy();
+        input.stackSize = 1;
         NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
         ItemStack output = OvenRecipes.instance().getOutputFor(input);
         NBTTagCompound outputCompound = new NBTTagCompound(), inputCompound = new NBTTagCompound();
@@ -50,8 +53,8 @@ public class RecipeOvenItem implements IOvenItem
         output.writeToNBT(outputCompound);
         slotCompound.setTag(RECIPE_INPUT, inputCompound);
         slotCompound.setTag(RECIPE_OUTPUT, outputCompound);
-        input.stackSize--;
-        System.out.println("On added");
+        clicked.stackSize--;
+        System.out.println("On added, input: " + ItemUtils.name(input) + ", clicked: " + ItemUtils.name(clicked));
     }
 
     @Override
@@ -81,7 +84,24 @@ public class RecipeOvenItem implements IOvenItem
     @Override
     public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
-        return false;
+//        return false;
+        NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
+        NBTTagCompound inputCompound = slotCompound.getCompoundTag(RECIPE_INPUT);
+        ItemStack input = ItemStack.loadItemStackFromNBT(inputCompound);
+        if (input == null)
+        {
+            input = clicked.copy();
+            input.stackSize = 1;
+        }
+        if (ItemUtils.areStacksEqual(clicked, input, false) && input.stackSize < 4)
+        {
+            input.stackSize++;
+            clicked.stackSize--;
+            NBTTagCompound newInputCompound = new NBTTagCompound();
+            input.writeToNBT(newInputCompound);
+            slotCompound.setTag(RECIPE_INPUT, newInputCompound);
+            return true;
+        } else return false;
     }
 
     @Override
@@ -96,6 +116,8 @@ public class RecipeOvenItem implements IOvenItem
         NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
         boolean done = oven.isFinished();
         NBTTagCompound resultCompound = slotCompound.getCompoundTag(done ? RECIPE_OUTPUT : RECIPE_INPUT);
-        return ItemStack.loadItemStackFromNBT(resultCompound);
+        ItemStack dropping = ItemStack.loadItemStackFromNBT(resultCompound);
+        System.out.println(ItemUtils.name(dropping));
+        return dropping;
     }
 }

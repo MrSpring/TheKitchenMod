@@ -1,11 +1,9 @@
-package dk.mrspring.kitchen.api_impl.client;
+package dk.mrspring.kitchen.api_impl.client.ingredient;
 
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.api.pan.IIngredientRenderingRegistry;
-import dk.mrspring.kitchen.api_impl.client.ingredient.FallbackIngredientRenderingHandler;
-import dk.mrspring.kitchen.api_impl.client.ingredient.RecipeIngredientRenderingHandler;
 
 import java.util.ArrayList;
 import java.util.List;

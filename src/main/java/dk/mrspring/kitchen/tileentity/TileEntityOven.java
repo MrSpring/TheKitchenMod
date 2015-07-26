@@ -14,7 +14,9 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class TileEntityOven extends TileEntityTimeable implements IOven
 {
@@ -49,44 +51,57 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         for (int slot = 0; slot < items.length; slot++)
         {
             IOvenItem item = items[slot];
+            System.out.println("On right click slot: " + slot + ", is null? " + (item == null));
             if (item != null && item.onRightClicked(this, clicked, player, slot)) return true;
         }
         if (clicked == null && player.isSneaking())
         {
+            System.out.println("Toggling open");
             this.toggleOpen();
             return true;
         }
 
         if (isOpen())
         {
-            if (this.isFinished())
-            {
-                for (int i = 0; i < items.length; i++)
-                {
-                    IOvenItem item = items[i];
-                    if (item != null && item.canBeRemoved(this, clicked, player, i))
-                    {
-                        ItemStack drop = item.onRemoved(this, clicked, player, i);
-                        removeItemAt(i);
-                        spawnItemInWorld(drop);
-                        return true;
-                    }
-                }
-                return false;
-            } else
+            if (this.isFinished()) return tryRemove(clicked, player);
+            else
             {
                 IOvenItem item = OvenRegistry.getInstance().getOvenItemFor(this, clicked, player);
+                System.out.println("Trying to add item");
                 if (item.canAdd(this, clicked, player, getFreeSlots()))
+                {
+                    System.out.println("Item can add");
                     if (this.addItem(item, clicked, player))
+                    {
+                        System.out.println("Oven added item");
                         return true;
+                    }
+                } else return tryRemove(clicked, player);
                 return false;
             }
         } else return false;
     }
 
+    private boolean tryRemove(ItemStack clicked, EntityPlayer player)
+    {
+        for (int i = 0; i < items.length; i++)
+        {
+            IOvenItem item = items[i];
+            if (item != null && item.canBeRemoved(this, clicked, player, i))
+            {
+                ItemStack drop = item.onRemoved(this, clicked, player, i);
+                removeItemAt(i);
+                spawnItemInWorld(drop);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean addItem(IOvenItem item, ItemStack added, EntityPlayer player)
     {
         boolean[] spaced = spaceItem(item.getSize(this), item.consecutive(this));
+        System.out.println("Space: " + Arrays.toString(spaced));
         if (!spaced[0]) return false;
         if (spaced.length == 1)
         {
@@ -95,18 +110,19 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         }
         NBTTagCompound compound = new NBTTagCompound();
         List<Integer> fills = new ArrayList<Integer>();
-        for (int i = 1; i < spaced.length; i++)
-            if (spaced[i])
-                fills.add(i - 1);
-
+        for (int i = 1; i < spaced.length; i++) if (spaced[i]) fills.add(i - 1);
         int[] slots = ArrayUtils.toPrimitive(fills.toArray(new Integer[fills.size()]));
         compound.setIntArray(FILLED_SLOTS, slots);
-        for (int i = 1, j = 0; i < spaced.length; i = 1 + (j++))
+        for (int i = 1; i < spaced.length; i++)
+        {
+            int j = i - 1;
+            System.out.println(i + ", " + j);
             if (spaced[i])
             {
                 items[j] = item;
                 setSpecialInfo(j, (NBTTagCompound) compound.copy());
             }
+        }
         item.onAdded(this, added, player, slots);
         return true;
     }
@@ -114,8 +130,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     private boolean[] spaceItem(int size, boolean cons)
     {
         if (size == 0) return new boolean[]{true};
-        if (size > items.length)
-            return new boolean[items.length + 1];
+        if (size > items.length) return new boolean[items.length + 1];
         int empty = 0;
         boolean[] slots = new boolean[items.length + 1];
         for (int i = 0; i < items.length; i++)
@@ -147,7 +162,6 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         {
             cookTime++;
         }
-        System.out.println("cookTime = " + cookTime);
     }
 
     private boolean readyToCook()
@@ -265,6 +279,22 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     @Override
     public EntityItem spawnItemInWorld(ItemStack stack)
     {
+        if (stack != null)
+        {
+            Random random = new Random();
+
+            float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+            float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+
+            EntityItem entityItem = new EntityItem(worldObj, xCoord + xRandPos, yCoord + 1.15, zCoord + zRandPos, stack);
+
+            entityItem.motionX = random.nextGaussian() * 0.005F;
+            entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
+            entityItem.motionZ = random.nextGaussian() * 0.005F;
+
+            worldObj.spawnEntityInWorld(entityItem);
+            return entityItem;
+        }
         return null;
     }
 

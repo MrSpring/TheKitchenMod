@@ -36,4 +36,6 @@ public class ItemUtils
     {
         return stack != null ? stack.toString() : "null";
     }
+
+//    public static String deepName(ItemStack stack){}
 }

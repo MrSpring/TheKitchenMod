@@ -1,11 +1,7 @@
-package dk.mrspring.kitchen.api_impl.client;
+package dk.mrspring.kitchen.api_impl.client.board;
 
-import dk.mrspring.kitchen.api_impl.client.board.ItemRenderingHandler;
 import dk.mrspring.kitchen.api.board.IBoardRenderingHandler;
 import dk.mrspring.kitchen.api.board.IBoardRenderingRegistry;
-import dk.mrspring.kitchen.api_impl.client.board.BaconRenderingHandler;
-import dk.mrspring.kitchen.api_impl.client.board.BreadSliceRenderingHandler;
-import dk.mrspring.kitchen.api_impl.client.board.SlicingRenderingHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

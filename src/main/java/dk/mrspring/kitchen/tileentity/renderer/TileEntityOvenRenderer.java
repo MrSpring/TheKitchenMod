@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.tileentity.renderer;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api.oven.IOvenItemRenderingHandler;
-import dk.mrspring.kitchen.api_impl.client.OvenRenderingRegistry;
+import dk.mrspring.kitchen.api_impl.client.oven.OvenRenderingRegistry;
 import dk.mrspring.kitchen.model.ModelOven;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.client.Minecraft;
@@ -119,6 +119,11 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
         GL11.glPopMatrix();
 
         GL11.glPopMatrix();
+    }
+
+    private boolean eq(IOvenItem item1, IOvenItem item2)
+    {
+        return item1 == item2;
     }
 
     private void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)
