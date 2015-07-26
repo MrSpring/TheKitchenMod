@@ -52,7 +52,7 @@ public class BasicRecipeHandler
     public ItemStack getOutputFor(ItemStack input)
     {
         IRecipe forInput = getRecipeFor(input);
-        return forInput != null ? forInput.getOutput(input) : null;
+        return forInput != null ? forInput.getOutput(input).copy() : null;
     }
 
     public IRecipe getRecipeFor(ItemStack input)

@@ -20,11 +20,15 @@ public class ItemWearableIceCreamable extends ItemFoodArmorBase
     public ItemWearableIceCreamable(String name, String textureName, int baseHealAmount, String armorTexture, int armorType)
     {
         super(name, textureName, baseHealAmount, armorTexture, armorType);
+
+        this.setMaxStackSize(64);
     }
 
     public ItemWearableIceCreamable(String name, int baseHealAmount, String armorTexture, int armorType)
     {
         super(name, baseHealAmount, armorTexture, armorType);
+
+        this.setMaxStackSize(64);
     }
 
     @Override

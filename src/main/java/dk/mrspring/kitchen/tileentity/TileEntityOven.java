@@ -319,7 +319,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     @Override
     public int getDoneTime()
     {
-        int highest = 0;
+        int highest = 1;
         for (IOvenItem item : items)
             if (item != null) highest = Math.max(highest, item.getCookTime(this));
         return highest;
@@ -328,7 +328,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     @Override
     public boolean isFinished()
     {
-        return getCookTime() >= getDoneTime() && isCooking();
+        return getCookTime() >= getDoneTime() /*&& isCooking()*/;
     }
 
     @Override

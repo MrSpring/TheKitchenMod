@@ -97,6 +97,15 @@ public class RecipeOvenItem implements IOvenItem
         {
             input.stackSize++;
             clicked.stackSize--;
+            ItemStack output = OvenRecipes.instance().getOutputFor(input);
+            if (output != null)
+            {
+                System.out.println("output: " + ItemUtils.name(output));
+                output.stackSize *= input.stackSize;
+                NBTTagCompound outputCompound = new NBTTagCompound();
+                output.writeToNBT(outputCompound);
+                slotCompound.setTag(RECIPE_OUTPUT, outputCompound);
+            }
             NBTTagCompound newInputCompound = new NBTTagCompound();
             input.writeToNBT(newInputCompound);
             slotCompound.setTag(RECIPE_INPUT, newInputCompound);
