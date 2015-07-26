@@ -51,12 +51,10 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         for (int slot = 0; slot < items.length; slot++)
         {
             IOvenItem item = items[slot];
-            System.out.println("On right click slot: " + slot + ", is null? " + (item == null));
             if (item != null && item.onRightClicked(this, clicked, player, slot)) return true;
         }
         if (clicked == null && player.isSneaking())
         {
-            System.out.println("Toggling open");
             this.toggleOpen();
             return true;
         }
@@ -67,15 +65,9 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
             else
             {
                 IOvenItem item = OvenRegistry.getInstance().getOvenItemFor(this, clicked, player);
-                System.out.println("Trying to add item");
                 if (item.canAdd(this, clicked, player, getFreeSlots()))
                 {
-                    System.out.println("Item can add");
-                    if (this.addItem(item, clicked, player))
-                    {
-                        System.out.println("Oven added item");
-                        return true;
-                    }
+                    if (this.addItem(item, clicked, player)) return true;
                 } else return tryRemove(clicked, player);
                 return false;
             }
@@ -101,7 +93,6 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     private boolean addItem(IOvenItem item, ItemStack added, EntityPlayer player)
     {
         boolean[] spaced = spaceItem(item.getSize(this), item.consecutive(this));
-        System.out.println("Space: " + Arrays.toString(spaced));
         if (!spaced[0]) return false;
         if (spaced.length == 1)
         {
@@ -116,7 +107,6 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         for (int i = 1; i < spaced.length; i++)
         {
             int j = i - 1;
-            System.out.println(i + ", " + j);
             if (spaced[i])
             {
                 items[j] = item;
