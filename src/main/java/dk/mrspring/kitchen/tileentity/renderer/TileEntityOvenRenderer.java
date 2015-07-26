@@ -44,10 +44,7 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
 
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 
-        if (oven.getCookTime() > 0)
-            Minecraft.getMinecraft().renderEngine.bindTexture(activeTexture);
-        else
-            Minecraft.getMinecraft().renderEngine.bindTexture(inactiveTexture);
+        bindTexture(oven.getCookTime() > 0 ? activeTexture : inactiveTexture);
 
         GL11.glPushMatrix();
 
@@ -66,15 +63,38 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
         GL11.glTranslatef(0, 2, 0);
 
         IOvenItem previousItem = null;
+        float f = 0.2F;
+        float yF = 0F;
+        GL11.glTranslatef(0.05F, -0.8F, 0F);
         for (int i = 0; i < oven.getSlotCount(); i++)
         {
             IOvenItem item = oven.getItemAt(i);
             boolean first = previousItem == null || previousItem == item;
             if (item != null)
             {
-                IOvenItemRenderingHandler handler = OvenRenderingRegistry.getInstance().getHandlerFor(oven, item, i, first);
-                GL11.glTranslatef(1, 0, 0);
+                IOvenItemRenderingHandler handler =
+                        OvenRenderingRegistry.getInstance().getHandlerFor(oven, item, i, first);
+//                GL11.glTranslatef(0.1F, 0, 0);
+
+                GL11.glPushMatrix();
+                switch (i)
+                {
+                    case 0:
+                        GL11.glTranslatef(f, yF, -f);
+                        break;
+                    case 1:
+                        GL11.glTranslatef(f, yF, f);
+                        break;
+                    case 2:
+                        GL11.glTranslatef(-f, yF, f);
+                        break;
+                    case 3:
+                        GL11.glTranslatef(-f, yF, -f);
+                        break;
+                }
+
                 handler.render(oven, item, i, first);
+                GL11.glPopMatrix();
             }
             previousItem = item;
         }
