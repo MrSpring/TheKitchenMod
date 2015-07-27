@@ -2,8 +2,11 @@ package dk.mrspring.kitchen.item;
 
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.entity.EntityDingFX;
 import dk.mrspring.kitchen.item.render.ItemRenderMixingBowl;
 import dk.mrspring.kitchen.util.ItemUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Map;
@@ -172,5 +176,19 @@ public class ItemMixingBowl extends ItemBase
         else if (damage > 0 && damage < 4)
             return icons[damage];
         else return icons[0];
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack p_77659_1_, World world, EntityPlayer p_77659_3_)
+    {
+//        p_77659_2_.spawnEntityInWorld(new EntityDingFX(p_77659_2_, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ));
+//        world.spawnParticle();
+        if (world.isRemote)
+        {
+            EntityDingFX particle = new EntityDingFX(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ);
+            particle.setRotation(-p_77659_3_.getRotationYawHead());
+            Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+        }
+        return super.onItemRightClick(p_77659_1_, world, p_77659_3_);
     }
 }

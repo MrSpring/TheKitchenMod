@@ -7,5 +7,7 @@ public interface IOvenItemRenderingHandler
 {
     boolean shouldBeUsed(IOven oven, IOvenItem item, int slot, boolean firstSlot);
 
+    void renderPreTranslate(IOven oven, IOvenItem item, int slot, boolean firstSlot);
+
     void render(IOven oven, IOvenItem item, int slot, boolean firstSlot);
 }

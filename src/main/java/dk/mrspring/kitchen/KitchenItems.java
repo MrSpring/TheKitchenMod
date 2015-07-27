@@ -2,7 +2,10 @@ package dk.mrspring.kitchen;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.item.*;
-import dk.mrspring.kitchen.item.food.*;
+import dk.mrspring.kitchen.item.food.ItemFoodBase;
+import dk.mrspring.kitchen.item.food.ItemFoodWeaponBase;
+import dk.mrspring.kitchen.item.food.ItemIceCreamableBase;
+import dk.mrspring.kitchen.item.food.ItemWearableIceCreamable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -79,9 +82,11 @@ public class KitchenItems
     public static final Item scrambled_eggs = new ItemFoodBase("scrambled_eggs", 5, false, Kitchen.instance.foodTab).setMaxStackSize(16);
     public static final Item raw_meat_patty = new ItemFoodBase("raw_meat_patty", 1, true, Kitchen.instance.foodTab);
     public static final Item cooked_meat_patty = new ItemFoodBase("cooked_meat_patty", 4, true, Kitchen.instance.foodTab);
-    public static final Item flat_funnel = new ItemBase("flat_funnel", true);
-    public static final Item round_funnel = new ItemBase("round_funnel", true);
-    public static final Item square_funnel = new ItemBase("square_funnel", true);
+    //    public static final Item flat_funnel = new ItemBase("flat_funnel", true);
+//    public static final Item round_funnel = new ItemBase("round_funnel", true);
+//    public static final Item square_funnel = new ItemBase("square_funnel", true);
+    public static final Item empty_muffin_tray = new ItemBase("empty_muffin_tray", true).setMaxStackSize(1);
+    public static final Item filled_muffin_tray = new ItemBase("filled_muffin_tray", true).setMaxStackSize(1);
     public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[]{new ItemStack(bread_slice, 1, 0), new ItemStack(raw_bacon, 1, 0), new ItemStack(bread_slice, 1, 0)});
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.

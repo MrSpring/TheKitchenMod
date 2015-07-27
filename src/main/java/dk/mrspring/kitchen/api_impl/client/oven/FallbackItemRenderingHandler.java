@@ -16,6 +16,12 @@ public class FallbackItemRenderingHandler implements IOvenItemRenderingHandler
     }
 
     @Override
+    public void renderPreTranslate(IOven oven, IOvenItem item, int slot, boolean firstSlot)
+    {
+
+    }
+
+    @Override
     public void render(IOven oven, IOvenItem item, int slot, boolean firstSlot)
     {
 

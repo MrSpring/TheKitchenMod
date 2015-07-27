@@ -31,7 +31,12 @@ public class RecipeOvenItem implements IOvenItem
     @Override
     public boolean isForItem(IOven oven, ItemStack item, EntityPlayer player, boolean[] freeSlots)
     {
-        return OvenRecipes.instance().hasOutput(item);
+        return OvenRecipes.instance().hasOutput(item) && itemOverride(item);
+    }
+
+    public boolean itemOverride(ItemStack item)
+    {
+        return true;
     }
 
     @Override
@@ -43,16 +48,19 @@ public class RecipeOvenItem implements IOvenItem
     @Override
     public void onAdded(IOven oven, ItemStack clicked, EntityPlayer player, int[] slots)
     {
-        int slot = slots[0];
+//        int slot = slots[0];
         ItemStack input = clicked.copy();
         input.stackSize = 1;
-        NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
         ItemStack output = OvenRecipes.instance().getOutputFor(input);
         NBTTagCompound outputCompound = new NBTTagCompound(), inputCompound = new NBTTagCompound();
         input.writeToNBT(inputCompound);
         output.writeToNBT(outputCompound);
-        slotCompound.setTag(RECIPE_INPUT, inputCompound);
-        slotCompound.setTag(RECIPE_OUTPUT, outputCompound);
+        for (int slot : slots)
+        {
+            NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
+            slotCompound.setTag(RECIPE_INPUT, inputCompound.copy());
+            slotCompound.setTag(RECIPE_OUTPUT, outputCompound.copy());
+        }
         clicked.stackSize--;
         System.out.println("On added, input: " + ItemUtils.name(input) + ", clicked: " + ItemUtils.name(clicked));
     }

@@ -5,8 +5,9 @@ import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api.oven.IOvenItemRenderingHandler;
 import dk.mrspring.kitchen.api_impl.common.oven.RecipeOvenItem;
 import dk.mrspring.kitchen.api_impl.common.pan.RecipeIngredient;
-import dk.mrspring.kitchen.util.ItemUtils;
+import dk.mrspring.kitchen.model.ModelMuffinTray;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
@@ -26,6 +27,12 @@ public class RecipeItemRenderingHandler implements IOvenItemRenderingHandler
     }
 
     @Override
+    public void renderPreTranslate(IOven oven, IOvenItem item, int slot, boolean firstSlot)
+    {
+
+    }
+
+    @Override
     public void render(IOven oven, IOvenItem item, int slot, boolean firstSlot)
     {
         NBTTagCompound compound = oven.getSpecialInfo(slot);
@@ -33,26 +40,12 @@ public class RecipeItemRenderingHandler implements IOvenItemRenderingHandler
         ItemStack rendering = ItemStack.loadItemStackFromNBT(itemCompound);
         if (rendering != null)
         {
-//            rendering.stackSize = 1;
-
             GL11.glPushMatrix();
-//        GL11.glTranslatef(0, -1.36F, -0.143F);
-//            System.out.println(ItemUtils.name(rendering));
             float s = 0.7F;
             GL11.glScalef(s, s, s);
-
             renderItem(rendering, 0, 0, 0);
             GL11.glPopMatrix();
         }
-        /*NBTTagCompound compound = oven.getSpecialInfo(slot);
-        NBTTagCompound itemCompound = compound.getCompoundTag(oven.isFinished() ? RECIPE_OUTPUT : RECIPE_INPUT);
-        if (itemCompound != null)
-        {
-            GL11.glPushMatrix();
-            ItemStack rendering = ItemStack.loadItemStackFromNBT(itemCompound);
-            renderItem(rendering, 0, 0, 0);
-            GL11.glPopMatrix();
-        }*/
     }
 
     private void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)

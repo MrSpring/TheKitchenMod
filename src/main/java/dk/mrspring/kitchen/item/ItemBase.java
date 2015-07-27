@@ -163,8 +163,10 @@ public class ItemBase extends Item
         registerItem(scrambled_eggs);
         registerItem(raw_meat_patty);
         registerItem(cooked_meat_patty);
-        registerItem(flat_funnel);
-        registerItem(round_funnel);
-        registerItem(square_funnel);
+//        registerItem(flat_funnel);
+//        registerItem(round_funnel);
+//        registerItem(square_funnel);
+        registerItem(empty_muffin_tray);
+        registerItem(filled_muffin_tray);
     }
 }

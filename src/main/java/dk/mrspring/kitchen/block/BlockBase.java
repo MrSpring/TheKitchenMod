@@ -6,6 +6,7 @@ import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemBlockPlate;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 
 import static dk.mrspring.kitchen.GameRegisterer.registerBlock;
 
@@ -25,6 +26,13 @@ public class BlockBase extends Block
     public BlockBase(Material mat, String name, boolean useCreativeTab)
     {
         this(mat, name, ModInfo.modid + ":" + name, useCreativeTab);
+    }
+
+    @Override
+    public void registerBlockIcons(IIconRegister p_149651_1_)
+    {
+        super.registerBlockIcons(p_149651_1_);
+        System.out.println(p_149651_1_.getClass().getName());
     }
 
     public static void load()

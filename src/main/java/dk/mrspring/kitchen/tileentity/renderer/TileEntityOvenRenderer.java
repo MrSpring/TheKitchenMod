@@ -60,12 +60,11 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
 
         GL11.glPushMatrix();
 
-        GL11.glTranslatef(0, 2, 0);
+//        GL11.glTranslatef(0, 2, 0);
 
         IOvenItem previousItem = null;
         float f = 0.2F;
         float yF = 0F;
-        GL11.glTranslatef(0.05F, -0.8F, 0F);
         for (int i = 0; i < oven.getSlotCount(); i++)
         {
             IOvenItem item = oven.getItemAt(i);
@@ -76,7 +75,10 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
                         OvenRenderingRegistry.getInstance().getHandlerFor(oven, item, i, first);
 //                GL11.glTranslatef(0.1F, 0, 0);
 
+                handler.renderPreTranslate(oven, item, i, first);
+
                 GL11.glPushMatrix();
+                GL11.glTranslatef(0.05F, 2F - 0.8F, 0F);
                 switch (i)
                 {
                     case 0:
