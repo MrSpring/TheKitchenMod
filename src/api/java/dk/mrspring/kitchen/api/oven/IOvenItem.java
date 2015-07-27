@@ -30,5 +30,5 @@ public interface IOvenItem
 
     boolean canBeRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot);
 
-    ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot);
+    ItemStack[] onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot);
 }

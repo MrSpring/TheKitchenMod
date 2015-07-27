@@ -125,13 +125,13 @@ public class RecipeOvenItem implements IOvenItem
     }
 
     @Override
-    public ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
+    public ItemStack[] onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
         NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
         boolean done = oven.isFinished();
         NBTTagCompound resultCompound = slotCompound.getCompoundTag(done ? RECIPE_OUTPUT : RECIPE_INPUT);
         ItemStack dropping = ItemStack.loadItemStackFromNBT(resultCompound);
         System.out.println(ItemUtils.name(dropping));
-        return dropping;
+        return new ItemStack[]{dropping};
     }
 }

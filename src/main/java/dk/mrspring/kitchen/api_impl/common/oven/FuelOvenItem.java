@@ -79,7 +79,7 @@ public class FuelOvenItem implements IOvenItem
     }
 
     @Override
-    public ItemStack onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
+    public ItemStack[] onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
         return null;
     }

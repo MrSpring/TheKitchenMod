@@ -14,7 +14,6 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -81,9 +80,9 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
             IOvenItem item = items[i];
             if (item != null && item.canBeRemoved(this, clicked, player, i))
             {
-                ItemStack drop = item.onRemoved(this, clicked, player, i);
+                ItemStack[] drops = item.onRemoved(this, clicked, player, i);
                 removeItemAt(i);
-                spawnItemInWorld(drop);
+                for (ItemStack drop : drops) spawnItemInWorld(drop);
                 return true;
             }
         }
