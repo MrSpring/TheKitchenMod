@@ -69,7 +69,7 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
         for (int i = 0; i < oven.getSlotCount(); i++)
         {
             IOvenItem item = oven.getItemAt(i);
-            boolean first = previousItem == null || previousItem == item;
+            boolean first = previousItem == null || previousItem != item;
             if (item != null)
             {
                 IOvenItemRenderingHandler handler =
