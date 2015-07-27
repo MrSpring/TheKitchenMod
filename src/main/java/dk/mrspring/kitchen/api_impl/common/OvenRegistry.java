@@ -6,6 +6,7 @@ import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api.oven.IOvenItemRegistry;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.api_impl.common.oven.BasicOvenItem;
+import dk.mrspring.kitchen.api_impl.common.oven.BurgerBunOvenItem;
 import dk.mrspring.kitchen.api_impl.common.oven.FuelOvenItem;
 import dk.mrspring.kitchen.api_impl.common.oven.RecipeOvenItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,6 +26,7 @@ public class OvenRegistry implements IOvenItemRegistry
 
     private OvenRegistry()
     {
+        registerOvenItem(new BurgerBunOvenItem());
         registerOvenItem(new RecipeOvenItem());
         registerOvenItem(new FuelOvenItem());
     }

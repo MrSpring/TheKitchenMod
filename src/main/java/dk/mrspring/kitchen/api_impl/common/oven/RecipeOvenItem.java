@@ -81,6 +81,11 @@ public class RecipeOvenItem implements IOvenItem
         return 200;
     }
 
+    protected int getMaxOvenStackSize(IOven oven, ItemStack stack, int slot)
+    {
+        return 4;
+    }
+
     @Override
     public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
@@ -93,7 +98,7 @@ public class RecipeOvenItem implements IOvenItem
             input = clicked.copy();
             input.stackSize = 1;
         }
-        if (ItemUtils.areStacksEqual(clicked, input, false) && input.stackSize < 4)
+        if (ItemUtils.areStacksEqual(clicked, input, false) && input.stackSize < getMaxOvenStackSize(oven, clicked, slot))
         {
             input.stackSize++;
             clicked.stackSize--;
