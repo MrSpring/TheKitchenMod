@@ -1,5 +1,8 @@
 package dk.mrspring.kitchen.tileentity;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api_impl.common.OvenRegistry;
@@ -29,13 +32,15 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     public static final String ITEM_INFO = "ItemTagInfo";
     public static final String ITEM_INFO_INDEX = "Index";
     public static final String ITEM_INFO_LIST = "OvenItemInfo";
-    public static final String OLD_ITEM_LIST = "Items";
 
     IOvenItem[] items = new IOvenItem[4];
     NBTTagCompound[] tags = new NBTTagCompound[items.length];
     boolean open = false;
     boolean fuel = false;
     int cookTime = 0;
+
+    @SideOnly(Side.CLIENT)
+    float lidAngle = 0;
 
     @Override
     public boolean[] getFreeSlots()
@@ -148,6 +153,11 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     @Override
     public void updateEntity()
     {
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+            if (isOpen())
+                lidAngle = Math.min(1F, lidAngle + 0.1F);
+            else lidAngle = Math.max(0F, lidAngle - 0.1F);
+
         if (!isOpen() && readyToCook())
         {
             cookTime++;
@@ -440,5 +450,10 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     public int getSlotCount()
     {
         return this.items.length;
+    }
+
+    public float getLidAngle()
+    {
+        return lidAngle;
     }
 }

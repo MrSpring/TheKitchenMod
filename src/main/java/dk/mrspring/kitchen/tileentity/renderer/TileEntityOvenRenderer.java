@@ -56,7 +56,7 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
 
         GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
 
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, oven.isOpen() ? 1 : 0);
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, oven.getLidAngle());
 
         GL11.glPushMatrix();
 
