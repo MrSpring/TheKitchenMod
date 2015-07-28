@@ -17,10 +17,6 @@ public interface IOven extends ICooking, ISpawner
 
     IOvenItem removeItemAt(int slot);
 
-    boolean addOvenItem(IOvenItem item);
-
-    boolean addOvenItemAt(IOvenItem item, int slot);
-
     boolean isSlotFree(int slot);
 
     boolean isOpen();
@@ -40,4 +36,8 @@ public interface IOven extends ICooking, ISpawner
     boolean[] getFreeSlots();
 
     int[] getOccupyingSlots(int baseSlot);
+
+    int getBurnTime();
+
+    boolean isBurnt();
 }

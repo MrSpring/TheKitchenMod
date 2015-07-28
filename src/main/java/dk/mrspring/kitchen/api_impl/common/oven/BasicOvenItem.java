@@ -65,6 +65,12 @@ public class BasicOvenItem implements IOvenItem
     }
 
     @Override
+    public int getBurnTime(IOven oven)
+    {
+        return 0;
+    }
+
+    @Override
     public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
         return false;

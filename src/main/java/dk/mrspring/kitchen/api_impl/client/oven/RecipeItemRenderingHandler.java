@@ -4,10 +4,7 @@ import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api.oven.IOvenItemRenderingHandler;
 import dk.mrspring.kitchen.api_impl.common.oven.RecipeOvenItem;
-import dk.mrspring.kitchen.api_impl.common.pan.RecipeIngredient;
-import dk.mrspring.kitchen.model.ModelMuffinTray;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
@@ -36,7 +33,7 @@ public class RecipeItemRenderingHandler implements IOvenItemRenderingHandler
     public void render(IOven oven, IOvenItem item, int slot, boolean firstSlot)
     {
         NBTTagCompound compound = oven.getSpecialInfo(slot);
-        NBTTagCompound itemCompound = compound.getCompoundTag(oven.isFinished() ? RecipeIngredient.RECIPE_OUTPUT : RecipeIngredient.RECIPE_INPUT);
+        NBTTagCompound itemCompound = compound.getCompoundTag(oven.isFinished() ? (oven.isBurnt() ? RecipeOvenItem.RECIPE_BURNT_OUTPUT : RecipeOvenItem.RECIPE_OUTPUT) : RecipeOvenItem.RECIPE_INPUT);
         ItemStack rendering = ItemStack.loadItemStackFromNBT(itemCompound);
         if (rendering != null)
         {

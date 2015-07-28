@@ -53,4 +53,16 @@ public class OvenRecipes extends BasicRecipeHandler
         };
         addAll(defaultRecipes);
     }
+
+    public boolean hasBurntResult(ItemStack input)
+    {
+        return getBurntResult(input) != null;
+    }
+
+    public ItemStack getBurntResult(ItemStack input)
+    {
+        IRecipe recipe = getRecipeFor(input);
+        if (recipe instanceof OvenRecipe) return ((OvenRecipe) recipe).getBurntResult(input);
+        else return null;
+    }
 }

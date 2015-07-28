@@ -1,7 +1,10 @@
 package dk.mrspring.kitchen.api_impl.common.oven;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
+import dk.mrspring.kitchen.recipe.IRecipe;
+import dk.mrspring.kitchen.recipe.OvenRecipe;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +18,7 @@ public class RecipeOvenItem implements IOvenItem
 {
     public static final String RECIPE_INPUT = "RecipeInput";
     public static final String RECIPE_OUTPUT = "RecipeOutput";
+    public static final String RECIPE_BURNT_OUTPUT = "RecipeBurntOutput";
 
     @Override
     public String getName()
@@ -51,18 +55,26 @@ public class RecipeOvenItem implements IOvenItem
 //        int slot = slots[0];
         ItemStack input = clicked.copy();
         input.stackSize = 1;
-        ItemStack output = OvenRecipes.instance().getOutputFor(input);
-        NBTTagCompound outputCompound = new NBTTagCompound(), inputCompound = new NBTTagCompound();
+        IRecipe recipe = OvenRecipes.instance().getRecipeFor(input);
+        ItemStack output = recipe.getOutput(input);
+        ItemStack burntOutput = recipe instanceof OvenRecipe ?
+                ((OvenRecipe) recipe).getBurntResult(input) :
+                new ItemStack(KitchenItems.burnt_meat);
+        NBTTagCompound outputCompound = new NBTTagCompound(),
+                inputCompound = new NBTTagCompound(),
+                burntCompound = new NBTTagCompound();
         input.writeToNBT(inputCompound);
         output.writeToNBT(outputCompound);
+        burntOutput.writeToNBT(burntCompound);
         for (int slot : slots)
         {
             NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
             slotCompound.setTag(RECIPE_INPUT, inputCompound.copy());
             slotCompound.setTag(RECIPE_OUTPUT, outputCompound.copy());
+            slotCompound.setTag(RECIPE_BURNT_OUTPUT, burntCompound.copy());
         }
         clicked.stackSize--;
-        System.out.println("On added, input: " + ItemUtils.name(input) + ", clicked: " + ItemUtils.name(clicked));
+//        System.out.println("On added, input: " + ItemUtils.name(input) + ", clicked: " + ItemUtils.name(clicked));
     }
 
     @Override
@@ -89,6 +101,12 @@ public class RecipeOvenItem implements IOvenItem
         return 200;
     }
 
+    @Override
+    public int getBurnTime(IOven oven)
+    {
+        return getCookTime(oven) + 150;
+    }
+
     protected int getMaxOvenStackSize(IOven oven, ItemStack stack, int slot)
     {
         return 4;
@@ -97,7 +115,6 @@ public class RecipeOvenItem implements IOvenItem
     @Override
     public boolean onRightClicked(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
-//        return false;
         NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
         NBTTagCompound inputCompound = slotCompound.getCompoundTag(RECIPE_INPUT);
         ItemStack input = ItemStack.loadItemStackFromNBT(inputCompound);
@@ -113,7 +130,6 @@ public class RecipeOvenItem implements IOvenItem
             ItemStack output = OvenRecipes.instance().getOutputFor(input);
             if (output != null)
             {
-                System.out.println("output: " + ItemUtils.name(output));
                 output.stackSize *= input.stackSize;
                 NBTTagCompound outputCompound = new NBTTagCompound();
                 output.writeToNBT(outputCompound);
@@ -136,8 +152,8 @@ public class RecipeOvenItem implements IOvenItem
     public ItemStack[] onRemoved(IOven oven, ItemStack clicked, EntityPlayer player, int slot)
     {
         NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
-        boolean done = oven.isFinished();
-        NBTTagCompound resultCompound = slotCompound.getCompoundTag(done ? RECIPE_OUTPUT : RECIPE_INPUT);
+        boolean done = oven.isFinished(), burnt = oven.isBurnt();
+        NBTTagCompound resultCompound = slotCompound.getCompoundTag(done ? (burnt ? RECIPE_BURNT_OUTPUT : RECIPE_OUTPUT) : RECIPE_INPUT);
         ItemStack dropping = ItemStack.loadItemStackFromNBT(resultCompound);
         System.out.println(ItemUtils.name(dropping));
         return new ItemStack[]{dropping};
