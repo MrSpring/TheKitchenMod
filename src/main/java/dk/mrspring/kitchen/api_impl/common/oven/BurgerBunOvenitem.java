@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by Konrad on 27-07-2015.
  */
-public class BurgerBunOvenItem extends RecipeOvenItem
+public class BurgerBunOvenitem extends RecipeOvenItem
 {
     @Override
     public String getName()
