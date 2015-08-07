@@ -22,7 +22,7 @@ public class OvenRegistry implements IOvenItemRegistry
     private OvenRegistry()
     {
         registerOvenItem(new MuffinTrayItem());
-        registerOvenItem(new BurgerBunOvenitem());
+        registerOvenItem(new BurgerBunOvenItem());
         registerOvenItem(new RecipeOvenItem());
         registerOvenItem(new FuelOvenItem());
     }
