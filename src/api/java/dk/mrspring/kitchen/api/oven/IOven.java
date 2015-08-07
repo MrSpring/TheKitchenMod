@@ -9,7 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 /**
  * Created by Konrad on 21-06-2015.
  */
-public interface IOven extends ICooking, ISpawner
+public interface IOven extends ISpawner
 {
     boolean rightClicked(ItemStack clicked, EntityPlayer player);
 
@@ -22,6 +22,8 @@ public interface IOven extends ICooking, ISpawner
     boolean isOpen();
 
     boolean hasSpace(int size, boolean cons);
+
+    void toggleOpen();
 
     NBTTagCompound getSpecialInfo(int slot);
 
@@ -37,7 +39,15 @@ public interface IOven extends ICooking, ISpawner
 
     int[] getOccupyingSlots(int baseSlot);
 
-    int getBurnTime();
+    int getBurnTime(int slot);
 
-    boolean isBurnt();
+    boolean isBurnt(int slot);
+
+    boolean isCooking();
+
+    int getCookTime(int slot);
+
+    int getDoneTime(int slot);
+
+    boolean isFinished(int slot);
 }

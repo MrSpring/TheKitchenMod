@@ -1,12 +1,10 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.entity.EntityDingFX;
 import dk.mrspring.kitchen.item.render.ItemRenderMixingBowl;
 import dk.mrspring.kitchen.util.ItemUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -185,9 +183,10 @@ public class ItemMixingBowl extends ItemBase
 //        world.spawnParticle();
         if (world.isRemote)
         {
-            EntityDingFX particle = new EntityDingFX(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ);
-            particle.setRotation(-p_77659_3_.getRotationYawHead());
-            Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+            Kitchen.proxy.spawnDingParticle(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ, -p_77659_3_.getRotationYawHead());
+//            EntityDingFX particle = new EntityDingFX(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ);
+//            particle.setRotation(-p_77659_3_.getRotationYawHead());
+//            Minecraft.getMinecraft().effectRenderer.addEffect(particle);
         }
         return super.onItemRightClick(p_77659_1_, world, p_77659_3_);
     }

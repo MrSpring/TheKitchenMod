@@ -33,7 +33,7 @@ public class RecipeItemRenderingHandler implements IOvenItemRenderingHandler
     public void render(IOven oven, IOvenItem item, int slot, boolean firstSlot)
     {
         NBTTagCompound compound = oven.getSpecialInfo(slot);
-        NBTTagCompound itemCompound = compound.getCompoundTag(oven.isFinished() ? (oven.isBurnt() ? RecipeOvenItem.RECIPE_BURNT_OUTPUT : RecipeOvenItem.RECIPE_OUTPUT) : RecipeOvenItem.RECIPE_INPUT);
+        NBTTagCompound itemCompound = compound.getCompoundTag(oven.isFinished(slot) ? (oven.isBurnt(slot) ? RecipeOvenItem.RECIPE_BURNT_OUTPUT : RecipeOvenItem.RECIPE_OUTPUT) : RecipeOvenItem.RECIPE_INPUT);
         ItemStack rendering = ItemStack.loadItemStackFromNBT(itemCompound);
         if (rendering != null)
         {

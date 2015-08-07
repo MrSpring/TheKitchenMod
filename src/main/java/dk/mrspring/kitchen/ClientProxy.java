@@ -1,14 +1,13 @@
 package dk.mrspring.kitchen;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
+import dk.mrspring.kitchen.entity.EntityDingFX;
 import dk.mrspring.kitchen.item.render.*;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.tileentity.renderer.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
-import org.apache.commons.io.IOUtils;
-
-import java.io.InputStream;
-import java.net.URL;
 
 public class ClientProxy extends CommonProxy
 {
@@ -43,5 +42,13 @@ public class ClientProxy extends CommonProxy
         {
             ModLogger.print(ModLogger.DEBUG, "Failed to download the version highlights, they will not be listed in the book!");
         }*/
+    }
+
+    @Override
+    public void spawnDingParticle(World world, double posX, double posY, double posZ, float rotation)
+    {
+        EntityDingFX particle = new EntityDingFX(world, posX, posY, posZ);
+        particle.setRotation(rotation);
+        Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
 }
