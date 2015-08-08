@@ -35,8 +35,7 @@ public class IngredientRegistry implements IIngredientRegistry
     @Override
     public void registerIngredient(IIngredient ingredient)
     {
-        if (ingredient != null)
-            ingredients.add(ingredient);
+        ingredients.add(0, ingredient);
     }
 
     @Override

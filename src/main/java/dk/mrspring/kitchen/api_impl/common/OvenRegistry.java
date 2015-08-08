@@ -21,10 +21,10 @@ public class OvenRegistry implements IOvenItemRegistry
 
     private OvenRegistry()
     {
-        registerOvenItem(new MuffinTrayItem());
-        registerOvenItem(new BurgerBunOvenItem());
         registerOvenItem(new RecipeOvenItem());
         registerOvenItem(new FuelOvenItem());
+        registerOvenItem(new BurgerBunOvenItem());
+        registerOvenItem(new MuffinTrayItem());
     }
 
     public static OvenRegistry getInstance()
@@ -35,7 +35,7 @@ public class OvenRegistry implements IOvenItemRegistry
     @Override
     public void registerOvenItem(IOvenItem item)
     {
-        if (item != null) items.add(item);
+        if (item != null) items.add(0, item);
     }
 
     @Override

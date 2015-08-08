@@ -1,7 +1,8 @@
 package dk.mrspring.kitchen.api_impl.common;
 
+import dk.mrspring.kitchen.api.board.IBoardEventRegistry;
+import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api.board.ICuttingBoard;
-import dk.mrspring.kitchen.api.board.*;
 import dk.mrspring.kitchen.api_impl.common.board.BasicItemHandler;
 import dk.mrspring.kitchen.api_impl.common.board.KnifeItemHandler;
 import dk.mrspring.kitchen.api_impl.common.board.SandwichableItemHandler;
@@ -34,7 +35,7 @@ public class BoardEventRegistry implements IBoardEventRegistry
     @Override
     public void registerHandler(IBoardItemHandler handler)
     {
-        if (handler != null) handlers.add(handler);
+        if (handler != null) handlers.add(0, handler);
     }
 
     @Override
