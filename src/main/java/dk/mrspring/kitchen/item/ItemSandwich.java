@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.item;
 import com.google.common.collect.Lists;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
+import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
 import dk.mrspring.kitchen.config.ComboConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;

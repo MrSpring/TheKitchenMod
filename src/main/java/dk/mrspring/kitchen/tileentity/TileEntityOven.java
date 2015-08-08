@@ -2,7 +2,7 @@ package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
-import dk.mrspring.kitchen.api_impl.common.OvenRegistry;
+import dk.mrspring.kitchen.api_impl.common.registry.OvenRegistry;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

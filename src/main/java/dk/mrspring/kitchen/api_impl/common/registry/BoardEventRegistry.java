@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.api_impl.common;
+package dk.mrspring.kitchen.api_impl.common.registry;
 
 import dk.mrspring.kitchen.api.board.IBoardEventRegistry;
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;

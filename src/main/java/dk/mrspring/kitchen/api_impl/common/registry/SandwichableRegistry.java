@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.api_impl.common;
+package dk.mrspring.kitchen.api_impl.common.registry;
 
 import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;

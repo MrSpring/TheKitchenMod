@@ -1,10 +1,8 @@
 package dk.mrspring.kitchen.comp.waila;
 
-import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api.board.ICuttingBoard;
-import dk.mrspring.kitchen.api_impl.common.BoardEventRegistry;
-import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
+import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -13,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.Collections;

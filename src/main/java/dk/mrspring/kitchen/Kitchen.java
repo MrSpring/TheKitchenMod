@@ -10,7 +10,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
+import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.comp.nei.NEIKitchenConfig;
 import dk.mrspring.kitchen.event.ModEventHandler;

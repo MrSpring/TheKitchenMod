@@ -1,14 +1,12 @@
 package dk.mrspring.kitchen.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
-import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
-import dk.mrspring.kitchen.config.SandwichableConfig;
+import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
@@ -16,7 +14,6 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;

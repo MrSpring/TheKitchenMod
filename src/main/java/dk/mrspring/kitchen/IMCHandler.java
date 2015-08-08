@@ -3,10 +3,9 @@ package dk.mrspring.kitchen;
 import com.google.gson.Gson;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
+import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
 import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
-import dk.mrspring.kitchen.config.wrapper.JsonItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

@@ -4,7 +4,7 @@ import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModLogger;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
-import dk.mrspring.kitchen.api_impl.common.IngredientRegistry;
+import dk.mrspring.kitchen.api_impl.common.registry.IngredientRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

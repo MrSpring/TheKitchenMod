@@ -1,9 +1,8 @@
 package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.api.board.ICuttingBoard;
-import dk.mrspring.kitchen.api_impl.common.BoardEventRegistry;
+import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
-import dk.mrspring.kitchen.api_impl.common.SandwichableRegistry;
 import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
