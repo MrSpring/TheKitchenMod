@@ -168,5 +168,8 @@ public class ItemBase extends Item
 //        registerItem(square_funnel);
         registerItem(empty_muffin_tray);
         registerItem(filled_muffin_tray);
+        registerItem(cooked_muffin_tray);
+        registerItem(empty_muffin_cup);
+        registerItem(filled_muffin_cup);
     }
 }

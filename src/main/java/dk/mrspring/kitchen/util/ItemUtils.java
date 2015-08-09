@@ -5,6 +5,8 @@ import dk.mrspring.kitchen.item.ItemMixingBowl;
 import dk.mrspring.kitchen.item.food.ItemIceCreamableBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Created by Konrad on 13-07-2015.
@@ -35,6 +37,16 @@ public class ItemUtils
     public static String name(ItemStack stack)
     {
         return stack != null ? stack.toString() : "null";
+    }
+
+    public static boolean itemDict(ItemStack stack, String oreDictionaryName)
+    {
+        if (stack != null)
+        {
+            int[] idsForStack = OreDictionary.getOreIDs(stack);
+            int idForName = OreDictionary.getOreID(oreDictionaryName);
+            return ArrayUtils.contains(idsForStack, idForName);
+        } else return oreDictionaryName == null; // If stack and ore dict. name are both null, they are equal.
     }
 
 //    public static String deepName(ItemStack stack){}

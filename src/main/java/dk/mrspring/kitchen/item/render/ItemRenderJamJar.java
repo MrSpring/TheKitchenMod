@@ -47,6 +47,21 @@ public class ItemRenderJamJar implements IItemRenderer
         return new float[]{red, green, blue};
     }
 
+    public static int floatArrayAsInt(float[] color, int fallback)
+    {
+        if (color == null || color.length != 3) return fallback;
+//        float red = ((color >> 16) & 0xFF);
+//        float green = ((color >> 8) & 0xFF);
+//        float blue = (color & 0xFF);
+        int red = (int) (color[0] * 255);
+        int green = (int) (color[1] * 255);
+        int blue = (int) (color[2] * 255);
+        int rgb = red;
+        rgb = (rgb << 8) + green;
+        rgb = (rgb << 8) + blue;
+        return rgb;
+    }
+
     public static int getColorAsInteger(ItemStack jamJarStack)
     {
         String jamType = ItemJamJar.getJamFromStack(jamJarStack);

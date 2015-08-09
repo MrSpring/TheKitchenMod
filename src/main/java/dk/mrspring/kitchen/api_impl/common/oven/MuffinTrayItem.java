@@ -25,7 +25,7 @@ public class MuffinTrayItem extends RecipeOvenItem
     @Override
     public boolean itemOverride(ItemStack item)
     {
-        return ItemUtils.item(item, KitchenItems.empty_muffin_tray);
+        return ItemUtils.item(item, KitchenItems.filled_muffin_tray);
     }
 
     @Override

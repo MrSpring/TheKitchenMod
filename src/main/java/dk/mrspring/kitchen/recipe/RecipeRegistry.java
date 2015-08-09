@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModLogger;
@@ -52,9 +51,10 @@ public class RecipeRegistry
         GameRegistry.addRecipe(new ItemStack(mixing_bowl, 1), "CDC", " C ", valueOf('C'), clay_ball, valueOf('D'), new ItemStack(dye, 1, 12));
         // Ice Cream Cone recipe
         GameRegistry.addRecipe(new ItemStack(ice_cream_cone, 2), "W W", " W ", valueOf('W'), waffle);
-        // Hand Mixer Recipe
+        // Hand Mixer recipe
         GameRegistry.addRecipe(new ItemStack(hand_mixer), " I ", "I I", "SI ", valueOf('I'), iron_ingot, valueOf('S'), stick);
-
+        // Muffin Cup recipe
+        GameRegistry.addRecipe(new MuffinCupRecipe());
 
         // Mixing Bowl recipes
         GameRegistry.addShapelessRecipe(GMBS("waffle_dough", 3), GMBS(null, 0), egg, Items.wheat, milk_bucket, sugar);

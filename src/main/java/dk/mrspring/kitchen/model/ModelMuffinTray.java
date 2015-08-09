@@ -7,12 +7,12 @@ import net.minecraft.entity.Entity;
 public class ModelMuffinTray extends ModelBase
 {
     public ModelRenderer trayBase;
-    public ModelRenderer cup1;
-    public ModelRenderer cup2;
-    public ModelRenderer cup3;
-    public ModelRenderer cup4;
-    public ModelRenderer cup5;
-    public ModelRenderer cup6;
+    public ModelRenderer cup1, muffin1;
+    public ModelRenderer cup2, muffin2;
+    public ModelRenderer cup3, muffin3;
+    public ModelRenderer cup4, muffin4;
+    public ModelRenderer cup5, muffin5;
+    public ModelRenderer cup6, muffin6;
 
     public ModelMuffinTray()
     {
