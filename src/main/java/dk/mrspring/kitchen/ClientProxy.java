@@ -33,6 +33,7 @@ public class ClientProxy extends CommonProxy
 //        SandwichRender.loadRenderingHandlers();
         ItemRenderMixingBowl.initColors();
         ItemRenderJamJar.initColors();
+        ItemRenderMuffin.initColors();
 
         /*try
         {

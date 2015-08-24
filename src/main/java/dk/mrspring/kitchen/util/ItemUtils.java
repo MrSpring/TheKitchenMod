@@ -5,6 +5,7 @@ import dk.mrspring.kitchen.item.ItemMixingBowl;
 import dk.mrspring.kitchen.item.food.ItemIceCreamableBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -49,5 +50,17 @@ public class ItemUtils
         } else return oreDictionaryName == null; // If stack and ore dict. name are both null, they are equal.
     }
 
-//    public static String deepName(ItemStack stack){}
+    public static String getStringTag(ItemStack stack, String tagName)
+    {
+        if (stack == null || !stack.hasTagCompound()) return null;
+        else return stack.getTagCompound().getString(tagName);
+    }
+
+    public static void setStringTag(ItemStack stack, String tagName, String tagValue)
+    {
+        if (stack == null) return;
+        NBTTagCompound compound = stack.getTagCompound();
+        if (compound == null) stack.setTagCompound(compound = new NBTTagCompound());
+        compound.setString(tagName, tagValue);
+    }
 }

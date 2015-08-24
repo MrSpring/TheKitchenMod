@@ -50,11 +50,9 @@ public class ItemMixingBowl extends ItemBase
         return !(mix1 == null || mix2 == null) && mix1.equals(mix2);
     }
 
-    public static String getMixTypeFromStack(ItemStack mixingBowlStack)
+    public static String getMixTypeFromStack(ItemStack stack)
     {
-        if (mixingBowlStack.getTagCompound() != null)
-            return mixingBowlStack.getTagCompound().getString(MIX_TYPE);
-        else return null;
+        return ItemUtils.getStringTag(stack, MIX_TYPE);
     }
 
     public static void reduceUsesLeft(ItemStack mixingBowlStack, int amount)

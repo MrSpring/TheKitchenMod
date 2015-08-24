@@ -8,6 +8,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Created by Konrad on 09-08-2015.
@@ -17,7 +18,8 @@ public class MuffinCupRecipe extends ShapedRecipes
     public MuffinCupRecipe()
     {
         // int p_i1917_1_, int p_i1917_2_, ItemStack[] p_i1917_3_, ItemStack p_i1917_4_
-        super(2, 1, new ItemStack[]{new ItemStack(Items.paper), new ItemStack(Items.paper), new ItemStack(Items.dye)},
+        super(2, 1, new ItemStack[]{new ItemStack(Items.paper), new ItemStack(Items.paper),
+                        new ItemStack(Items.dye, 1, OreDictionary.WILDCARD_VALUE)},
                 new ItemStack(KitchenItems.empty_muffin_cup, 6, ItemMuffinCup.WHITE));
     }
 
