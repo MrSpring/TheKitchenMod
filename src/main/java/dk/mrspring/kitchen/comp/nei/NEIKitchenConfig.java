@@ -54,8 +54,8 @@ public class NEIKitchenConfig implements IConfigureNEI
         itemCompound = new NBTTagCompound();
         new ItemStack(KitchenItems.bread_slice).writeToNBT(itemCompound);
         layers.appendTag(itemCompound);
-
         newSandwich.setTagInfo("SandwichLayers", layers);
+
         API.addItemListEntry(newSandwich);
         API.addItemFilter(new ItemFilter.ItemFilterProvider()
         {
@@ -88,6 +88,9 @@ public class NEIKitchenConfig implements IConfigureNEI
 
         API.registerRecipeHandler(new ToasterCraftingHandler());
         API.registerUsageHandler(new ToasterCraftingHandler());
+
+        API.registerRecipeHandler(new MuffinCupCraftingHandler());
+        API.registerUsageHandler(new MuffinCupCraftingHandler());
     }
 
     @Override

@@ -6,21 +6,19 @@ import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Created by Konrad on 09-08-2015.
  */
-public class MuffinCupRecipe extends ShapedRecipes
+public class MuffinCupRecipe implements net.minecraft.item.crafting.IRecipe
 {
     public MuffinCupRecipe()
     {
         // int p_i1917_1_, int p_i1917_2_, ItemStack[] p_i1917_3_, ItemStack p_i1917_4_
-        super(2, 1, new ItemStack[]{new ItemStack(Items.paper), new ItemStack(Items.paper),
-                        new ItemStack(Items.dye, 1, OreDictionary.WILDCARD_VALUE)},
-                new ItemStack(KitchenItems.empty_muffin_cup, 6, ItemMuffinCup.WHITE));
+//        super(2, 1, new ItemStack[]{new ItemStack(Items.paper), new ItemStack(Items.paper),
+//                        new ItemStack(Items.dye, 1, ItemMuffinCup.WHITE)},
+//                new ItemStack(KitchenItems.empty_muffin_cup, 6, ItemMuffinCup.WHITE));
     }
 
     @Override
@@ -56,7 +54,7 @@ public class MuffinCupRecipe extends ShapedRecipes
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inventory)
     {
-        ItemStack normalResult = super.getCraftingResult(inventory);
+        ItemStack normalResult = getRecipeOutput();
         for (int x = 0; x < 3; x++)
             for (int y = 0; y < 3; y++)
             {
@@ -65,5 +63,17 @@ public class MuffinCupRecipe extends ShapedRecipes
                     normalResult.setItemDamage(inSlot.getItemDamage());
             }
         return normalResult;
+    }
+
+    @Override
+    public int getRecipeSize()
+    {
+        return 0;
+    }
+
+    @Override
+    public ItemStack getRecipeOutput()
+    {
+        return new ItemStack(KitchenItems.empty_muffin_cup, 6, ItemMuffinCup.WHITE);
     }
 }

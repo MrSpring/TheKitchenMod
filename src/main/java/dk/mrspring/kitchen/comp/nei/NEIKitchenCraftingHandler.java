@@ -104,6 +104,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
     @Override
     public void loadCraftingRecipes(ItemStack result)
     {
+        System.out.println("load single");
         this.loadRecipeFor(result);
     }
 
