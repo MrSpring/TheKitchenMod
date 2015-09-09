@@ -136,7 +136,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
                 int renderingWidth = renderer.getStringWidth(rendering);
                 int x = 51 + 14;
                 drawKeyboardKey(x, renderingWidth);
-                renderer.drawString(rendering, Math.min(x - renderingWidth, x-8), 42 - 13, 0xFFFFFF, true);
+                renderer.drawString(rendering, Math.min(x - renderingWidth, x - 8), 42 - 14, 0xFFFFFF, true);
                 return;
             }
             drawTexturedModalRect(51, 42 - 18, drawX, 31, 16, 16);
@@ -146,7 +146,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
     private void drawKeyboardKey(int startX, int w)
     {
         int width = Math.max(16, w + 6);
-        int x = startX - width + 3, y = 42 - 16;
+        int x = startX - width + 3, y = 42 - 17;
         drawTexturedModalRect(x, y, 176, 47, 3, 20);
         int count = (width - 6) / 10;
         int remaining = (width - 6) % 10;
