@@ -5,7 +5,6 @@ import dk.mrspring.kitchen.KitchenItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.awt.*;
 
@@ -71,17 +70,20 @@ public class MuffinCupCraftingHandler extends ShapedRecipeHandler
     @Override
     public void loadCraftingRecipes(ItemStack result)
     {
-        arecipes.add(new CachedShapedRecipe(2, 2, new Object[]{
-                new ItemStack(Items.paper),
-                new ItemStack(Items.paper),
-                new ItemStack(Items.dye, 1, result.getItemDamage()), // TODO: Use OreDictionary
-                null
-        }, result));
+        if (result.getItem() == KitchenItems.empty_muffin_cup)
+        {
+            arecipes.add(new CachedShapedRecipe(2, 2, new Object[]{
+                    new ItemStack(Items.paper),
+                    new ItemStack(Items.paper),
+                    new ItemStack(Items.dye, 1, result.getItemDamage()), // TODO: Use OreDictionary
+                    null
+            }, result));
 
-        arecipes.add(new CachedShapedRecipe(1, 2, new Object[]{
-                CUPS,
-                new ItemStack(Items.dye, 1, result.getItemDamage()) // TODO: Use OreDictionary
-        }, result));
+            arecipes.add(new CachedShapedRecipe(1, 2, new Object[]{
+                    CUPS,
+                    new ItemStack(Items.dye, 1, result.getItemDamage()) // TODO: Use OreDictionary
+            }, result));
+        }
     }
 
     @Override
