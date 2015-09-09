@@ -6,7 +6,9 @@ import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.recipe.INEIRecipeHelper;
 import dk.mrspring.kitchen.recipe.IRecipe;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
@@ -120,15 +122,43 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
         if (drawMouse())
         {
             int drawX = 176;
-            int mouseButton = Minecraft.getMinecraft().gameSettings.keyBindUseItem.getKeyCode();
-            if (mouseButton == -100)
+            int useKey = Minecraft.getMinecraft().gameSettings.keyBindUseItem.getKeyCode();
+            if (useKey == -100)
                 drawX += 16;
-            else if (mouseButton == -99)
+            else if (useKey == -99)
                 drawX += 32;
-            else if (mouseButton == -98)
+            else if (useKey == -98)
                 drawX += 48;
+            else
+            {
+                FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
+                String rendering = GameSettings.getKeyDisplayString(useKey);
+                int renderingWidth = renderer.getStringWidth(rendering);
+                int x = 51 + 14;
+                drawKeyboardKey(x, renderingWidth);
+                renderer.drawString(rendering, Math.min(x - renderingWidth, x-8), 42 - 13, 0xFFFFFF, true);
+                return;
+            }
             drawTexturedModalRect(51, 42 - 18, drawX, 31, 16, 16);
         }
+    }
+
+    private void drawKeyboardKey(int startX, int w)
+    {
+        int width = Math.max(16, w + 6);
+        int x = startX - width + 3, y = 42 - 16;
+        drawTexturedModalRect(x, y, 176, 47, 3, 20);
+        int count = (width - 6) / 10;
+        int remaining = (width - 6) % 10;
+        if (count == 0 || count == 1)
+            drawTexturedModalRect(x + 3, y, 176 + 3, 47, 10, 20);
+        else
+        {
+            for (int i = 0; i < count; i++)
+                drawTexturedModalRect(x + 3 + (i * 10), y, 176 + 3, 47, 10, 20);
+            drawTexturedModalRect(x + width - 3 - remaining, y, 176 + 3, 47, remaining, 20);
+        }
+        drawTexturedModalRect(x + width - 3, y, 176 + 13, 47, 3, 20);
     }
 
     @Override
