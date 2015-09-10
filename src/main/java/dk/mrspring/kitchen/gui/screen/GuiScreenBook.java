@@ -1,30 +1,295 @@
+
 package dk.mrspring.kitchen.gui.screen;
 
-import com.google.gson.Gson;
-import dk.mrspring.kitchen.*;
-import dk.mrspring.kitchen.config.wrapper.JsonItemStack;
-import net.minecraft.block.Block;
+import dk.mrspring.kitchen.api.book.*;
+import dk.mrspring.kitchen.api_impl.client.book.CookingBookRegistry;
+import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.IExtendedEntityProperties;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+
 
 /**
  * Created by MrSpring on 15-12-2014 for TheKitchenMod.
  */
+
 public class GuiScreenBook extends GuiScreen
+{
+    final int PAGE_WIDTH = 140, BOOK_WIDTH = PAGE_WIDTH * 2, BOOK_HEIGHT = 180;
+    final int BUTTON_SIZE = 24;
+    final int LEFT_PADDING = 16, RIGHT_PADDING = 10, TOP_PADDING = 16, BOTTOM_PADDING = 16;
+    final ResourceLocation LEFT = new ResourceLocation("kitchen", "textures/gui/cooking_book_left.png");
+    final ResourceLocation RIGHT = new ResourceLocation("kitchen", "textures/gui/cooking_book_right.png");
+
+    IPageElement[][] elements;
+
+    private int leftPageIndex = 0, rightPageIndex = leftPageIndex + 1;
+
+    static boolean isMouseHovering(int mouseX, int mouseY, int posX, int posY, int width, int height)
+    {
+        return mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
+    }
+
+    @Override
+    public void initGui()
+    {
+        super.initGui();
+
+        try
+        {
+            IChapterHandler[] handlers = CookingBookRegistry.getInstance().getRegisteredHandlers();
+            Chapter[] chapters = makeChapters(handlers);
+            PagedChapter[] pagedChapters = initFromChapters(chapters);
+            this.elements = createPages(pagedChapters);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            mc.displayGuiScreen(null);
+        }
+    }
+
+    private CookingBookUnlocksProperties getFromPlayer(EntityPlayer player)
+    {
+        IExtendedEntityProperties properties = player.getExtendedProperties(CookingBookUnlocksProperties.UNLOCKED_CHAPTERS);
+        CookingBookUnlocksProperties unlocks;
+        if (properties == null || !(properties instanceof CookingBookUnlocksProperties))
+        {
+            player.registerExtendedProperties(CookingBookUnlocksProperties.UNLOCKED_CHAPTERS, unlocks = new CookingBookUnlocksProperties());
+        } else unlocks = (CookingBookUnlocksProperties) properties;
+        return unlocks;
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partial)
+    {
+        super.drawScreen(mouseX, mouseY, partial);
+
+        GL11.glPushMatrix();
+        int x = (width - BOOK_WIDTH) / 2, y = (height - BOOK_HEIGHT) / 2;
+        GL11.glTranslatef(x, y, 0);
+        int relMouseX = mouseX - x, relMouseY = mouseY - y;
+        this.drawBook(relMouseX, relMouseY, partial);
+        IPageElement[] leftPage = getPage(leftPageIndex), rightPage = getPage(rightPageIndex);
+        GL11.glPushMatrix();
+        GL11.glTranslated(LEFT_PADDING, TOP_PADDING, 0);
+        this.drawPage(leftPage);
+        GL11.glPopMatrix();
+        GL11.glPushMatrix();
+        GL11.glTranslatef(PAGE_WIDTH + RIGHT_PADDING, TOP_PADDING, 0);
+        this.drawPage(rightPage);
+        GL11.glPopMatrix();
+        GL11.glPopMatrix();
+    }
+
+    private void drawPage(IPageElement[] elements)
+    {
+        Container container = new Container(null);
+        for (IPageElement element : elements)
+        {
+            GL11.glPushMatrix();
+            element.render(container);
+            GL11.glPopMatrix();
+            int height = element.getHeight(container);
+            GL11.glTranslatef(0, height, 0);
+            container.decreaseHeight(height);
+        }
+    }
+
+    private IPageElement[] getPage(int pageIndex)
+    {
+        if (pageIndex >= 0 && pageIndex < elements.length) return elements[pageIndex];
+        else return new IPageElement[0];
+    }
+
+    private void increasePage()
+    {
+        rightPageIndex = 1 + leftPageIndex++;
+    }
+
+    private void evenOutPages(List<IPageElement[]> pages)
+    {
+        if (pages.size() % 2 != 0) pages.add(new IPageElement[0]);
+    }
+
+    private IPageElement[][] createPages(PagedChapter[] chapters)
+    {
+        List<IPageElement[]> pages = new ArrayList<IPageElement[]>();
+        for (PagedChapter chapter : chapters)
+        {
+            List<Page> chapterPages = chapter.pages;
+            for (Page page : chapterPages) pages.add(page.asArray());
+            evenOutPages(pages);
+        }
+        return pages.toArray(new IPageElement[pages.size()][]);
+    }
+
+    private PagedChapter[] initFromChapters(Chapter[] chapters)
+    {
+        PagedChapter[] initChapters = new PagedChapter[chapters.length];
+        for (int i = 0; i < chapters.length; i++)
+        {
+            Chapter chapter = chapters[i];
+            PagedChapter pagedChapter = new PagedChapter();
+            Container container = new Container(chapter);
+            Page currentPage = new Page();
+            for (IPageElement element : chapter.getElements())
+            {
+                element.initElement(container);
+                if (element.getHeight(container) > container.getAvailableHeight())
+                {
+                    if (element instanceof ISplittable)
+                    {
+                        ISplittable splittable = (ISplittable) element;
+                        IPageElement split = splittable.createSplitElement(container);
+
+                        currentPage.addElement(element);
+                        pagedChapter.addPage(currentPage.copy());
+
+                        currentPage = new Page();
+                        currentPage.addElement(split);
+                        container.reset();
+
+                        split.initElement(container);
+                        container.decreaseHeight(split.getHeight(container));
+                    } else
+                    {
+                        pagedChapter.addPage(currentPage.copy());
+
+                        currentPage = new Page();
+                        container.reset();
+                    }
+                } else
+                    currentPage.addElement(element);
+            }
+            pagedChapter.addPage(currentPage);
+            initChapters[i] = pagedChapter;
+        }
+        return initChapters;
+//        List<Chapter> elements = new ArrayList<List<IPageElement[]>>(chapters.length);
+//        for (int i = 0; i < chapters.length; i++)
+//        {
+//            Chapter chapter = chapters[i];
+//            List<IPageElement> chapterElements = new ArrayList<IPageElement>(chapter.getElements());
+//            Container container = new Container(chapter);
+//            for (IPageElement element : chapterElements)
+//            {
+//                element.initElement(container);
+//                container.increaseElementIndex();
+//                container.decreaseHeight(element.getHeight(container));
+//            }
+//            elements.add(i, chapterElements);
+//        }
+    }
+
+    private Chapter[] makeChapters(IChapterHandler[] handlers)
+    {
+        Chapter[] chapters = new Chapter[handlers.length];
+        CookingBookUnlocksProperties unlocks = getFromPlayer(mc.thePlayer);
+        for (int i = 0; i < handlers.length; i++)
+        {
+            String id = handlers[i].getId();
+            Chapter chapter = new Chapter(!unlocks.hasUnlocked(id));
+            if (chapter.isLocked()) handlers[i].addLockedElementsToChapter(chapter);
+            else handlers[i].addElementsToChapter(chapter);
+            chapters[i] = chapter;
+        }
+        return chapters;
+    }
+
+    private void drawBook(int mouseX, int mouseY, float partial)
+    {
+        mc.getTextureManager().bindTexture(LEFT);
+        boolean hover = isMouseHovering(mouseX, mouseY, 0, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
+        drawTexturedModalRect(0, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
+        drawTexturedModalRect(0, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
+        mc.getTextureManager().bindTexture(RIGHT);
+        hover = isMouseHovering(mouseX, mouseY, BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
+        drawTexturedModalRect(PAGE_WIDTH, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
+        drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
+    }
+
+    public class Container implements IPageElementContainer
+    {
+        int height = BOOK_HEIGHT;
+        int elementIndex = 0;
+        Chapter chapter;
+
+        private Container(Chapter chapter)
+        {
+            this.chapter = chapter;
+        }
+
+        @Override
+        public int getAvailableWidth()
+        {
+            return PAGE_WIDTH - LEFT_PADDING - RIGHT_PADDING;
+        }
+
+        private void setHeight(int height)
+        {
+            this.height = height;
+        }
+
+        private void resetHeight()
+        {
+            setHeight(BOOK_HEIGHT - TOP_PADDING - BOTTOM_PADDING);
+        }
+
+        private void resetIndex()
+        {
+            elementIndex = 0;
+        }
+
+        private void reset()
+        {
+            resetHeight();
+            resetIndex();
+        }
+
+        private void decreaseHeight(int amount)
+        {
+            this.height -= amount;
+        }
+
+        private void increaseElementIndex()
+        {
+            elementIndex++;
+        }
+
+        @Override
+        public int getAvailableHeight()
+        {
+            return height;
+        }
+
+        @Override
+        public int getCurrentElementId()
+        {
+            return elementIndex;
+        }
+
+        @Override
+        public IChapter getChapter()
+        {
+            return chapter;
+        }
+
+        @Override
+        public Minecraft getMinecraft()
+        {
+            return mc;
+        }
+    }
+}
+
+/*
+public class GuiScreenBook extends GuiScreen // TODO: Add API stuff
 {
     private static final String START_CRAFTING = "$C_START$"; // TODO: Replace with enum?
     private static final String STOP_CRAFTING = "$C_STOP$";
@@ -63,6 +328,8 @@ public class GuiScreenBook extends GuiScreen
         this.evenOutPages();
 
         this.addTableOfContent();
+
+        Minecraft.getMinecraft().thePlayer.getExtendedProperties("cookingBookUnlocks");
 
         pageIndex = new int[]{ // TODO: Finish book.
                 this.addChapter("item.cooking_book.pages.sandwiches.title", 0, 99, 0,
@@ -482,12 +749,14 @@ public class GuiScreenBook extends GuiScreen
 
     private interface Splittable
     {
-        /**
-         * Splits the element into to parts, one in the specified height, and the other the remains.
-         *
-         * @param toHeight The height if which the first element is being capped to.
-         * @return Returns an array of 2 elements.
-         */
+        */
+/**
+ * Splits the element into to parts, one in the specified height, and the other the remains.
+ *
+ * @param toHeight The height if which the first element is being capped to.
+ * @return Returns an array of 2 elements.
+ *//*
+
         public Element[] split(int toHeight);
     }
 
@@ -788,3 +1057,4 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 }
+*/
