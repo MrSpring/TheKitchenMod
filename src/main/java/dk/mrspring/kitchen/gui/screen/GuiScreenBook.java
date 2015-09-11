@@ -43,8 +43,8 @@ public class GuiScreenBook extends GuiScreen
     {
         super.initGui();
 
-        this.buttonList.add(new GuiButton(0, width / 2 - PAGE_WIDTH, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
-        this.buttonList.add(new GuiButton(1, width / 2 + PAGE_WIDTH - BUTTON_SIZE, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
+        this.buttonList.add(new GuiNoRenderButton(0, width / 2 - PAGE_WIDTH, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
+        this.buttonList.add(new GuiNoRenderButton(1, width / 2 + PAGE_WIDTH - BUTTON_SIZE, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
 
         try
         {
@@ -130,18 +130,31 @@ public class GuiScreenBook extends GuiScreen
 
     public void increasePage()
     {
-        if (canGoRight()) rightPageIndex = 1 + leftPageIndex++;
+        if (canGoRight())
+        {
+            leftPageIndex += 2;
+            rightPageIndex = leftPageIndex + 1;
+        }
     }
 
     public void decreasePage()
     {
-        if (canGoLeft()) rightPageIndex = 1 + leftPageIndex--;
+        if (canGoLeft())
+        {
+            leftPageIndex -= 2;
+            rightPageIndex = leftPageIndex + 1;
+        }
     }
 
     private IPageElement[] getPage(int pageIndex)
     {
-        if (pageIndex >= 0 && pageIndex < elements.length) return elements[pageIndex];
-        else return new IPageElement[0];
+        if (pageIndex >= 0 && pageIndex < elements.length)
+        {
+            return elements[pageIndex];
+        } else
+        {
+            return new IPageElement[0];
+        }
     }
 
     private void evenOutPages(List<IPageElement[]> pages)
@@ -170,10 +183,43 @@ public class GuiScreenBook extends GuiScreen
             PagedChapter pagedChapter = new PagedChapter();
             Container container = new Container(chapter);
             Page currentPage = new Page();
-            for (IPageElement element : chapter.getElements())
+            List<IPageElement> elements1 = chapter.getElements();
+            for (int i1 = 0; i1 < elements1.size(); i1++)
+            {
+                IPageElement element = elements1.get(i1);
+                element.initElement(container);
+                int height = element.getHeight(container);
+                if (height > container.getAvailableHeight())
+                {
+                    if (element instanceof ISplittable)
+                    {
+                        while (height > container.getAvailableHeight() && element instanceof ISplittable)
+                        {
+                            IPageElement split = ((ISplittable) element).createSplitElement(container);
+                            currentPage.addElement(element);
+                            pagedChapter.addPage(currentPage.copy());
+                            currentPage = new Page();
+                            container.reset();
+                            element = split;
+                            element.initElement(container);
+                            height = element.getHeight(container);
+                        }
+                    } else
+                    {
+                        pagedChapter.addPage(currentPage.copy());
+                        currentPage = new Page();
+                        container.reset();
+                    }
+                }
+                currentPage.addElement(element);
+                container.decreaseHeight(height);
+                container.increaseElementIndex();
+            }
+            pagedChapter.addPage(currentPage);
+            initChapters[i] = pagedChapter;
+            /*for (IPageElement element : chapter.getElements())
             {
                 element.initElement(container);
-                System.out.println("Available height: " + container.getAvailableHeight() + ", element height: " + element.getHeight(container));
                 if (element.getHeight(container) > container.getAvailableHeight())
                 {
                     if (element instanceof ISplittable)
@@ -204,7 +250,7 @@ public class GuiScreenBook extends GuiScreen
                 }
             }
             pagedChapter.addPage(currentPage);
-            initChapters[i] = pagedChapter;
+            initChapters[i] = pagedChapter;*/
         }
         return initChapters;
     }
@@ -226,7 +272,7 @@ public class GuiScreenBook extends GuiScreen
 
     public boolean canGoRight()
     {
-        return rightPageIndex >= elements.length;
+        return rightPageIndex < elements.length - 1;
     }
 
     public boolean canGoLeft()
