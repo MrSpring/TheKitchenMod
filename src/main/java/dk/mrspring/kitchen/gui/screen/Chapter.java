@@ -15,10 +15,12 @@ public class Chapter implements IChapter
     List<IPageElement> elements = new ArrayList<IPageElement>();
 
     boolean locked;
+    String id;
 
-    public Chapter(boolean isLocked)
+    public Chapter(boolean isLocked, String id)
     {
         this.locked = isLocked;
+        this.id = id;
     }
 
     @Override

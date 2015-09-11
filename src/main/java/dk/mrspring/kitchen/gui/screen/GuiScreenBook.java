@@ -15,7 +15,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -33,6 +35,7 @@ public class GuiScreenBook extends GuiScreen
     IPageElement[][] elements;
     List<HoverDraw> hovers = new ArrayList<HoverDraw>();
     int currentRenderMouseX = 0, currentRenderMouseY = 0;
+    Map<String, Integer> tableOfContent = new HashMap<String, Integer>();
 
     private int leftPageIndex = 0, rightPageIndex = leftPageIndex + 1;
 
@@ -48,6 +51,7 @@ public class GuiScreenBook extends GuiScreen
 
         this.buttonList.add(new GuiNoRenderButton(0, width / 2 - PAGE_WIDTH, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
         this.buttonList.add(new GuiNoRenderButton(1, width / 2 + PAGE_WIDTH - BUTTON_SIZE, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
+        this.buttonList.add(new GuiNoRenderButton(2, width / 2 + PAGE_WIDTH - BUTTON_SIZE - 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
 
         try
         {
@@ -73,6 +77,9 @@ public class GuiScreenBook extends GuiScreen
                 break;
             case 1:
                 increasePage();
+                break;
+            case 2:
+                mc.displayGuiScreen(null);
                 break;
         }
     }
@@ -116,10 +123,12 @@ public class GuiScreenBook extends GuiScreen
         mc.getTextureManager().bindTexture(LEFT);
         boolean hover = isMouseHovering(mouseX, mouseY, 0, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
         drawTexturedModalRect(0, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
+        drawTexturedModalRect(15, -24, canGoLeft() ? 48 : 48 + 24, 180, 23, 24);
         if (canGoLeft()) drawTexturedModalRect(0, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
         mc.getTextureManager().bindTexture(RIGHT);
         hover = isMouseHovering(mouseX, mouseY, BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
         drawTexturedModalRect(PAGE_WIDTH, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
+        drawTexturedModalRect(BOOK_WIDTH - 14 - 24, -24, 48, 180, 23, 24);
         if (canGoRight())
             drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
     }
@@ -178,6 +187,7 @@ public class GuiScreenBook extends GuiScreen
         List<IPageElement[]> pages = new ArrayList<IPageElement[]>();
         for (PagedChapter chapter : chapters)
         {
+            tableOfContent.put(chapter.id, pages.size());
             List<Page> chapterPages = chapter.pages;
             for (Page page : chapterPages) pages.add(page.asArray());
             evenOutPages(pages);
@@ -191,7 +201,7 @@ public class GuiScreenBook extends GuiScreen
         for (int i = 0; i < chapters.length; i++)
         {
             Chapter chapter = chapters[i];
-            PagedChapter pagedChapter = new PagedChapter();
+            PagedChapter pagedChapter = new PagedChapter(chapter.id);
             Container container = new Container(chapter);
             Page currentPage = new Page();
             List<IPageElement> elements1 = chapter.getElements();
@@ -273,7 +283,7 @@ public class GuiScreenBook extends GuiScreen
         for (int i = 0; i < handlers.length; i++)
         {
             String id = handlers[i].getId();
-            Chapter chapter = new Chapter(!unlocks.hasUnlocked(id));
+            Chapter chapter = new Chapter(!unlocks.hasUnlocked(id), id);
             if (chapter.isLocked()) handlers[i].addLockedElementsToChapter(chapter);
             else handlers[i].addElementsToChapter(chapter);
             chapters[i] = chapter;

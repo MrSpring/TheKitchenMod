@@ -1,7 +1,5 @@
 package dk.mrspring.kitchen.gui.screen;
 
-import dk.mrspring.kitchen.api.book.IChapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +9,17 @@ import java.util.List;
 public class PagedChapter
 {
     List<Page> pages = new ArrayList<Page>();
+    String id;
+
+    public PagedChapter(String id)
+    {
+        this.id = id;
+    }
 
     public void addPage(Page page)
     {
         this.pages.add(page);
-        System.out.println("Adding page of size: "+page.elements.size());
+        System.out.println("Adding page of size: " + page.elements.size());
     }
 
 
