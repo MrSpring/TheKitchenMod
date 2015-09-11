@@ -5,12 +5,11 @@ import dk.mrspring.kitchen.api.book.*;
 import dk.mrspring.kitchen.api_impl.client.book.CookingBookRegistry;
 import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.IExtendedEntityProperties;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -44,6 +43,9 @@ public class GuiScreenBook extends GuiScreen
     {
         super.initGui();
 
+        this.buttonList.add(new GuiButton(0, width / 2 - PAGE_WIDTH, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
+        this.buttonList.add(new GuiButton(1, width / 2 + PAGE_WIDTH - BUTTON_SIZE, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
+
         try
         {
             IChapterHandler[] handlers = CookingBookRegistry.getInstance().getRegisteredHandlers();
@@ -57,15 +59,19 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 
-    private CookingBookUnlocksProperties getFromPlayer(EntityPlayer player)
+    @Override
+    protected void actionPerformed(GuiButton button)
     {
-        IExtendedEntityProperties properties = player.getExtendedProperties(CookingBookUnlocksProperties.UNLOCKED_CHAPTERS);
-        CookingBookUnlocksProperties unlocks;
-        if (properties == null || !(properties instanceof CookingBookUnlocksProperties))
+        super.actionPerformed(button);
+        switch (button.id)
         {
-            player.registerExtendedProperties(CookingBookUnlocksProperties.UNLOCKED_CHAPTERS, unlocks = new CookingBookUnlocksProperties());
-        } else unlocks = (CookingBookUnlocksProperties) properties;
-        return unlocks;
+            case 0:
+                decreasePage();
+                break;
+            case 1:
+                increasePage();
+                break;
+        }
     }
 
     @Override
@@ -95,6 +101,19 @@ public class GuiScreenBook extends GuiScreen
         GL11.glPopMatrix();
     }
 
+    private void drawBook(int mouseX, int mouseY, float partial)
+    {
+        mc.getTextureManager().bindTexture(LEFT);
+        boolean hover = isMouseHovering(mouseX, mouseY, 0, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
+        drawTexturedModalRect(0, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
+        if (canGoLeft()) drawTexturedModalRect(0, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
+        mc.getTextureManager().bindTexture(RIGHT);
+        hover = isMouseHovering(mouseX, mouseY, BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
+        drawTexturedModalRect(PAGE_WIDTH, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
+        if (canGoRight())
+            drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
+    }
+
     private void drawPage(IPageElement[] elements)
     {
         Container container = new Container(null);
@@ -109,15 +128,20 @@ public class GuiScreenBook extends GuiScreen
         }
     }
 
+    public void increasePage()
+    {
+        if (canGoRight()) rightPageIndex = 1 + leftPageIndex++;
+    }
+
+    public void decreasePage()
+    {
+        if (canGoLeft()) rightPageIndex = 1 + leftPageIndex--;
+    }
+
     private IPageElement[] getPage(int pageIndex)
     {
         if (pageIndex >= 0 && pageIndex < elements.length) return elements[pageIndex];
         else return new IPageElement[0];
-    }
-
-    private void increasePage()
-    {
-        rightPageIndex = 1 + leftPageIndex++;
     }
 
     private void evenOutPages(List<IPageElement[]> pages)
@@ -149,6 +173,7 @@ public class GuiScreenBook extends GuiScreen
             for (IPageElement element : chapter.getElements())
             {
                 element.initElement(container);
+                System.out.println("Available height: " + container.getAvailableHeight() + ", element height: " + element.getHeight(container));
                 if (element.getHeight(container) > container.getAvailableHeight())
                 {
                     if (element instanceof ISplittable)
@@ -173,32 +198,21 @@ public class GuiScreenBook extends GuiScreen
                         container.reset();
                     }
                 } else
+                {
                     currentPage.addElement(element);
+                    container.decreaseHeight(element.getHeight(container));
+                }
             }
             pagedChapter.addPage(currentPage);
             initChapters[i] = pagedChapter;
         }
         return initChapters;
-//        List<Chapter> elements = new ArrayList<List<IPageElement[]>>(chapters.length);
-//        for (int i = 0; i < chapters.length; i++)
-//        {
-//            Chapter chapter = chapters[i];
-//            List<IPageElement> chapterElements = new ArrayList<IPageElement>(chapter.getElements());
-//            Container container = new Container(chapter);
-//            for (IPageElement element : chapterElements)
-//            {
-//                element.initElement(container);
-//                container.increaseElementIndex();
-//                container.decreaseHeight(element.getHeight(container));
-//            }
-//            elements.add(i, chapterElements);
-//        }
     }
 
     private Chapter[] makeChapters(IChapterHandler[] handlers)
     {
         Chapter[] chapters = new Chapter[handlers.length];
-        CookingBookUnlocksProperties unlocks = getFromPlayer(mc.thePlayer);
+        CookingBookUnlocksProperties unlocks = CookingBookUnlocksProperties.getFromPlayer(mc.thePlayer);
         for (int i = 0; i < handlers.length; i++)
         {
             String id = handlers[i].getId();
@@ -210,21 +224,19 @@ public class GuiScreenBook extends GuiScreen
         return chapters;
     }
 
-    private void drawBook(int mouseX, int mouseY, float partial)
+    public boolean canGoRight()
     {
-        mc.getTextureManager().bindTexture(LEFT);
-        boolean hover = isMouseHovering(mouseX, mouseY, 0, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
-        drawTexturedModalRect(0, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
-        drawTexturedModalRect(0, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
-        mc.getTextureManager().bindTexture(RIGHT);
-        hover = isMouseHovering(mouseX, mouseY, BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
-        drawTexturedModalRect(PAGE_WIDTH, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
-        drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
+        return rightPageIndex >= elements.length;
+    }
+
+    public boolean canGoLeft()
+    {
+        return leftPageIndex > 0;
     }
 
     public class Container implements IPageElementContainer
     {
-        int height = BOOK_HEIGHT;
+        int height = BOOK_HEIGHT - TOP_PADDING - BOTTOM_PADDING;
         int elementIndex = 0;
         Chapter chapter;
 

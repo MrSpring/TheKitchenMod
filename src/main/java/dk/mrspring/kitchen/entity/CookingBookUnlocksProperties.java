@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.entity;
 
 import dk.mrspring.javanbt.NBTType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -19,6 +20,17 @@ public class CookingBookUnlocksProperties implements IExtendedEntityProperties
     public List<String> unlocks = new ArrayList<String>();
 
     public static final String UNLOCKED_CHAPTERS = "UnlockedCookingBookChapters";
+
+    public static CookingBookUnlocksProperties getFromPlayer(EntityPlayer player)
+    {
+        IExtendedEntityProperties properties = player.getExtendedProperties(CookingBookUnlocksProperties.UNLOCKED_CHAPTERS);
+        CookingBookUnlocksProperties unlocks;
+        if (properties == null || !(properties instanceof CookingBookUnlocksProperties))
+        {
+            player.registerExtendedProperties(CookingBookUnlocksProperties.UNLOCKED_CHAPTERS, unlocks = new CookingBookUnlocksProperties());
+        } else unlocks = (CookingBookUnlocksProperties) properties;
+        return unlocks;
+    }
 
     public boolean hasUnlocked(String chapter)
     {

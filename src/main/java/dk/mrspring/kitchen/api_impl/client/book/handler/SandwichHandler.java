@@ -29,6 +29,15 @@ public class SandwichHandler implements IChapterHandler
         chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
         chapter.addElement(new SpacerElement(10));
         chapter.addElement(new RecipeElement(new ItemStack(KitchenBlocks.board)));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
 //        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 0, 161, 99, 61));
     }
 

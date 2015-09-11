@@ -30,9 +30,15 @@ public class TextElement implements IPageElement, ISplittable
         this(rawText, false);
     }
 
-    public TextElement(List<String> lines)
+    public TextElement(List<String> lines, boolean center)
     {
         this.lines = lines;
+        this.center = center;
+    }
+
+    public TextElement(List<String> lines)
+    {
+        this(lines, false);
     }
 
     @Override
@@ -82,11 +88,12 @@ public class TextElement implements IPageElement, ISplittable
         FontRenderer renderer = container.getMinecraft().fontRenderer;
         int linesAvailable = container.getAvailableHeight() / renderer.FONT_HEIGHT;
         int linesSize = lines.size();
-        if (linesAvailable > linesSize)
+        System.out.println(linesAvailable + ", " + linesSize);
+        if (linesSize > linesAvailable)
         {
             List<String> newElementLines = this.lines.subList(linesAvailable, linesSize);
             this.lines = this.lines.subList(0, linesAvailable);
-            return new TextElement(newElementLines);
+            return new TextElement(newElementLines, center);
         } else return null;
     }
 
