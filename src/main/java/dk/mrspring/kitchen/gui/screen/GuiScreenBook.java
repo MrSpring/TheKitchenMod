@@ -5,6 +5,7 @@ import dk.mrspring.kitchen.api.book.*;
 import dk.mrspring.kitchen.api_impl.client.book.CookingBookRegistry;
 import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
@@ -30,6 +31,8 @@ public class GuiScreenBook extends GuiScreen
     final ResourceLocation RIGHT = new ResourceLocation("kitchen", "textures/gui/cooking_book_right.png");
 
     IPageElement[][] elements;
+    List<HoverDraw> hovers = new ArrayList<HoverDraw>();
+    int currentRenderMouseX = 0, currentRenderMouseY = 0;
 
     private int leftPageIndex = 0, rightPageIndex = leftPageIndex + 1;
 
@@ -79,6 +82,9 @@ public class GuiScreenBook extends GuiScreen
     {
         super.drawScreen(mouseX, mouseY, partial);
 
+        this.currentRenderMouseX = mouseX;
+        this.currentRenderMouseY = mouseY;
+
         GL11.glPushMatrix();
         RenderHelper.enableGUIStandardItemLighting();
         GL11.glDisable(GL11.GL_LIGHTING);
@@ -99,6 +105,10 @@ public class GuiScreenBook extends GuiScreen
         this.drawPage(rightPage, relMouseX - RIGHT_PADDING, relMouseY - TOP_PADDING);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
+
+        for (HoverDraw draw : hovers)
+            draw.draw();
+        hovers.clear();
     }
 
     private void drawBook(int mouseX, int mouseY, float partial)
@@ -357,6 +367,38 @@ public class GuiScreenBook extends GuiScreen
         public RenderItem getRenderItem()
         {
             return itemRender;
+        }
+
+        @Override
+        public void drawHoverTextAtMouse(List text, FontRenderer renderer)
+        {
+            hovers.add(new HoverDraw(currentRenderMouseX, currentRenderMouseY, text, renderer));
+        }
+
+        @Override
+        public void drawHoverText(List text, int x, int y, FontRenderer renderer)
+        {
+            drawHoveringText(text, x, y, renderer);
+        }
+    }
+
+    private class HoverDraw
+    {
+        int x, y;
+        List lines;
+        FontRenderer renderer;
+
+        private HoverDraw(int x, int y, List lines, FontRenderer renderer)
+        {
+            this.x = x;
+            this.y = y;
+            this.lines = lines;
+            this.renderer = renderer;
+        }
+
+        public void draw()
+        {
+            drawHoveringText(lines, x, y, renderer);
         }
     }
 }

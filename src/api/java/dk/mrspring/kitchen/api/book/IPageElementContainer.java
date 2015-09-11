@@ -1,7 +1,10 @@
 package dk.mrspring.kitchen.api.book;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.entity.RenderItem;
+
+import java.util.List;
 
 /**
  * Created on 09-09-2015 for TheKitchenMod.
@@ -19,4 +22,8 @@ public interface IPageElementContainer
     Minecraft getMinecraft();
 
     RenderItem getRenderItem();
+
+    void drawHoverTextAtMouse(List text, FontRenderer renderer);
+
+    void drawHoverText(List text, int x, int y, FontRenderer renderer);
 }
