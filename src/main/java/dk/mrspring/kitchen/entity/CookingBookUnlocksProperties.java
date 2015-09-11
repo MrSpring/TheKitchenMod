@@ -32,6 +32,11 @@ public class CookingBookUnlocksProperties implements IExtendedEntityProperties
         return unlocks;
     }
 
+    public static void unlockChapter(String chapterId, EntityPlayer player)
+    {
+        getFromPlayer(player).unlockChapter(chapterId);
+    }
+
     public boolean hasUnlocked(String chapter)
     {
         return unlocks.contains(chapter);
