@@ -1,12 +1,11 @@
 package dk.mrspring.kitchen.api_impl.client.book.handler;
 
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.book.IChapter;
 import dk.mrspring.kitchen.api.book.IChapterHandler;
-import dk.mrspring.kitchen.api_impl.client.book.element.EndOfPageElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.ImageElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.TextElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.TitleElement;
+import dk.mrspring.kitchen.api_impl.client.book.element.*;
+import net.minecraft.item.ItemStack;
 
 /**
  * Created on 10-09-2015 for TheKitchenMod.
@@ -26,7 +25,8 @@ public class SandwichHandler implements IChapterHandler
     {
         this.addTitle(chapter);
         chapter.addElement(new TextElement("Make your Cutting Board to unlock this chapter!", true));
-        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 0, 161, 99, 61));
+//        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 0, 161, 99, 61));
+        chapter.addElement(new RecipeElement(new ItemStack(KitchenBlocks.board)));
     }
 
     private void addTitle(IChapter chapter)
