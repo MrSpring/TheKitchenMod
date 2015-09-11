@@ -26,7 +26,7 @@ public class CookingBookRegistry implements ICookingBookRegistry
     {
         registeredHandlers = new HashMap<String, IChapterHandler>();
 
-        registerChapterHandler("sandwich", new CuttingBoardHandler());
+        registerChapterHandler(CuttingBoardHandler.ID, new CuttingBoardHandler());
     }
 
     @Override
