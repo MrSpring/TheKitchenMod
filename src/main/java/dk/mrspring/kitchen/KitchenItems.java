@@ -88,10 +88,10 @@ public class KitchenItems
     public static final Item empty_muffin_cup = new ItemMuffinCup("muffin_cup");
     public static final Item uncooked_muffin = new ItemMuffin("raw_muffin", 1);
     public static final Item cooked_muffin = new ItemMuffin("cooked_muffin", 5);
-    public static ItemStack basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[]{new ItemStack(bread_slice, 1, 0), new ItemStack(raw_bacon, 1, 0), new ItemStack(bread_slice, 1, 0)});
+    public static ItemStack basic_sandwich;
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.
-    private static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
+    public static ItemStack getSandwichItemStackWithNBTTags(ItemStack[] layers)
     {
         ItemSandwich sandwich = new ItemSandwich();
         GameRegistry.registerItem(sandwich, "sandwich");

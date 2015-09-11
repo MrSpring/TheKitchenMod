@@ -109,6 +109,7 @@ public class ItemBase extends Item
         registerItem(bacon);
         registerItem(raw_bacon);
         registerItem(bread_slice);
+        basic_sandwich = getSandwichItemStackWithNBTTags(new ItemStack[]{new ItemStack(bread_slice, 1, 0), new ItemStack(bacon, 1, 0), new ItemStack(bread_slice, 1, 0)});
         GameRegistry.registerCustomItemStack("sandwich_itemstack", basic_sandwich);
         registerItem(tomato);
         registerItem(lettuce);
