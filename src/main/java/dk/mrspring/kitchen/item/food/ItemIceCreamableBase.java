@@ -25,7 +25,7 @@ public class ItemIceCreamableBase extends ItemFoodBase
     public static boolean hasEqualIceCream(ItemStack stack1, ItemStack stack2)
     {
         if (stack1 == null || stack2 == null) return false;
-        if (!(stack1.getItem() instanceof ItemIceCreamableBase || stack2.getItem() instanceof ItemIceCreamableBase))
+        if (!(stack1.getItem() instanceof ItemIceCreamableBase) || !(stack2.getItem() instanceof ItemIceCreamableBase))
             return false;
         String[] cream1 = getIceCreamFromStack(stack1), cream2 = getIceCreamFromStack(stack2);
         return Arrays.equals(cream1, cream2);
