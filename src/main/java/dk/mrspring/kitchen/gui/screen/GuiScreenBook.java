@@ -6,10 +6,13 @@ import dk.mrspring.kitchen.api_impl.client.book.CookingBookRegistry;
 import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +74,11 @@ public class GuiScreenBook extends GuiScreen
         super.drawScreen(mouseX, mouseY, partial);
 
         GL11.glPushMatrix();
+        RenderHelper.enableGUIStandardItemLighting();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+        GL11.glEnable(GL11.GL_LIGHTING);
         int x = (width - BOOK_WIDTH) / 2, y = (height - BOOK_HEIGHT) / 2;
         GL11.glTranslatef(x, y, 0);
         int relMouseX = mouseX - x, relMouseY = mouseY - y;
@@ -284,6 +292,12 @@ public class GuiScreenBook extends GuiScreen
         public Minecraft getMinecraft()
         {
             return mc;
+        }
+
+        @Override
+        public RenderItem getRenderItem()
+        {
+            return itemRender;
         }
     }
 }

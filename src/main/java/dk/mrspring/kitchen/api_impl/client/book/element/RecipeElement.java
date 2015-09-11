@@ -4,6 +4,8 @@ import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.book.IPageElementContainer;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -13,6 +15,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
@@ -131,5 +134,27 @@ public class RecipeElement extends ImageElement
     public void render(IPageElementContainer container)
     {
         super.render(container);
+
+        Minecraft mc = container.getMinecraft();
+        RenderItem render = container.getRenderItem();
+
+        GL11.glPushMatrix();
+        GL11.glTranslated(14F, 7F, 0F);
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glColor4f(1, 1, 1, 1);
+        for (int y = 0; y < 3; y++)
+            for (int x = 0; x < 3; x++)
+            {
+                GL11.glPushMatrix();
+                ItemStack stack = recipe[y * 3 + x];
+                if (stack != null)
+                    render.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16, y * 16);
+                GL11.glPopMatrix();
+            }
+
+        GL11.glTranslatef(67F, 16F, 0F);
+        render.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), output, 0, 0);
+
+        GL11.glPopMatrix();
     }
 }
