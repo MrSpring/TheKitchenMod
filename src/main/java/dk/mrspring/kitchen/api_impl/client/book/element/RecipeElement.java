@@ -130,16 +130,23 @@ public class RecipeElement extends ImageElement
             System.out.println(ItemUtils.name(stack));
     }
 
+    static boolean isMouseHovering(int mouseX, int mouseY, int posX, int posY, int width, int height)
+    {
+        return mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
+    }
+
     @Override
     public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
-        super.render(container, mouseX,mouseY);
+        super.render(container, mouseX, mouseY);
 
         Minecraft mc = container.getMinecraft();
         RenderItem render = container.getRenderItem();
 
         GL11.glPushMatrix();
         GL11.glTranslated(14F, 7F, 0F);
+        mouseX -= 14;
+        mouseY -= 7;
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glColor4f(1, 1, 1, 1);
         for (int y = 0; y < 3; y++)
@@ -148,12 +155,26 @@ public class RecipeElement extends ImageElement
                 GL11.glPushMatrix();
                 ItemStack stack = recipe[y * 3 + x];
                 if (stack != null)
+                {
                     render.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x * 16, y * 16);
+                    if (isMouseHovering(mouseX, mouseY, x * 16, y * 16, 16, 16))
+                    {
+                        List lines = stack.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips);
+                        container.drawHoverTextAtMouse(lines, mc.fontRenderer);
+                    }
+                }
                 GL11.glPopMatrix();
             }
 
         GL11.glTranslatef(67F, 16F, 0F);
+        mouseX -= 67;
+        mouseY -= 16;
         render.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), output, 0, 0);
+        if (isMouseHovering(mouseX, mouseY, 0, 0, 16, 16))
+        {
+            List lines = output.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips);
+            container.drawHoverTextAtMouse(lines, mc.fontRenderer);
+        }
 
         GL11.glPopMatrix();
     }
