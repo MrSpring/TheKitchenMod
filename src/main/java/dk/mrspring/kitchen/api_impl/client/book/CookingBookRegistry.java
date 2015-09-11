@@ -2,7 +2,7 @@ package dk.mrspring.kitchen.api_impl.client.book;
 
 import dk.mrspring.kitchen.api.book.IChapterHandler;
 import dk.mrspring.kitchen.api.book.ICookingBookRegistry;
-import dk.mrspring.kitchen.api_impl.client.book.handler.SandwichHandler;
+import dk.mrspring.kitchen.api_impl.client.book.handler.CuttingBoardHandler;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class CookingBookRegistry implements ICookingBookRegistry
     {
         registeredHandlers = new HashMap<String, IChapterHandler>();
 
-        registerChapterHandler("sandwich", new SandwichHandler());
+        registerChapterHandler("sandwich", new CuttingBoardHandler());
     }
 
     @Override

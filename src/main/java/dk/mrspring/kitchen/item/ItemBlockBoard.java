@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.api_impl.client.book.handler.CuttingBoardHandler;
 import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +22,6 @@ public class ItemBlockBoard extends ItemBlock
     public void onCreated(ItemStack created, World world, EntityPlayer player)
     {
         super.onCreated(created, world, player);
-        CookingBookUnlocksProperties.unlockChapter("sandwiches", player);
+        CookingBookUnlocksProperties.unlockChapter(CuttingBoardHandler.ID, player);
     }
 }

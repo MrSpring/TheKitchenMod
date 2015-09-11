@@ -10,8 +10,10 @@ import net.minecraft.item.ItemStack;
 /**
  * Created on 10-09-2015 for TheKitchenMod.
  */
-public class SandwichHandler implements IChapterHandler
+public class CuttingBoardHandler implements IChapterHandler
 {
+    public static String ID = "cuttingboard";
+
     @Override
     public void addElementsToChapter(IChapter chapter)
     {
@@ -43,7 +45,7 @@ public class SandwichHandler implements IChapterHandler
     @Override
     public String getId()
     {
-        return "sandwiches";
+        return ID;
     }
 
     @Override
