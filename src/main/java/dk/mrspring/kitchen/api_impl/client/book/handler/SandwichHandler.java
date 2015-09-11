@@ -17,23 +17,24 @@ public class SandwichHandler implements IChapterHandler
     {
         this.addTitle(chapter);
         chapter.addElement(new TextElement("This is the first paragraph in the chapter that is all about dem delicious sandwiches!"));
-        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 0, 161, 99, 61));
+        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 99, 0, 99, 99));
+//        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 0, 161, 99, 61));
     }
 
     @Override
     public void addLockedElementsToChapter(IChapter chapter)
     {
         this.addTitle(chapter);
-        chapter.addElement(new TextElement("Make your Cutting Board to unlock this chapter!", true));
-//        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 0, 161, 99, 61));
+        chapter.addElement(new SpacerElement(10));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new SpacerElement(10));
         chapter.addElement(new RecipeElement(new ItemStack(KitchenBlocks.board)));
+//        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 0, 161, 99, 61));
     }
 
     private void addTitle(IChapter chapter)
     {
         chapter.addElement(new TitleElement("Sandwiches"));
-        chapter.addElement(new ImageElement(ModInfo.toResource("textures/gui/cooking_book.png"), 99, 0, 99, 99));
-        chapter.addElement(new EndOfPageElement());
     }
 
     @Override
