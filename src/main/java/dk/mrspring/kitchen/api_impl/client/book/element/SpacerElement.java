@@ -36,13 +36,13 @@ public class SpacerElement extends ImageElement
     }
 
     @Override
-    public void render(IPageElementContainer container)
+    public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
         if (doImage)
         {
             float heightOffset = ((float) (height - 11)) / 2F;
             GL11.glTranslatef(0, heightOffset, 0);
-            super.render(container);
+            super.render(container, mouseX, mouseY);
         }
     }
 }

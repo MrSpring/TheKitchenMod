@@ -39,7 +39,7 @@ public class ImageElement implements IPageElement
     }
 
     @Override
-    public void render(IPageElementContainer container)
+    public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
         int x = (container.getAvailableWidth() - width) / 2, y = 0;
         container.getMinecraft().getTextureManager().bindTexture(location);

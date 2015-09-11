@@ -92,11 +92,11 @@ public class GuiScreenBook extends GuiScreen
         IPageElement[] leftPage = getPage(leftPageIndex), rightPage = getPage(rightPageIndex);
         GL11.glPushMatrix();
         GL11.glTranslated(LEFT_PADDING, TOP_PADDING, 0);
-        this.drawPage(leftPage);
+        this.drawPage(leftPage, relMouseX - LEFT_PADDING, relMouseY - TOP_PADDING);
         GL11.glPopMatrix();
         GL11.glPushMatrix();
         GL11.glTranslatef(PAGE_WIDTH + RIGHT_PADDING, TOP_PADDING, 0);
-        this.drawPage(rightPage);
+        this.drawPage(rightPage, relMouseX - RIGHT_PADDING, relMouseY - TOP_PADDING);
         GL11.glPopMatrix();
         GL11.glPopMatrix();
     }
@@ -114,15 +114,16 @@ public class GuiScreenBook extends GuiScreen
             drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
     }
 
-    private void drawPage(IPageElement[] elements)
+    private void drawPage(IPageElement[] elements, int mouseX, int mouseY)
     {
         Container container = new Container(null);
         for (IPageElement element : elements)
         {
             GL11.glPushMatrix();
-            element.render(container);
+            element.render(container, mouseX, mouseY);
             GL11.glPopMatrix();
             int height = element.getHeight(container);
+            mouseY -= height;
             GL11.glTranslatef(0, height, 0);
             container.decreaseHeight(height);
         }

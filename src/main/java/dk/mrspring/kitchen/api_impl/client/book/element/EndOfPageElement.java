@@ -20,7 +20,7 @@ public class EndOfPageElement implements IPageElement
     }
 
     @Override
-    public void render(IPageElementContainer container)
+    public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
     }
 }

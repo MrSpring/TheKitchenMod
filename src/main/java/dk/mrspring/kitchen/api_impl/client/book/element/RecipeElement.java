@@ -131,9 +131,9 @@ public class RecipeElement extends ImageElement
     }
 
     @Override
-    public void render(IPageElementContainer container)
+    public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
-        super.render(container);
+        super.render(container, mouseX,mouseY);
 
         Minecraft mc = container.getMinecraft();
         RenderItem render = container.getRenderItem();

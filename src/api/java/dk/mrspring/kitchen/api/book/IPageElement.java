@@ -9,5 +9,5 @@ public interface IPageElement
 
     int getHeight(IPageElementContainer container);
 
-    void render(IPageElementContainer container);
+    void render(IPageElementContainer container, int mouseX, int mouseY);
 }

@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.api.book.IPageElement;
 import dk.mrspring.kitchen.api.book.IPageElementContainer;
 import dk.mrspring.kitchen.api.book.ISplittable;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.Tessellator;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -66,7 +67,7 @@ public class TextElement implements IPageElement, ISplittable
     }
 
     @Override
-    public void render(IPageElementContainer container)
+    public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
         FontRenderer renderer = container.getMinecraft().fontRenderer;
         GL11.glPushMatrix();
