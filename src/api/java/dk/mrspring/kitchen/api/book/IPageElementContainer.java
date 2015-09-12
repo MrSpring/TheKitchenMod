@@ -23,6 +23,8 @@ public interface IPageElementContainer
 
     RenderItem getRenderItem();
 
+    IBook getGui();
+
     void drawHoverTextAtMouse(List text, FontRenderer renderer);
 
     void drawHoverText(List text, int x, int y, FontRenderer renderer);

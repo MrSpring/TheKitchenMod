@@ -10,4 +10,6 @@ public interface IPageElement
     int getHeight(IPageElementContainer container);
 
     void render(IPageElementContainer container, int mouseX, int mouseY);
+
+    void mouseClicked(IPageElementContainer container, int mouseX, int mouseY, int mouseButton);
 }

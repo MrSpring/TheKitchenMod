@@ -55,4 +55,9 @@ public class ImageElement implements IPageElement
         tessellator.addVertexWithUV((double) (x + 0), (double) (y), 0, (double) ((float) (u + 0) * f), (double) ((float) (v + 0) * f1));
         tessellator.draw();
     }
+
+    @Override
+    public void mouseClicked(IPageElementContainer container, int mouseX, int mouseY, int mouseButton)
+    {
+    }
 }

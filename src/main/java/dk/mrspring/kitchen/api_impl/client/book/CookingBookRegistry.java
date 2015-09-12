@@ -3,9 +3,13 @@ package dk.mrspring.kitchen.api_impl.client.book;
 import dk.mrspring.kitchen.api.book.IChapterHandler;
 import dk.mrspring.kitchen.api.book.ICookingBookRegistry;
 import dk.mrspring.kitchen.api_impl.client.book.handler.CuttingBoardHandler;
+import dk.mrspring.kitchen.api_impl.client.book.handler.OvenHandler;
+import dk.mrspring.kitchen.api_impl.client.book.handler.PanHandler;
+import dk.mrspring.kitchen.api_impl.client.book.handler.TableOfContentHandler;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -24,9 +28,12 @@ public class CookingBookRegistry implements ICookingBookRegistry
 
     private CookingBookRegistry()
     {
-        registeredHandlers = new HashMap<String, IChapterHandler>();
+        registeredHandlers = new LinkedHashMap<String, IChapterHandler>();
 
+        registerChapterHandler("tableofcontent", new TableOfContentHandler());
         registerChapterHandler(CuttingBoardHandler.ID, new CuttingBoardHandler());
+        registerChapterHandler("oven", new OvenHandler());
+        registerChapterHandler("pan", new PanHandler());
     }
 
     @Override

@@ -23,4 +23,9 @@ public class EndOfPageElement implements IPageElement
     public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
     }
+
+    @Override
+    public void mouseClicked(IPageElementContainer container, int mouseX, int mouseY, int mouseButton)
+    {
+    }
 }
