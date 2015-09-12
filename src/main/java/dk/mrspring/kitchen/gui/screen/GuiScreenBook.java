@@ -32,7 +32,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
     final ResourceLocation LEFT = new ResourceLocation("kitchen", "textures/gui/cooking_book_left.png");
     final ResourceLocation RIGHT = new ResourceLocation("kitchen", "textures/gui/cooking_book_right.png");
 
-    IPageElement[][] elements; // TODO: Replace with Page[] that holds Chapter instance
+    Page[] pages;
     List<HoverDraw> hovers = new ArrayList<HoverDraw>();
     int currentRenderMouseX = 0, currentRenderMouseY = 0;
     public Map<String, ChapterMarker> tableOfContent = new LinkedHashMap<String, ChapterMarker>();
@@ -58,7 +58,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
             IChapterHandler[] handlers = CookingBookRegistry.getInstance().getRegisteredHandlers();
             Chapter[] chapters = makeChapters(handlers);
             PagedChapter[] pagedChapters = initFromChapters(chapters);
-            this.elements = createPages(pagedChapters);
+            this.pages = createPages(pagedChapters);
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -102,7 +102,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
         GL11.glTranslatef(x, y, 0);
         int relMouseX = mouseX - x, relMouseY = mouseY - y;
         this.drawBook(relMouseX, relMouseY, partial);
-        IPageElement[] leftPage = getPage(leftPageIndex), rightPage = getPage(rightPageIndex);
+        Page leftPage = getPage(leftPageIndex), rightPage = getPage(rightPageIndex);
         GL11.glPushMatrix();
         GL11.glTranslated(LEFT_PADDING, TOP_PADDING, 0);
         this.drawPage(leftPage, relMouseX - LEFT_PADDING, relMouseY - TOP_PADDING, leftPageIndex + 1);
@@ -129,20 +129,20 @@ public class GuiScreenBook extends GuiScreen implements IBook
         if (relMouseY >= 0 && relMouseY < BOOK_HEIGHT - TOP_PADDING - BOTTOM_PADDING)
             if (relMouseX >= 0 && relMouseX < PAGE_WIDTH - LEFT_PADDING - RIGHT_PADDING)
             {
-                IPageElement[] page = getPage(leftPageIndex);
+                Page page = getPage(leftPageIndex);
                 handlePageClick(page, relMouseX, relMouseY, mouseButton);
             } else if (relMouseX >= PAGE_WIDTH && relMouseX < BOOK_WIDTH - LEFT_PADDING - RIGHT_PADDING)
             {
                 relMouseX -= PAGE_WIDTH;
-                IPageElement[] page = getPage(rightPageIndex);
+                Page page = getPage(rightPageIndex);
                 handlePageClick(page, relMouseX, relMouseY, mouseButton);
             }
     }
 
-    private void handlePageClick(IPageElement[] page, int mouseX, int mouseY, int mouseButton)
+    private void handlePageClick(Page page, int mouseX, int mouseY, int mouseButton)
     {
-        Container container = new Container(null);
-        for (IPageElement element : page)
+        Container container = new Container(page.getChapter());
+        for (IPageElement element : page.elements)
         {
             element.mouseClicked(container, mouseX, mouseY, mouseButton);
             int height = element.getHeight(container);
@@ -167,10 +167,10 @@ public class GuiScreenBook extends GuiScreen implements IBook
             drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
     }
 
-    private void drawPage(IPageElement[] elements, int mouseX, int mouseY, int pageNumber)
+    private void drawPage(Page page, int mouseX, int mouseY, int pageNumber)
     {
-        Container container = new Container(null);
-        for (IPageElement element : elements)
+        Container container = new Container(page.getChapter());
+        for (IPageElement element : page.elements)
         {
             GL11.glPushMatrix();
             element.render(container, mouseX, mouseY);
@@ -201,33 +201,33 @@ public class GuiScreenBook extends GuiScreen implements IBook
         }
     }
 
-    private IPageElement[] getPage(int pageIndex)
+    private Page getPage(int pageIndex)
     {
-        if (pageIndex >= 0 && pageIndex < elements.length)
+        if (pageIndex >= 0 && pageIndex < pages.length)
         {
-            return elements[pageIndex];
+            return pages[pageIndex];
         } else
         {
-            return new IPageElement[0];
+            return new Page(null);
         }
     }
 
-    private void evenOutPages(List<IPageElement[]> pages)
+    private void evenOutPages(List<Page> pages, Chapter chapter)
     {
-        if (pages.size() % 2 != 0) pages.add(new IPageElement[0]);
+        if (pages.size() % 2 != 0) pages.add(new Page(chapter));
     }
 
-    private IPageElement[][] createPages(PagedChapter[] chapters)
+    private Page[] createPages(PagedChapter[] chapters)
     {
-        List<IPageElement[]> pages = new ArrayList<IPageElement[]>();
+        List<Page> pages = new ArrayList<Page>();
         for (PagedChapter chapter : chapters)
         {
-            tableOfContent.get(chapter.id).setPageIndex(pages.size());
+            tableOfContent.get(chapter.chapter.id).setPageIndex(pages.size());
             List<Page> chapterPages = chapter.pages;
-            for (Page page : chapterPages) pages.add(page.asArray());
-            evenOutPages(pages);
+            pages.addAll(chapterPages);
+            evenOutPages(pages, chapter.chapter);
         }
-        return pages.toArray(new IPageElement[pages.size()][]);
+        return pages.toArray(new Page[pages.size()]);
     }
 
     private PagedChapter[] initFromChapters(Chapter[] chapters)
@@ -236,9 +236,9 @@ public class GuiScreenBook extends GuiScreen implements IBook
         for (int i = 0; i < chapters.length; i++)
         {
             Chapter chapter = chapters[i];
-            PagedChapter pagedChapter = new PagedChapter(chapter.id);
+            PagedChapter pagedChapter = new PagedChapter(chapter);
             Container container = new Container(chapter);
-            Page currentPage = new Page();
+            Page currentPage = new Page(chapter);
             List<IPageElement> elements1 = chapter.getElements();
             for (int i1 = 0; i1 < elements1.size(); i1++)
             {
@@ -254,7 +254,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
                             IPageElement split = ((ISplittable) element).createSplitElement(container);
                             currentPage.addElement(element);
                             pagedChapter.addPage(currentPage.copy());
-                            currentPage = new Page();
+                            currentPage = new Page(chapter);
                             container.reset();
                             element = split;
                             element.initElement(container);
@@ -263,7 +263,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
                     } else
                     {
                         pagedChapter.addPage(currentPage.copy());
-                        currentPage = new Page();
+                        currentPage = new Page(chapter);
                         container.reset();
                     }
                 }
@@ -295,7 +295,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
 
     public boolean canGoRight()
     {
-        return rightPageIndex < elements.length - 1;
+        return rightPageIndex < pages.length - 1;
     }
 
     public boolean canGoLeft()
@@ -312,7 +312,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
     @Override
     public void goToPage(int page)
     {
-        leftPageIndex = Math.min(page, elements.length - 2);
+        leftPageIndex = Math.min(page, pages.length - 2);
         rightPageIndex = leftPageIndex + 1;
     }
 

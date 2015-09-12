@@ -11,15 +11,17 @@ import java.util.List;
 public class Page
 {
     List<IPageElement> elements;
+    Chapter chapter;
 
-    public Page(List<IPageElement> elements)
+    public Page(List<IPageElement> elements, Chapter chapter)
     {
         this.elements = elements;
+        this.chapter = chapter;
     }
 
-    public Page()
+    public Page(Chapter chapter)
     {
-        this(new ArrayList<IPageElement>());
+        this(new ArrayList<IPageElement>(), chapter);
     }
 
     public void addElement(int index, IPageElement element)
@@ -34,11 +36,16 @@ public class Page
 
     public Page copy()
     {
-        return new Page(new ArrayList<IPageElement>(elements));
+        return new Page(new ArrayList<IPageElement>(elements), this.getChapter());
     }
 
     public IPageElement[] asArray()
     {
         return elements.toArray(new IPageElement[elements.size()]);
+    }
+
+    public Chapter getChapter()
+    {
+        return chapter;
     }
 }

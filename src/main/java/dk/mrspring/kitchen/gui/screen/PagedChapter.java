@@ -9,11 +9,11 @@ import java.util.List;
 public class PagedChapter
 {
     List<Page> pages = new ArrayList<Page>();
-    String id;
+    Chapter chapter;
 
-    public PagedChapter(String id)
+    public PagedChapter(Chapter chapter)
     {
-        this.id = id;
+        this.chapter = chapter;
     }
 
     public void addPage(Page page)
