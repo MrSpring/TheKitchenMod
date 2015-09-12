@@ -35,7 +35,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
     Page[] pages;
     List<HoverDraw> hovers = new ArrayList<HoverDraw>();
     int currentRenderMouseX = 0, currentRenderMouseY = 0;
-    public Map<String, ChapterMarker> tableOfContent = new LinkedHashMap<String, ChapterMarker>();
+    Map<String, ChapterMarker> tableOfContent = new LinkedHashMap<String, ChapterMarker>();
 
     private int leftPageIndex = 0, rightPageIndex = leftPageIndex + 1;
 
@@ -435,9 +435,9 @@ public class GuiScreenBook extends GuiScreen implements IBook
 }
 
 /*
-public class GuiScreenBook extends GuiScreen // TODO: Add API stuff
+public class GuiScreenBook extends GuiScreen
 {
-    private static final String START_CRAFTING = "$C_START$"; // TODO: Replace with enum?
+    private static final String START_CRAFTING = "$C_START$";
     private static final String STOP_CRAFTING = "$C_STOP$";
     private static final String START_TEXT = "$T_START$";
     private static final String STOP_TEXT = "$T_STOP$";
@@ -477,7 +477,7 @@ public class GuiScreenBook extends GuiScreen // TODO: Add API stuff
 
         Minecraft.getMinecraft().thePlayer.getExtendedProperties("cookingBookUnlocks");
 
-        pageIndex = new int[]{ // TODO: Finish book.
+        pageIndex = new int[]{
                 this.addChapter("item.cooking_book.pages.sandwiches.title", 0, 99, 0,
                         START_TEXT,
                         "item.cooking_book.pages.sandwiches.text01",
@@ -1056,7 +1056,6 @@ public class GuiScreenBook extends GuiScreen // TODO: Add API stuff
                     textX += maxWidth / 2 - (minecraft.fontRenderer.getStringWidth(line) / 2);//int lineWidth = minecraft.fontRenderer.getStringWidth(line);
 
                 minecraft.fontRenderer.drawString(line, textX, (i * 9), 0x4C1C06, false);
-                // TODO: Center String
             }
         }
 
@@ -1177,8 +1176,8 @@ public class GuiScreenBook extends GuiScreen // TODO: Add API stuff
                             x = 1;
                             y = 2;
                             break;
-                        case 8:      // TODO: Clean up code
-                            x = 2;   // TODO: Support 2x2 and 3x3 recipes
+                        case 8:
+                            x = 2;
                             y = 2;
                             break;
                     }
