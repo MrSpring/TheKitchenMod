@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class RecipeElement extends ImageElement
 {
-    ItemStack[] recipe; // TODO: Do NEI-like item switching for alt. items
+    ItemStack[] recipe;
     ItemStack output;
 
     public RecipeElement(ItemStack output)
@@ -39,7 +39,6 @@ public class RecipeElement extends ImageElement
                     if (ItemUtils.areStacksEqual(result, output, true))
                     {
                         this.loadFromRecipe((IRecipe) o);
-                        System.out.println("load");
                         return;
                     }
                 }
@@ -48,8 +47,6 @@ public class RecipeElement extends ImageElement
 
     private void loadFromRecipe(IRecipe recipe)
     {
-        System.out.println(recipe.getClass().getSimpleName());
-
         if (recipe instanceof ShapedRecipes)
             this.loadFromRecipe((ShapedRecipes) recipe);
         else if (recipe instanceof ShapelessRecipes)
@@ -95,7 +92,6 @@ public class RecipeElement extends ImageElement
             Object o = array[i];
             if (o != null)
             {
-                System.out.println(o.getClass().getSimpleName());
                 if (o instanceof ItemStack)
                     this.recipe[i] = (ItemStack) o;
                 else if (o instanceof String)
@@ -125,9 +121,6 @@ public class RecipeElement extends ImageElement
     public void initElement(IPageElementContainer container)
     {
         super.initElement(container);
-
-        for (ItemStack stack : recipe)
-            System.out.println(ItemUtils.name(stack));
     }
 
     static boolean isMouseHovering(int mouseX, int mouseY, int posX, int posY, int width, int height)
