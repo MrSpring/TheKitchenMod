@@ -11,13 +11,11 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -44,6 +42,11 @@ public class GuiScreenBook extends GuiScreen implements IBook
         return mouseX >= posX && mouseY >= posY && mouseX < posX + width && mouseY < posY + height;
     }
 
+    private ChapterMarker getTableOfContentMarker()
+    {
+        return getTableOfContent().get("tableofcontent");
+    }
+
     @Override
     public void initGui()
     {
@@ -52,6 +55,8 @@ public class GuiScreenBook extends GuiScreen implements IBook
         this.buttonList.add(new GuiNoRenderButton(0, width / 2 - PAGE_WIDTH, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
         this.buttonList.add(new GuiNoRenderButton(1, width / 2 + PAGE_WIDTH - BUTTON_SIZE, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
         this.buttonList.add(new GuiNoRenderButton(2, width / 2 + PAGE_WIDTH - BUTTON_SIZE - 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
+        this.buttonList.add(new GuiNoRenderButton(3, width / 2 - PAGE_WIDTH + 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
+        //BOOK_WIDTH - 14 - 24, -24, 23, 24
 
         try
         {
@@ -96,6 +101,9 @@ public class GuiScreenBook extends GuiScreen implements IBook
             case 2:
                 mc.displayGuiScreen(null);
                 break;
+            case 3:
+                goToPage(getTableOfContentMarker().getPageIndex());
+                break;
         }
     }
 
@@ -112,7 +120,6 @@ public class GuiScreenBook extends GuiScreen implements IBook
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-        GL11.glEnable(GL11.GL_LIGHTING);
         int x = (width - BOOK_WIDTH) / 2, y = (height - BOOK_HEIGHT) / 2;
         GL11.glTranslatef(x, y, 0);
         int relMouseX = mouseX - x, relMouseY = mouseY - y;
@@ -180,7 +187,9 @@ public class GuiScreenBook extends GuiScreen implements IBook
         mc.getTextureManager().bindTexture(LEFT);
         boolean hover = isMouseHovering(mouseX, mouseY, 0, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
         drawTexturedModalRect(0, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
-        drawTexturedModalRect(15, -24, canGoLeft() ? 48 : 48 + 24, 180, 23, 24);
+        ChapterMarker tocMarker = getTableOfContentMarker();
+        int x = leftPageIndex != tocMarker.getPageIndex() && rightPageIndex != tocMarker.getPageIndex() ? 48 : 48 + 24;
+        drawTexturedModalRect(15, -24, x, 180, 23, 24);
         if (canGoLeft()) drawTexturedModalRect(0, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
         mc.getTextureManager().bindTexture(RIGHT);
         hover = isMouseHovering(mouseX, mouseY, BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
@@ -188,6 +197,10 @@ public class GuiScreenBook extends GuiScreen implements IBook
         drawTexturedModalRect(BOOK_WIDTH - 14 - 24, -24, 48, 180, 23, 24);
         if (canGoRight())
             drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
+        if (isMouseHovering(mouseX, mouseY, 15, -24, 23, 24))
+            hovers.add(new HoverDraw(Collections.singletonList("Home"), mc.fontRenderer));
+        else if (isMouseHovering(mouseX, mouseY, BOOK_WIDTH - 14 - 24, -24, 23, 24))
+            hovers.add(new HoverDraw(Collections.singletonList("Exit"), mc.fontRenderer));
     }
 
     private void drawPage(Page page, int mouseX, int mouseY)
@@ -335,8 +348,57 @@ public class GuiScreenBook extends GuiScreen implements IBook
     @Override
     public void goToPage(int page)
     {
-        leftPageIndex = Math.min(page, pages.length - 2);
+        page = Math.max(Math.min(page, pages.length - 2), 0);
+        if (page % 2 == 0)
+            leftPageIndex = page;
+        else
+            leftPageIndex = page - 1;
         rightPageIndex = leftPageIndex + 1;
+    }
+
+    @Override
+    protected void keyTyped(char charTypes, int keyCode)
+    {
+        super.keyTyped(charTypes, keyCode);
+
+        switch (keyCode)
+        {
+            case Keyboard.KEY_1:
+                goToPage(0);
+                break;
+            case Keyboard.KEY_2:
+                goToPage(1);
+                break;
+            case Keyboard.KEY_3:
+                goToPage(2);
+                break;
+            case Keyboard.KEY_4:
+                goToPage(3);
+                break;
+            case Keyboard.KEY_5:
+                goToPage(4);
+                break;
+            case Keyboard.KEY_6:
+                goToPage(5);
+                break;
+            case Keyboard.KEY_7:
+                goToPage(6);
+                break;
+            case Keyboard.KEY_8:
+                goToPage(7);
+                break;
+            case Keyboard.KEY_9:
+                goToPage(8);
+                break;
+            case Keyboard.KEY_LEFT:
+            case Keyboard.KEY_A:
+                goToPage(leftPageIndex - 1);
+                break;
+            case Keyboard.KEY_RIGHT:
+            case Keyboard.KEY_D:
+                goToPage(rightPageIndex + 1);
+                break;
+        }
     }
 
     public class Container implements IPageElementContainer
@@ -454,6 +516,11 @@ public class GuiScreenBook extends GuiScreen implements IBook
             this.y = y;
             this.lines = lines;
             this.renderer = renderer;
+        }
+
+        private HoverDraw(List lines, FontRenderer renderer)
+        {
+            this(currentRenderMouseX, currentRenderMouseY, lines, renderer);
         }
 
         public void draw()

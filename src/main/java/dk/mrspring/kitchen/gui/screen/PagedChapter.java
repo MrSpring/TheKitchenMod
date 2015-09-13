@@ -19,8 +19,5 @@ public class PagedChapter
     public void addPage(Page page)
     {
         this.pages.add(page);
-        System.out.println("Adding page of size: " + page.elements.size());
     }
-
-
 }

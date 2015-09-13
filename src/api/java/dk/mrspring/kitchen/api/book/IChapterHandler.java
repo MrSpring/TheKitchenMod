@@ -5,7 +5,7 @@ import net.minecraft.util.StatCollector;
 /**
  * Created on 09-09-2015 for TheKitchenMod.
  */
-public interface IChapterHandler
+public interface IChapterHandler // TODO: showInToc()
 {
     void addElementsToChapter(IChapter chapter);
 
