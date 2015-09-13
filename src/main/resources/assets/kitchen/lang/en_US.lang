@@ -118,9 +118,9 @@ item.pink_muffin_cup.name=Pink Muffin Cup
 item.lime_muffin_cup.name=Lime Muffin Cup
 item.yellow_muffin_cup.name=Yellow Muffin Cup
 item.light_blue_muffin_cup.name=Light Blue Muffin Cup
-item.magenta_blue_muffin_cup.name=Magenta Muffin Cup
-item.orange_blue_muffin_cup.name=Orange Muffin Cup
-item.white_blue_muffin_cup.name=White Muffin Cup
+item.magenta_muffin_cup.name=Magenta Muffin Cup
+item.orange_muffin_cup.name=Orange Muffin Cup
+item.white_muffin_cup.name=White Muffin Cup
 item.muffin_cup.name=Muffin Cup
 
 combo.big_mac.name=There is Only One!
