@@ -24,6 +24,7 @@ tile.wild_vanilla.name=Wild Vanilla
 tile.casserole.name=Casserole
 tile.casserole.contents=Contains
 tile.crafting_cabinet.name=Crafting Kitchen Cabinet
+tile.wild_onion.name=Wild Onion
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
@@ -168,13 +169,16 @@ waila.false=False
 
 item.cooking_book.name=Cooking Book
 
-item.cooking_book.pages.introduction.title=§lIntroduction
+item.cooking_book.pages.introduction.title=Welcome
+item.cooking_book.pages.introduction.text01=Welcome to your very own, personalized cooking book that molds itself around your experiences as a Minecraft chef.\nThis book will automatically unlock chapters about certain blocks and items, when you make one for the first time.
+item.cooking_book.pages.introduction.text02=These chapters will in great detail describe how to use these blocks and items, so that you may cook up better, and more satisfying meals for you and your fellow Minecraftians.
+
 item.cooking_book.pages.introduction=Thank you for installing The Kitchen Mod!\nYou are currently using version §l%v§r
 item.cooking_book.pages.update_highlights=§l§nUpdate Highlights:§r
 item.cooking_book.pages.stop_mod_reposts.title=§l#StopModReposts§r
 item.cooking_book.pages.stop_mod_reposts.text=Did you download this mod from §lMinecraftForum.net§r, §lPlanetMinecraft.com§r or §lMrSpring.dk§r?\nIf not, then please read this:\n\nThe site you downloaded from is probably illegally redistributing the mod. Downloading from such sites does not support the developers one bit. This is starting to become a big issue, and something has to be done about it!\nFor more information, including a long list of websites that do this, please visit §lStopModReposts.org§r
 
-item.cooking_book.pages.contents.title=§n§lContents:§r
+item.cooking_book.pages.contents.title=Contents:
 item.cooking_book.pages.contents.sandwich=Sandwiches
 item.cooking_book.pages.contents.oven=The Oven
 item.cooking_book.pages.contents.pan=The Frying Pan
@@ -182,13 +186,13 @@ item.cooking_book.pages.contents.waffle=Waffle
 item.cooking_book.pages.contents.toast=Toast
 item.cooking_book.pages.contents.timer=Timer
 
-item.cooking_book.pages.sandwiches.title=§l§nSandwiches
+item.cooking_book.pages.sandwiches.title=Sandwiches
 item.cooking_book.pages.sandwiches.text01=There are a few things that you'll need to make your sandwiches.\nOne thing is a Knife, crafted like so:
 item.cooking_book.pages.sandwiches.text02=The knife is used to slice up the ingredients you'll need to make your sandwiches. Simply put the item you want to slice up on the Cutting Board, and right-click the Cutting Board with a knife a couple of times.
 item.cooking_book.pages.sandwiches.text03=And you're also gonna need the Cutting Board, crafted like so:
 item.cooking_book.pages.sandwiches.text04=To make a Sandwich, all you need to do is right-click the Cutting Board with a sandwichable item. Sandwichable items will say that they are sandwichable below their names. A Sandwich needs a good base and top, so make sure to use some kind of Bread at the top and bottom of your sandwich. When you're satisfied with your sandwich, all you have to do is right-click the Cutting Board, while crouching, to pop off your sandwich.
 
-item.cooking_book.pages.oven.title=§l§nThe Oven
+item.cooking_book.pages.oven.title=The Oven
 item.cooking_book.pages.oven.text01=The Oven is an elegant and efficient way to cook your food.\nIt uses less coal than a regular furnace; one piece of coal can cook up to 16 items.\nThe Oven is crafted like so:
 item.cooking_book.pages.oven.text02=In order to put items into the oven, it must be opened first. You do so by right-clicking the oven while crouching.
 item.cooking_book.pages.oven.text03=And now items can be added!\nOnly food items, though. That means you can't cook ores in the oven. You can only cook items that are edible.
@@ -196,14 +200,14 @@ item.cooking_book.pages.oven.text04=The oven can hold 4 stacks of items, each st
 item.cooking_book.pages.oven.text05=You then close the oven, by right-clicking while crouched, and the oven starts cooking.\nWhen the items are ready smoke particles will form around the hatch of the oven.
 item.cooking_book.pages.oven.text06=Open it and right click with an empty hand to take out the items.\nMake sure you keep an eye on your items. If you don't get them out in time, they'll burn!
 
-item.cooking_book.pages.pan.title=§l§nThe Frying Pan
+item.cooking_book.pages.pan.title=The Frying Pan
 item.cooking_book.pages.pan.text01=The Frying Pan is used to fry things like Bacon, and to make all kinds of Jam.\nThe Frying Pan is crafted like so:
 
-item.cooking_book.pages.waffle.title=§l§nWaffles
+item.cooking_book.pages.waffle.title=Waffles
 
-item.cooking_book.pages.toast.title=§l§nToast
+item.cooking_book.pages.toast.title=Toast
 
-item.cooking_book.pages.timer.title=§l§nTimer
+item.cooking_book.pages.timer.title=Timer
 
 achievement.kitchen.installed=Kitchen Mod Installed
 achievement.kitchen.installed.desc=Install The Kitchen Mod

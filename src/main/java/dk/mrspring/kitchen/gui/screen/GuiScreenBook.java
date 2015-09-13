@@ -28,7 +28,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
 {
     final int PAGE_WIDTH = 140, BOOK_WIDTH = PAGE_WIDTH * 2, BOOK_HEIGHT = 180;
     final int BUTTON_SIZE = 24;
-    final int LEFT_PADDING = 16, RIGHT_PADDING = 10, TOP_PADDING = 16, BOTTOM_PADDING = 16;
+    final int LEFT_PADDING = 16, RIGHT_PADDING = 12, TOP_PADDING = 13, BOTTOM_PADDING = 24;
     final ResourceLocation LEFT = new ResourceLocation("kitchen", "textures/gui/cooking_book_left.png");
     final ResourceLocation RIGHT = new ResourceLocation("kitchen", "textures/gui/cooking_book_right.png");
 
@@ -105,17 +105,25 @@ public class GuiScreenBook extends GuiScreen implements IBook
         Page leftPage = getPage(leftPageIndex), rightPage = getPage(rightPageIndex);
         GL11.glPushMatrix();
         GL11.glTranslated(LEFT_PADDING, TOP_PADDING, 0);
-        this.drawPage(leftPage, relMouseX - LEFT_PADDING, relMouseY - TOP_PADDING, leftPageIndex + 1);
+        this.drawPage(leftPage, relMouseX - LEFT_PADDING, relMouseY - TOP_PADDING);
         GL11.glPopMatrix();
         GL11.glPushMatrix();
         GL11.glTranslatef(PAGE_WIDTH + RIGHT_PADDING, TOP_PADDING, 0);
-        this.drawPage(rightPage, relMouseX - RIGHT_PADDING, relMouseY - TOP_PADDING, rightPageIndex + 1);
+        this.drawPage(rightPage, relMouseX - RIGHT_PADDING, relMouseY - TOP_PADDING);
         GL11.glPopMatrix();
+        drawCenteredString(mc.fontRenderer, String.valueOf(leftPageIndex + 1), PAGE_WIDTH / 2, BOOK_HEIGHT - 20, 0x4C1C06);
+        drawCenteredString(mc.fontRenderer, String.valueOf(rightPageIndex + 1), (PAGE_WIDTH / 2) + PAGE_WIDTH, BOOK_HEIGHT - 20, 0x4C1C06);
         GL11.glPopMatrix();
 
         for (HoverDraw draw : hovers)
             draw.draw();
         hovers.clear();
+    }
+
+    @Override
+    public void drawCenteredString(FontRenderer renderer, String s, int x, int y, int color)
+    {
+        renderer.drawString(s, x - renderer.getStringWidth(s) / 2, y, color);
     }
 
     @Override
@@ -167,9 +175,10 @@ public class GuiScreenBook extends GuiScreen implements IBook
             drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
     }
 
-    private void drawPage(Page page, int mouseX, int mouseY, int pageNumber)
+    private void drawPage(Page page, int mouseX, int mouseY)
     {
         Container container = new Container(page.getChapter());
+        GL11.glPushMatrix();
         for (IPageElement element : page.elements)
         {
             GL11.glPushMatrix();
@@ -180,7 +189,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
             GL11.glTranslatef(0, height, 0);
             container.decreaseHeight(height);
         }
-        drawCenteredString(mc.fontRenderer, String.valueOf(pageNumber), PAGE_WIDTH / 2, BOOK_HEIGHT, 0x4C1C06);
+        GL11.glPopMatrix();
     }
 
     public void increasePage()
@@ -280,12 +289,11 @@ public class GuiScreenBook extends GuiScreen implements IBook
     private Chapter[] makeChapters(IChapterHandler[] handlers)
     {
         Chapter[] chapters = new Chapter[handlers.length];
-        CookingBookUnlocksProperties unlocks = CookingBookUnlocksProperties.getFromPlayer(mc.thePlayer);
         for (int i = 0; i < handlers.length; i++)
         {
             String id = handlers[i].getId();
             tableOfContent.put(id, new ChapterMarker(handlers[i]));
-            Chapter chapter = new Chapter(!unlocks.hasUnlocked(id), id);
+            Chapter chapter = new Chapter(!CookingBookUnlocksProperties.hasPlayerUnlocked(id, mc.thePlayer), id);
             if (chapter.isLocked()) handlers[i].addLockedElementsToChapter(chapter);
             else handlers[i].addElementsToChapter(chapter);
             chapters[i] = chapter;

@@ -19,6 +19,7 @@ public class KitchenConfig extends BaseConfig
     public int show_stats_key = Keyboard.KEY_LSHIFT;
     public boolean show_item_name = true;
     public int[] show_item_name_key_combo = new int[]{Keyboard.KEY_LSHIFT, Keyboard.KEY_LCONTROL, Keyboard.KEY_LMENU};
+    public boolean cooking_book_creative_auto_unlock = true;
 
     public KitchenConfig()
     {

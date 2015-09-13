@@ -1,13 +1,15 @@
 package dk.mrspring.kitchen.api_impl.client.book.element;
 
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.api.book.IPageElement;
 import dk.mrspring.kitchen.api.book.IPageElementContainer;
+import dk.mrspring.kitchen.api.book.ISplittable;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Created on 11-09-2015 for TheKitchenMod.
  */
-public class SpacerElement extends ImageElement
+public class SpacerElement extends ImageElement implements ISplittable
 {
     int height;
     boolean doImage = true;
@@ -44,5 +46,11 @@ public class SpacerElement extends ImageElement
             GL11.glTranslatef(0, heightOffset, 0);
             super.render(container, mouseX, mouseY);
         }
+    }
+
+    @Override
+    public IPageElement createSplitElement(IPageElementContainer container)
+    {
+        return new SpacerElement(0).disableImage();
     }
 }

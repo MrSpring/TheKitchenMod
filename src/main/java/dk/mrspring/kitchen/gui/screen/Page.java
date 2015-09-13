@@ -26,12 +26,12 @@ public class Page
 
     public void addElement(int index, IPageElement element)
     {
-        this.elements.add(index, element);
+        if (element != null) this.elements.add(index, element);
     }
 
     public void addElement(IPageElement element)
     {
-        this.elements.add(element);
+        if (element != null) this.elements.add(element);
     }
 
     public Page copy()

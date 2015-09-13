@@ -1,6 +1,9 @@
 package dk.mrspring.kitchen.entity;
 
 import dk.mrspring.javanbt.NBTType;
+import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.config.BaseConfig;
+import dk.mrspring.kitchen.config.KitchenConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,9 +35,15 @@ public class CookingBookUnlocksProperties implements IExtendedEntityProperties
         return unlocks;
     }
 
-    public static void unlockChapter(String chapterId, EntityPlayer player)
+    public static boolean hasPlayerUnlocked(String chapter, EntityPlayer player)
     {
-        getFromPlayer(player).unlockChapter(chapterId);
+        return (ModConfig.getKitchenConfig().cooking_book_creative_auto_unlock && player.capabilities.isCreativeMode) ||
+                getFromPlayer(player).hasUnlocked(chapter);
+    }
+
+    public static void unlockChapter(String chapter, EntityPlayer player)
+    {
+        getFromPlayer(player).unlockChapter(chapter);
     }
 
     public boolean hasUnlocked(String chapter)

@@ -8,7 +8,20 @@ import dk.mrspring.kitchen.api.book.IPageElementContainer;
  */
 public class EndOfPageElement implements IPageElement
 {
+    int offset;
+
+    public EndOfPageElement(int offset)
+    {
+        this.offset = offset;
+    }
+
+    public EndOfPageElement()
+    {
+        this(1);
+    }
+
     @Override
+
     public void initElement(IPageElementContainer container)
     {
     }
@@ -16,7 +29,7 @@ public class EndOfPageElement implements IPageElement
     @Override
     public int getHeight(IPageElementContainer container)
     {
-        return container.getAvailableHeight() + 1;
+        return container.getAvailableHeight() - offset;
     }
 
     @Override
