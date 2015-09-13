@@ -12,4 +12,6 @@ public interface IPageElement
     void render(IPageElementContainer container, int mouseX, int mouseY);
 
     void mouseClicked(IPageElementContainer container, int mouseX, int mouseY, int mouseButton);
+
+    void onUpdate(IPageElementContainer container);
 }

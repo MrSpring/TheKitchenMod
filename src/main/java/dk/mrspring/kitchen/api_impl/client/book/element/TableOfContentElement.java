@@ -75,6 +75,12 @@ public class TableOfContentElement implements IPageElement, ISplittable
         if (clicked != null) container.getGui().goToPage(clicked.getPageIndex());
     }
 
+    @Override
+    public void onUpdate(IPageElementContainer container)
+    {
+
+    }
+
     private ChapterMarker getMarkerAt(int x, int y)
     {
         int index = y / LINE_HEIGHT;

@@ -67,6 +67,21 @@ public class GuiScreenBook extends GuiScreen implements IBook
     }
 
     @Override
+    public void updateScreen()
+    {
+        Page[] pages = new Page[]{getPage(leftPageIndex), getPage(rightPageIndex)};
+        for (Page page : pages)
+        {
+            Container container = new Container(page.getChapter());
+            for (IPageElement element : page.elements)
+            {
+                element.onUpdate(container);
+                container.onLoop(element.getHeight(container));
+            }
+        }
+    }
+
+    @Override
     protected void actionPerformed(GuiButton button)
     {
         super.actionPerformed(button);
@@ -418,6 +433,12 @@ public class GuiScreenBook extends GuiScreen implements IBook
         public void drawHoverText(List text, int x, int y, FontRenderer renderer)
         {
             drawHoveringText(text, x, y, renderer);
+        }
+
+        public void onLoop(int height)
+        {
+            this.decreaseHeight(height);
+            this.increaseElementIndex();
         }
     }
 

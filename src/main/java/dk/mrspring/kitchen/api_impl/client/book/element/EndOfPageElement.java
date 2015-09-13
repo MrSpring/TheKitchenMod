@@ -41,4 +41,9 @@ public class EndOfPageElement implements IPageElement
     public void mouseClicked(IPageElementContainer container, int mouseX, int mouseY, int mouseButton)
     {
     }
+
+    @Override
+    public void onUpdate(IPageElementContainer container)
+    {
+    }
 }
