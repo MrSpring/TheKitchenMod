@@ -28,7 +28,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
 {
     final int PAGE_WIDTH = 140, BOOK_WIDTH = PAGE_WIDTH * 2, BOOK_HEIGHT = 180;
     final int BUTTON_SIZE = 24;
-    final int LEFT_PADDING = 16, RIGHT_PADDING = 12, TOP_PADDING = 13, BOTTOM_PADDING = 24;
+    final int LEFT_PADDING = 16, RIGHT_PADDING = 12, TOP_PADDING = 13, BOTTOM_PADDING = 20;
     final ResourceLocation LEFT = new ResourceLocation("kitchen", "textures/gui/cooking_book_left.png");
     final ResourceLocation RIGHT = new ResourceLocation("kitchen", "textures/gui/cooking_book_right.png");
 

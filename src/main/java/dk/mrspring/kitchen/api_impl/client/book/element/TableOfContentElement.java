@@ -41,12 +41,12 @@ public class TableOfContentElement implements IPageElement, ISplittable
     public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
         FontRenderer renderer = container.getMinecraft().fontRenderer;
-        int i = 0;
+        int i = 0, hoverIndex = (mouseX >= 0 && mouseX < container.getAvailableWidth() ? (mouseY / LINE_HEIGHT) + fromIndex : -1);
         for (ChapterMarker marker : markerMap.values())
         {
             if (i >= fromIndex && i < toIndex)
             {
-                renderer.drawString((marker.getPageIndex() + 1) + ". " + marker.getDisplayName(), 0, 0, 0x4C1C06);
+                renderer.drawString((marker.getPageIndex() + 1) + ". " + (hoverIndex == i ? "\u00a7n" : "") + marker.getDisplayName(), 0, 0, 0x4C1C06);
                 GL11.glTranslatef(0, LINE_HEIGHT, 0);
             }
             i++;
@@ -78,7 +78,6 @@ public class TableOfContentElement implements IPageElement, ISplittable
     @Override
     public void onUpdate(IPageElementContainer container)
     {
-
     }
 
     private ChapterMarker getMarkerAt(int x, int y)
