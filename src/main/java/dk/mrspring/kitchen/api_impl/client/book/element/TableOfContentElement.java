@@ -26,7 +26,7 @@ public class TableOfContentElement implements IPageElement, ISplittable
         this.markerMap = container.getGui().getTableOfContent();
         if (fromIndex == -1 || toIndex == -1)
         {
-            fromIndex = 1;
+            fromIndex = 2;
             toIndex = markerMap.size();
         }
     }
@@ -41,7 +41,7 @@ public class TableOfContentElement implements IPageElement, ISplittable
     public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
         FontRenderer renderer = container.getMinecraft().fontRenderer;
-        int i = 0, hoverIndex = (mouseX >= 0 && mouseX < container.getAvailableWidth() ? (mouseY / LINE_HEIGHT) + fromIndex : -1);
+        int i = 0, hoverIndex = getMarkerIndexAt(container, mouseX, mouseY);
         for (ChapterMarker marker : markerMap.values())
         {
             if (i >= fromIndex && i < toIndex)
@@ -71,7 +71,7 @@ public class TableOfContentElement implements IPageElement, ISplittable
     @Override
     public void mouseClicked(IPageElementContainer container, int mouseX, int mouseY, int mouseButton)
     {
-        ChapterMarker clicked = getMarkerAt(mouseX, mouseY);
+        ChapterMarker clicked = getMarkerAt(container, mouseX, mouseY);
         if (clicked != null) container.getGui().goToPage(clicked.getPageIndex());
     }
 
@@ -80,11 +80,22 @@ public class TableOfContentElement implements IPageElement, ISplittable
     {
     }
 
-    private ChapterMarker getMarkerAt(int x, int y)
+    private int getMarkerIndexAt(IPageElementContainer container, int x, int y)
     {
+        if (x < 0 || x >= container.getAvailableWidth()) return -1;
         int index = y / LINE_HEIGHT;
         index += fromIndex;
+        return index;
+    }
+
+    private ChapterMarker getMarkerAtIndex(int index)
+    {
         List<ChapterMarker> markers = new ArrayList<ChapterMarker>(markerMap.values());
         return index >= 0 && index < toIndex ? markers.get(index) : null;
+    }
+
+    private ChapterMarker getMarkerAt(IPageElementContainer container, int x, int y)
+    {
+        return getMarkerAtIndex(getMarkerIndexAt(container, x, y));
     }
 }

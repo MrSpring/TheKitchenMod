@@ -197,7 +197,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
         drawTexturedModalRect(BOOK_WIDTH - 14 - 24, -24, 48, 180, 23, 24);
         if (canGoRight())
             drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
-        if (isMouseHovering(mouseX, mouseY, 15, -24, 23, 24))
+        if (isMouseHovering(mouseX, mouseY, 15, -24, 23, 24) && !(leftPageIndex == getTableOfContentMarker().getPageIndex()))
             hovers.add(new HoverDraw(Collections.singletonList("Home"), mc.fontRenderer));
         else if (isMouseHovering(mouseX, mouseY, BOOK_WIDTH - 14 - 24, -24, 23, 24))
             hovers.add(new HoverDraw(Collections.singletonList("Exit"), mc.fontRenderer));
