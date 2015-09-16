@@ -48,7 +48,6 @@ public class ClientProxy extends CommonProxy
     @Override
     public void spawnDingParticle(World world, double posX, double posY, double posZ)
     {
-        System.out.println("Spawning particle!");
         EntityDingFX particle = new EntityDingFX(world, posX, posY, posZ);
         Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
