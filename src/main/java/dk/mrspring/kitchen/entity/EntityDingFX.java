@@ -5,6 +5,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
@@ -53,5 +54,6 @@ public class EntityDingFX extends EntityFX
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, brightX, brightY);
         renderer.drawString("DING", -(renderer.getStringWidth("DING") / 2), -9, 0xFFFFFF, true);
         GL11.glPopMatrix();
+        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("minecraft", "textures/particle/particles.png"));
     }
 }
