@@ -75,7 +75,7 @@ public class TileEntityPanRenderer extends TileEntityTimeableRenderer
         float pixel = 0.0625F;
 
         if (tileEntity.getWorldObj().getBlock(x, y - 1, z) == KitchenBlocks.oven)
-            GL11.glTranslatef(4 * pixel, 0F, -(2 * pixel));
+            GL11.glTranslatef(-4 * pixel, 0F, -2 * pixel);
         float scale = 0.5F;
         GL11.glScalef(scale, scale, scale);
     }
