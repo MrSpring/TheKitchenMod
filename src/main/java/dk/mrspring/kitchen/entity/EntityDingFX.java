@@ -13,19 +13,13 @@ import org.lwjgl.opengl.GL11;
  */
 public class EntityDingFX extends EntityFX
 {
-    double rotY = 0;
     int timeAlive = 0;
 
     public EntityDingFX(World world, double x, double y, double z)
     {
         super(world, x, y, z);
         this.particleMaxAge = 40;
-        this.motionY = 0.1;
-    }
-
-    public void setRotation(double y)
-    {
-        this.rotY = y;
+        this.motionY = 0.025;
     }
 
     @Override
@@ -46,7 +40,7 @@ public class EntityDingFX extends EntityFX
         GL11.glPushMatrix();
         GL11.glTranslatef(renderX, renderY, renderZ);
         GL11.glRotated(-Minecraft.getMinecraft().renderViewEntity.rotationYaw, 0F, 1F, 0F);
-        float s = 0.0625F;
+        float s = 0.02F;
         GL11.glScalef(-s, -s, s);
         float size = timeAlive >= 20 ?
                 Math.max(0, 5 - Math.max(0F, ((float) timeAlive + partialTick) - 35F)) :

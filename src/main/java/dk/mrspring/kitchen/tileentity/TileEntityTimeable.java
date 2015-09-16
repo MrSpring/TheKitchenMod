@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -12,14 +13,22 @@ public abstract class TileEntityTimeable extends TileEntity
     private boolean hasDinged = false;
     private boolean hasTimer = false;
 
+    public float[] getTimerLocalPosition()
+    {
+        return new float[]{0.5F, 1.2F, 0.5F};
+    }
+
     @Override
     public void updateEntity()
     {
         super.updateEntity();
 
-        if (this.getTime() > this.getDoneTime() && !hasDinged && hasTimer)
+        if (!hasDinged && hasTimer && this.getTime() > this.getDoneTime())
         {
             worldObj.playSound(xCoord, yCoord, zCoord, ModInfo.modid + ":" + "ding", 1, 1, false);
+            float[] position = getTimerLocalPosition();
+            Kitchen.proxy.spawnDingParticle(worldObj, position[0]+(float)xCoord, position[1]+(float)yCoord, position[2]+(float)zCoord);
+            System.out.println("sound");
             hasDinged = true;
         } else if (this.getTime() < this.getDoneTime() && hasDinged && hasTimer)
             this.hasDinged = false;

@@ -351,7 +351,8 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     {
         int lowest = 0;
         for (int slot = 0; slot < getSlotCount(); slot++)
-            lowest = Math.min(lowest, getSlot(slot).getCookTime());
+            lowest = Math.max(lowest, getSlot(slot).getCookTime());
+//        System.out.println("Returning time: " + lowest);
         return lowest;
     }
 
@@ -360,8 +361,28 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     {
         int lowest = 0;
         for (int slot = 0; slot < getSlotCount(); slot++)
-            lowest = Math.min(lowest, getSlot(slot).getDoneTime());
+            lowest = Math.max(lowest, getSlot(slot).getDoneTime());
+//        System.out.println("Returning done: " + lowest);
         return lowest;
+    }
+
+    @Override
+    public float[] getTimerLocalPosition()
+    {
+        final float P = 0.0625F;
+        switch (getBlockMetadata())
+        {
+            case 0:
+                return new float[]{P * 3, 1F - P - P, 0};
+            case 1:
+                return new float[]{1, 1F - P - P, P * 3};
+            case 2:
+                return new float[]{1 - P * 3, 1F - P * 2, 1F};
+            case 3:
+                return new float[]{0, 1F - P - P, 1F-P * 3};
+            default:
+                return super.getTimerLocalPosition();
+        }
     }
 
     public float getLidAngle()

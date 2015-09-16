@@ -181,7 +181,7 @@ public class ItemMixingBowl extends ItemBase
 //        world.spawnParticle();
         if (world.isRemote)
         {
-            Kitchen.proxy.spawnDingParticle(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ, -p_77659_3_.getRotationYawHead());
+            Kitchen.proxy.spawnDingParticle(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ);
 //            EntityDingFX particle = new EntityDingFX(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ);
 //            particle.setRotation(-p_77659_3_.getRotationYawHead());
 //            Minecraft.getMinecraft().effectRenderer.addEffect(particle);

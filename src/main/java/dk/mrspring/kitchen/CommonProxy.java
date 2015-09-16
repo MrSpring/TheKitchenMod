@@ -11,8 +11,8 @@ public class CommonProxy
 		
 	}
 
-	public void spawnDingParticle(World world, double posX, double posY, double posZ, float rotation)
+	public void spawnDingParticle(World world, double posX, double posY, double posZ)
 	{
-
+		System.out.println("Server spawn");
 	}
 }
