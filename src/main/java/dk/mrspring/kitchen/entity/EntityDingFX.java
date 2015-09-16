@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.entity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
@@ -13,14 +14,13 @@ import org.lwjgl.opengl.GL11;
 public class EntityDingFX extends EntityFX
 {
     double rotY = 0;
+    int timeAlive = 0;
 
-    public EntityDingFX(World p_i1218_1_, double p_i1218_2_, double p_i1218_4_, double p_i1218_6_)
+    public EntityDingFX(World world, double x, double y, double z)
     {
-        super(p_i1218_1_, p_i1218_2_, p_i1218_4_, p_i1218_6_);
-//        this.particleIcon = Minecraft.getMinecraft().text
-        this.particleMaxAge = 10;
+        super(world, x, y, z);
+        this.particleMaxAge = 40;
         this.motionY = 0.1;
-
     }
 
     public void setRotation(double y)
@@ -29,37 +29,35 @@ public class EntityDingFX extends EntityFX
     }
 
     @Override
-    public void renderParticle(Tessellator tessellator, float p_70539_2_, float x, float y, float z, float p_70539_6_, float p_70539_7_)
+    public void onUpdate()
     {
-        float renderX = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) p_70539_2_ - interpPosX);
-        float renderY = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) p_70539_2_ - interpPosY);
-        float renderZ = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) p_70539_2_ - interpPosZ);
-//        super.renderParticle(p_70539_1_, p_70539_2_, p_70539_3_, p_70539_4_, p_70539_5_, p_70539_6_, p_70539_7_);
+        super.onUpdate();
+        this.motionY *= 0.9D;
+        this.timeAlive++;
+    }
+
+    @Override
+    public void renderParticle(Tessellator tess, float partialTick, float x, float y, float z, float p_70539_6_, float p_70539_7_)
+    {
+        float renderX = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTick - interpPosX);
+        float renderY = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTick - interpPosY);
+        float renderZ = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTick - interpPosZ);
+        FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
         GL11.glPushMatrix();
         GL11.glTranslatef(renderX, renderY, renderZ);
-        GL11.glRotated(this.rotY,0,1,0);
+        GL11.glRotated(-Minecraft.getMinecraft().renderViewEntity.rotationYaw, 0F, 1F, 0F);
         float s = 0.0625F;
         GL11.glScalef(-s, -s, s);
-//        GL11.glTranslated(this.posX-x, this.posY-y, this.posZ-z);
-//        GL11.glTranslatef(0, 0, z);
-//        System.out.println(interpPosX+", "+interpPosY+", "+interpPosZ);
-//        GL11.glTranslated(interpPosX,interpPosY,interpPosZ);
-//        GL11.
-        FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
-        GL11.glColor4f(1,1,1,1);
-        renderer.drawString("DING", 0, 0, 0xFFFFFF, true);
+        float size = timeAlive >= 20 ?
+                Math.max(0, 5 - Math.max(0F, ((float) timeAlive + partialTick) - 35F)) :
+                Math.min(partialTick + (float) this.timeAlive + partialTick, 5F);
+        size /= 5;
+        GL11.glScalef(size, size, size);
+        int bright = 0xF0;
+        int brightX = bright % 65536;
+        int brightY = bright / 65536;
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, brightX, brightY);
+        renderer.drawString("DING", -(renderer.getStringWidth("DING") / 2), -9, 0xFFFFFF, true);
         GL11.glPopMatrix();
-//        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("minecraft:textures/font/ascii.png"));
-
-//        tessellator.addVertexWithUV(renderX - 0.5, renderY - 0.5, renderZ, 0, 0);
-//        tessellator.addVertexWithUV(renderX + 0.5, renderY - 0.5, renderZ, 1, 0);
-//        tessellator.addVertexWithUV(renderX + 0.5, renderY + 0.5, renderZ, 1, 1);
-//        tessellator.addVertexWithUV(renderX - 0.5, renderY + 0.5, renderZ, 0, 1);
-
-//        tessellator.addVertexWithUV(x - 0.5, y - 0.5, z, 0, 0);
-//        tessellator.addVertexWithUV(x + 0.5, y - 0.5, z, 1, 0);
-//        tessellator.addVertexWithUV(x + 0.5, y + 0.5, z, 1, 1);
-//        tessellator.addVertexWithUV(x - 0.5, y + 0.5, z, 0, 1);
-//        super.renderParticle(tessellator, p_70539_2_, x, y, z, p_70539_6_, p_70539_7_);
     }
 }
