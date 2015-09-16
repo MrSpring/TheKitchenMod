@@ -42,6 +42,7 @@ public abstract class TileEntityTimeable extends TileEntity
     {
         super.readFromNBT(compound);
         this.hasTimer = compound.getBoolean("HasTimer");
+        this.hasDinged = compound.getBoolean("HasDinged");
     }
 
     @Override
@@ -49,6 +50,7 @@ public abstract class TileEntityTimeable extends TileEntity
     {
         super.writeToNBT(compound);
         compound.setBoolean("HasTimer", this.hasTimer);
+        compound.setBoolean("HasDinged", this.hasDinged);
     }
 
     public boolean getHasTimer()
