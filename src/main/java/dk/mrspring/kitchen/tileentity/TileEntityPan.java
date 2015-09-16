@@ -125,6 +125,20 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
     }
 
     @Override
+    public float[] getTimerLocalPosition()
+    {
+        final float P = 0.0625F;
+        float[][] poses = new float[][]{
+                new float[]{1 - P * 4, P, 0},
+                new float[]{1, P, 1 - P * 4},
+                new float[]{P * 4, P, 1F},
+                new float[]{0, P, P * 4}
+        };
+        int metadata = worldObj.getBlockMetadata(xCoord, yCoord - 1, zCoord);
+        return metadata >= 0 && metadata < poses.length ? poses[metadata] : super.getTimerLocalPosition();
+    }
+
+    @Override
     public boolean isFinished()
     {
         return getCookTime() >= getDoneTime();
@@ -137,7 +151,7 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
 
         if (ingredient != null && this.ingredient.readyToCook(this))
         {
-            if (cookTime < getDoneTime())
+            if (cookTime <= getDoneTime())
                 cookTime++;
         } else cookTime = 0;
     }
