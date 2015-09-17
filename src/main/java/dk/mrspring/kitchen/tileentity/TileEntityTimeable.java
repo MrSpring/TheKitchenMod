@@ -25,13 +25,12 @@ public abstract class TileEntityTimeable extends TileEntity
 
         if (!hasDinged && hasTimer && this.getTime() > this.getDoneTime())
         {
-            worldObj.playSound(xCoord, yCoord, zCoord, ModInfo.modid + ":" + "ding", 1, 1, false);
+            worldObj.playSound(xCoord, yCoord, zCoord, ModInfo.toTexture("ding"), 1, 1, false);
             if (worldObj.isRemote)
             {
                 float[] position = getTimerLocalPosition();
                 Kitchen.proxy.spawnDingParticle(worldObj, position[0] + (float) xCoord, position[1] + (float) yCoord, position[2] + (float) zCoord);
             }
-            System.out.println("sound");
             hasDinged = true;
         } else if (this.getTime() < this.getDoneTime() && hasDinged && hasTimer)
             this.hasDinged = false;
