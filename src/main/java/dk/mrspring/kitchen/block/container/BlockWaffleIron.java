@@ -42,7 +42,7 @@ public class BlockWaffleIron extends BlockContainerBase
     @Override
     public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer activator, int side, float clickX, float clickY, float clickZ)
     {
-        if (!world.isRemote)
+        if (!world.isRemote) // TODO: Move to TileEntity
         {
             if (activator.isSneaking())
             {
