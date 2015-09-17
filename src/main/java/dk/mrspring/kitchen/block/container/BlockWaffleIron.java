@@ -88,15 +88,7 @@ public class BlockWaffleIron extends BlockContainerBase
     {
         int direction = MathHelper.floor_double((double) (player.rotationYaw * 8.0F / 360.0F) + 0.5D) & 7;
         super.onBlockPlacedBy(world, x, y, z, player, itemStack);
-
         world.setBlockMetadataWithNotify(x, y, z, direction, 2);
-
-        if (itemStack.getTagCompound() != null)
-            if (itemStack.getTagCompound().getTag("PlateData") != null)
-            {
-                TileEntityPlate tileEntityPlate = (TileEntityPlate) world.getTileEntity(x, y, z);
-                tileEntityPlate.readItemsFromNBT((NBTTagCompound) itemStack.getTagCompound().getTag("PlateData"));
-            }
     }
 
     @Override
