@@ -173,4 +173,22 @@ public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite us
     {
         return 400;
     }
+
+    @Override
+    public float[] getTimerLocalPosition()
+    {
+        final float P = 0.0625F;
+        float[][] poses = new float[][]{
+                new float[]{P * 5.5F, P, 3 * P},
+                new float[]{1 - P * 5, P, 2 * P},
+                new float[]{1 - 3 * P, P, P * 5.5F},
+                new float[]{1 - 2 * P, P, 1 - P * 5},
+                new float[]{1F - P * 5.5F, P, 1 - 3 * P},
+                new float[]{P * 5, P, 1 - 2 * P},
+                new float[]{3 * P, P, 1F - P * 5.5F},
+                new float[]{2 * P, P, P * 5}
+        };
+        int metadata = worldObj.getBlockMetadata(xCoord, yCoord - 1, zCoord);
+        return metadata >= 0 && metadata < poses.length ? poses[metadata] : super.getTimerLocalPosition();
+    }
 }
