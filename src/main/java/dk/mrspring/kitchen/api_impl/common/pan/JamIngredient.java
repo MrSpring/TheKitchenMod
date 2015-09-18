@@ -8,6 +8,7 @@ import dk.mrspring.kitchen.recipe.FryingPanJamRecipes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 /**
  * Created by Konrad on 19-06-2015.
@@ -24,9 +25,11 @@ public class JamIngredient implements IIngredient
     }
 
     @Override
-    public String getDisplayName()
+    public String getDisplayName(IFryingPan pan)
     {
-        return "Jam";
+        NBTTagCompound compound = pan.getSpecialInfo();
+        String jam = compound.getString(JAM_RECIPE_OUTPUT);
+        return StatCollector.translateToLocal("jam." + jam.toLowerCase() + ".name");
     }
 
     @Override

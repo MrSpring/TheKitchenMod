@@ -17,7 +17,7 @@ public class BasicIngredient implements IIngredient
     }
 
     @Override
-    public String getDisplayName()
+    public String getDisplayName(IFryingPan pan)
     {
         return "Empty";
     }

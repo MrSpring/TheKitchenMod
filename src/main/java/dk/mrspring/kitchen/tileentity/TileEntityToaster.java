@@ -182,13 +182,10 @@ public class TileEntityToaster extends TileEntityTimeable
         float[][] poses = new float[][]{
                 new float[]{7 * P, 3 * P, 3 * P},
                 new float[]{1 - 5 * P, 3 * P, 4 * P},
-
                 new float[]{1 - 3 * P, 3 * P, 7 * P},
                 new float[]{1 - 4 * P, 3 * P, 1 - 5 * P},
-
                 new float[]{1F - 7 * P, 3 * P, 1 - 3 * P},
                 new float[]{5 * P, 3 * P, 1 - 4 * P},
-
                 new float[]{3 * P, 3 * P, 1F - 7 * P},
                 new float[]{4 * P, P, 5 * P}
         };

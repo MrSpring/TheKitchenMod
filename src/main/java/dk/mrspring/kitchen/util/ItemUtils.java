@@ -35,9 +35,14 @@ public class ItemUtils
         return stack != null && stack.getItem() == item;
     }
 
+    public static String name(ItemStack stack, String fallback)
+    {
+        return stack != null ? stack.toString() : fallback;
+    }
+
     public static String name(ItemStack stack)
     {
-        return stack != null ? stack.toString() : "null";
+        return name(stack, "null");
     }
 
     public static boolean itemDict(ItemStack stack, String oreDictionaryName)

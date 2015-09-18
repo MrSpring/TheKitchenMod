@@ -40,7 +40,7 @@ public class WailaPanProvider implements IWailaDataProvider
             if (cookTime!=0&&cookTime<410)
             {
                 String line =StatCollector.translateToLocal("waila.pan_making")+": ";
-                String making =tileEntityPan.getIngredient().getDisplayName();
+                String making =tileEntityPan.getIngredient().getDisplayName(tileEntityPan);
                 line+=making;
                 strings.add(line);
             } else if (cookTime>=410)

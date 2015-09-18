@@ -10,7 +10,7 @@ public interface IIngredient
 {
     String getName();
 
-    String getDisplayName(); // TODO: Add IFryingPan to parameters
+    String getDisplayName(IFryingPan pan);
 
     /**
      * Is used to determine if this Ingredient should be used for the Item that was right-clicked with.
