@@ -1,10 +1,11 @@
 package dk.mrspring.kitchen.block.container;
 
+import dk.mrspring.kitchen.api.board.IBoardItemHandler;
+import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -12,7 +13,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.Random;
+import java.util.List;
 
 public class BlockBoard extends BlockContainerBase
 {
@@ -44,19 +45,6 @@ public class BlockBoard extends BlockContainerBase
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
     {
         return null;
-    }
-
-    @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
-    {
-        TileEntityBoard tileEntityBoard = (TileEntityBoard) world.getTileEntity(x, y, z);
-
-        if (tileEntityBoard != null)
-        {
-
-        } // TODO: Drop items
-
-        super.breakBlock(world, x, y, z, block, p_149749_6_);
     }
 
     @Override

@@ -1,19 +1,24 @@
 package dk.mrspring.kitchen.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
+import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
 import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
@@ -23,6 +28,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import org.lwjgl.input.Keyboard;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -128,7 +134,7 @@ public class ModEventHandler
             }
     }
 
-    /*@SubscribeEvent
+    @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
@@ -137,7 +143,7 @@ public class ModEventHandler
             player.getEntityData().setBoolean("HasGottenCookingBook", true);
             player.inventory.addItemStackToInventory(new ItemStack(KitchenItems.cooking_book));
         }
-    }*/
+    }
 
     @SubscribeEvent
     public void onBlockBreak(BlockEvent.BreakEvent event)
@@ -146,13 +152,28 @@ public class ModEventHandler
         Block block = event.world.getBlock(x, y, z);
         if (block == KitchenBlocks.board)
         {
-            System.out.println("Break");
             TileEntity tileEntity = event.world.getTileEntity(x, y, z);
             if (tileEntity instanceof TileEntityBoard)
             {
-                TileEntityBoard entityBoard = (TileEntityBoard) tileEntity;
-                while (entityBoard.getLayerCount() > 0)
-                    entityBoard.removeTopItem(event.getPlayer());
+                TileEntityBoard board = (TileEntityBoard) tileEntity;
+                EntityPlayer player = event.getPlayer();
+                List<ItemStack> stacks = board.getLayers();
+                for (ItemStack stack : stacks)
+                {
+                    IBoardItemHandler handler = BoardEventRegistry.instance().getHandlerFor(board, stack, player);
+                    ItemStack drop = handler.onRemoved(board, stack, player);
+                    Random rand = new Random();
+                    float f = rand.nextFloat() * 0.8F + 0.1F;
+                    float f1 = rand.nextFloat() * 0.8F + 0.1F;
+                    float f2 = rand.nextFloat() * 0.8F + 0.1F;
+                    EntityItem entityitem = new EntityItem(event.world,
+                            ((float) x + f), ((float) y + f1), ((float) z + f2), drop.copy());
+                    float f3 = 0.05F;
+                    entityitem.motionX = (double) ((float) rand.nextGaussian() * f3);
+                    entityitem.motionY = (double) ((float) rand.nextGaussian() * f3 + 0.2F);
+                    entityitem.motionZ = (double) ((float) rand.nextGaussian() * f3);
+                    event.world.spawnEntityInWorld(entityitem);
+                }
             }
         }
     }
