@@ -3,16 +3,12 @@ package dk.mrspring.kitchen.event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
-import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
 import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
+import dk.mrspring.kitchen.block.container.BlockContainerBase;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
-import dk.mrspring.kitchen.tileentity.TileEntityBoard;
-import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,14 +17,12 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import org.lwjgl.input.Keyboard;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -149,8 +143,13 @@ public class ModEventHandler
     public void onBlockBreak(BlockEvent.BreakEvent event)
     {
         int x = event.x, y = event.y, z = event.z;
-        Block block = event.world.getBlock(x, y, z);
-        if (block == KitchenBlocks.board)
+        Block block = event.block;
+        if (block instanceof BlockContainerBase)
+        {
+            BlockContainerBase container = (BlockContainerBase) block;
+            container.onBlockBroken(event.getPlayer(), event.world, x, y, z);
+        }
+        /*if (block == KitchenBlocks.board)
         {
             TileEntity tileEntity = event.world.getTileEntity(x, y, z);
             if (tileEntity instanceof TileEntityBoard)
@@ -175,6 +174,6 @@ public class ModEventHandler
                     event.world.spawnEntityInWorld(entityitem);
                 }
             }
-        }
+        }*/
     }
 }

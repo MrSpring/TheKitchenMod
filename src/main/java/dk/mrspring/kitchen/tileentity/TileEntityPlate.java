@@ -76,9 +76,9 @@ public class TileEntityPlate extends TileEntity
             return null;
     }
 
-    public ItemStack[] getItemsAsArray()
+    public ArrayList<ItemStack> getItems()
     {
-        return this.items.toArray(new ItemStack[1]);
+        return items;
     }
 
     @Override

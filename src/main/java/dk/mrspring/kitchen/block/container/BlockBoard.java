@@ -1,14 +1,17 @@
 package dk.mrspring.kitchen.block.container;
 
+import dk.mrspring.kitchen.api.board.IBoardItemHandler;
+import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class BlockBoard extends BlockContainerBase
 {
@@ -18,12 +21,8 @@ public class BlockBoard extends BlockContainerBase
 
         this.setStepSound(soundTypeWood);
         this.setHardness(2.0F);
-    }
 
-    @Override
-    public void onBlockAdded(World p_149726_1_, int p_149726_2_, int p_149726_3_, int p_149726_4_)
-    {
-        super.onBlockAdded(p_149726_1_, p_149726_2_, p_149726_3_, p_149726_4_);
+        this.rotationAngles = 4;
     }
 
     @Override
@@ -31,8 +30,7 @@ public class BlockBoard extends BlockContainerBase
     {
         TileEntityBoard entity = (TileEntityBoard) world.getTileEntity(x, y, z);
         if (!world.isRemote)
-            if (entity.rightClicked(activator.getCurrentEquippedItem(), activator))
-                world.markBlockForUpdate(x, y, z);
+            if (entity.rightClicked(activator.getCurrentEquippedItem(), activator)) world.markBlockForUpdate(x, y, z);
         return false;
     }
 
@@ -46,7 +44,6 @@ public class BlockBoard extends BlockContainerBase
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
     {
         int metadata = world.getBlockMetadata(x, y, z);
-
         if (metadata % 2 == 0)
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F * 3, 1.0F - 0.0625F, 0.0625F * 2, 1.0F - (0.0625F * 3));
         else if (metadata % 2 == 1)
@@ -60,17 +57,21 @@ public class BlockBoard extends BlockContainerBase
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack placed)
+    public void onBlockBroken(EntityPlayer player, World world, int x, int y, int z)
     {
-        int direction = MathHelper.floor_double((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-
-//        if (direction == 0 || direction == 2)
-//            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-//        else if (direction == 1 || direction == 3)
-//            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
-        world.setBlockMetadataWithNotify(x, y, z, direction, 2);
-
-        super.onBlockPlacedBy(world, x, y, z, placer, placed);
+        super.onBlockBroken(player, world, x, y, z);
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity instanceof TileEntityBoard)
+        {
+            TileEntityBoard board = (TileEntityBoard) tileEntity;
+            List<ItemStack> stacks = board.getLayers();
+            for (ItemStack stack : stacks)
+            {
+                IBoardItemHandler handler = BoardEventRegistry.instance().getHandlerFor(board, stack, player);
+                ItemStack drop = handler.onRemoved(board, stack, player);
+                spawnItem(drop, world, x, y, z);
+            }
+        }
     }
 
     @Override

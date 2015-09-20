@@ -8,6 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -20,9 +21,10 @@ public class BlockToaster extends BlockContainerBase
     {
         super("toaster", TileEntityToaster.class);
         float pixel = 0.0625F;
-        this.setBlockBounds(3 * pixel, 0, 3 * pixel, 1 - 3 * pixel, 0.5F-pixel, 1 - 3 * pixel);
+        this.setBlockBounds(3 * pixel, 0, 3 * pixel, 1 - 3 * pixel, 0.5F - pixel, 1 - 3 * pixel);
         this.setHardness(4.0F);
         this.setStepSound(Block.soundTypePiston);
+        this.rotationAngles = 8;
     }
 
     @Override
@@ -64,6 +66,19 @@ public class BlockToaster extends BlockContainerBase
         }
         world.markBlockForUpdate(x, y, z);
         return false;
+    }
+
+    @Override
+    public void onBlockBroken(EntityPlayer player, World world, int x, int y, int z)
+    {
+        super.onBlockBroken(player, world, x, y, z);
+        TileEntity entity = world.getTileEntity(x, y, z);
+        if (entity instanceof TileEntityToaster)
+        {
+            TileEntityToaster toaster = (TileEntityToaster) entity;
+            spawnItem(toaster.getStack1(), world, x, y, z);
+            spawnItem(toaster.getStack2(), world, x, y, z);
+        }
     }
 
     @Override
