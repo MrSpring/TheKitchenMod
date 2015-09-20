@@ -10,6 +10,7 @@ import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.recipe.*;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -82,7 +83,7 @@ public class NEIKitchenConfig implements IConfigureNEI
         handlers.add(new MuffinCupCraftingHandler());
         handlers.add(new WaffleIronCraftingHandler());
         IRecipe recipe = new BasicRecipe(KitchenItems.dirty_hand_mixer, KitchenItems.hand_mixer);
-        handlers.add(new SimpleCraftingHandler("kitchen.hand_mixer", "item.dirty_hand_mixer.name", Collections.singletonList(recipe), new ItemStack(Blocks.cauldron)));
+        handlers.add(new SimpleCraftingHandler("kitchen.hand_mixer", "item.dirty_hand_mixer.name", Collections.singletonList(recipe), new ItemStack(Items.cauldron)));
     }
 
     @Override
