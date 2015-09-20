@@ -33,7 +33,7 @@ public class TileEntityKitchenCabinetRenderer extends TileEntitySpecialRenderer
 		GL11.glTranslatef(0.5F + (float) var2, 1.5F + (float) var4, 0.5F + (float) var6);
 		GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
 
-		Minecraft.getMinecraft().renderEngine.bindTexture(this.texture);
+		bindTexture(this.texture);
 		int metadata = tileEntity.getBlockMetadata();
 		boolean renderCorner = false;
 		float rotateAngle = 0F;

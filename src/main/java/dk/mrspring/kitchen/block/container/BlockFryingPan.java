@@ -1,12 +1,10 @@
 package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.KitchenBlocks;
+import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityPan;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 

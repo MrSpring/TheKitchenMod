@@ -1,14 +1,10 @@
 package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.KitchenItems;
-import dk.mrspring.kitchen.tileentity.TileEntityPlate;
+import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityWaffleIron;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -25,6 +21,7 @@ public class BlockWaffleIron extends BlockContainerBase
         this.setBlockBounds(2 * pixel, 0, 2 * pixel, 1 - 2 * pixel, 0.5F, 1 - 2 * pixel);
         this.setHardness(4.0F);
         this.setStepSound(Block.soundTypePiston);
+        this.rotationAngles = 8;
     }
 
     @Override
@@ -81,14 +78,6 @@ public class BlockWaffleIron extends BlockContainerBase
         } else world.markBlockForUpdate(x, y, z);
 
         return true;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemStack)
-    {
-        int direction = MathHelper.floor_double((double) (player.rotationYaw * 8.0F / 360.0F) + 0.5D) & 7;
-        super.onBlockPlacedBy(world, x, y, z, player, itemStack);
-        world.setBlockMetadataWithNotify(x, y, z, direction, 2);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.block.container;
+package dk.mrspring.kitchen.block;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
@@ -23,8 +23,8 @@ import java.util.Random;
 public class BlockContainerBase extends BlockContainer
 {
     Class tileEntityClass;
-    int rotationAngles = 0;
-    boolean enableTimer = true;
+    public int rotationAngles = 0;
+    public boolean enableTimer = true;
 
     protected BlockContainerBase(Material material, String name, String textureName, boolean useCreativeTab, Class tileEntityClass)
     {
@@ -43,7 +43,7 @@ public class BlockContainerBase extends BlockContainer
 
     protected BlockContainerBase(Material material, String name, boolean useCreativeTab, Class<? extends TileEntity> tileEntityClass)
     {
-        this(material, name, ModInfo.modid + ":" + name, useCreativeTab, tileEntityClass);
+        this(material, name, ModInfo.toTexture(name), useCreativeTab, tileEntityClass);
     }
 
     protected BlockContainerBase(Material material, String name, Class<? extends TileEntity> tileEntityClass)
@@ -58,7 +58,7 @@ public class BlockContainerBase extends BlockContainer
 
     protected BlockContainerBase(String name, boolean useCreativeTab, Class<? extends TileEntity> tileEntityClass)
     {
-        this(name, ModInfo.modid + ":" + name, useCreativeTab, tileEntityClass);
+        this(name, ModInfo.toTexture(name), useCreativeTab, tileEntityClass);
     }
 
     protected BlockContainerBase(Material material, String name, String textureName, Class<? extends TileEntity> tileEntityClass)
@@ -119,7 +119,8 @@ public class BlockContainerBase extends BlockContainer
     {
         if (rotationAngles > 0)
         {
-            int direction = MathHelper.floor_double((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & (rotationAngles - 1);
+            int direction = MathHelper.floor_double((double) (placer.rotationYaw * (float) rotationAngles / 360.0F) + 0.5D) & (rotationAngles - 1);
+            System.out.println(direction + ", " + rotationAngles);
             world.setBlockMetadataWithNotify(x, y, z, direction, 2);
         }
         super.onBlockPlacedBy(world, x, y, z, placer, placed);
@@ -129,8 +130,6 @@ public class BlockContainerBase extends BlockContainer
     {
         return tileEntityClass;
     }
-
-    // TODO: Add spawnBreakDrops(EntityPlayer, World, x, y, z), call from ModEventHandler#onBlockBreak
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)

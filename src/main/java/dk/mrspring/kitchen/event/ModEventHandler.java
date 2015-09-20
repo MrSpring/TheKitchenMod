@@ -7,7 +7,7 @@ import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
-import dk.mrspring.kitchen.block.container.BlockContainerBase;
+import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.client.settings.GameSettings;

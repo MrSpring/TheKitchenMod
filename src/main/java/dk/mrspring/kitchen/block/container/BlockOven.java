@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.api.oven.IOvenItem;
+import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

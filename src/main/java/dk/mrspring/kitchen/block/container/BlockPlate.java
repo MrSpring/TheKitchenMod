@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.block.container;
 
+import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;

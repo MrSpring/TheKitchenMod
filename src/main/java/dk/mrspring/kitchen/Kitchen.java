@@ -21,7 +21,6 @@ import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
@@ -75,8 +74,9 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityPlate.class, "tileEntityPlate");
         GameRegistry.registerTileEntity(TileEntityKitchenCabinet.class, "tileEntityKitchenCabinet");
         GameRegistry.registerTileEntity(TileEntityPan.class, "tileEntityFryingPan");
-        GameRegistry.registerTileEntity(TileEntityWaffleIron.class, "tileEntityWaffleIron");
-        GameRegistry.registerTileEntity(TileEntityToaster.class, "tileEntityToaster");
+        GameRegistry.registerTileEntity(TileEntityWaffleIron.class, "kitchen.tileEntityWaffleIron");
+        GameRegistry.registerTileEntity(TileEntityToaster.class, "kitchen.tileEntityToaster");
+        GameRegistry.registerTileEntity(TileEntityCraftingCabinet.class, "kitchen.tileEntityCraftingCabinet");
 
 
         // Loading Blocks and Items

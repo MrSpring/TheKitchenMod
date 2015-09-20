@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
+import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;

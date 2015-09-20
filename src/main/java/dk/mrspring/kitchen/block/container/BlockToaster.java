@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.block.container;
 
+import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityToaster;
 import net.minecraft.block.Block;
@@ -79,22 +80,6 @@ public class BlockToaster extends BlockContainerBase
             spawnItem(toaster.getStack1(), world, x, y, z);
             spawnItem(toaster.getStack2(), world, x, y, z);
         }
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemStack)
-    {
-        int direction = MathHelper.floor_double((double) (player.rotationYaw * 8.0F / 360.0F) + 0.5D) & 7;
-        super.onBlockPlacedBy(world, x, y, z, player, itemStack);
-
-        world.setBlockMetadataWithNotify(x, y, z, direction, 2);
-
-        if (itemStack.getTagCompound() != null)
-            if (itemStack.getTagCompound().getTag("PlateData") != null)
-            {
-                TileEntityPlate tileEntityPlate = (TileEntityPlate) world.getTileEntity(x, y, z);
-                tileEntityPlate.readItemsFromNBT((NBTTagCompound) itemStack.getTagCompound().getTag("PlateData"));
-            }
     }
 
     @Override
