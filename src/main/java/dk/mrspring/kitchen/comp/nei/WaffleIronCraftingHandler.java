@@ -43,4 +43,10 @@ public class WaffleIronCraftingHandler extends NEIKitchenCraftingHandler
             recipes.add(new BasicRecipe(ItemMixingBowl.getMixingBowlStack(entry.getKey(), 3), entry.getValue()[0]));
         return recipes;
     }
+
+    @Override
+    protected boolean drawMouse()
+    {
+        return false;
+    }
 }
