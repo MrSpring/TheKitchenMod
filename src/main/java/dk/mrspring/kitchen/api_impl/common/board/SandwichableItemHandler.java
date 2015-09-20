@@ -52,7 +52,7 @@ public class SandwichableItemHandler implements IBoardItemHandler
     public ItemStack onRemoved(ICuttingBoard tileEntityBoard, ItemStack removed, EntityPlayer player)
     {
         ISandwichable sandwichable = SandwichableRegistry.getInstance().getSandwichableForItem(removed);
-        return sandwichable.getDropItem() ? removed : null;
+        return sandwichable.getDropItem() ? removed.copy() : null;
     }
 
     @Override

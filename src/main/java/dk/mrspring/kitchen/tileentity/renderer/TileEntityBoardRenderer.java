@@ -40,13 +40,8 @@ public class TileEntityBoardRenderer extends TileEntitySpecialRenderer
         GL11.glTranslated(x, y + 1.56, z);
         int metadata = tileEntity.getBlockMetadata();
         double boardHeight = 0.0625;
-        if (metadata == 0)
-            GL11.glTranslated(.5, boardHeight, .5);
-        else
-        {
-            GL11.glRotatef(90, 0, 1, 0);
-            GL11.glTranslated(-.5, boardHeight, .5);
-        }
+        GL11.glTranslated(.5, boardHeight, .5);
+        GL11.glRotatef(-90 * metadata, 0, 1, 0);
 
         List<ItemStack> layers = tileEntity.getLayers();
         NBTTagCompound specialInfo = tileEntity.getSpecialInfo();

@@ -1,9 +1,6 @@
 package dk.mrspring.kitchen.block.container;
 
-import dk.mrspring.kitchen.api.board.IBoardItemHandler;
-import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
 import dk.mrspring.kitchen.tileentity.TileEntityBoard;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,8 +9,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class BlockBoard extends BlockContainerBase
 {
@@ -52,9 +47,9 @@ public class BlockBoard extends BlockContainerBase
     {
         int metadata = world.getBlockMetadata(x, y, z);
 
-        if (metadata == 0)
+        if (metadata % 2 == 0)
             this.setBlockBounds(0.0625F, 0.0F, 0.0625F * 3, 1.0F - 0.0625F, 0.0625F * 2, 1.0F - (0.0625F * 3));
-        else if (metadata == 1)
+        else if (metadata % 2 == 1)
             this.setBlockBounds(0.0625F * 3, 0.0F, 0.0625F, 1.0F - (0.0625F * 3), 0.0625F * 2, 1.0F - 0.0625F);
     }
 
@@ -69,10 +64,11 @@ public class BlockBoard extends BlockContainerBase
     {
         int direction = MathHelper.floor_double((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
-        if (direction == 0 || direction == 2)
-            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
-        else if (direction == 1 || direction == 3)
-            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+//        if (direction == 0 || direction == 2)
+//            world.setBlockMetadataWithNotify(x, y, z, 0, 2);
+//        else if (direction == 1 || direction == 3)
+//            world.setBlockMetadataWithNotify(x, y, z, 1, 2);
+        world.setBlockMetadataWithNotify(x, y, z, direction, 2);
 
         super.onBlockPlacedBy(world, x, y, z, placer, placed);
     }

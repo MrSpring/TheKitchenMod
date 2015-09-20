@@ -60,7 +60,7 @@ public class ItemJamJar extends ItemBase
 
     public static void reduceUsesLeft(ItemStack jamStack, int amount)
     {
-        if (jamStack.getItemDamage() > 0)
+        if (jamStack != null && jamStack.getItem() == KitchenItems.jam_jar && jamStack.getItemDamage() > 0)
         {
             jamStack.setItemDamage(jamStack.getItemDamage() - amount);
             if (jamStack.getItemDamage() == 0 && jamStack.hasTagCompound())

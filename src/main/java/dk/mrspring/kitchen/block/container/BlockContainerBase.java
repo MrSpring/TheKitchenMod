@@ -115,6 +115,8 @@ public class BlockContainerBase extends BlockContainer
         return tileEntityClass;
     }
 
+    // TODO: Add spawnBreakDrops(EntityPlayer, World, x, y, z), call from ModEventHandler#onBlockBreak
+
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
     {

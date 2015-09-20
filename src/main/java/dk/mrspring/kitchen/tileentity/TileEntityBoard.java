@@ -1,8 +1,8 @@
 package dk.mrspring.kitchen.tileentity;
 
+import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.api.board.ICuttingBoard;
 import dk.mrspring.kitchen.api_impl.common.registry.BoardEventRegistry;
-import dk.mrspring.kitchen.api.board.IBoardItemHandler;
 import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,7 +61,7 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
             if (topHandler.canBeRemoved(this, topItem, player))
             {
                 ItemStack dropping = topHandler.onRemoved(this, topItem, player);
-                getLayers().remove(topItem);
+                getLayers().remove(getLayerCount() - 1);
                 if (dropping != null)
                     this.spawnItemInWorld(dropping);
                 return true;

@@ -277,7 +277,7 @@ public class SandwichableRegistry implements ISandwichableRegistry
         public ItemStack getBoardStack(ItemStack original)
         {
             ItemStack copy = boardStack.copy();
-            copy.stackSize = 1;
+//            copy.stackSize = 1;
             return copy;
         }
 
