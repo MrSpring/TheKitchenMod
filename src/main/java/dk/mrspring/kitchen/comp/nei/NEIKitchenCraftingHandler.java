@@ -51,7 +51,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
                 if (!recipe.doesExpectedOutputMatch(output))
                     continue;
                 ItemStack input = recipe.getExpectedInput(output);
-                arecipes.add(new RecipePair(input, output));
+                arecipes.add(new RecipePair(input, recipe.getExpectedOutput(input)));
             }
     }
 
@@ -66,7 +66,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
                 if (!recipe.doesExpectedInputMatch(input))
                     continue;
                 ItemStack output = recipe.getExpectedOutput(input);
-                arecipes.add(new RecipePair(input, output));
+                arecipes.add(new RecipePair(recipe.getExpectedInput(output), output));
             }
         }
     }

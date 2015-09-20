@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite using IWaffleIron and IDough
 {
-    static Map<String, ItemStack[]> recipes;
+    public static Map<String, ItemStack[]> recipes;
 
     public static void load()
     {
