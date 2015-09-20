@@ -47,14 +47,14 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 
         double yItemOffset = 0;
 
-        for (ItemStack itemStack : ((TileEntityPlate) var1).getItemsAsArray())
+        for (ItemStack itemStack : ((TileEntityPlate) var1).getItems())
         {
             if (itemStack != null)
             {
                 if (itemStack.getItem() instanceof ItemSandwich)
                 {
                     GL11.glTranslatef(0.0F,-0.1F,0.0F);
-                    this.renderSadwich(itemStack);
+                    this.renderSandwich(itemStack);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
         }
     }
 
-    private void renderSadwich(ItemStack item)
+    private void renderSandwich(ItemStack item)
     {
         /*GL11.glPushMatrix();
         float scale = 1.0F;

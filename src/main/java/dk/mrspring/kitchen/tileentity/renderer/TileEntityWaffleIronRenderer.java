@@ -19,9 +19,10 @@ public class TileEntityWaffleIronRenderer extends TileEntityTimeableRenderer
     ModelWaffleIron model = new ModelWaffleIron();
 
     @Override
-    public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float p_147500_8_)
+    public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float partial)
     {
-        super.renderTileEntityAt(var1, x, y, z, p_147500_8_);
+        super.renderTileEntityAt(var1, x, y, z, partial);
+        TileEntityWaffleIron entity = (TileEntityWaffleIron) var1;
 
         GL11.glPushMatrix();
 
@@ -36,7 +37,8 @@ public class TileEntityWaffleIronRenderer extends TileEntityTimeableRenderer
 
         int metadata = var1.getBlockMetadata();
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F, ((TileEntityWaffleIron) var1).getLidAngle(), ((TileEntityWaffleIron) var1).getWaffleState(), ItemRenderMixingBowl.getColorAsRGB(((TileEntityWaffleIron) var1).dough));
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F, entity.getLidAngle(), entity.getLidDirection(),
+                entity.getWaffleState(), ItemRenderMixingBowl.getColorAsRGB(entity.dough), partial);
 
         GL11.glPopMatrix();
 

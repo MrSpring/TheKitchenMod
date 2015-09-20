@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created by MrSpring on 13-12-2014 for TheKitchenMod.
  */
-public abstract class TileEntityTimeableRenderer extends TileEntitySpecialRenderer implements ITimeableRenderer
+public abstract class TileEntityTimeableRenderer extends TileEntitySpecialRenderer
 {
     ModelTimer model = new ModelTimer();
 
@@ -23,6 +23,12 @@ public abstract class TileEntityTimeableRenderer extends TileEntitySpecialRender
             if (((TileEntityTimeable) tileEntity).getHasTimer())
                 this.renderTimer(tileEntity, p_147500_2_, p_147500_4_, p_147500_6_);
     }
+
+    /***
+     * Locally translate the timer around using GL11.glTranslate/glRotate
+     * @param tileEntity The tileEntity from renderTileEntityAt
+     */
+    public abstract void transformTimer(TileEntity tileEntity);
 
     private void renderTimer(TileEntity tileEntity, double x, double y, double z)
     {

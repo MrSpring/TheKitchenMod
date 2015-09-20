@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.tileentity;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import dk.mrspring.kitchen.KitchenItems;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -30,18 +32,13 @@ public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite us
     }
 
     boolean isOpen = false;
-    float lidAngle = 0;
+    int lidAngle = 0, lidDirection = 0;
     int cookTime = 0;
     public String dough = "";
 
-    public float getLidAngle()
+    public int getLidAngle()
     {
         return lidAngle;
-    }
-
-    public void setLidAngle(float lidAngle)
-    {
-        this.lidAngle = lidAngle;
     }
 
     public int getCookTime()
@@ -63,21 +60,31 @@ public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite us
     {
         super.updateEntity();
 
-        if (this.isOpen()) // TODO: Only do on Client
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
-            if (this.lidAngle + 0.1F < 1.0)
-                this.lidAngle += 0.1F;
-        } else
-        {
-            if (this.lidAngle - 0.1F > 0.0)
-                this.lidAngle -= 0.1F;
-
-            if (!this.dough.isEmpty())
+            if (isOpen())
+                if (lidAngle < 15)
+                {
+                    lidAngle++;
+                    lidDirection = -1;
+                } else lidDirection = 0;
+            else if (lidAngle > 0)
             {
-                if (cookTime < 610)
-                    this.cookTime++;
-            }
+                lidAngle--;
+                lidDirection = 1;
+            } else
+                lidDirection = 0;
         }
+//            if (this.isOpen())
+//                if (this.lidAngle < 10)
+//                    this.lidAngle += 1F;
+//                else if (this.lidAngle - 0.1F > 0.0)
+//                    this.lidAngle -= 0.1F;
+
+
+        if (!this.isOpen() && !this.dough.isEmpty())
+            if (cookTime <= 600)
+                this.cookTime++;
     }
 
     public int getWaffleState()
@@ -190,5 +197,10 @@ public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite us
         };
         int metadata = worldObj.getBlockMetadata(xCoord, yCoord - 1, zCoord);
         return metadata >= 0 && metadata < poses.length ? poses[metadata] : super.getTimerLocalPosition();
+    }
+
+    public int getLidDirection()
+    {
+        return lidDirection;
     }
 }
