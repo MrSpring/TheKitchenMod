@@ -74,24 +74,7 @@ public class NEIKitchenConfig implements IConfigureNEI
                 };
             }
         });
-//        API.registerRecipeHandler(new SimpleCraftingHandler("kitchen.frying_pan", "tile.frying_pan.name", FryingPanRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.frying_pan)));
-//        API.registerUsageHandler(new SimpleCraftingHandler("kitchen.frying_pan", "tile.frying_pan.name", FryingPanRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.frying_pan))); // TODO: Add NEI handler interface to for Ingredients
 
-//        API.registerRecipeHandler(new SimpleCraftingHandler("kitchen.oven", "tile.oven.name", OvenRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.oven), false));
-//        API.registerUsageHandler(new SimpleCraftingHandler("kitchen.oven", "tile.oven.name", OvenRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.oven), false));
-
-//        API.registerRecipeHandler(new SimpleCraftingHandler("kitchen.toaster", "tile.toaster.name", ToasterRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.toaster)));
-//        API.registerUsageHandler(new SimpleCraftingHandler("kitchen.toaster", "tile.toaster.name", ToasterRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.toaster)));
-
-//        API.registerRecipeHandler(new MuffinCupCraftingHandler());
-//        API.registerUsageHandler(new MuffinCupCraftingHandler());
-
-//        API.registerRecipeHandler(new WaffleIronCraftingHandler());
-//        API.registerUsageHandler(new WaffleIronCraftingHandler());
-
-//        API.registerRecipeHandler(new SimpleCraftingHandler("kitchen.hand_mixer", "item.dirty_hand_mixer.name", Collections.singletonList(recipe), new ItemStack(Blocks.cauldron)));
-//        API.registerUsageHandler(new SimpleCraftingHandler("kitchen.hand_mixer", "item.dirty_hand_mixer.name", Collections.singletonList(recipe), new ItemStack(Blocks.cauldron)));
-//        GuiCraftingRecipe.craftinghandlers.add();
         ArrayList<ICraftingHandler> handlers = GuiCraftingRecipe.craftinghandlers;
         handlers.add(new SimpleCraftingHandler("kitchen.frying_pan", "tile.frying_pan.name", FryingPanRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.frying_pan)));
         handlers.add(new SimpleCraftingHandler("kitchen.oven", "tile.oven.name", OvenRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.oven), false));
