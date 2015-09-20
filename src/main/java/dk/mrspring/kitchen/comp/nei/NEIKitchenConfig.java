@@ -3,8 +3,11 @@ package dk.mrspring.kitchen.comp.nei;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import codechicken.nei.api.ItemFilter;
+import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.recipe.OvenRecipes;
+import dk.mrspring.kitchen.recipe.ToasterRecipes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -68,14 +71,14 @@ public class NEIKitchenConfig implements IConfigureNEI
                 };
             }
         });
-        API.registerRecipeHandler(new FryingPanCraftingHandler());
-        API.registerUsageHandler(new FryingPanCraftingHandler()); // TODO: Add NEI handler interface to for Ingredients
+        API.registerRecipeHandler(new SimpleCraftingHandler("kitchen.frying_pan", "tile.frying_pan.name", ToasterRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.frying_pan)));
+        API.registerUsageHandler(new SimpleCraftingHandler("kitchen.frying_pan", "tile.frying_pan.name", ToasterRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.frying_pan))); // TODO: Add NEI handler interface to for Ingredients
 
-        API.registerRecipeHandler(new OvenCraftingHandler());
-        API.registerUsageHandler(new OvenCraftingHandler());
+        API.registerRecipeHandler(new SimpleCraftingHandler("kitchen.oven", "tile.oven.name", OvenRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.oven), false));
+        API.registerUsageHandler(new SimpleCraftingHandler("kitchen.oven", "tile.oven.name", OvenRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.oven), false));
 
-        API.registerRecipeHandler(new ToasterCraftingHandler());
-        API.registerUsageHandler(new ToasterCraftingHandler());
+        API.registerRecipeHandler(new SimpleCraftingHandler("kitchen.toaster", "tile.toaster.name", ToasterRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.toaster)));
+        API.registerUsageHandler(new SimpleCraftingHandler("kitchen.toaster", "tile.toaster.name", ToasterRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.toaster)));
 
         API.registerRecipeHandler(new MuffinCupCraftingHandler());
         API.registerUsageHandler(new MuffinCupCraftingHandler());

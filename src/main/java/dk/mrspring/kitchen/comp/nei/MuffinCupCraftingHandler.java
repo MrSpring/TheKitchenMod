@@ -29,7 +29,7 @@ public class MuffinCupCraftingHandler extends ShapedRecipeHandler
 
     public void loadTransferRects()
     {
-        this.transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "muffin_cup"));
+        this.transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "kitchen.muffin_cup"));
     }
 
     @Override

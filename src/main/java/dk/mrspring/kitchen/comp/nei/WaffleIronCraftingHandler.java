@@ -15,24 +15,11 @@ import java.util.Map;
 /**
  * Created on 20-09-2015 for TheKitchenMod.
  */
-public class WaffleIronCraftingHandler extends NEIKitchenCraftingHandler
+public class WaffleIronCraftingHandler extends SimpleCraftingHandler
 {
-    @Override
-    protected ItemStack getBlockDisplayStack()
+    public WaffleIronCraftingHandler()
     {
-        return new ItemStack(KitchenBlocks.waffle_iron);
-    }
-
-    @Override
-    protected String getName()
-    {
-        return StatCollector.translateToLocal("tile.waffle_iron.name");
-    }
-
-    @Override
-    protected String getID()
-    {
-        return "waffleiron";
+        super("kitchen.waffle_iron", "tile.waffle_iron.name", null, new ItemStack(KitchenBlocks.waffle_iron), false);
     }
 
     @Override
@@ -42,11 +29,5 @@ public class WaffleIronCraftingHandler extends NEIKitchenCraftingHandler
         for (Map.Entry<String, ItemStack[]> entry : TileEntityWaffleIron.recipes.entrySet())
             recipes.add(new BasicRecipe(ItemMixingBowl.getMixingBowlStack(entry.getKey(), 3), entry.getValue()[0]));
         return recipes;
-    }
-
-    @Override
-    protected boolean drawMouse()
-    {
-        return false;
     }
 }
