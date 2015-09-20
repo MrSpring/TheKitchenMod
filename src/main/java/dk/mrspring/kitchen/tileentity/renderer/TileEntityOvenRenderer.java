@@ -34,9 +34,9 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float var8)
+    public void renderTileEntityAt(TileEntity var1, double x, double y, double z, float partial)
     {
-        super.renderTileEntityAt(var1, x, y, z, var8);
+        super.renderTileEntityAt(var1, x, y, z, partial);
 
         TileEntityOven oven = (TileEntityOven) var1;
 
@@ -56,7 +56,8 @@ public class TileEntityOvenRenderer extends TileEntityTimeableRenderer
 
         GL11.glRotatef(metadata * (90), 0F, 1F, 0F);
 
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, oven.getLidAngle());
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, oven.getLidAngle(), oven.getLidDirection(),
+                partial);
 
         GL11.glPushMatrix();
 

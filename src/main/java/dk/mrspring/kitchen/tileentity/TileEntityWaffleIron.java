@@ -61,7 +61,7 @@ public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite us
         super.updateEntity();
 
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-        {
+        {// TODO: Optimise
             if (isOpen())
                 if (lidAngle < 15)
                 {

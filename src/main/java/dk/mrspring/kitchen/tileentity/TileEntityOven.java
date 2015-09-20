@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.tileentity;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api_impl.common.registry.OvenRegistry;
@@ -31,6 +33,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
 
     OvenSlot[] items = new OvenSlot[4];
     boolean fuel = false, open = false, cooking = false;
+    int lidAngle = 0, lidDirection = 0;
 
     @Override
     public boolean rightClicked(ItemStack clicked, EntityPlayer player)
@@ -144,6 +147,22 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     {
         super.updateEntity();
         if (cooking) this.updateCookTimes();
+
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+        {// TODO: Optimise
+            if (isOpen())
+                if (lidAngle < 12)
+                {
+                    lidAngle++;
+                    lidDirection = 1;
+                } else lidDirection = 0;
+            else if (lidAngle > 0)
+            {
+                lidAngle--;
+                lidDirection = -1;
+            } else
+                lidDirection = 0;
+        }
     }
 
     private void openAndStopCooking()
@@ -380,9 +399,14 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         return metadata >= 0 && metadata < poses.length ? poses[metadata] : super.getTimerLocalPosition();
     }
 
-    public float getLidAngle()
+    public int getLidAngle()
     {
-        return isOpen() ? 1F : 0F;
+        return lidAngle;
+    }
+
+    public int getLidDirection()
+    {
+        return lidDirection;
     }
 
     @Override

@@ -143,7 +143,8 @@ public class ModelOven extends ModelBase
         setRotation(TopBase, 0F, 0F, 0F);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float lidAngle)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int lidAngle,
+                       int lidDirection, float partial)
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
@@ -154,22 +155,27 @@ public class ModelOven extends ModelBase
         Bottom.render(f5);
         Back.render(f5);
 
-        LidBottom.rotateAngleX = (lidAngle * 1.25F);
+        float rotation = lidAngle;
+        rotation += (float) lidDirection * partial;
+        rotation = Math.max(0, Math.min(12, rotation));
+        rotation *= 0.1F;
+
+        LidBottom.rotateAngleX = rotation;
         LidBottom.render(f5);
 
-        LidTop.rotateAngleX = (lidAngle * 1.25F);
+        LidTop.rotateAngleX = rotation;
         LidTop.render(f5);
 
-        LidRight.rotateAngleX = (lidAngle * 1.25F);
+        LidRight.rotateAngleX = rotation;
         LidRight.render(f5);
 
-        LidLeft.rotateAngleX = (lidAngle * 1.25F);
+        LidLeft.rotateAngleX = rotation;
         LidLeft.render(f5);
 
-        LidWindow.rotateAngleX = (lidAngle * 1.25F);
+        LidWindow.rotateAngleX = rotation;
         LidWindow.render(f5);
 
-        LidHandle.rotateAngleX = (lidAngle * 1.25F);
+        LidHandle.rotateAngleX = rotation;
         LidHandle.render(f5);
 
         Top1.render(f5);
