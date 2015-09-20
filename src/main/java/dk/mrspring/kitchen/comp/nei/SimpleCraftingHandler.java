@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.comp.nei;
 
+import codechicken.nei.recipe.TemplateRecipeHandler;
 import dk.mrspring.kitchen.recipe.IRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public class SimpleCraftingHandler extends NEIKitchenCraftingHandler
 {
-    String name, translatedName;
+    String name, unlocalizedName, translatedName;
     ItemStack display;
     List<IRecipe> recipes;
     boolean drawMouse = true;
@@ -19,10 +20,13 @@ public class SimpleCraftingHandler extends NEIKitchenCraftingHandler
     public SimpleCraftingHandler(String name, String unlocalizedName, List<IRecipe> recipes, ItemStack displayStack, boolean drawMouse)
     {
         this.name = name;
+        this.unlocalizedName = unlocalizedName;
         this.translatedName = StatCollector.translateToLocal(unlocalizedName);
         this.display = displayStack;
         this.recipes = recipes;
         this.drawMouse = drawMouse;
+        this.transferRects.clear();
+        this.loadTransferRects();
     }
 
     public SimpleCraftingHandler(String name, String unlocalizedName, List<IRecipe> recipes, ItemStack displayStack)
@@ -34,6 +38,12 @@ public class SimpleCraftingHandler extends NEIKitchenCraftingHandler
     protected boolean drawMouse()
     {
         return drawMouse;
+    }
+
+    @Override
+    public TemplateRecipeHandler newInstance()
+    {
+        return new SimpleCraftingHandler(name, unlocalizedName, recipes, display, drawMouse);
     }
 
     @Override

@@ -5,6 +5,7 @@ import codechicken.nei.recipe.FurnaceRecipeHandler;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.recipe.INEIRecipeHelper;
 import dk.mrspring.kitchen.recipe.IRecipe;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -30,7 +31,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
 
     protected void loadAllRecipes()
     {
-        java.util.List<IRecipe> recipes = getRecipes();
+        List<IRecipe> recipes = getRecipes();
         for (IRecipe iRecipe : recipes)
             if (iRecipe instanceof INEIRecipeHelper)
             {
@@ -43,7 +44,8 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
 
     protected void loadRecipeFor(ItemStack output)
     {
-        java.util.List<IRecipe> recipes = getRecipes();
+        System.out.println(getID()+" loading recipes for: " + ItemUtils.name(output));
+        List<IRecipe> recipes = getRecipes();
         for (IRecipe iRecipe : recipes)
             if (iRecipe instanceof INEIRecipeHelper)
             {
@@ -57,7 +59,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
 
     protected void loadRecipesFrom(ItemStack input)
     {
-        java.util.List<IRecipe> recipes = getRecipes();
+        List<IRecipe> recipes = getRecipes();
         for (IRecipe iRecipe : recipes)
         {
             if (iRecipe instanceof INEIRecipeHelper)

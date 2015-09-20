@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.comp.nei;
 
+import codechicken.nei.recipe.TemplateRecipeHandler;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.item.ItemMixingBowl;
 import dk.mrspring.kitchen.recipe.BasicRecipe;
@@ -20,6 +21,12 @@ public class WaffleIronCraftingHandler extends SimpleCraftingHandler
     public WaffleIronCraftingHandler()
     {
         super("kitchen.waffle_iron", "tile.waffle_iron.name", null, new ItemStack(KitchenBlocks.waffle_iron), false);
+    }
+
+    @Override
+    public TemplateRecipeHandler newInstance()
+    {
+        return new WaffleIronCraftingHandler();
     }
 
     @Override
