@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.tileentity;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api_impl.common.registry.OvenRegistry;
@@ -33,7 +34,8 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
 
     OvenSlot[] items = new OvenSlot[4];
     boolean fuel = false, open = false, cooking = false;
-    int lidAngle = 0, lidDirection = 0;
+    @SideOnly(Side.CLIENT)
+    int lidAngle, lidDirection;
 
     @Override
     public boolean rightClicked(ItemStack clicked, EntityPlayer player)

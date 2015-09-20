@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.tileentity;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.KitchenItems;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,8 @@ public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite us
     }
 
     boolean isOpen = false;
-    int lidAngle = 0, lidDirection = 0;
+    @SideOnly(Side.CLIENT)
+    int lidAngle, lidDirection;
     int cookTime = 0;
     public String dough = "";
 
