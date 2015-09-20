@@ -151,20 +151,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
         if (cooking) this.updateCookTimes();
 
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-        {// TODO: Optimise
-            if (isOpen())
-                if (lidAngle < 12)
-                {
-                    lidAngle++;
-                    lidDirection = 1;
-                } else lidDirection = 0;
-            else if (lidAngle > 0)
-            {
-                lidAngle--;
-                lidDirection = -1;
-            } else
-                lidDirection = 0;
-        }
+            lidAngle += lidDirection = isOpen() ? (lidAngle < 12 ? 1 : 0) : (lidAngle > 0 ? -1 : 0);
     }
 
     private void openAndStopCooking()

@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by MrSpring on 09-12-2014 for TheKitchenMod.
  */
-public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite using IWaffleIron and IDough
+public class TileEntityWaffleIron extends TileEntityTimeable
 {
     public static Map<String, ItemStack[]> recipes;
 
@@ -63,26 +63,7 @@ public class TileEntityWaffleIron extends TileEntityTimeable // TODO: Rewrite us
         super.updateEntity();
 
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-        {// TODO: Optimise
-            if (isOpen())
-                if (lidAngle < 15)
-                {
-                    lidAngle++;
-                    lidDirection = -1;
-                } else lidDirection = 0;
-            else if (lidAngle > 0)
-            {
-                lidAngle--;
-                lidDirection = 1;
-            } else
-                lidDirection = 0;
-        }
-//            if (this.isOpen())
-//                if (this.lidAngle < 10)
-//                    this.lidAngle += 1F;
-//                else if (this.lidAngle - 0.1F > 0.0)
-//                    this.lidAngle -= 0.1F;
-
+            lidAngle += lidDirection = isOpen() ? (lidAngle < 15 ? 1 : 0) : (lidAngle > 0 ? -1 : 0);
 
         if (!this.isOpen() && !this.dough.isEmpty())
             if (cookTime <= 600)

@@ -186,7 +186,7 @@ public class ModelWaffleIron extends ModelBase
 //        System.out.println(f + ", " + f1 + ", " + f2 + ", " + f3 + ", " + f4 + ", " + f5);
 
         float rotation = -lidAngle;
-        rotation += (float) lidDirection * partial;
+        rotation += (float) -lidDirection * partial;
         rotation = Math.max(-15, Math.min(0, rotation));
 //        System.out.println(lidDirection);
         rotation *= 0.12F;
