@@ -173,19 +173,4 @@ public class ItemMixingBowl extends ItemBase
             return icons[damage];
         else return icons[0];
     }
-
-    @Override
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World world, EntityPlayer p_77659_3_)
-    {
-//        p_77659_2_.spawnEntityInWorld(new EntityDingFX(p_77659_2_, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ));
-//        world.spawnParticle();
-        if (world.isRemote)
-        {
-            Kitchen.proxy.spawnDingParticle(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ);
-//            EntityDingFX particle = new EntityDingFX(world, p_77659_3_.posX, p_77659_3_.posY, p_77659_3_.posZ);
-//            particle.setRotation(-p_77659_3_.getRotationYawHead());
-//            Minecraft.getMinecraft().effectRenderer.addEffect(particle);
-        }
-        return super.onItemRightClick(p_77659_1_, world, p_77659_3_);
-    }
 }
