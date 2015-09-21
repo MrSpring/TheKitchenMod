@@ -1,15 +1,16 @@
 package dk.mrspring.kitchen.comp.nei;
 
-import codechicken.nei.api.API;
-import codechicken.nei.api.IConfigureNEI;
-import codechicken.nei.api.ItemFilter;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.api.*;
 import codechicken.nei.recipe.GuiCraftingRecipe;
-import codechicken.nei.recipe.ICraftingHandler;
+import codechicken.nei.recipe.GuiUsageRecipe;
+import codechicken.nei.recipe.IRecipeHandler;
+import codechicken.nei.recipe.TemplateRecipeHandler;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.recipe.*;
-import net.minecraft.init.Blocks;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -76,14 +77,20 @@ public class NEIKitchenConfig implements IConfigureNEI
             }
         });
 
-        ArrayList<ICraftingHandler> handlers = GuiCraftingRecipe.craftinghandlers;
-        handlers.add(new SimpleCraftingHandler("kitchen.frying_pan", "tile.frying_pan.name", FryingPanRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.frying_pan)));
-        handlers.add(new SimpleCraftingHandler("kitchen.oven", "tile.oven.name", OvenRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.oven), false));
-        handlers.add(new SimpleCraftingHandler("kitchen.toaster", "tile.toaster.name", ToasterRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.toaster)));
-        handlers.add(new MuffinCupCraftingHandler());
-        handlers.add(new WaffleIronCraftingHandler());
+        register(new SimpleCraftingHandler("kitchen.frying_pan", "tile.frying_pan.name", FryingPanRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.frying_pan)));
+        register(new SimpleCraftingHandler("kitchen.oven", "tile.oven.name", OvenRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.oven), false));
+        register(new SimpleCraftingHandler("kitchen.toaster", "tile.toaster.name", ToasterRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.toaster)));
+        register(new KnifeCraftingHandler());//(new SimpleCraftingHandler("kitchen.knife", "tile.board.name", KnifeRecipes.instance().getRecipes(), new ItemStack(KitchenBlocks.board)));
+        register(new MuffinCupCraftingHandler());
+        register(new WaffleIronCraftingHandler());
         IRecipe recipe = new BasicRecipe(KitchenItems.dirty_hand_mixer, KitchenItems.hand_mixer);
-        handlers.add(new SimpleCraftingHandler("kitchen.hand_mixer", "item.dirty_hand_mixer.name", Collections.singletonList(recipe), new ItemStack(Items.cauldron)));
+        register(new SimpleCraftingHandler("kitchen.hand_mixer", "item.dirty_hand_mixer.name", Collections.singletonList(recipe), new ItemStack(Items.cauldron)));
+    }
+
+    private void register(TemplateRecipeHandler handler)
+    {
+        GuiCraftingRecipe.craftinghandlers.add(handler);
+        GuiUsageRecipe.usagehandlers.add(handler);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.comp.nei;
 
 import codechicken.nei.PositionedStack;
+import codechicken.nei.api.IOverlayHandler;
 import codechicken.nei.recipe.FurnaceRecipeHandler;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.recipe.INEIRecipeHelper;
@@ -8,6 +9,7 @@ import dk.mrspring.kitchen.recipe.IRecipe;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.ItemStack;
@@ -21,6 +23,11 @@ import java.util.List;
  */
 public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
 {
+    public int stackX = 51, stackY = 42;
+    public int inputX = 51, inputY = 6;
+    public int outputX = 111, outputY = 24;
+    public boolean drawOtherStack = true;
+
     protected abstract ItemStack getBlockDisplayStack();
 
     protected abstract String getName();
@@ -44,7 +51,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
 
     protected void loadRecipeFor(ItemStack output)
     {
-        System.out.println(getID()+" loading recipes for: " + ItemUtils.name(output));
+        System.out.println("Loading recipe for: "+ItemUtils.name(output));
         List<IRecipe> recipes = getRecipes();
         for (IRecipe iRecipe : recipes)
             if (iRecipe instanceof INEIRecipeHelper)
@@ -177,7 +184,7 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
         return getName();
     }
 
-    private void drawTexturedModalRect(int x, int y, int u, int v, int width, int height)
+    protected void drawTexturedModalRect(int x, int y, int u, int v, int width, int height)
     {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
@@ -190,17 +197,35 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
         tessellator.draw();
     }
 
-    public class RecipePair extends SmeltingPair
+    public class RecipePair extends CachedRecipe
     {
+        public PositionedStack ingred;
+        public PositionedStack result;
+
         public RecipePair(ItemStack input, ItemStack output)
         {
-            super(input, output);
+            super();
+
+            this.ingred = new PositionedStack(input, inputX, inputY);
+            this.result = new PositionedStack(output, outputX, outputY);
+        }
+
+        @Override
+        public PositionedStack getResult()
+        {
+            return result;
+        }
+
+        @Override
+        public PositionedStack getIngredient()
+        {
+            return ingred;
         }
 
         @Override
         public PositionedStack getOtherStack()
         {
-            return new PositionedStack(getBlockDisplayStack(), 51, 42, false);
+            return drawOtherStack ? new PositionedStack(getBlockDisplayStack(), stackX, stackY, false) : null;
         }
     }
 }

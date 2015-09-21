@@ -3,7 +3,9 @@ package dk.mrspring.kitchen.util;
 import dk.mrspring.kitchen.item.ItemJamJar;
 import dk.mrspring.kitchen.item.ItemMixingBowl;
 import dk.mrspring.kitchen.item.food.ItemIceCreamableBase;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
@@ -28,6 +30,11 @@ public class ItemUtils
     public static boolean equalStacks(ItemStack stack1, ItemStack stack2)
     {
         return !(stack1 == null || stack2 == null) && stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2.getItemDamage();
+    }
+
+    public static boolean item(ItemStack stack, Block block)
+    {
+        return item(stack, ItemBlock.getItemFromBlock(block));
     }
 
     public static boolean item(ItemStack stack, Item item)
