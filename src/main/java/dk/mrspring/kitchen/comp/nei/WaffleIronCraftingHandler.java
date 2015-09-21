@@ -2,12 +2,10 @@ package dk.mrspring.kitchen.comp.nei;
 
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.item.ItemMixingBowl;
-import dk.mrspring.kitchen.recipe.BasicRecipe;
 import dk.mrspring.kitchen.recipe.IRecipe;
+import dk.mrspring.kitchen.recipe.MixingBowlRecipe;
 import dk.mrspring.kitchen.tileentity.TileEntityWaffleIron;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +32,7 @@ public class WaffleIronCraftingHandler extends SimpleCraftingHandler
     {
         List<IRecipe> recipes = new ArrayList<IRecipe>();
         for (Map.Entry<String, ItemStack[]> entry : TileEntityWaffleIron.recipes.entrySet())
-            recipes.add(new BasicRecipe(ItemMixingBowl.getMixingBowlStack(entry.getKey(), 3), entry.getValue()[0]));
+            recipes.add(new MixingBowlRecipe(entry.getKey(), entry.getValue()[0]));
         return recipes;
     }
 }

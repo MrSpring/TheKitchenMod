@@ -1,6 +1,8 @@
 package dk.mrspring.kitchen.recipe;
 
 import dk.mrspring.kitchen.Kitchen;
+import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.item.ItemMixingBowl;
 
 import static dk.mrspring.kitchen.KitchenItems.*;
 
@@ -36,6 +38,7 @@ public class FryingPanRecipes extends BasicRecipeHandler
                 new BasicRecipe(beef, cooked_beef),
                 new BasicRecipe(raw_roast_beef, roast_beef),
                 new BasicRecipe(porkchop, cooked_porkchop), // TODO: Add the rest of the recipes
+                new MixingBowlRecipe("pancake_dough", KitchenItems.pancake)
         });
     }
 }
