@@ -24,7 +24,6 @@ public class OvenRegistry implements IOvenItemRegistry
         registerOvenItem(new RecipeOvenItem());
         registerOvenItem(new FuelOvenItem());
         registerOvenItem(new BurgerBunOvenItem());
-        registerOvenItem(new MuffinTrayItem());
     }
 
     public static OvenRegistry getInstance()

@@ -9,9 +9,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Konrad on 10-08-2015.
@@ -19,6 +21,7 @@ import java.util.Map;
 public class ItemMuffin extends ItemFoodBase
 {
     public static final String MUFFIN_TYPE = "MuffinType";
+    private static final Random RANDOM = new Random();
 
     public static String getMuffinType(ItemStack stack)
     {
@@ -27,7 +30,7 @@ public class ItemMuffin extends ItemFoodBase
 
     public static ItemStack makeMuffinStack(String muffinType, boolean cooked)
     {
-        return makeMuffinStack(muffinType, cooked, ItemMuffinCup.WHITE);
+        return makeMuffinStack(muffinType, cooked, RANDOM.nextInt(ItemMuffinCup.colorNames.length));
     }
 
     public static ItemStack makeMuffinStack(String muffinType, boolean cooked, int color)
@@ -40,13 +43,30 @@ public class ItemMuffin extends ItemFoodBase
     public ItemMuffin(String name, int healAmount)
     {
         super(name, healAmount, false, true);
+
+        this.setMaxStackSize(1);
+    }
+
+    @Override
+    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player)
+    {
+        super.onEaten(stack, world, player);
+        return new ItemStack(KitchenItems.empty_muffin_cup, 1, stack.getItemDamage());
     }
 
     @Override
     public IIcon getIconFromDamageForRenderPass(int damage, int pass)
     {
-        if (pass != 2) return KitchenItems.empty_muffin_cup.getIconFromDamageForRenderPass(damage, pass);
-        else return super.getIconFromDamageForRenderPass(damage, pass);
+        if (pass != 2)
+            return KitchenItems.empty_muffin_cup.getIconFromDamageForRenderPass(damage, pass);
+        else
+            return super.getIconFromDamageForRenderPass(damage, pass);
+    }
+
+    @Override
+    public boolean requiresMultipleRenderPasses()
+    {
+        return true;
     }
 
     @Override
@@ -58,7 +78,7 @@ public class ItemMuffin extends ItemFoodBase
     @Override
     public void getSubItems(Item item, CreativeTabs p_150895_2_, List list)
     {
-        for (Map.Entry<String, Integer> entry : ItemRenderMuffin.muffinColors.entrySet())
+        for (Map.Entry<String, Integer> entry : ItemRenderMuffin.COLOR_HANDLER.getColors().entrySet())
             list.add(makeMuffinStack(entry.getKey(), item == KitchenItems.cooked_muffin));
     }
 
@@ -73,6 +93,6 @@ public class ItemMuffin extends ItemFoodBase
     public int getColorFromItemStack(ItemStack stack, int pass)
     {
         if (pass != 2) return KitchenItems.empty_muffin_cup.getColorFromItemStack(stack, pass);
-        else return ItemRenderMuffin.getColorAsInteger(stack);
+        else return ItemRenderMuffin.COLOR_HANDLER.getColorFromStack(stack);
     }
 }

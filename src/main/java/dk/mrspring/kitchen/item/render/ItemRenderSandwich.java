@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.item.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.tileentity.renderer.TileEntityBoardRenderer;
 import dk.mrspring.kitchen.util.SandwichUtils;
 import net.minecraft.item.ItemStack;
@@ -8,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class ItemRenderSandwich implements IItemRenderer
 {
     @Override

@@ -1,11 +1,14 @@
 package dk.mrspring.kitchen.item.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Created by Konrad on 12-02-2015.
  */
+@SideOnly(Side.CLIENT)
 public class ItemIceCreamConeRenderer extends ItemIceCreamableRenderer
 {
     @Override

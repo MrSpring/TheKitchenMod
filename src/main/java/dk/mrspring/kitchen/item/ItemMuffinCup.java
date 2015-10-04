@@ -2,8 +2,7 @@ package dk.mrspring.kitchen.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
-import dk.mrspring.kitchen.util.ItemUtils;
+import dk.mrspring.kitchen.item.render.ColorHandler;
 import net.minecraft.block.BlockColored;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,7 +22,6 @@ public class ItemMuffinCup extends ItemBase
             GRAY = 8, PINK = 9, LIME = 10, YELLOW = 11, LIGHT_BLUE = 12, MAGENTA = 13, ORANGE = 14, WHITE = 15;
     public static final String[] colorNames = new String[]{"black", "red", "green", "brown", "blue", "purple", "cyan",
             "silver", "gray", "pink", "lime", "yellow", "light_blue", "magenta", "orange", "white"};
-    public static final String MUFFIN_TYPE = "MuffinType";
 
     @SideOnly(Side.CLIENT)
     IIcon overlay;
@@ -75,7 +73,7 @@ public class ItemMuffinCup extends ItemBase
         if (renderPass == 1)
         {
             float[] rgbColor = EntitySheep.fleeceColorTable[BlockColored.func_150032_b(stack.getItemDamage())];
-            return ItemRenderJamJar.floatArrayAsInt(rgbColor, super.getColorFromItemStack(stack, renderPass));
+            return ColorHandler.getRGBAsInt(rgbColor, super.getColorFromItemStack(stack, renderPass));
         } else return super.getColorFromItemStack(stack, renderPass);
     }
 

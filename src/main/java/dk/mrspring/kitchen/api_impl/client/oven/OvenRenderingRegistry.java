@@ -19,7 +19,6 @@ public class OvenRenderingRegistry implements IOvenItemRenderingRegistry
 
     private OvenRenderingRegistry()
     {
-        registerRenderingHandler(new MuffinTrayItemRenderingHandler());
         registerRenderingHandler(new RecipeItemRenderingHandler());
     }
 

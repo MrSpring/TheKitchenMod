@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.item;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
@@ -24,6 +26,7 @@ public class ItemJamJar extends ItemBase
 {
     public static String JAM_TYPE = "JamType";
 
+    @SideOnly(Side.CLIENT)
     IIcon[] jamIcon = new IIcon[6];
 
     public ItemJamJar(String name)
@@ -87,7 +90,7 @@ public class ItemJamJar extends ItemBase
     {
         super.getSubItems(item, creativeTab, subItems);
         if (ModConfig.getKitchenConfig().show_different_jars_in_creative_tab)
-            for (Map.Entry<String, Integer> entry : ItemRenderJamJar.jamColors.entrySet())
+            for (Map.Entry<String, Integer> entry : ItemRenderJamJar.COLOR_HANDLER.getColors().entrySet())
                 subItems.add(getJamJarStack(entry.getKey(), 6));
     }
 
@@ -112,14 +115,16 @@ public class ItemJamJar extends ItemBase
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int renderPass)
     {
         if (renderPass == 0 && stack.getItemDamage() > 0)
-            return ItemRenderJamJar.getColorAsInteger(stack);
+            return ItemRenderJamJar.COLOR_HANDLER.getColorFromStack(stack);
         else return super.getColorFromItemStack(stack, renderPass);
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister register)
     {
         super.registerIcons(register);

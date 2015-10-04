@@ -3,11 +3,13 @@ package dk.mrspring.kitchen.util;
 import dk.mrspring.kitchen.item.ItemJamJar;
 import dk.mrspring.kitchen.item.ItemMixingBowl;
 import dk.mrspring.kitchen.item.food.ItemIceCreamableBase;
+import dk.mrspring.nbtjson.NBTType;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -74,5 +76,17 @@ public class ItemUtils
         NBTTagCompound compound = stack.getTagCompound();
         if (compound == null) stack.setTagCompound(compound = new NBTTagCompound());
         compound.setString(tagName, tagValue);
+    }
+
+    public static NBTTagList getListTag(ItemStack stack, String tagName, NBTType type)
+    {
+        return getListTag(stack, tagName, type.getId());
+    }
+
+    public static NBTTagList getListTag(ItemStack stack, String tagName, int listType)
+    {
+        if (stack == null || !stack.hasTagCompound() || !stack.getTagCompound().hasKey(tagName, 9))
+            return new NBTTagList();
+        return stack.getTagCompound().getTagList(tagName, listType);
     }
 }

@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.config.wrapper;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.javanbt.NBTJsonDecompile;
+import dk.mrspring.nbtjson.NBTJsonDecompile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

@@ -49,7 +49,6 @@ public class OvenRecipes extends BasicRecipeHandler
                 new BasicRecipe(new ItemStack(KitchenItems.raw_roast_beef), new ItemStack(KitchenItems.roast_beef)),
                 new BasicRecipe(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)),
                 new BasicRecipe(new ItemStack(KitchenItems.raw_bacon), new ItemStack(KitchenItems.bacon)),
-                new BasicRecipe(new ItemStack(KitchenItems.empty_muffin_tray), new ItemStack(KitchenItems.filled_muffin_tray))
         };
         addAll(defaultRecipes);
     }

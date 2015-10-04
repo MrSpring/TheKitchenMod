@@ -82,9 +82,6 @@ public class KitchenItems
     public static final Item scrambled_eggs = new ItemFoodBase("scrambled_eggs", 5, false, Kitchen.instance.foodTab).setMaxStackSize(16);
     public static final Item raw_meat_patty = new ItemFoodBase("raw_meat_patty", 1, true, Kitchen.instance.foodTab);
     public static final Item cooked_meat_patty = new ItemFoodBase("cooked_meat_patty", 4, true, Kitchen.instance.foodTab);
-    public static final Item empty_muffin_tray = new ItemBase("empty_muffin_tray", true).setMaxStackSize(1);
-    public static final Item filled_muffin_tray = new ItemBase("filled_muffin_tray", true).setMaxStackSize(1);
-    public static final Item cooked_muffin_tray = new ItemBase("cooked_filled_muffin_tray", true).setMaxStackSize(1);
     public static final Item empty_muffin_cup = new ItemMuffinCup("muffin_cup");
     public static final Item uncooked_muffin = new ItemMuffin("raw_muffin", 1);
     public static final Item cooked_muffin = new ItemMuffin("cooked_muffin", 5);

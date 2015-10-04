@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.item;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
@@ -28,6 +30,7 @@ public class ItemMixingBowl extends ItemBase
 {
     public static final String MIX_TYPE = "MixType";
 
+    @SideOnly(Side.CLIENT)
     IIcon[] icons;
 
     public ItemMixingBowl(String name)
@@ -113,7 +116,7 @@ public class ItemMixingBowl extends ItemBase
         super.getSubItems(p_150895_1_, p_150895_2_, list);
 
         if (ModConfig.getKitchenConfig().show_different_mixing_bowls_in_creative_tab)
-            for (Map.Entry<String, Integer> entry : ItemRenderMixingBowl.mixColors.entrySet())
+            for (Map.Entry<String, Integer> entry : ItemRenderMixingBowl.COLOR_HANDLER.getColors().entrySet())
             {
                 ItemStack stack = new ItemStack(p_150895_1_, 1, 3);
                 stack.setTagInfo(MIX_TYPE, new NBTTagString(entry.getKey()));
@@ -160,7 +163,7 @@ public class ItemMixingBowl extends ItemBase
     public int getColorFromItemStack(ItemStack stack, int renderPass)
     {
         if (renderPass == 1)
-            return ItemRenderMixingBowl.getColorAsInteger(stack);
+            return ItemRenderMixingBowl.COLOR_HANDLER.getColorFromStack(stack);
         else return super.getColorFromItemStack(stack, renderPass);
     }
 

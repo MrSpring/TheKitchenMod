@@ -38,7 +38,7 @@ public class TileEntityWaffleIronRenderer extends TileEntityTimeableRenderer
         int metadata = var1.getBlockMetadata();
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
         this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0635F, entity.getLidAngle(), entity.getLidDirection(),
-                entity.getWaffleState(), ItemRenderMixingBowl.getColorAsRGB(entity.dough), partial);
+                entity.getWaffleState(), ItemRenderMixingBowl.COLOR_HANDLER.getColorAsRGB(entity.dough), partial);
 
         GL11.glPopMatrix();
 

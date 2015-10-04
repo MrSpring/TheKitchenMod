@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.model;
 
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.render.ColorHandler;
 import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -93,7 +94,7 @@ public class ModelJamJar extends ModelBase
 			jam.mirror = true;
 			setRotation(jam, 0F, 0F, 0F);
 			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.modid, "textures/models/jam.png"));
-            float[] rgb= ItemRenderJamJar.intAsFloatArray(color);
+            float[] rgb= ColorHandler.getIntAsRGB(color);
             GL11.glColor4f(rgb[0] / 255, rgb[1] / 255, rgb[2] / 255, 1);
             jam.render(f5);
 		}

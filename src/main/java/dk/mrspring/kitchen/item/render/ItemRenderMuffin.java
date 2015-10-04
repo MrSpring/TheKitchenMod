@@ -1,34 +1,27 @@
 package dk.mrspring.kitchen.item.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.ItemMuffin;
 import net.minecraft.item.ItemStack;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Konrad on 09-08-2015.
  */
-public class ItemRenderMuffin
+@SideOnly(Side.CLIENT)
+public class ItemRenderMuffin extends ColorHandler
 {
-    public static Map<String, Integer> muffinColors = new HashMap<String, Integer>();
+    public static final ColorHandler COLOR_HANDLER = new ItemRenderMuffin();
 
-    public static int getColorAsInteger(String mixType)
+    @Override
+    String getIdentifierFromStack(ItemStack stack)
     {
-        if (mixType != null)
-            if (muffinColors.containsKey(mixType))
-                return muffinColors.get(mixType);
-        return 16777215;
+        return ItemMuffin.getMuffinType(stack);
     }
 
-    public static int getColorAsInteger(ItemStack muffinStack)
+    @Override
+    public void loadDefaults()
     {
-        String muffinType = ItemMuffin.getMuffinType(muffinStack);
-        return getColorAsInteger(muffinType);
-    }
-
-    public static void initColors()
-    {
-        muffinColors.put("vanilla", 0xDFA037);
+        this.registerColor("vanilla", 0xDFA037);
     }
 }

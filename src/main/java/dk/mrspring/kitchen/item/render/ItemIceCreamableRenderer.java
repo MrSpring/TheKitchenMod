@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.item.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.model.ModelIceCream;
 import dk.mrspring.kitchen.model.ModelIceCreamCone;
@@ -24,6 +26,7 @@ import java.util.Map;
 /**
  * Created by Konrad on 24-01-2015.
  */
+@SideOnly(Side.CLIENT)
 public class ItemIceCreamableRenderer implements IItemRenderer
 {
     public static Map<Item, ICustomModel> specialItemModels;
@@ -141,7 +144,7 @@ public class ItemIceCreamableRenderer implements IItemRenderer
                 String iceCreamName = iceCreamsCompound.getStringTagAt(i);
                 if (iceCreamName != null)
                 {
-                    int color = ItemRenderMixingBowl.getColorAsInteger(iceCreamName);
+                    int color = ItemRenderMixingBowl.COLOR_HANDLER.getColorAsInteger(iceCreamName);
                     iceCreams.add(new IceCream(iceCreamName, color));
                 }
             }
@@ -240,7 +243,7 @@ public class ItemIceCreamableRenderer implements IItemRenderer
         public IceCream(String name, int color)
         {
             this.name = name;
-            this.color = ItemRenderMixingBowl.intAsFloatArray(color);
+            this.color = ColorHandler.getIntAsRGB(color);
         }
     }
 }

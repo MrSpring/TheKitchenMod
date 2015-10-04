@@ -41,13 +41,15 @@ public class MuffinCupCraftingHandler extends ShapedRecipeHandler
     @Override
     public void loadCraftingRecipes(String outputId, Object... results)
     {
-        if (outputId.equals("muffin_cup"))
+        if (outputId.equals("kitchen.muffin_cup"))
             for (int i = 0; i < colorNames.length; i++)
             {
-                arecipes.add(new CachedShapedRecipe(2, 2, new ItemStack[]{
+                arecipes.add(new CachedShapedRecipe(3, 2, new ItemStack[]{
                         new ItemStack(Items.paper),
+                        null/*new ItemStack(Items.paper)*/,
                         new ItemStack(Items.paper),
                         new ItemStack(Items.dye, 1, i), // TODO: Use OreDictionary
+                        new ItemStack(Items.paper),
                         null
                 }, new ItemStack(KitchenItems.empty_muffin_cup, 6, i)));
 

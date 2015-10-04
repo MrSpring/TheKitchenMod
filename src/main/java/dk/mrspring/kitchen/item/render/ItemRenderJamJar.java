@@ -12,78 +12,39 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by Konrad on 25-09-2014 for ModJam4.
  */
 @SideOnly(Side.CLIENT)
 public class ItemRenderJamJar implements IItemRenderer
 {
-    public static Map<String, Integer> jamColors = new HashMap<String, Integer>();
+    public static final ColorHandler COLOR_HANDLER = new ColorHandler()
+    {
+        @Override
+        String getIdentifierFromStack(ItemStack stack)
+        {
+            return ItemJamJar.getJamFromStack(stack);
+        }
+
+        @Override
+        public void loadDefaults()
+        {
+            registerColor("strawberry", 16196364);
+            registerColor("apple", 14415786);
+            registerColor("peanut", 9659689);
+            registerColor("cocoa", 0x895836);
+            registerColor("ketchup", 0xFF3200);
+        }
+    };
+
     ModelJamJar model = new ModelJamJar();
     ResourceLocation texture = ModInfo.toResource("textures/models/jar.png");
-
-    public static int getColorAsInteger(String jam)
-    {
-        if (jam != null)
-            if (jamColors.containsKey(jam))
-                return jamColors.get(jam);
-        return 0xFF5D35;
-    }
-
-    public static float[] getColorAsRGB(String jam)
-    {
-        int baseColor = getColorAsInteger(jam);
-        return intAsFloatArray(baseColor);
-    }
-
-    public static float[] intAsFloatArray(int color)
-    {
-        float red = ((color >> 16) & 0xFF);
-        float green = ((color >> 8) & 0xFF);
-        float blue = (color & 0xFF);
-        return new float[]{red, green, blue};
-    }
-
-    public static int floatArrayAsInt(float[] color, int fallback)
-    {
-        if (color == null || color.length != 3) return fallback;
-//        float red = ((color >> 16) & 0xFF);
-//        float green = ((color >> 8) & 0xFF);
-//        float blue = (color & 0xFF);
-        int red = (int) (color[0] * 255);
-        int green = (int) (color[1] * 255);
-        int blue = (int) (color[2] * 255);
-        int rgb = red;
-        rgb = (rgb << 8) + green;
-        rgb = (rgb << 8) + blue;
-        return rgb;
-    }
-
-    public static int getColorAsInteger(ItemStack jamJarStack)
-    {
-        String jamType = ItemJamJar.getJamFromStack(jamJarStack);
-        return getColorAsInteger(jamType);
-    }
-
-    public static void initColors()
-    {
-        jamColors.put("strawberry", 16196364);
-        jamColors.put("apple", 14415786);
-        jamColors.put("peanut", 9659689);
-        jamColors.put("cocoa", 0x895836);
-        jamColors.put("ketchup", 0xFF3200);
-    }
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
         switch (type)
         {
-            /*case INVENTORY:
-                return true;*/
             case EQUIPPED:
                 return true;
             case EQUIPPED_FIRST_PERSON:
@@ -103,7 +64,7 @@ public class ItemRenderJamJar implements IItemRenderer
     public void renderItem(ItemRenderType type, ItemStack item, Object... data)
     {
         int metadata = item.getItemDamage();
-        int color = getColorAsInteger(item);
+        int color = COLOR_HANDLER.getColorFromStack(item);
 
         switch (type)
         {

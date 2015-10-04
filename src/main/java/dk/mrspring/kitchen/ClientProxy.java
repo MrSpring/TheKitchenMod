@@ -31,10 +31,9 @@ public class ClientProxy extends CommonProxy
 
         ItemIceCreamableRenderer.load();
 
-//        SandwichRender.loadRenderingHandlers();
-        ItemRenderMixingBowl.initColors();
-        ItemRenderJamJar.initColors();
-        ItemRenderMuffin.initColors();
+        ItemRenderMixingBowl.COLOR_HANDLER.loadDefaults();
+        ItemRenderJamJar.COLOR_HANDLER.loadDefaults();
+        ItemRenderMuffin.COLOR_HANDLER.loadDefaults();
 
         /*try
         {
