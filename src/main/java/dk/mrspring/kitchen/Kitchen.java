@@ -29,7 +29,7 @@ public class Kitchen
     @Instance(ModInfo.modid)
     public static Kitchen instance;
     @SidedProxy(serverSide = "dk.mrspring.kitchen.CommonProxy", clientSide = "dk.mrspring.kitchen.ClientProxy")
-    public CommonProxy proxy;
+    public static CommonProxy proxy;
     public CreativeTabs tab;
     public CreativeTabs foodTab;
     public OvenRecipes ovenRecipes;
@@ -83,7 +83,7 @@ public class Kitchen
         BlockBase.load();
 
         // Registering renderers
-        instance.proxy.registerRenderers();
+        proxy.registerRenderers();
     }
 
     @EventHandler
