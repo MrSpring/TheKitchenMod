@@ -149,31 +149,5 @@ public class ModEventHandler
             BlockContainerBase container = (BlockContainerBase) block;
             container.onBlockBroken(event.getPlayer(), event.world, x, y, z);
         }
-        /*if (block == KitchenBlocks.board)
-        {
-            TileEntity tileEntity = event.world.getTileEntity(x, y, z);
-            if (tileEntity instanceof TileEntityBoard)
-            {
-                TileEntityBoard board = (TileEntityBoard) tileEntity;
-                EntityPlayer player = event.getPlayer();
-                List<ItemStack> stacks = board.getLayers();
-                for (ItemStack stack : stacks)
-                {
-                    IBoardItemHandler handler = BoardEventRegistry.instance().getHandlerFor(board, stack, player);
-                    ItemStack drop = handler.onRemoved(board, stack, player);
-                    Random rand = new Random();
-                    float f = rand.nextFloat() * 0.8F + 0.1F;
-                    float f1 = rand.nextFloat() * 0.8F + 0.1F;
-                    float f2 = rand.nextFloat() * 0.8F + 0.1F;
-                    EntityItem entityitem = new EntityItem(event.world,
-                            ((float) x + f), ((float) y + f1), ((float) z + f2), drop.copy());
-                    float f3 = 0.05F;
-                    entityitem.motionX = (double) ((float) rand.nextGaussian() * f3);
-                    entityitem.motionY = (double) ((float) rand.nextGaussian() * f3 + 0.2F);
-                    entityitem.motionZ = (double) ((float) rand.nextGaussian() * f3);
-                    event.world.spawnEntityInWorld(entityitem);
-                }
-            }
-        }*/
     }
 }

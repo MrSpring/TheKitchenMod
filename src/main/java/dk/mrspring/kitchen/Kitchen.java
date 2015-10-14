@@ -29,7 +29,7 @@ public class Kitchen
     @Instance(ModInfo.modid)
     public static Kitchen instance;
     @SidedProxy(serverSide = "dk.mrspring.kitchen.CommonProxy", clientSide = "dk.mrspring.kitchen.ClientProxy")
-    public static CommonProxy proxy;
+    public CommonProxy proxy;
     public CreativeTabs tab;
     public CreativeTabs foodTab;
     public OvenRecipes ovenRecipes;
@@ -42,7 +42,6 @@ public class Kitchen
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
-
         // Loads the mods logger
         ModLogger.initializeLogger(event);
 
@@ -84,9 +83,7 @@ public class Kitchen
         BlockBase.load();
 
         // Registering renderers
-        proxy.registerRenderers();
-        // Registers the default Board events
-//        BoardEventRegistry.registerDefaultEvents();
+        instance.proxy.registerRenderers();
     }
 
     @EventHandler
