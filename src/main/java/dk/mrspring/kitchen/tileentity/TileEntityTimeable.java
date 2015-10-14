@@ -29,7 +29,7 @@ public abstract class TileEntityTimeable extends TileEntity
             if (worldObj.isRemote)
             {
                 float[] position = getTimerLocalPosition();
-                Kitchen.proxy.spawnDingParticle(worldObj, position[0] + (float) xCoord, position[1] + (float) yCoord, position[2] + (float) zCoord);
+                Kitchen.instance.proxy.spawnDingParticle(worldObj, position[0] + (float) xCoord, position[1] + (float) yCoord, position[2] + (float) zCoord);
             }
             hasDinged = true;
         } else if (this.getTime() < this.getDoneTime() && hasDinged && hasTimer)
