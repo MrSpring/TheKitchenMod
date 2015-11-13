@@ -148,14 +148,18 @@ public class BlockContainerBase extends BlockContainer
 
     public void spawnItem(ItemStack stack, World world, int x, int y, int z)
     {
+        spawnItemInWorld(stack, world, x, y, z);
+    }
+
+    public static void spawnItemInWorld(ItemStack stack, World world, int x, int y, int z)
+    {
         if (stack != null && stack.stackSize > 0)
         {
             Random rand = new Random();
             float xRand = rand.nextFloat() * 0.8F + 0.1F;
             float yRand = rand.nextFloat() * 0.8F + 0.1F;
             float zRand = rand.nextFloat() * 0.8F + 0.1F;
-            EntityItem entityitem = new EntityItem(world,
-                    ((float) x + xRand), ((float) y + yRand), ((float) z + zRand), stack.copy());
+            EntityItem entityitem = new EntityItem(world, ((float) x + xRand), ((float) y + yRand), ((float) z + zRand), stack.copy());
             float f = 0.05F;
             entityitem.motionX = (double) ((float) rand.nextGaussian() * f);
             entityitem.motionY = (double) ((float) rand.nextGaussian() * f + 0.2F);

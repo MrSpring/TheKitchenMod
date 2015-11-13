@@ -43,4 +43,5 @@ public class KitchenBlocks
     public static final Block waffle_iron = new BlockWaffleIron();
     public static final Block toaster = new BlockToaster();
     public static final Block crafting_cabinet = new BlockCraftingCabinet();
+    public static final Block muffin_tray = new BlockMuffinTray();
 }
