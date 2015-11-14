@@ -59,21 +59,15 @@ public class ItemRenderOven implements IItemRenderer
                 GL11.glRotatef(25, 0F, 0F, 1F);
                 GL11.glTranslatef(.5F, .8F, -.15F);
                 GL11.glRotatef(40, 0, 1, 0);
-
                 float scale = 0.8F;
-
                 GL11.glScalef(0.6F, scale, scale);
-
                 GL11.glTranslatef(.5F, -.2F, .5F);
                 break;
             case EQUIPPED:
-                GL11.glRotatef(180, 0, 1, 0);
-                GL11.glRotatef(25F, 0F, 0F, -1F);
-                GL11.glRotatef(5, 0, -1, 0);
-                GL11.glTranslatef(-0.875F, 1.2F, -0.05F);
-
-                scale = 1.2F;
-
+                GL11.glRotatef(25F, 0F, 0F, 1F);
+                GL11.glRotatef(40, 0, 1, 0);
+                GL11.glTranslatef(0.6F, 0.5F, 0.6F);
+                scale = 0.7F;
                 GL11.glScalef(scale, scale, scale);
                 break;
             case INVENTORY:
