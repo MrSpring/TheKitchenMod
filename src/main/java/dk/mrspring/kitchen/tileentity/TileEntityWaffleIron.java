@@ -100,37 +100,19 @@ public class TileEntityWaffleIron extends TileEntityTimeable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readDataFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         this.cookTime = compound.getInteger("CookTime");
         this.isOpen = compound.getBoolean("IsOpen");
         this.dough = compound.getString("Dough");
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public void writeDataToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
-
         compound.setInteger("CookTime", this.cookTime);
         compound.setBoolean("IsOpen", this.isOpen);
         compound.setString("Dough", this.dough);
-    }
-
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
     }
 
     public boolean finishWaffle()

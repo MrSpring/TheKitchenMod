@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.model;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import org.lwjgl.opengl.GL11;
 
 public class ModelMuffinTray extends ModelBase
 {
@@ -44,7 +45,7 @@ public class ModelMuffinTray extends ModelBase
         return newRenderer;
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean[] filled)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean[] filled, float[][] colors)
     {
         this.trayBase.render(f5);
         this.cup1.render(f5);
@@ -54,7 +55,12 @@ public class ModelMuffinTray extends ModelBase
         this.cup5.render(f5);
         this.cup6.render(f5);
         for (int i = 0; i < rawMuffins.length && i < filled.length; i++)
-            if (filled[i]) rawMuffins[i].render(f5);
+            if (filled[i])
+            {
+                float[] color = colors[i];
+                GL11.glColor4f(color[0] / 255, color[1] / 255, color[2] / 255, 1F);
+                rawMuffins[i].render(f5);
+            }
     }
 
     /**

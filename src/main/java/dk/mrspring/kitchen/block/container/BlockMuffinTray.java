@@ -2,7 +2,9 @@ package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityMuffinTray;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -28,7 +30,8 @@ public class BlockMuffinTray extends BlockContainerBase
                 world.markBlockForUpdate(x, y, z);
             else return false;
             return true;
-        } else {
+        } else
+        {
             world.markBlockForUpdate(x, y, z);
             return false;
         }
@@ -48,6 +51,24 @@ public class BlockMuffinTray extends BlockContainerBase
         else if (meta == 3)
             this.setBlockBounds(5F * p, 0F, 1.5F * p, 1F - 2F * p, 3 * p, 1F - 1.5F * p);
         else this.setBlockBounds(0F, 0F, 0F, 1F, 3 * p, 1F);
+    }
+
+    @Override
+    public void onBlockBroken(EntityPlayer player, World world, int x, int y, int z)
+    {
+        super.onBlockBroken(player, world, x, y, z);
+
+        TileEntityMuffinTray entity = (TileEntityMuffinTray) world.getTileEntity(x, y, z);
+        ItemStack stack = entity.makeDropStack();
+        spawnItem(stack, world, x, y, z);
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemStack)
+    {
+        super.onBlockPlacedBy(world, x, y, z, player, itemStack);
+        TileEntityMuffinTray tray = (TileEntityMuffinTray) world.getTileEntity(x, y, z);
+        tray.onPlaced(itemStack);
     }
 
     @Override

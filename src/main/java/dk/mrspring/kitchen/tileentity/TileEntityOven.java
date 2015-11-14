@@ -399,24 +399,8 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public void writeDataToNBT(NBTTagCompound compound)
     {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound compound)
-    {
-        super.writeToNBT(compound);
-
         compound.setBoolean(IS_OPEN, isOpen());
         compound.setBoolean(HAS_FUEL, hasFuel());
         compound.setBoolean(IS_COOKING, isCooking());
@@ -445,10 +429,8 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readDataFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         // TODO: Read old NBT data for backwards compatibility
 
         open = compound.getBoolean(IS_OPEN);

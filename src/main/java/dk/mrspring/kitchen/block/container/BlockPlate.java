@@ -25,23 +25,6 @@ public class BlockPlate extends BlockContainerBase
         this.rotationAngles = 8;
     }
 
-    /*@Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
-    {
-        ArrayList<ItemStack> toReturn = new ArrayList<ItemStack>();
-
-        if (this.tileEntityPlate != null)
-            for (ItemStack item : this.tileEntityPlate.getItemsAsArray())
-            {
-                if (item != null)
-                    toReturn.add(item);
-            }
-
-        toReturn.add(new ItemStack(this, 1, 0));
-
-        return toReturn;
-    }*/
-
     @Override
     public void onBlockBroken(EntityPlayer player, World world, int x, int y, int z)
     {
@@ -63,37 +46,37 @@ public class BlockPlate extends BlockContainerBase
 
         if (!world.isRemote)
             if (!activator.isSneaking())
-                if (activator.getCurrentEquippedItem() != null)
-                    if (activator.getCurrentEquippedItem().getItem() != null)
-                        if (tileEntityPlate.addItem(activator.getCurrentEquippedItem()))
-                        {
-                            --activator.getCurrentEquippedItem().stackSize;
-                            return true;
-                        } else
-                            return false;
-                    else
-                        return false;
-                else
+        if (activator.getCurrentEquippedItem() != null)
+            if (activator.getCurrentEquippedItem().getItem() != null)
+                if (tileEntityPlate.addItem(activator.getCurrentEquippedItem()))
                 {
-                    ItemStack itemStack = tileEntityPlate.removeTopItem();
-
-                    if (itemStack != null)
-                    {
-                        world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, itemStack));
-                        return true;
-                    } else
-                        return true;
-                }
+                    --activator.getCurrentEquippedItem().stackSize;
+                    return true;
+                } else
+                    return false;
             else
+                return false;
+        else
+        {
+            ItemStack itemStack = tileEntityPlate.removeTopItem();
+
+            if (itemStack != null)
             {
-                ItemStack item = new ItemStack(this, 1, 0);
-                NBTTagCompound plateCompound = new NBTTagCompound();
-                tileEntityPlate.writeItemsToNBT(plateCompound);
-                item.setTagInfo("PlateData", plateCompound);
-                world.setBlockToAir(x, y, z);
-                world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
+                world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, itemStack));
                 return true;
-            }
+            } else
+                return true;
+        }
+        else
+        {
+            ItemStack item = new ItemStack(this, 1, 0);
+            NBTTagCompound plateCompound = new NBTTagCompound();
+            tileEntityPlate.writeItemsToNBT(plateCompound);
+            item.setTagInfo("PlateData", plateCompound);
+            world.setBlockToAir(x, y, z);
+            world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
+            return true;
+        }
         else
             return true;
     }

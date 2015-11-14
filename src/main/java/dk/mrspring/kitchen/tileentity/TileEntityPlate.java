@@ -12,7 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TileEntityPlate extends TileEntity
+public class TileEntityPlate extends TileEntityBase
 {
     protected ArrayList<ItemStack> items = new ArrayList<ItemStack>();
     protected boolean isFull = false;
@@ -82,9 +82,8 @@ public class TileEntityPlate extends TileEntity
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public void writeDataToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
         this.writeItemsToNBT(compound);
         compound.setBoolean("IsFull", this.isFull);
     }
@@ -105,9 +104,8 @@ public class TileEntityPlate extends TileEntity
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readDataFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
         this.readItemsFromNBT(compound);
         this.isFull = compound.getBoolean("IsFull");
     }
@@ -126,19 +124,5 @@ public class TileEntityPlate extends TileEntity
                 this.items.add(itemStack);
             }
         }
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
-    }
-
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
     }
 }

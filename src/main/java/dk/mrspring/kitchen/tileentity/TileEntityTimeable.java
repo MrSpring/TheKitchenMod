@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * Created by MrSpring on 11-12-2014 for TheKitchenMod.
  */
-public abstract class TileEntityTimeable extends TileEntity
+public abstract class TileEntityTimeable extends TileEntityBase
 {
     private boolean hasDinged = false;
     private boolean hasTimer = false;

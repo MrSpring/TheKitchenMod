@@ -122,10 +122,8 @@ public class TileEntityToaster extends TileEntityTimeable
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public void writeDataToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
-
         compound.setInteger("CookTime", cookTime);
         compound.setBoolean("IsCooking", isCooking);
         if (stack1 != null)
@@ -135,10 +133,8 @@ public class TileEntityToaster extends TileEntityTimeable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readDataFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         this.cookTime = compound.getInteger("CookTime");
         this.isCooking = compound.getBoolean("IsCooking");
         if (compound.hasKey("Stack1"))
@@ -147,20 +143,6 @@ public class TileEntityToaster extends TileEntityTimeable
         if (compound.hasKey("Stack2"))
             this.stack2 = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("Stack2"));
         else this.stack2 = null;
-    }
-
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
     }
 
     @Override

@@ -188,8 +188,6 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
     @Override
     public void readFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         this.resetLayers();
         NBTTagList list = compound.getTagList("Items", 10);
 
@@ -208,8 +206,6 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
     @Override
     public void writeToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
-
         NBTTagList list = new NBTTagList();
         for (ItemStack layer : this.layers)
         {
@@ -223,20 +219,6 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
 
         compound.setTag("Items", list);
         compound.setTag("SpecialInfo", this.getSpecialInfo());
-    }
-
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
     }
 
     @Override

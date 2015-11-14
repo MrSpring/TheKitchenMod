@@ -1,10 +1,13 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.ItemMuffin;
+import dk.mrspring.kitchen.item.render.ItemRenderMuffin;
 import dk.mrspring.kitchen.model.ModelMuffinTray;
 import dk.mrspring.kitchen.tileentity.TileEntityMuffinTray;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -40,8 +43,18 @@ public class TileEntityMuffinTrayRenderer extends TileEntitySpecialRenderer
         GL11.glRotatef(metadata * (90F), 0F, 1F, 0F);
         TileEntityMuffinTray tray = (TileEntityMuffinTray) var1;
         boolean[] filled = new boolean[tray.getMuffinCount()];
-        for (int i = 0; i < filled.length; i++) filled[i] = tray.getInSlot(i) != null;
-        this.modelPlate.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, filled);
+        float[][] colors = new float[tray.getMuffinCount()][];
+        for (int i = 0; i < filled.length; i++)
+        {
+            ItemStack inSlot = tray.getInSlot(i);
+            if (filled[i] = inSlot != null)
+            {
+                String type = ItemMuffin.getMuffinType(inSlot);
+                if (type != null) colors[i] = ItemRenderMuffin.COLOR_HANDLER.getColorAsRGB(type);
+                else colors[i] = new float[]{1F, 1F, 1F};
+            }
+        }
+        this.modelPlate.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, filled, colors);
 
         GL11.glPopMatrix();
 

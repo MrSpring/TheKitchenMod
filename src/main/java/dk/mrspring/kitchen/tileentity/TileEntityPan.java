@@ -192,10 +192,8 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public void writeDataToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
-
         if (getIngredient() != null)
             compound.setString("Ingredient", this.getIngredient().getName());
         compound.setInteger("CookTime", this.getCookTime());
@@ -204,10 +202,8 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readDataFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         String string = compound.getString("Ingredient");
         if (string != null && !string.isEmpty())
             try
@@ -222,19 +218,5 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
         this.cookTime = compound.getInteger("CookTime");
         if (compound.hasKey("SpecialInfo", 10))
             this.setSpecialInfo(compound.getCompoundTag("SpecialInfo"));
-    }
-
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
     }
 }

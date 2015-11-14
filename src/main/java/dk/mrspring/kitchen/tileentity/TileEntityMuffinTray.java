@@ -7,23 +7,33 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Created on 04-10-2015 for TheKitchenMod.
  */
-public class TileEntityMuffinTray extends TileEntity
+public class TileEntityMuffinTray extends TileEntityBase
 {
     public static final String ITEM_LIST = "ItemList", ITEM_SLOT = "Slot";
+
+    public static final String MUFFIN_TRAY_INFO = "MuffinTrayInfo";
 
     ItemStack[] muffins = new ItemStack[6];
 
     public void onPlaced(ItemStack placed)
     {
+        NBTTagCompound itemCompound = placed == null ? null : placed.getTagCompound();
+        if (itemCompound == null) itemCompound = new NBTTagCompound();
+        NBTTagCompound infoCompound = itemCompound.getCompoundTag(MUFFIN_TRAY_INFO);
+        this.readDataFromNBT(infoCompound);
+    }
 
+    public ItemStack makeDropStack()
+    {
+        ItemStack stack = new ItemStack(getBlockType(), 1);
+        NBTTagCompound infoCompound = new NBTTagCompound();
+        this.writeDataToNBT(infoCompound);
+        stack.setTagInfo(MUFFIN_TRAY_INFO, infoCompound);
+        return stack;
     }
 
     public boolean rightClick(ItemStack clicked, EntityPlayer clicker, float clickX, float clickZ)
@@ -72,7 +82,6 @@ public class TileEntityMuffinTray extends TileEntity
                 x *= (1F + 4 * p);
                 int vert = (int) (x / 0.3333F);
                 if (z > 9.5F * p) vert += 3;
-                System.out.println(x + ", " + z);
                 return vert;
             case 3:
                 x = 1F - x;
@@ -80,7 +89,6 @@ public class TileEntityMuffinTray extends TileEntity
             case 1:
                 vert = (int) (z / 0.3333F);
                 if (x < (16F - 9.5F) * p) vert += 3;
-                System.out.println(x + ", " + z);
                 return vert;
             default:
                 return -1;
@@ -94,11 +102,14 @@ public class TileEntityMuffinTray extends TileEntity
             muffins[i] = null;
     }
 
-    @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public int getMuffinCount()
     {
-        super.readFromNBT(compound);
+        return muffins.length;
+    }
 
+    @Override
+    public void readDataFromNBT(NBTTagCompound compound)
+    {
         this.clearSlots();
         NBTTagList itemList = compound.getTagList(ITEM_LIST, 10);
         for (int i = 0; i < itemList.tagCount(); i++)
@@ -111,10 +122,8 @@ public class TileEntityMuffinTray extends TileEntity
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public void writeDataToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
-
         NBTTagList itemList = new NBTTagList();
         for (int i = 0; i < muffins.length; i++)
         {
@@ -128,24 +137,5 @@ public class TileEntityMuffinTray extends TileEntity
             }
         }
         compound.setTag(ITEM_LIST, itemList);
-    }
-
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
-    }
-
-    public int getMuffinCount()
-    {
-        return muffins.length;
     }
 }
