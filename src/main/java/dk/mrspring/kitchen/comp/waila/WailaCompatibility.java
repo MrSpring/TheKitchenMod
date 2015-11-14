@@ -16,37 +16,8 @@ import java.util.List;
 /**
  * Created by Konrad on 05-10-2014 for TheKitchenMod.
  */
-public class WailaDataProvider implements IWailaDataProvider
+public class WailaCompatibility
 {
-    @Override
-    public ItemStack getWailaStack(IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler)
-    {
-        return null;
-    }
-
-    @Override
-    public List<String> getWailaHead(ItemStack itemStack, List<String> strings, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler)
-    {
-        return strings;
-    }
-
-    @Override
-    public List<String> getWailaBody(ItemStack itemStack, List<String> strings, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler)
-    {
-        return strings;
-    }
-
-    @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> strings, IWailaDataAccessor iWailaDataAccessor, IWailaConfigHandler iWailaConfigHandler)
-    {
-        return strings;
-    }
-
-    public NBTTagCompound getNBTData(EntityPlayerMP entityPlayerMP, TileEntity tileEntity, NBTTagCompound nbtTagCompound, World world, int i, int i1, int i2)
-    {
-        return null;
-    }
-
     public static void callbackRegister(IWailaRegistrar registrar)
     {
         final String mod = "The Kitchen Mod";
@@ -64,5 +35,7 @@ public class WailaDataProvider implements IWailaDataProvider
         registrar.registerBodyProvider(new WailaPanProvider(), BlockFryingPan.class);
         registrar.registerBodyProvider(new WailaToasterProvider(), BlockToaster.class);
         registrar.registerBodyProvider(new WailaWaffleIronProvider(), BlockWaffleIron.class);
+        registrar.registerBodyProvider(new WailaMuffinTrayProvider(), BlockMuffinTray.class);
+        registrar.registerStackProvider(new WailaMuffinTrayProvider(), BlockMuffinTray.class);
     }
 }

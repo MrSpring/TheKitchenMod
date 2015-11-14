@@ -1,13 +1,11 @@
 package dk.mrspring.kitchen.item.render;
 
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.item.ItemBlockMuffinTray.Tray;
 import dk.mrspring.kitchen.item.ItemMuffin;
 import dk.mrspring.kitchen.model.ModelMuffinTray;
-import dk.mrspring.kitchen.tileentity.TileEntityMuffinTray;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
@@ -83,9 +81,6 @@ public class ItemMuffinTrayRenderer implements IItemRenderer
                 GL11.glTranslatef(.5F, .5F, .5F);
                 break;
             case EQUIPPED:
-//                GL11.glRotatef(180, 1, 0, 0);
-//                GL11.glRotatef(-10, 0, 0, 1);
-//                GL11.glTranslatef(.6F, -1.5F, .09F);
                 GL11.glRotatef(180, 0, 1, 0);
                 GL11.glRotatef(25F, 0F, 0F, -1F);
                 GL11.glRotatef(5, 0, -1, 0);
@@ -112,35 +107,5 @@ public class ItemMuffinTrayRenderer implements IItemRenderer
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
         this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, filled, colors);
         GL11.glPopMatrix();
-    }
-
-    private class Tray
-    {
-        ItemStack[] stacks;
-
-        public Tray(ItemStack input)
-        {
-            stacks = new ItemStack[6];
-            if (!input.hasTagCompound()) input.setTagCompound(new NBTTagCompound());
-            NBTTagCompound trayInfo = input.getTagCompound().getCompoundTag(TileEntityMuffinTray.MUFFIN_TRAY_INFO);
-            NBTTagList itemList = trayInfo.getTagList(TileEntityMuffinTray.ITEM_LIST, 10);
-            for (int i = 0; i < itemList.tagCount(); i++)
-            {
-                NBTTagCompound itemCompound = itemList.getCompoundTagAt(i);
-                int slot = itemCompound.getInteger(TileEntityMuffinTray.ITEM_SLOT);
-                ItemStack stack = ItemStack.loadItemStackFromNBT(itemCompound);
-                stacks[slot] = stack;
-            }
-        }
-
-        public int getMuffinCount()
-        {
-            return stacks.length;
-        }
-
-        public ItemStack getInSlot(int slot)
-        {
-            return stacks[slot];
-        }
     }
 }

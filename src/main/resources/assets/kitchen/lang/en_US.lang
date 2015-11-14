@@ -25,6 +25,7 @@ tile.casserole.name=Casserole
 tile.casserole.contents=Contains
 tile.crafting_cabinet.name=Crafting Kitchen Cabinet
 tile.wild_onion.name=Wild Onion
+tile.muffin_tray.name=Muffin Tray
 
 item.knife.name=Knife
 item.bacon_raw.name=Raw Bacon
@@ -122,6 +123,9 @@ item.magenta_muffin_cup.name=Magenta Muffin Cup
 item.orange_muffin_cup.name=Orange Muffin Cup
 item.white_muffin_cup.name=White Muffin Cup
 item.muffin_cup.name=Muffin Cup
+item.empty_muffin_tray.name=Empty Muffin Tray
+item.filled_muffin_tray.name=Filled Muffin Tray
+item.muffin_tray.waila=Muffins: %s/%s
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT

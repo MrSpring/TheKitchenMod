@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemBlockBoard;
+import dk.mrspring.kitchen.item.ItemBlockMuffinTray;
 import dk.mrspring.kitchen.item.ItemBlockPlate;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -62,6 +63,6 @@ public class BlockBase extends Block
         registerBlock(KitchenBlocks.frying_pan);
         registerBlock(KitchenBlocks.waffle_iron);
         registerBlock(KitchenBlocks.toaster);
-        registerBlock(KitchenBlocks.muffin_tray);
+        registerBlock(KitchenBlocks.muffin_tray, ItemBlockMuffinTray.class);
     }
 }

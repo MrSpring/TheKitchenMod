@@ -59,6 +59,13 @@ public class TileEntityMuffinTray extends TileEntityBase
         return false;
     }
 
+    public int amountFilled()
+    {
+        int amount = 0;
+        for (ItemStack stack : muffins) if (stack != null) amount++;
+        return amount;
+    }
+
     public ItemStack getInSlot(int slot)
     {
         return muffins[slot];
