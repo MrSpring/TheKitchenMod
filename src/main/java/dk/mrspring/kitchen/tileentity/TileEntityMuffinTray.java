@@ -7,6 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 /**
@@ -14,6 +17,8 @@ import net.minecraft.tileentity.TileEntity;
  */
 public class TileEntityMuffinTray extends TileEntity
 {
+    public static final String ITEM_LIST = "ItemList", ITEM_SLOT = "Slot";
+
     ItemStack[] muffins = new ItemStack[6];
 
     public void onPlaced(ItemStack placed)
@@ -24,51 +29,58 @@ public class TileEntityMuffinTray extends TileEntity
     public boolean rightClick(ItemStack clicked, EntityPlayer clicker, float clickX, float clickZ)
     {
         int slot = getSlotAt(clickX, clickZ);
-        if (getInSlot(slot) == null)
-        {
-            if (ItemUtils.item(clicked, KitchenItems.uncooked_muffin))
+        System.out.println(slot);
+        if (slot >= 0 && slot < muffins.length)
+            if (getInSlot(slot) == null)
             {
-                setInSlot(slot, clicked.copy());
-                clicked.stackSize--;
+                if (ItemUtils.item(clicked, KitchenItems.uncooked_muffin))
+                {
+                    setInSlot(slot, clicked.copy());
+                    clicked.stackSize--;
+                    return true;
+                }
+            } else
+            {
+                BlockContainerBase.spawnItemInWorld(getInSlot(slot).copy(), getWorldObj(), xCoord, yCoord, zCoord);
+                setInSlot(slot, null);
                 return true;
             }
-        } else
-        {
-            BlockContainerBase.spawnItemInWorld(getInSlot(slot).copy(), getWorldObj(), xCoord, yCoord, zCoord);
-            setInSlot(slot, null);
-            return true;
-        }
 
         return false;
     }
 
-    private ItemStack getInSlot(int slot)
+    public ItemStack getInSlot(int slot)
     {
         return muffins[slot];
     }
 
-    private void setInSlot(int slot, ItemStack stack)
+    public void setInSlot(int slot, ItemStack stack)
     {
         this.muffins[slot] = stack;
     }
 
     public int getSlotAt(float x, float z)
     {
+        float p = 0.0625F;
         switch (getBlockMetadata())
         {
             case 2:
                 x = 1F - x;
                 z = 1F - z;
             case 0:
+                x -= 2 * p;
+                x *= (1F + 4 * p);
                 int vert = (int) (x / 0.3333F);
-                if (z > 0.5F) vert += 3;
+                if (z > 9.5F * p) vert += 3;
+                System.out.println(x + ", " + z);
                 return vert;
             case 3:
                 x = 1F - x;
                 z = 1F - z;
             case 1:
                 vert = (int) (z / 0.3333F);
-                if (x < 0.5F) vert += 3;
+                if (x < (16F - 9.5F) * p) vert += 3;
+                System.out.println(x + ", " + z);
                 return vert;
             default:
                 return -1;
@@ -88,11 +100,11 @@ public class TileEntityMuffinTray extends TileEntity
         super.readFromNBT(compound);
 
         this.clearSlots();
-        NBTTagList itemList = compound.getTagList("ItemList", 10);
+        NBTTagList itemList = compound.getTagList(ITEM_LIST, 10);
         for (int i = 0; i < itemList.tagCount(); i++)
         {
             NBTTagCompound itemCompound = itemList.getCompoundTagAt(i);
-            int slot = itemCompound.getInteger("Slot");
+            int slot = itemCompound.getInteger(ITEM_SLOT);
             ItemStack stack = ItemStack.loadItemStackFromNBT(itemCompound);
             setInSlot(slot, stack);
         }
@@ -111,10 +123,29 @@ public class TileEntityMuffinTray extends TileEntity
             {
                 NBTTagCompound itemCompound = new NBTTagCompound();
                 inSlot.writeToNBT(itemCompound);
-                itemCompound.setInteger("Slot", i);
+                itemCompound.setInteger(ITEM_SLOT, i);
                 itemList.appendTag(itemCompound);
             }
         }
-        compound.setTag("ItemList", itemList);
+        compound.setTag(ITEM_LIST, itemList);
+    }
+
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound compound = new NBTTagCompound();
+        this.writeToNBT(compound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+        this.readFromNBT(pkt.func_148857_g());
+    }
+
+    public int getMuffinCount()
+    {
+        return muffins.length;
     }
 }

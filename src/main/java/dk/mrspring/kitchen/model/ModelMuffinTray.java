@@ -7,49 +7,54 @@ import net.minecraft.entity.Entity;
 public class ModelMuffinTray extends ModelBase
 {
     public ModelRenderer trayBase;
-    public ModelRenderer cup1, muffin1;
-    public ModelRenderer cup2, muffin2;
-    public ModelRenderer cup3, muffin3;
-    public ModelRenderer cup4, muffin4;
-    public ModelRenderer cup5, muffin5;
-    public ModelRenderer cup6, muffin6;
+    public ModelRenderer cup1;
+    public ModelRenderer cup2;
+    public ModelRenderer cup3;
+    public ModelRenderer cup4;
+    public ModelRenderer cup5;
+    public ModelRenderer cup6;
+    public ModelRenderer[] rawMuffins = new ModelRenderer[6];
 
     public ModelMuffinTray()
     {
         this.textureWidth = 64;
         this.textureHeight = 64;
-        this.trayBase = new ModelRenderer(this, 0, 0);
-        this.trayBase.setRotationPoint(-6.5F, 17.0F, -3.0F);
-        this.trayBase.addBox(0.0F, 0.0F, 0.0F, 13, 1, 9, 0.0F);
-        this.cup4 = new ModelRenderer(this, 26, 11);
-        this.cup4.setRotationPoint(2.0F, 18.0F, -2.0F);
-        this.cup4.addBox(0.0F, 0.0F, 0.0F, 3, 2, 3, 0.0F);
-        this.cup6 = new ModelRenderer(this, 0, 11);
-        this.cup6.setRotationPoint(-5.0F, 18.0F, -2.0F);
-        this.cup6.addBox(0.0F, 0.0F, 0.0F, 3, 2, 3, 0.0F);
-        this.cup3 = new ModelRenderer(this, 13, 17);
-        this.cup3.setRotationPoint(-1.5F, 18.0F, 2.0F);
-        this.cup3.addBox(0.0F, 0.0F, 0.0F, 3, 2, 3, 0.0F);
-        this.cup2 = new ModelRenderer(this, 0, 17);
-        this.cup2.setRotationPoint(-5.0F, 18.0F, 2.0F);
-        this.cup2.addBox(0.0F, 0.0F, 0.0F, 3, 2, 3, 0.0F);
-        this.cup1 = new ModelRenderer(this, 26, 17);
-        this.cup1.setRotationPoint(2.0F, 18.0F, 2.0F);
-        this.cup1.addBox(0.0F, 0.0F, 0.0F, 3, 2, 3, 0.0F);
-        this.cup5 = new ModelRenderer(this, 13, 11);
-        this.cup5.setRotationPoint(-1.5F, 18.0F, -2.0F);
-        this.cup5.addBox(0.0F, 0.0F, 0.0F, 3, 2, 3, 0.0F);
+        this.trayBase = make(0, 0, -6.5F, 17F, -3F, 0F, 0F, 0F, 13, 1, 9);
+
+        cup1 = make(26, 17, 2.5F, 18F, 2F, 0F, 0F, 0F, 3, 2, 3);
+        cup2 = make(0, 17, -5.5F, 18F, 2F, 0F, 0F, 0F, 3, 2, 3);
+        cup3 = make(13, 17, -1.5F, 18F, 2F, 0F, 0F, 0F, 3, 2, 3);
+        cup4 = make(26, 11, 2.5F, 18F, -2F, 0F, 0F, 0F, 3, 2, 3);
+        cup5 = make(13, 11, -1.5F, 18F, -2F, 0F, 0F, 0F, 3, 2, 3);
+        cup6 = make(0, 11, -5.5F, 18F, -2F, 0F, 0F, 0F, 3, 2, 3);
+
+        rawMuffins[0] = make(26, 24, 2.5F, 16.5F, -2F, 0F, 0F, 0F, 3, 1, 3);
+        rawMuffins[1] = make(13, 24, -1.5F, 16.5F, -2F, 0F, 0F, 0F, 3, 1, 3);
+        rawMuffins[2] = make(0, 24, -5.5F, 16.5F, -2F, 0F, 0F, 0F, 3, 1, 3);
+        rawMuffins[3] = make(26, 29, 2.5F, 16.5F, 2F, 0F, 0F, 0F, 3, 1, 3);
+        rawMuffins[4] = make(13, 29, -1.5F, 16.5F, 2F, 0F, 0F, 0F, 3, 1, 3);
+        rawMuffins[5] = make(0, 29, -5.5F, 16.5F, 2F, 0F, 0F, 0F, 3, 1, 3);
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean filled)
+    private ModelRenderer make(int texX, int texY, float rotPntX, float rotPntY, float rotPntZ, float boxX, float boxY, float boxZ, int boxW, int boxH, int boxL)
+    {
+        ModelRenderer newRenderer = new ModelRenderer(this, texX, texY);
+        newRenderer.setRotationPoint(rotPntX, rotPntY, rotPntZ);
+        newRenderer.addBox(boxX, boxY, boxZ, boxW, boxH, boxL);
+        return newRenderer;
+    }
+
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, boolean[] filled)
     {
         this.trayBase.render(f5);
-        this.cup4.render(f5);
-        this.cup6.render(f5);
-        this.cup3.render(f5);
-        this.cup2.render(f5);
         this.cup1.render(f5);
+        this.cup2.render(f5);
+        this.cup3.render(f5);
+        this.cup4.render(f5);
         this.cup5.render(f5);
+        this.cup6.render(f5);
+        for (int i = 0; i < rawMuffins.length && i < filled.length; i++)
+            if (filled[i]) rawMuffins[i].render(f5);
     }
 
     /**

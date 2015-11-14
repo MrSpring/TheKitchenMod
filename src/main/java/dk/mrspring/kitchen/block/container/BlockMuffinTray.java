@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.block.container;
 import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityMuffinTray;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /**
@@ -27,6 +28,49 @@ public class BlockMuffinTray extends BlockContainerBase
                 world.markBlockForUpdate(x, y, z);
             else return false;
             return true;
-        } else return false;
+        } else {
+            world.markBlockForUpdate(x, y, z);
+            return false;
+        }
+    }
+
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
+    {
+        int meta = world.getBlockMetadata(x, y, z);
+        float p = 0.0625F;
+        if (meta == 0)
+            this.setBlockBounds(1.5F * p, 0F, 5F * p, 1F - 1.5F * p, 3 * p, 1F - 2F * p);
+        else if (meta == 1)
+            this.setBlockBounds(2F * p, 0F, 1.5F * p, 1F - 5F * p, 3 * p, 1F - 1.5F * p);
+        else if (meta == 2)
+            this.setBlockBounds(1.5F * p, 0F, 2F * p, 1F - 1.5F * p, 3 * p, 1F - 5F * p);
+        else if (meta == 3)
+            this.setBlockBounds(5F * p, 0F, 1.5F * p, 1F - 2F * p, 3 * p, 1F - 1.5F * p);
+        else this.setBlockBounds(0F, 0F, 0F, 1F, 3 * p, 1F);
+    }
+
+    @Override
+    public void setBlockBoundsForItemRender()
+    {
+        this.setBlockBounds(0F, 0F, 0F, 1F, 1F, 1F);
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
+    public int getRenderType()
+    {
+        return -1;
     }
 }
