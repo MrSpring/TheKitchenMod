@@ -4,6 +4,7 @@ import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.item.food.ItemFoodBase;
 import dk.mrspring.kitchen.item.render.ItemRenderMuffin;
 import dk.mrspring.kitchen.util.ItemUtils;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -48,6 +49,12 @@ public class ItemMuffin extends ItemFoodBase
     }
 
     @Override
+    public String getItemStackDisplayName(ItemStack stack)
+    {
+        return I18n.format(getUnlocalizedName(stack) + ".name", I18n.format("muffin." + getMuffinType(stack) + ".name"));
+    }
+
+    @Override
     public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player)
     {
         super.onEaten(stack, world, player);
@@ -86,7 +93,7 @@ public class ItemMuffin extends ItemFoodBase
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_)
     {
         super.addInformation(stack, player, list, p_77624_4_);
-        list.add(getMuffinType(stack));
+        list.add(I18n.format("item.muffin.desc", I18n.format("item." + ItemMuffinCup.colorNames[stack.getItemDamage()] + "_muffin_cup.name")));
     }
 
     @Override

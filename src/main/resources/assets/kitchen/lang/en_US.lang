@@ -126,6 +126,12 @@ item.muffin_cup.name=Muffin Cup
 item.empty_muffin_tray.name=Empty Muffin Tray
 item.filled_muffin_tray.name=Filled Muffin Tray
 item.muffin_tray.waila=Muffins: %s/%s
+item.raw_muffin.name=Raw %s Muffin
+item.cooked_muffin.name=Cooked %s Muffin
+item.burnt_muffin.name=Burnt %s Muffin
+item.muffin.desc=In a %s
+
+muffin.vanilla.name=Vanilla
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
