@@ -34,8 +34,12 @@ public class BlockOven extends BlockContainerBase
             for (int i = 0; i < oven.getSlotCount(); i++)
             {
                 IOvenItem item = oven.getItemAt(i);
-                ItemStack[] stacks = item.onRemoved(oven, null, player, i);
-                for (ItemStack stack : stacks) spawnItem(stack, world, x, y, z);
+                if (item != null && item.canBeRemoved(oven, null, player, i))
+                {
+                    ItemStack[] drops = item.onRemoved(oven,null,player,i);
+                    oven.removeItemAt(i);
+                    for (ItemStack stack : drops) spawnItem(stack, world, x, y, z);
+                }
             }
         }
         super.onBlockBroken(player, world, x, y, z);
