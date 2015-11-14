@@ -6,6 +6,7 @@ import dk.mrspring.kitchen.item.render.*;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.tileentity.renderer.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 
@@ -29,6 +30,7 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("pancake"), new ItemIceCreamableRenderer());
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("waffle"), new ItemIceCreamableRenderer());
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("ice_cream_cone"), new ItemIceCreamConeRenderer());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(GameRegisterer.findBlock("muffin_tray")), new ItemMuffinTrayRenderer());
 
         ItemIceCreamableRenderer.load();
 

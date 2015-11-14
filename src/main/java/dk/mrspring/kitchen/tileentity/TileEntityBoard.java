@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityBoard extends TileEntity implements ICuttingBoard
+public class TileEntityBoard extends TileEntityBase implements ICuttingBoard
 {
     private List<ItemStack> layers = new ArrayList<ItemStack>();
     private NBTTagCompound specialInfo = new NBTTagCompound();
@@ -186,7 +186,7 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readDataFromNBT(NBTTagCompound compound)
     {
         this.resetLayers();
         NBTTagList list = compound.getTagList("Items", 10);
@@ -204,7 +204,7 @@ public class TileEntityBoard extends TileEntity implements ICuttingBoard
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public void writeDataToNBT(NBTTagCompound compound)
     {
         NBTTagList list = new NBTTagList();
         for (ItemStack layer : this.layers)
