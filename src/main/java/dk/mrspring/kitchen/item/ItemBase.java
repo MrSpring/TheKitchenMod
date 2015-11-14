@@ -165,7 +165,7 @@ public class ItemBase extends Item
         registerItem(raw_meat_patty);
         registerItem(cooked_meat_patty);
         registerItem(empty_muffin_cup);
-        registerItem(uncooked_muffin);
+        registerItem(raw_muffin);
         registerItem(cooked_muffin);
     }
 }

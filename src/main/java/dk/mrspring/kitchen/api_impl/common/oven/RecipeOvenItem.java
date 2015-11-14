@@ -53,19 +53,22 @@ public class RecipeOvenItem implements IOvenItem
     public void onAdded(IOven oven, ItemStack clicked, EntityPlayer player, int[] slots)
     {
 //        int slot = slots[0];
-        ItemStack input = clicked.copy();
-        input.stackSize = 1;
-        IRecipe recipe = OvenRecipes.instance().getRecipeFor(input);
+//        input.stackSize = 1;
+        /*IRecipe recipe = OvenRecipes.instance().getRecipeFor(input);
         ItemStack output = recipe.getOutput(input);
         ItemStack burntOutput = recipe instanceof OvenRecipe ?
                 ((OvenRecipe) recipe).getBurntResult(input) :
-                new ItemStack(KitchenItems.burnt_meat);
+                new ItemStack(KitchenItems.burnt_meat);*/
+        ItemStack input = getRecipeInput(oven, clicked);
+        ItemStack[] output = getRecipeOutput(oven, input);
         NBTTagCompound outputCompound = new NBTTagCompound(),
                 inputCompound = new NBTTagCompound(),
                 burntCompound = new NBTTagCompound();
         input.writeToNBT(inputCompound);
-        output.writeToNBT(outputCompound);
-        burntOutput.writeToNBT(burntCompound);
+        output[0].writeToNBT(outputCompound);
+        if (output.length > 1 && output[1] != null)
+            output[1].writeToNBT(burntCompound);
+        else new ItemStack(KitchenItems.burnt_meat).writeToNBT(burntCompound);
         for (int slot : slots)
         {
             NBTTagCompound slotCompound = oven.getSpecialInfo(slot);
@@ -75,6 +78,28 @@ public class RecipeOvenItem implements IOvenItem
         }
         clicked.stackSize--;
 //        System.out.println("On added, input: " + ItemUtils.name(input) + ", clicked: " + ItemUtils.name(clicked));
+    }
+
+    /**
+     * @param oven  The Oven instance.
+     * @param input The input ItemStack from getRecipeInput().
+     * @return Returns the output for the recipe. [0] should be normal output, [1] should be burnt output (If any. Uses
+     * Burnt Meat is not specified).
+     */
+    public ItemStack[] getRecipeOutput(IOven oven, ItemStack input)
+    {
+        IRecipe recipe = OvenRecipes.instance().getRecipeFor(input);
+        return new ItemStack[]{recipe.getOutput(input),
+                recipe instanceof OvenRecipe ?
+                        ((OvenRecipe) recipe).getBurntResult(input) :
+                        new ItemStack(KitchenItems.burnt_meat)};
+    }
+
+    public ItemStack getRecipeInput(IOven oven, ItemStack clicked)
+    {
+        ItemStack input = clicked.copy();
+        input.stackSize = 1;
+        return input;
     }
 
     @Override

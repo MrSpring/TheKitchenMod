@@ -1,6 +1,6 @@
 package dk.mrspring.kitchen.item;
 
-import dk.mrspring.kitchen.tileentity.TileEntityMuffinTray;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.nbtjson.NBTType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,14 +11,15 @@ import net.minecraft.nbt.NBTTagList;
 
 import java.util.List;
 
-import static dk.mrspring.kitchen.tileentity.TileEntityMuffinTray.ITEM_LIST;
-import static dk.mrspring.kitchen.tileentity.TileEntityMuffinTray.MUFFIN_TRAY_INFO;
-
 /**
  * Created on 14-11-2015 for TheKitchenMod.
  */
 public class ItemBlockMuffinTray extends ItemBlock
 {
+    public static final String ITEM_LIST = "ItemList", ITEM_SLOT = "Slot";
+
+    public static final String MUFFIN_TRAY_INFO = "MuffinTrayInfo";
+
     public ItemBlockMuffinTray(Block p_i45328_1_)
     {
         super(p_i45328_1_);
@@ -61,14 +62,24 @@ public class ItemBlockMuffinTray extends ItemBlock
 
         public Tray(ItemStack input)
         {
-            stacks = new ItemStack[6];
             if (!input.hasTagCompound()) input.setTagCompound(new NBTTagCompound());
             NBTTagCompound trayInfo = input.getTagCompound().getCompoundTag(MUFFIN_TRAY_INFO);
-            NBTTagList itemList = trayInfo.getTagList(TileEntityMuffinTray.ITEM_LIST, 10);
+            this.loadFrom(trayInfo);
+        }
+
+        public Tray(NBTTagCompound trayInfo)
+        {
+            this.loadFrom(trayInfo);
+        }
+
+        private void loadFrom(NBTTagCompound trayInfo)
+        {
+            stacks = new ItemStack[6];
+            NBTTagList itemList = trayInfo.getTagList(ITEM_LIST, 10);
             for (int i = 0; i < itemList.tagCount(); i++)
             {
                 NBTTagCompound itemCompound = itemList.getCompoundTagAt(i);
-                int slot = itemCompound.getInteger(TileEntityMuffinTray.ITEM_SLOT);
+                int slot = itemCompound.getInteger(ITEM_SLOT);
                 ItemStack stack = ItemStack.loadItemStackFromNBT(itemCompound);
                 stacks[slot] = stack;
             }
@@ -82,6 +93,63 @@ public class ItemBlockMuffinTray extends ItemBlock
         public ItemStack getInSlot(int slot)
         {
             return stacks[slot];
+        }
+
+        public void cook()
+        {
+            for (int i = 0; i < getMuffinCount(); i++)
+            {
+                ItemStack inSlot = getInSlot(i);
+                if (inSlot != null)
+                {
+                    if (inSlot.getItem() == KitchenItems.raw_muffin)
+                        inSlot.func_150996_a(KitchenItems.cooked_muffin);
+                    else if (inSlot.getItem() == KitchenItems.cooked_muffin)
+                        inSlot.func_150996_a(KitchenItems.burnt_muffin);
+                    else inSlot = null;
+                    setInSlot(i, inSlot);
+                }
+            }
+        }
+
+        public void setInSlot(int slot, ItemStack stack)
+        {
+            this.stacks[slot] = stack;
+        }
+
+        public void writeToStack(ItemStack stack)
+        {
+            NBTTagCompound trayInfo = new NBTTagCompound();
+            this.writeTo(trayInfo);
+            stack.setTagInfo(MUFFIN_TRAY_INFO, trayInfo);
+        }
+
+        public void writeTo(NBTTagCompound trayInfo)
+        {
+            NBTTagList itemList = new NBTTagList();
+            for (int i = 0; i < stacks.length; i++)
+            {
+                ItemStack inSlot = getInSlot(i);
+                if (inSlot != null)
+                {
+                    NBTTagCompound itemCompound = new NBTTagCompound();
+                    inSlot.writeToNBT(itemCompound);
+                    itemCompound.setInteger(ITEM_SLOT, i);
+                    itemList.appendTag(itemCompound);
+                }
+            }
+            trayInfo.setTag(ITEM_LIST, itemList);
+        }
+
+        public ItemStack[] getMuffins()
+        {
+            return stacks;
+        }
+
+        public void clearSlots()
+        {
+            for (int i = 0; i < stacks.length; i++)
+                stacks[i] = null;
         }
     }
 }

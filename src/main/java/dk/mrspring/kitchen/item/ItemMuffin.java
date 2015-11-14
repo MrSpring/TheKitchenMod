@@ -35,7 +35,7 @@ public class ItemMuffin extends ItemFoodBase
 
     public static ItemStack makeMuffinStack(String muffinType, boolean cooked, int color)
     {
-        ItemStack muffin = new ItemStack(cooked ? KitchenItems.cooked_muffin : KitchenItems.uncooked_muffin, 1, color);
+        ItemStack muffin = new ItemStack(cooked ? KitchenItems.cooked_muffin : KitchenItems.raw_muffin, 1, color);
         ItemUtils.setStringTag(muffin, MUFFIN_TYPE, muffinType);
         return muffin;
     }

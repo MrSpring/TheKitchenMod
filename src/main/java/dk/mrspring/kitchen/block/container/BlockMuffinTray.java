@@ -1,7 +1,11 @@
 package dk.mrspring.kitchen.block.container;
 
+import dk.mrspring.kitchen.KitchenBlocks;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.block.BlockContainerBase;
+import dk.mrspring.kitchen.item.ItemBlockMuffinTray.Tray;
 import dk.mrspring.kitchen.tileentity.TileEntityMuffinTray;
+import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,6 +17,13 @@ import net.minecraft.world.World;
  */
 public class BlockMuffinTray extends BlockContainerBase
 {
+    public static void cookOnce(ItemStack stack)
+    {
+        Tray tray = new Tray(stack);
+        tray.cook();
+        tray.writeToStack(stack);
+    }
+
     public BlockMuffinTray()
     {
         super("muffin_tray", TileEntityMuffinTray.class);
