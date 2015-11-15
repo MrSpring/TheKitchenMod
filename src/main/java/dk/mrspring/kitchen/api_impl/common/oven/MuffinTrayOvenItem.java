@@ -2,10 +2,9 @@ package dk.mrspring.kitchen.api_impl.common.oven;
 
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.api.oven.IOven;
-import dk.mrspring.kitchen.item.ItemBlockMuffinTray;
+import dk.mrspring.kitchen.item.block.ItemBlockMuffinTray;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**

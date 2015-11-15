@@ -1,11 +1,8 @@
 package dk.mrspring.kitchen.block.container;
 
-import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.block.BlockContainerBase;
-import dk.mrspring.kitchen.item.ItemBlockMuffinTray.Tray;
+import dk.mrspring.kitchen.item.block.ItemBlockMuffinTray.Tray;
 import dk.mrspring.kitchen.tileentity.TileEntityMuffinTray;
-import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

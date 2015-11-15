@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.item;
+package dk.mrspring.kitchen.item.block;
 
 import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.block.Block;

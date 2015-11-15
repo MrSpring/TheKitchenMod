@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.item;
+package dk.mrspring.kitchen.item.block;
 
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.nbtjson.NBTType;

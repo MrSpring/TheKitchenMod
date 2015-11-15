@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.item.render.block;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.item.ItemBlockMuffinTray.Tray;
+import dk.mrspring.kitchen.item.block.ItemBlockMuffinTray.Tray;
 import dk.mrspring.kitchen.item.ItemMuffin;
 import dk.mrspring.kitchen.item.render.ItemRenderMuffin;
 import dk.mrspring.kitchen.model.ModelMuffinTray;
