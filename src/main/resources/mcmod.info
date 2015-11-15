@@ -9,7 +9,7 @@
   "updateUrl": "",
   "authors": ["MrSpring"],
   "credits": "Made by Mr. Spring during the 96 hour ModJam 4.",
-  "logoFile": "",
+  "logoFile": "logo.png",
   "screenshots": [],
   "dependencies": []
 }
