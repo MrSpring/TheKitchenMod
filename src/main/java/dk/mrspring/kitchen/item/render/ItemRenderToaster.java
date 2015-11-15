@@ -77,7 +77,7 @@ public class ItemRenderToaster implements IItemRenderer
                 GL11.glTranslatef(0F, 1.3F, 0F);
                 break;
             case ENTITY:
-                scale = 1F;
+                scale = 0.7F;
                 GL11.glScalef(scale, scale, scale);
                 GL11.glTranslatef(0.0625F, 1.3F, 0F);
                 break;
