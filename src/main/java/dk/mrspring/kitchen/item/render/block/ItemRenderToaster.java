@@ -60,7 +60,7 @@ public class ItemRenderToaster implements IItemRenderer
         {
             case EQUIPPED_FIRST_PERSON:
                 GL11.glRotatef(25, 0F, 0F, 1F);
-                GL11.glTranslatef(.4F, 1.3F, -.2F);
+                GL11.glTranslatef(.4F, 1.3F, .2F);
                 GL11.glRotatef(40, 0, 1, 0);
                 float scale = 0.9F;
                 GL11.glScalef(0.8F, scale, scale);
