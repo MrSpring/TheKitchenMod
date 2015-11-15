@@ -3,6 +3,7 @@ package dk.mrspring.kitchen;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import dk.mrspring.kitchen.entity.EntityDingFX;
 import dk.mrspring.kitchen.item.render.*;
+import dk.mrspring.kitchen.item.render.block.*;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.tileentity.renderer.*;
 import net.minecraft.client.Minecraft;

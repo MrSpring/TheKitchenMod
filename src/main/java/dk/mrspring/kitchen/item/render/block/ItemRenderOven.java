@@ -1,8 +1,7 @@
-package dk.mrspring.kitchen.item.render;
+package dk.mrspring.kitchen.item.render.block;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelOven;
-import dk.mrspring.kitchen.model.ModelToaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -12,10 +11,10 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created on 15-11-2015 for TheKitchenMod.
  */
-public class ItemRenderToaster implements IItemRenderer
+public class ItemRenderOven implements IItemRenderer
 {
-    ModelToaster model = new ModelToaster();
-    ResourceLocation texture = new ResourceLocation(ModInfo.modid + ":textures/models/toaster.png");
+    ModelOven model = new ModelOven();
+    ResourceLocation texture = new ResourceLocation(ModInfo.modid + ":textures/models/oven.png");
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
@@ -58,33 +57,35 @@ public class ItemRenderToaster implements IItemRenderer
         {
             case EQUIPPED_FIRST_PERSON:
                 GL11.glRotatef(25, 0F, 0F, 1F);
-                GL11.glTranslatef(.4F, 1.3F, -.2F);
+                GL11.glTranslatef(.5F, .66F, .13F);
                 GL11.glRotatef(40, 0, 1, 0);
-                float scale = 0.9F;
-                GL11.glScalef(0.8F, scale, scale);
+                float scale = 0.8F;
+                GL11.glScalef(scale, scale, scale);
                 GL11.glTranslatef(.5F, -.2F, .5F);
                 break;
             case EQUIPPED:
                 GL11.glRotatef(25F, 0F, 0F, 1F);
                 GL11.glRotatef(40, 0, 1, 0);
-                GL11.glTranslatef(0.7F, 1.1F, 0.7F);
+                GL11.glTranslatef(0.6F, 0.55F, 0.6F);
+                scale = 0.7F;
+                GL11.glScalef(scale, scale, scale);
                 break;
             case INVENTORY:
                 GL11.glRotatef(180, 0, 1, 0);
-                GL11.glTranslatef(0.035F,0,0);
-                scale = 2F;
+                scale = 1F;
                 GL11.glScalef(scale, scale, scale);
-                GL11.glTranslatef(0F, 1.3F, 0F);
+                GL11.glTranslatef(0.0F, 1F, 0F);
                 break;
             case ENTITY:
-                scale = 0.7F;
+                scale = 0.5F;
                 GL11.glScalef(scale, scale, scale);
-                GL11.glTranslatef(0.0625F, 1.3F, 0F);
+                GL11.glTranslatef(0F, 1.3F, 0F);
+                GL11.glTranslatef(0F, 0F, -0.1F);
                 break;
         }
 
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, false);
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, 0, 0, 0F);
         GL11.glPopMatrix();
     }
 }

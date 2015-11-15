@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.item.render;
+package dk.mrspring.kitchen.item.render.block;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelPan;

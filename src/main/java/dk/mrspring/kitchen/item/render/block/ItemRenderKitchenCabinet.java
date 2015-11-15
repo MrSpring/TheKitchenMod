@@ -1,7 +1,6 @@
-package dk.mrspring.kitchen.item.render;
+package dk.mrspring.kitchen.item.render.block;
 
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.ModelCraftingCabinet;
 import dk.mrspring.kitchen.model.ModelKitchenCabinet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -12,10 +11,10 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created on 15-11-2015 for TheKitchenMod.
  */
-public class ItemRenderCraftingCabinet implements IItemRenderer
+public class ItemRenderKitchenCabinet implements IItemRenderer
 {
-    ModelCraftingCabinet model = new ModelCraftingCabinet();
-    ResourceLocation texture = new ResourceLocation(ModInfo.modid + ":textures/models/crafting_cabinet.png");
+    ModelKitchenCabinet model = new ModelKitchenCabinet();
+    ResourceLocation texture = new ResourceLocation(ModInfo.modid + ":textures/models/kitchen_cabinet.png");
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
@@ -86,7 +85,7 @@ public class ItemRenderCraftingCabinet implements IItemRenderer
         }
 
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, false);
         GL11.glPopMatrix();
     }
 }
