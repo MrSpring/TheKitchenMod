@@ -80,10 +80,9 @@ public class ItemRenderFryingPan implements IItemRenderer
                 GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
                 break;
             case ENTITY:
-                scale = 1.5F;
+                scale = 1.0F;
                 GL11.glScalef(scale, scale, scale);
                 GL11.glTranslatef(0F, 1.4F, 0F);
-                GL11.glTranslatef(0F, 0F, 0F);
                 GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
                 break;
         }
