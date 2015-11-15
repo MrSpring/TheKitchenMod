@@ -32,6 +32,7 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(GameRegisterer.findItem("ice_cream_cone"), new ItemIceCreamConeRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(GameRegisterer.findBlock("muffin_tray")), new ItemMuffinTrayRenderer());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(GameRegisterer.findBlock("oven")), new ItemRenderOven());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(GameRegisterer.findBlock("frying_pan")), new ItemRenderFryingPan());
 
         ItemIceCreamableRenderer.load();
 
