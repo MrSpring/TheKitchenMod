@@ -2,7 +2,7 @@ package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.render.ItemRenderMixingBowl;
-import dk.mrspring.kitchen.model.ModelWaffleIron;
+import dk.mrspring.kitchen.model.block.ModelWaffleIron;
 import dk.mrspring.kitchen.tileentity.TileEntityWaffleIron;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;

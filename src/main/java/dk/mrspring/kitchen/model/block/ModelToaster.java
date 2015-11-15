@@ -5,7 +5,7 @@
 // - ZeuX
 
 
-package dk.mrspring.kitchen.model;
+package dk.mrspring.kitchen.model.block;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.item.render.block;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.ModelWaffleIron;
+import dk.mrspring.kitchen.model.block.ModelWaffleIron;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

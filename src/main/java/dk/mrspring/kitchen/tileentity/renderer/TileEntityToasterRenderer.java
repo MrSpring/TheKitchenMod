@@ -1,13 +1,11 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.ModelToaster;
-import dk.mrspring.kitchen.tileentity.TileEntityTimeable;
+import dk.mrspring.kitchen.model.block.ModelToaster;
 import dk.mrspring.kitchen.tileentity.TileEntityToaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

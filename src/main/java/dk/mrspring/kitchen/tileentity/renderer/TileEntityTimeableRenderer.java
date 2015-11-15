@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.ModelTimer;
+import dk.mrspring.kitchen.model.block.ModelTimer;
 import dk.mrspring.kitchen.tileentity.TileEntityTimeable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

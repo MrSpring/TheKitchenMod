@@ -1,9 +1,8 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.ModelKitchenCabinet;
+import dk.mrspring.kitchen.model.block.ModelKitchenCabinet;
 import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;

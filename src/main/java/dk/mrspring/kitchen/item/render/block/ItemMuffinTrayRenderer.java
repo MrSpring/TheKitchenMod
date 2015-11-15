@@ -6,7 +6,7 @@ import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.block.ItemBlockMuffinTray.Tray;
 import dk.mrspring.kitchen.item.ItemMuffin;
 import dk.mrspring.kitchen.item.render.ItemRenderMuffin;
-import dk.mrspring.kitchen.model.ModelMuffinTray;
+import dk.mrspring.kitchen.model.block.ModelMuffinTray;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

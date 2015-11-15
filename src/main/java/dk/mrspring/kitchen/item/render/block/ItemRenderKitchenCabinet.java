@@ -3,7 +3,7 @@ package dk.mrspring.kitchen.item.render.block;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.ModelKitchenCabinet;
+import dk.mrspring.kitchen.model.block.ModelKitchenCabinet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

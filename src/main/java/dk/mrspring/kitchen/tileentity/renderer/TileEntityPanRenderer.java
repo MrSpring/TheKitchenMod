@@ -6,7 +6,7 @@ import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.ingredient.IngredientRenderingRegistry;
-import dk.mrspring.kitchen.model.ModelPan;
+import dk.mrspring.kitchen.model.block.ModelPan;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;

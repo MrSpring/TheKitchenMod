@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.ModelPlate;
+import dk.mrspring.kitchen.model.block.ModelPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import dk.mrspring.nbtjson.NBTType;
 import net.minecraft.client.Minecraft;

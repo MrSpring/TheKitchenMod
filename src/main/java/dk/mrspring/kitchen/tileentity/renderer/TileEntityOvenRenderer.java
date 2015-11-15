@@ -4,7 +4,7 @@ import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api.oven.IOvenItemRenderingHandler;
 import dk.mrspring.kitchen.api_impl.client.oven.OvenRenderingRegistry;
-import dk.mrspring.kitchen.model.ModelOven;
+import dk.mrspring.kitchen.model.block.ModelOven;
 import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;

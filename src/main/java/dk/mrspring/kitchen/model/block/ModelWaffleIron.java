@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.model;
+package dk.mrspring.kitchen.model.block;
 
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.client.Minecraft;
