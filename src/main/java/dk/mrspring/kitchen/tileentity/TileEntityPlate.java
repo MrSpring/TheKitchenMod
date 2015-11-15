@@ -1,13 +1,11 @@
 package dk.mrspring.kitchen.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,37 +17,14 @@ public class TileEntityPlate extends TileEntityBase
     protected boolean isFull = false;
     protected Random random = new Random();
 
-    public boolean addItem(ItemStack itemStack)
+    public boolean addItem(ItemStack stack)
     {
-        if (itemStack != null)
-            if (itemStack.getItem() != null)
-                if (itemStack.getItem() instanceof ItemSandwich)
-                    if (!this.isFull && this.items.size() == 0)
-                    {
-                        ItemStack item = itemStack.copy();
-                        item.stackSize = 1;
-
-                        this.items.add(item);
-                        this.isFull = true;
-                        return true;
-                    } else
-                        return false;
-                else
-                {
-                    if (!this.isFull)
-                    {
-                        ItemStack item = itemStack.copy();
-                        item.stackSize = 1;
-
-                        this.items.add(item);
-                        return true;
-                    } else
-                        return false;
-                }
-            else
-                return false;
-        else
-            return false;
+        if (stack == null || isFull) return false;
+        ItemStack adding = stack.copy();
+        adding.stackSize = 1;
+        this.items.add(adding);
+        if (adding.getItem() instanceof ItemSandwich) isFull = true;
+        return true;
     }
 
     public ItemStack removeTopItem()
