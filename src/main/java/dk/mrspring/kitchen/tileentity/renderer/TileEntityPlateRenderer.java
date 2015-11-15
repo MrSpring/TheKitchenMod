@@ -57,8 +57,9 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
     }
 
-    public static void renderPlateContents(List<ItemStack> stacks)
+    public static double renderPlateContents(List<ItemStack> stacks)
     {
+        GL11.glPushMatrix();
         double yItemOffset = 0;
         for (ItemStack stack : stacks)
         {
@@ -75,6 +76,8 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
                 itemStack.getTagCompound().removeTag(RENDERING_ON_PLATE);
             }
         }
+        GL11.glPopMatrix();
+        return -yItemOffset;
     }
 
     private static void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)
