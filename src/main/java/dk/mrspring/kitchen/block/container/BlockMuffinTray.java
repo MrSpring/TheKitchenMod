@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.block.BlockContainerBase;
-import dk.mrspring.kitchen.item.block.ItemBlockMuffinTray.Tray;
 import dk.mrspring.kitchen.tileentity.TileEntityMuffinTray;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,23 +8,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 /**
  * Created on 13-11-2015 for TheKitchenMod.
  */
 public class BlockMuffinTray extends BlockContainerBase
 {
-    public static void cookOnce(ItemStack stack)
-    {
-        Tray tray = new Tray(stack);
-        tray.cook();
-        tray.writeToStack(stack);
-    }
-
     public BlockMuffinTray()
     {
         super("muffin_tray", TileEntityMuffinTray.class);
 
         this.rotationAngles = 4;
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+    {
+        return new ArrayList<ItemStack>();
     }
 
     @Override

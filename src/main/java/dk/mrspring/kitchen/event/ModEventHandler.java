@@ -8,6 +8,7 @@ import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.sandwichable.ISandwichable;
 import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
 import dk.mrspring.kitchen.block.BlockContainerBase;
+import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import dk.mrspring.kitchen.recipe.KnifeRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.client.settings.GameSettings;
@@ -18,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -126,6 +128,13 @@ public class ModEventHandler
                     event.drops.add(hamEntity);
                 }
             }
+    }
+
+    @SubscribeEvent
+    public void entityConstruct(EntityEvent.EntityConstructing event)
+    {
+        if (event.entity instanceof EntityPlayer)
+            event.entity.registerExtendedProperties(CookingBookUnlocksProperties.UNLOCKED_CHAPTERS, new CookingBookUnlocksProperties());
     }
 
     @SubscribeEvent

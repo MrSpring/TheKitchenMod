@@ -27,7 +27,7 @@ public class ItemJamJar extends ItemBase
     public static String JAM_TYPE = "JamType";
 
     @SideOnly(Side.CLIENT)
-    IIcon[] jamIcon = new IIcon[6];
+    IIcon[] jamIcon;
 
     public ItemJamJar(String name)
     {
@@ -127,6 +127,7 @@ public class ItemJamJar extends ItemBase
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister register)
     {
+        jamIcon = new IIcon[6];
         super.registerIcons(register);
         for (int i = 0; i < this.jamIcon.length; i++)
             this.jamIcon[i] = register.registerIcon(ModInfo.modid + ":jam_jar_filling_" + (i + 1));
