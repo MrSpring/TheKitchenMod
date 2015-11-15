@@ -10,11 +10,12 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TileEntityPlate extends TileEntityBase
 {
-    protected ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+    protected List<ItemStack> items = new ArrayList<ItemStack>();
     protected boolean isFull = false;
     protected Random random = new Random();
 
@@ -76,7 +77,7 @@ public class TileEntityPlate extends TileEntityBase
             return null;
     }
 
-    public ArrayList<ItemStack> getItems()
+    public List<ItemStack> getItems()
     {
         return items;
     }

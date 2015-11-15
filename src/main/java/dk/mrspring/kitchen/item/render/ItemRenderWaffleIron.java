@@ -8,6 +8,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
+import static dk.mrspring.kitchen.tileentity.renderer.TileEntityPlateRenderer.CUSTOM_HEIGHT;
+import static dk.mrspring.kitchen.tileentity.renderer.TileEntityPlateRenderer.RENDERING_ON_PLATE;
+
 /**
  * Created on 15-11-2015 for TheKitchenMod.
  */
@@ -78,11 +81,22 @@ public class ItemRenderWaffleIron implements IItemRenderer
                 scale = 0.6F;
                 GL11.glScalef(scale, scale, scale);
                 GL11.glTranslatef(0F, 1.3F, 0F);
+                if (item.hasTagCompound() && item.getTagCompound().hasKey(RENDERING_ON_PLATE))
+                    this.translateForPlate(item);
                 break;
         }
 
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
         this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F, 0, 0, 0, null, 0F);
         GL11.glPopMatrix();
+    }
+
+    private void translateForPlate(ItemStack stack)
+    {
+        stack.getTagCompound().getCompoundTag(RENDERING_ON_PLATE).setDouble(CUSTOM_HEIGHT, 0.162D);
+        GL11.glRotatef(90, 1, 0, 0);
+        float s = 1.3F;
+        GL11.glScalef(s, s, s);
+        GL11.glTranslatef(0F, 1.425F, 0.7F);
     }
 }
