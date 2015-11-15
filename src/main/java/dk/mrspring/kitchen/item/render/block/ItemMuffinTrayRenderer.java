@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.item.render.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.ItemBlockMuffinTray.Tray;
 import dk.mrspring.kitchen.item.ItemMuffin;
@@ -14,6 +16,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Created on 14-11-2015 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public class ItemMuffinTrayRenderer implements IItemRenderer
 {
     ModelMuffinTray model = new ModelMuffinTray();

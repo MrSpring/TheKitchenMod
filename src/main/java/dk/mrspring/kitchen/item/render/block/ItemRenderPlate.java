@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.item.render.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelPlate;
 import dk.mrspring.kitchen.tileentity.renderer.TileEntityPlateRenderer;
@@ -20,6 +22,7 @@ import static dk.mrspring.kitchen.tileentity.renderer.TileEntityPlateRenderer.RE
 /**
  * Created on 15-11-2015 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public class ItemRenderPlate implements IItemRenderer
 {
     ModelPlate model = new ModelPlate();
