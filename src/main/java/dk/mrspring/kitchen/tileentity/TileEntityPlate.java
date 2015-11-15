@@ -1,7 +1,5 @@
 package dk.mrspring.kitchen.tileentity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,27 +27,11 @@ public class TileEntityPlate extends TileEntityBase
 
     public ItemStack removeTopItem()
     {
-        int index = this.items.size();
-
-        if (index != 0)
-        {
-            ItemStack item = this.items.get(index - 1);
-
-            if (item != null)
-                if (item.getItem() != null)
-                {
-                    this.items.remove(index - 1);
-
-                    if (this.isFull)
-                        this.isFull = false;
-
-                    return item;
-                } else
-                    return null;
-            else
-                return null;
-        } else
-            return null;
+        if (this.items.size() == 0) return null;
+        int index = this.items.size() - 1;
+        ItemStack removed = items.remove(index);
+        if (isFull) isFull = false;
+        return removed;
     }
 
     public List<ItemStack> getItems()
