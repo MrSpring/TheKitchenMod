@@ -110,7 +110,7 @@ public class ItemRenderPlate implements IItemRenderer
         {
             GL11.glPushMatrix();
             GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-            double height = TileEntityPlateRenderer.renderPlateContents(plate.items);
+            double height = TileEntityPlateRenderer.renderPlateContents(plate.items, null);
             item.getTagCompound().getCompoundTag(RENDERING_ON_PLATE).setDouble(CUSTOM_HEIGHT, height);
             GL11.glPopMatrix();
         }

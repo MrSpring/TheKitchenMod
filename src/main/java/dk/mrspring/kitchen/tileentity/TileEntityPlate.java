@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.item.ItemSandwich;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,9 +13,13 @@ import java.util.Random;
 
 public class TileEntityPlate extends TileEntityBase
 {
-    protected List<ItemStack> items = new ArrayList<ItemStack>();
-    protected boolean isFull = false;
-    protected Random random = new Random();
+    List<ItemStack> items = new ArrayList<ItemStack>();
+    boolean isFull = false;
+
+    @SideOnly(Side.CLIENT)
+    public List<Position> positions;
+    @SideOnly(Side.CLIENT)
+    Random rand;
 
     public boolean addItem(ItemStack stack)
     {
@@ -22,7 +28,15 @@ public class TileEntityPlate extends TileEntityBase
         adding.stackSize = 1;
         this.items.add(adding);
         if (adding.getItem() instanceof ItemSandwich) isFull = true;
+        if (worldObj != null && worldObj.isRemote) this.addRandomPosition();
         return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    void addRandomPosition()
+    {
+        if (positions == null) positions = new ArrayList<Position>();
+        if (positions.size() < items.size()) positions.add(new Position());
     }
 
     public ItemStack removeTopItem()
@@ -31,7 +45,14 @@ public class TileEntityPlate extends TileEntityBase
         int index = this.items.size() - 1;
         ItemStack removed = items.remove(index);
         if (isFull) isFull = false;
+        if (worldObj.isRemote) this.removeRandomPosition(index);
         return removed;
+    }
+
+    @SideOnly(Side.CLIENT)
+    void removeRandomPosition(int index)
+    {
+        positions.remove(index);
     }
 
     public List<ItemStack> getItems()
@@ -72,6 +93,7 @@ public class TileEntityPlate extends TileEntityBase
     {
         NBTTagList itemList = compound.getTagList("Items", 10);
         this.items = new ArrayList<ItemStack>();
+//        if (worldObj.isRemote) positions = new ArrayList<Position>();
 
         for (int i = 0; i < itemList.tagCount(); ++i)
         {
@@ -79,8 +101,24 @@ public class TileEntityPlate extends TileEntityBase
             {
                 NBTTagCompound item = itemList.getCompoundTagAt(i);
                 ItemStack itemStack = ItemStack.loadItemStackFromNBT(item);
-                this.items.add(itemStack);
+                this.addItem(itemStack);
             }
+        }
+        if (worldObj.isRemote) if (positions != null && positions.size() > items.size())
+            positions.subList(items.size(), positions.size()).clear();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public class Position
+    {
+        public float xOffset;
+        public float zOffset;
+
+        Position()
+        {
+            if (rand == null) rand = new Random();
+            this.xOffset = rand.nextFloat() - 0.5F;
+            this.zOffset = rand.nextFloat() - 0.5F;
         }
     }
 }

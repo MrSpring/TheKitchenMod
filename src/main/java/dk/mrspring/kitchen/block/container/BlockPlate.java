@@ -46,37 +46,34 @@ public class BlockPlate extends BlockContainerBase
 
         if (!world.isRemote)
             if (!activator.isSneaking())
-        if (activator.getCurrentEquippedItem() != null)
-            if (activator.getCurrentEquippedItem().getItem() != null)
-                if (tileEntityPlate.addItem(activator.getCurrentEquippedItem()))
+                if (activator.getCurrentEquippedItem() != null)
+                    if (tileEntityPlate.addItem(activator.getCurrentEquippedItem()))
+                    {
+                        --activator.getCurrentEquippedItem().stackSize;
+                        return true;
+                    } else
+                        return false;
+                else
                 {
-                    --activator.getCurrentEquippedItem().stackSize;
-                    return true;
-                } else
-                    return false;
-            else
-                return false;
-        else
-        {
-            ItemStack itemStack = tileEntityPlate.removeTopItem();
+                    ItemStack itemStack = tileEntityPlate.removeTopItem();
 
-            if (itemStack != null)
+                    if (itemStack != null)
+                    {
+                        world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, itemStack));
+                        return true;
+                    } else
+                        return true;
+                }
+            else
             {
-                world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, itemStack));
+                ItemStack item = new ItemStack(this, 1, 0);
+                NBTTagCompound plateCompound = new NBTTagCompound();
+                tileEntityPlate.writeItemsToNBT(plateCompound);
+                item.setTagInfo("PlateData", plateCompound);
+                world.setBlockToAir(x, y, z);
+                world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
                 return true;
-            } else
-                return true;
-        }
-        else
-        {
-            ItemStack item = new ItemStack(this, 1, 0);
-            NBTTagCompound plateCompound = new NBTTagCompound();
-            tileEntityPlate.writeItemsToNBT(plateCompound);
-            item.setTagInfo("PlateData", plateCompound);
-            world.setBlockToAir(x, y, z);
-            world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
-            return true;
-        }
+            }
         else
             return true;
     }

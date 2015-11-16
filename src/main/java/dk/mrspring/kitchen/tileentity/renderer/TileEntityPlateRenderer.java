@@ -49,26 +49,36 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
         GL11.glPopMatrix();
 
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
-        GL11.glTranslatef(0, -0.7F, 0);
-        float s = 1.5F;
+        GL11.glTranslatef(0, -0.55F, 0);
+        float s = 1.4F;
         GL11.glScalef(s, s, s);
-        renderPlateContents(((TileEntityPlate) var1).getItems());
+        TileEntityPlate plate = (TileEntityPlate) var1;
+        renderPlateContents(plate.getItems(), plate.positions);
 
         GL11.glPopMatrix();
     }
 
-    public static double renderPlateContents(List<ItemStack> stacks)
+    public static double renderPlateContents(List<ItemStack> stacks, List<TileEntityPlate.Position> positions)
     {
         GL11.glPushMatrix();
         double yItemOffset = 0;
-        for (ItemStack stack : stacks)
+        for (int i = 0; i < stacks.size(); i++)
         {
+            ItemStack stack = stacks.get(i);
             if (stack != null)
             {
                 ItemStack itemStack = stack.copy();
                 itemStack.stackSize = 1;
                 itemStack.setTagInfo(RENDERING_ON_PLATE, new NBTTagCompound());
-                renderItem(itemStack, 0, yItemOffset + 1.4, -0.20F);
+                float xOff = 0F, zOff = 0F;
+                if (positions != null)
+                {
+                    TileEntityPlate.Position pos = positions.get(i);
+                    float ratio = 0.0625F;
+                    xOff = pos.xOffset * ratio;
+                    zOff = pos.zOffset * ratio;
+                }
+                renderItem(itemStack, xOff, yItemOffset + 1.4, -0.20F + zOff);
                 NBTTagCompound info = itemStack.getTagCompound().getCompoundTag(RENDERING_ON_PLATE);
                 if (info.hasKey(CUSTOM_HEIGHT, NBTType.DOUBLE.getId()))
                     yItemOffset -= info.getDouble(CUSTOM_HEIGHT);
