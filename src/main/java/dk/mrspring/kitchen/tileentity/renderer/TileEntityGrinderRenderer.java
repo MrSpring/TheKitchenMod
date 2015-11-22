@@ -1,18 +1,36 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.model.block.ModelCraftingCabinet;
 import dk.mrspring.kitchen.model.block.ModelGrinder;
+import dk.mrspring.kitchen.tileentity.TileEntityGrinder;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 16-11-2015 for TheKitchenMod.
  */
 public class TileEntityGrinderRenderer extends TileEntitySpecialRenderer
 {
+    public static final List<IMouthRenderingHandler> renderers = new ArrayList<IMouthRenderingHandler>();
+
+    static
+    {
+        renderers.add(new ItemMouthRenderingHandler());
+    }
+
+    public interface IMouthRenderingHandler
+    {
+        boolean shouldUse(ItemStack mouth);
+
+        void render(ItemStack mouth);
+    }
+
     ModelGrinder model = new ModelGrinder();
     ResourceLocation texture = ModInfo.toResource("textures/models/grinder.png");
 
@@ -31,6 +49,17 @@ public class TileEntityGrinderRenderer extends TileEntitySpecialRenderer
 
         GL11.glRotatef(metadata * 90F, 0F, 1F, 0F);
         model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+
+        TileEntityGrinder grinder = (TileEntityGrinder) var1;
+        if (grinder.mouth != null)
+            for (IMouthRenderingHandler handler : renderers)
+                if (handler.shouldUse(grinder.mouth))
+                {
+                    GL11.glPushMatrix();
+                    handler.render(grinder.mouth);
+                    GL11.glPopMatrix();
+                    break;
+                }
 
         GL11.glPopMatrix();
 

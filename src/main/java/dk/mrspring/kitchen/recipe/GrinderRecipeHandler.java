@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.recipe;
 
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.item.ItemMixingBowl;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -15,7 +14,7 @@ public class GrinderRecipeHandler extends BasicRecipeHandler
     {
         super.load();
 
-        this.addRecipe(new GrinderRecipe(ItemMixingBowl.getMixingBowlStack("pasta", 1), KitchenItems.plate_mouth, new ItemStack(KitchenItems.fried_egg)));
+        this.addRecipe(new GrinderRecipe(ItemMixingBowl.getMixingBowlStack("pasta", 1), KitchenItems.plate_mouth, new ItemStack(KitchenItems.lasagna_plate)));
     }
 
     @Override

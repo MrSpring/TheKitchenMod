@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.tileentity.renderer;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.block.ModelPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
+import dk.mrspring.kitchen.util.RenderUtils;
 import dk.mrspring.nbtjson.NBTType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -78,7 +79,7 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
                     xOff = pos.xOffset * ratio;
                     zOff = pos.zOffset * ratio;
                 }
-                renderItem(itemStack, xOff, yItemOffset + 1.4, -0.20F + zOff);
+                RenderUtils.renderItem(itemStack, xOff, yItemOffset + 1.4, -0.20F + zOff);
                 NBTTagCompound info = itemStack.getTagCompound().getCompoundTag(RENDERING_ON_PLATE);
                 if (info.hasKey(CUSTOM_HEIGHT, NBTType.DOUBLE.getId()))
                     yItemOffset -= info.getDouble(CUSTOM_HEIGHT);
@@ -88,26 +89,6 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
         }
         GL11.glPopMatrix();
         return -yItemOffset;
-    }
-
-    private static void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)
-    {
-        if (item != null)
-        {
-            GL11.glPushMatrix();
-
-            GL11.glTranslated(xOffset, yOffset, zOffset);
-
-            EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
-            itemEntity.hoverStart = 0.0F;
-            RenderItem.renderInFrame = true;
-            GL11.glRotatef(180, 0, 1, 1);
-            GL11.glRotatef(180, 0, 1, 0);
-            RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-            RenderItem.renderInFrame = false;
-
-            GL11.glPopMatrix();
-        }
     }
 
     private static void renderSandwich(ItemStack item)
