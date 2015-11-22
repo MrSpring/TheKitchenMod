@@ -1,5 +1,8 @@
 package dk.mrspring.kitchen.recipe;
 
+import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.item.ItemJamJar;
+import dk.mrspring.kitchen.item.ItemMixingBowl;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -53,6 +56,16 @@ public class BasicRecipe implements IRecipe, INEIRecipeHelper
     public ItemStack getOutput(ItemStack input)
     {
         return output;
+    }
+
+    @Override
+    public void reduceInputSize(ItemStack input)
+    {
+        if (ItemUtils.item(input, KitchenItems.mixing_bowl))
+            ItemMixingBowl.reduceUsesLeft(input, 1);
+        else if (ItemUtils.item(input, KitchenItems.jam_jar))
+            ItemJamJar.reduceUsesLeft(input, 1);
+        else input.stackSize--;
     }
 
     @Override

@@ -30,5 +30,6 @@ public class ItemRenderMixingBowl extends ColorHandler
         registerColor("chocolate_ice_cream", 0xCC8051);
         registerColor("apple_ice_cream", 0xF2EFBC);
         registerColor("scrambled_eggs", 0xFFF356);
+        registerColor("pasta", 0xFAFF7F);
     }
 }

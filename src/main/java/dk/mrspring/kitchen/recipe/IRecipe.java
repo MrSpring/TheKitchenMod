@@ -11,5 +11,7 @@ public interface IRecipe
 
     ItemStack getOutput(ItemStack input);
 
+    void reduceInputSize(ItemStack input);
+
     boolean isValid();
 }

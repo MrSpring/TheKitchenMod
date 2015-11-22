@@ -1,7 +1,6 @@
 package dk.mrspring.kitchen.recipe;
 
 import dk.mrspring.kitchen.config.wrapper.JsonBasicRecipe;
-import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class BasicRecipeHandler
     {
         for (IRecipe recipe : array)
             if (recipe.isValid())
-                this.recipes.add(recipe);
+                this.addRecipe(recipe);
     }
 
     public List<IRecipe> getRecipes()
@@ -58,15 +57,22 @@ public class BasicRecipeHandler
     public IRecipe getRecipeFor(ItemStack input)
     {
         for (IRecipe recipe : recipes)
+        {
             if (recipe.doesInputMatch(input))
                 return recipe;
+        }
         return null;
+    }
+
+    public void addRecipe(IRecipe recipe)
+    {
+        recipes.add(recipe);
     }
 
     public void addRecipe(ItemStack input, ItemStack output)
     {
         if (input != null && output != null)
-            recipes.add(new BasicRecipe(input, output));
+            addRecipe(new BasicRecipe(input, output));
     }
 
     public boolean hasOutput(ItemStack toAdd)

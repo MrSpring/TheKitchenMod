@@ -2,7 +2,9 @@ package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.tileentity.TileEntityGrinder;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 /**
  * Created on 16-11-2015 for TheKitchenMod.
@@ -14,6 +16,19 @@ public class BlockGrinder extends BlockContainerBase
         super("grinder", TileEntityGrinder.class);
 
         this.rotationAngles = 4;
+    }
+
+    @Override
+    public boolean onRightClicked(World world, int x, int y, int z, EntityPlayer clicker, int side, float clickX, float clickY, float clickZ)
+    {
+        if (!world.isRemote)
+        {
+            TileEntityGrinder grinder = (TileEntityGrinder) world.getTileEntity(x, y, z);
+            if (grinder.rightClick(clicker.getCurrentEquippedItem(), clicker.isSneaking()))
+                world.markBlockForUpdate(x, y, z);
+            else return false;
+        }
+        return true;
     }
 
     @Override

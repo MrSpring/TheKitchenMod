@@ -47,7 +47,7 @@ public class ItemMixingBowl extends ItemBase
 
     public static boolean areBowlsEqual(ItemStack stack1, ItemStack stack2)
     {
-        if (!ItemUtils.item(stack1, KitchenItems.mixing_bowl) || ItemUtils.item(stack2, KitchenItems.mixing_bowl))
+        if (!ItemUtils.item(stack1, KitchenItems.mixing_bowl) || !ItemUtils.item(stack2, KitchenItems.mixing_bowl))
             return false;
         String mix1 = getMixTypeFromStack(stack1), mix2 = getMixTypeFromStack(stack2);
         return !(mix1 == null || mix2 == null) && mix1.equals(mix2);

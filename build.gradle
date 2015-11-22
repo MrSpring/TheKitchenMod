@@ -21,14 +21,14 @@ apply plugin: 'forge'
 version = "1.4.0PRE-1.7.10"
 group = "dk.mrspring" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TheKitchenMod"
-ext.configFile = file "build.properties"
+//ext.configFile = file "build.properties"
 
-configFile.withReader {
+/*configFile.withReader {
     // Load config.  It shall from now be referenced as simply config or project.config
     def prop = new Properties()
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
-}
+}*/
 
 minecraft {
     version = "1.7.10-10.13.3.1381-1.7.10"
@@ -48,10 +48,10 @@ repositories {
         name "mobius"
         url "http://mobiusstrip.eu/maven/"
     }
-    maven {
+    /*maven {
         name "mrspring"
         url "http://mrspring.dk/maven/"
-    }
+    }*/
 }
 
 configurations {
@@ -69,12 +69,14 @@ dependencies {
     compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
     compile "codechicken:NotEnoughItems:1.7.10-1.0.5.118:dev"
     compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
-    compile "dk.mrspring:web-api:0.1.0"
-    compile "dk.mrspring:nbt-json:1.0.0:deobf"
+    //compile "dk.mrspring:web-api:0.1.0"
+    //compile "dk.mrspring:nbt-json:1.0.0:deobf"
+    compile files("libs/nbt-json-1.0.0-deobf.jar")
+    compile files("libs/web-api-0.1.0.jar")
     compile files("libs/FurnitureMod-3.4.8_1.7.10.jar")
 
-    releaseJars "dk.mrspring:web-api:0.1.0"
-    releaseJars "dk.mrspring:nbt-json:1.0.0:deobf"
+    //releaseJars "dk.mrspring:web-api:0.1.0"
+    //releaseJars "dk.mrspring:nbt-json:1.0.0:deobf"
 
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
@@ -148,7 +150,7 @@ artifacts {
     archives sourceJar, devJar, apiJar
 }
 
-dependencies {
+/*dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.10"
 }
 
@@ -162,7 +164,7 @@ uploadArchives {
             }
         }
     }
-}
+}*/
 
 idea {
     module {

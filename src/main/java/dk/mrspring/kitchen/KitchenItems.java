@@ -86,6 +86,8 @@ public class KitchenItems
     public static final Item raw_muffin = new ItemMuffin("raw_muffin", 1);
     public static final Item cooked_muffin = new ItemMuffin("cooked_muffin", 5);
     public static final Item burnt_muffin = new ItemMuffin("burnt_muffin", 0);
+    public static final Item plate_mouth = new ItemBase("plate_mouth", true);
+    public static final Item lasagna_plate = new ItemBase("lasagna_plate", Kitchen.instance.foodTab);
     public static ItemStack basic_sandwich;
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.

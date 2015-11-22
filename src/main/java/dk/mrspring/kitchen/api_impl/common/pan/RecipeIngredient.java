@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.api_impl.common.pan;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.recipe.FryingPanRecipes;
+import dk.mrspring.kitchen.recipe.IRecipe;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -46,7 +47,8 @@ public class RecipeIngredient implements IIngredient
     @Override
     public void onAdded(IFryingPan pan, ItemStack input, EntityPlayer player)
     {
-        ItemStack output = FryingPanRecipes.instance().getOutputFor(input);
+        IRecipe recipe = FryingPanRecipes.instance().getRecipeFor(input);
+        ItemStack output = recipe.getOutput(input).copy();
         NBTTagCompound compound = pan.getSpecialInfo();
 
         NBTTagCompound inputCompound = new NBTTagCompound();
@@ -57,7 +59,8 @@ public class RecipeIngredient implements IIngredient
         compound.setTag(RECIPE_INPUT, inputCompound);
         compound.setTag(RECIPE_OUTPUT, outputCompound);
 
-        input.stackSize--;
+        recipe.reduceInputSize(input);
+//        input.stackSize--;
     }
 
     @Override

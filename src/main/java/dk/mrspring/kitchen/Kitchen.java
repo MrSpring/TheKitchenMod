@@ -21,6 +21,7 @@ import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
@@ -37,6 +38,7 @@ public class Kitchen
     public KnifeRecipes knifeRecipes;
     public FryingPanRecipes fryingPanRecipes;
     public FryingPanJamRecipes fryingPanJamRecipes;
+    public GrinderRecipeHandler grinderRecipes;
     private GuiHandler guiHandler = new GuiHandler();
 
     @EventHandler
@@ -109,12 +111,14 @@ public class Kitchen
         instance.knifeRecipes = new KnifeRecipes();
         instance.fryingPanRecipes = new FryingPanRecipes();
         instance.fryingPanJamRecipes = new FryingPanJamRecipes();
+        instance.grinderRecipes = new GrinderRecipeHandler();
 
         instance.ovenRecipes.load();
         instance.toasterRecipes.load();
         instance.knifeRecipes.load();
         instance.fryingPanRecipes.load();
         instance.fryingPanJamRecipes.load();
+        instance.grinderRecipes.load();
 
         TileEntityWaffleIron.load();
 
