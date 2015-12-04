@@ -48,9 +48,9 @@ public class TileEntityGrinderRenderer extends TileEntitySpecialRenderer
         GL11.glPushMatrix();
 
         GL11.glRotatef(metadata * 90F, 0F, 1F, 0F);
-        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-
         TileEntityGrinder grinder = (TileEntityGrinder) var1;
+        model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, p_147500_8_, 0.0625F, grinder.animGrindCount, grinder.animUsePartial);
+
         if (grinder.mouth != null)
             for (IMouthRenderingHandler handler : renderers)
                 if (handler.shouldUse(grinder.mouth))

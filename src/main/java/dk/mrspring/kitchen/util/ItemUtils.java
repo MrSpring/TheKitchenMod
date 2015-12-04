@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.util;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.item.ItemJamJar;
 import dk.mrspring.kitchen.item.ItemMixingBowl;
 import dk.mrspring.kitchen.item.food.ItemIceCreamableBase;
@@ -27,6 +28,13 @@ public class ItemUtils
         if (equalStacks(stack1, stack2))
             return !checkTag || ItemStack.areItemStackTagsEqual(stack1, stack2);
         return false;
+    }
+
+    public static boolean canDrop(ItemStack stack)
+    {
+        if (item(stack, KitchenItems.mixing_bowl)) return false;
+        if (item(stack, KitchenItems.jam_jar)) return false;
+        return true;
     }
 
     public static boolean equalStacks(ItemStack stack1, ItemStack stack2)

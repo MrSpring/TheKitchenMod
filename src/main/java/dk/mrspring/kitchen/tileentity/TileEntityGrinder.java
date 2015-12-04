@@ -1,9 +1,10 @@
 package dk.mrspring.kitchen.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.recipe.GrinderRecipe;
-import dk.mrspring.kitchen.recipe.IRecipe;
 import dk.mrspring.kitchen.tileentity.grinder.PlateMouthHandler;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.item.ItemStack;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class TileEntityGrinder extends TileEntityBase
 {
-    public static final String INGREDIENT = "IngredientStack", MOUTH = "MouthStack";
+    public static final String INGREDIENT = "IngredientStack", MOUTH = "MouthStack", GRIND_COUNT = "GrindCount";
 
     public static final List<IMouthHandler> mouthHandlers = new ArrayList<IMouthHandler>();
 
@@ -34,6 +35,30 @@ public class TileEntityGrinder extends TileEntityBase
     public ItemStack ingredient, mouth;
     public int grindCount;
     int maxGrindCount = 4;
+
+    @SideOnly(Side.CLIENT)
+    public int animGrindCount;
+    @SideOnly(Side.CLIENT)
+    public boolean animUsePartial;
+
+    @Override
+    public void updateEntity()
+    {
+        super.updateEntity();
+
+        if (worldObj.isRemote)
+        {
+            if (animGrindCount != grindCount)
+                if (!animUsePartial)
+                    animUsePartial = true;
+                else
+                {
+                    animGrindCount = grindCount;
+                    animUsePartial = false;
+                }
+            else animUsePartial = false;
+        }
+    }
 
     public boolean rightClick(ItemStack stack, boolean sneaking)
     {
@@ -89,7 +114,8 @@ public class TileEntityGrinder extends TileEntityBase
     {
         if (ingredient != null)
         {
-            BlockContainerBase.spawnItemInWorld(ingredient, worldObj, xCoord, yCoord, zCoord);
+            if (ItemUtils.canDrop(ingredient))
+                BlockContainerBase.spawnItemInWorld(ingredient, worldObj, xCoord, yCoord, zCoord);
             System.out.println("Dropped ingredient: " + ItemUtils.name(ingredient));
             this.ingredient = null;
         } else if (mouth != null)
@@ -133,6 +159,7 @@ public class TileEntityGrinder extends TileEntityBase
     {
         if (ingredient != null) compound.setTag(INGREDIENT, ingredient.writeToNBT(new NBTTagCompound()));
         if (mouth != null) compound.setTag(MOUTH, mouth.writeToNBT(new NBTTagCompound()));
+        compound.setInteger(GRIND_COUNT, this.grindCount);
     }
 
     @Override
@@ -143,5 +170,6 @@ public class TileEntityGrinder extends TileEntityBase
             this.ingredient = ItemStack.loadItemStackFromNBT(compound.getCompoundTag(INGREDIENT));
         if (compound.hasKey(MOUTH, 10))
             this.mouth = ItemStack.loadItemStackFromNBT(compound.getCompoundTag(MOUTH));
+        this.grindCount = compound.getInteger(GRIND_COUNT);
     }
 }

@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.recipe;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,5 +41,10 @@ public class GrinderRecipe extends BasicRecipe
     public ItemStack getOutput(ItemStack input, ItemStack mouth)
     {
         return this.getOutput(input);
+    }
+
+    public ItemStack getDrop(ItemStack input, ItemStack inGrinder)
+    {
+        return ItemUtils.item(inGrinder, KitchenItems.mixing_bowl) ? null : inGrinder;
     }
 }

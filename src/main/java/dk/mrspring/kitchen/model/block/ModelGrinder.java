@@ -57,8 +57,8 @@ public class ModelGrinder extends ModelBase
         this.top3.setRotationPoint(-3.0F, 12.0F, -1.0F);
         this.top3.addBox(0.0F, 0.0F, 0.0F, 1, 3, 4, 0.0F);
         this.handleMiddle = new ModelRenderer(this, 8, 9);
-        this.handleMiddle.setRotationPoint(4.5F, 17.0F, 1.0F);
-        this.handleMiddle.addBox(0.0F, 0.0F, 0.0F, 1, 5, 1, 0.0F);
+        this.handleMiddle.setRotationPoint(2.0F, 18.0F, 1.5F);
+        this.handleMiddle.addBox(2.5F, -1.0F, -0.5F, 1, 5, 1, 0.0F);
         this.top4 = new ModelRenderer(this, 0, 20);
         this.top4.setRotationPoint(-2.0F, 12.0F, 3.0F);
         this.top4.addBox(0.0F, 0.0F, 0.0F, 4, 3, 1, 0.0F);
@@ -69,25 +69,30 @@ public class ModelGrinder extends ModelBase
         this.mouthBase.setRotationPoint(-3.0F, 17.0F, -2.0F);
         this.mouthBase.addBox(0.0F, 0.0F, 0.0F, 6, 3, 2, 0.0F);
         this.handleConnector = new ModelRenderer(this, 40, 30);
-        this.handleConnector.setRotationPoint(1.5F, 17.5F, 1.0F);
-        this.handleConnector.addBox(0.0F, 0.0F, 0.0F, 3, 1, 1, 0.0F);
+        this.handleConnector.setRotationPoint(2.0F, 18.0F, 1.5F);
+        this.handleConnector.addBox(-0.5F, -0.5F, -0.5F, 3, 1, 1, 0.0F);
         this.mouth3 = new ModelRenderer(this, 11, 12);
         this.mouth3.setRotationPoint(-4.0F, 17.0F, -6.0F);
         this.mouth3.addBox(0.0F, 0.0F, 0.0F, 1, 3, 4, 0.0F);
         this.mouth1 = new ModelRenderer(this, 11, 12);
         this.mouth1.setRotationPoint(3.0F, 17.0F, -6.0F);
         this.mouth1.addBox(0.0F, 0.0F, 0.0F, 1, 3, 4, 0.0F);
-        this.setRotateAngle(mouth1, 0.0F, 0.0F, -0.0017453292519943296F);
         this.handleHandle = new ModelRenderer(this, 35, 16);
-        this.handleHandle.setRotationPoint(5.0F, 20.5F, 0.5F);
-        this.handleHandle.addBox(0.0F, 0.0F, 0.0F, 3, 2, 2, 0.0F);
+        this.handleHandle.setRotationPoint(2.0F, 18.0F, 1.5F);
+        this.handleHandle.addBox(3.0F, 2.5F, -1.0F, 3, 2, 2, 0.0F);
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+    public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_)
+    {
+        super.render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
+        this.render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_, 0, false);
+    }
+
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int rotation, boolean usePartial)
     {
         GL11.glPushMatrix();
-        GL11.glTranslatef(0,0,0.125F);
+        GL11.glTranslatef(0, 0, 0.125F);
         this.base1.render(f5);
         this.stand.render(f5);
         this.mouth2.render(f5);
@@ -96,13 +101,22 @@ public class ModelGrinder extends ModelBase
         this.mouth4.render(f5);
         this.top2.render(f5);
         this.top3.render(f5);
-        this.handleMiddle.render(f5);
         this.top4.render(f5);
         this.top1.render(f5);
         this.mouthBase.render(f5);
-        this.handleConnector.render(f5);
         this.mouth3.render(f5);
         this.mouth1.render(f5);
+        float degrees = rotation * 90;
+        if (usePartial)
+        {
+            degrees += f4 * 90F;
+        }
+        float r = (float) Math.toRadians(degrees);
+        this.setRotateAngle(handleMiddle, r, 0F, 0F);
+        this.handleMiddle.render(f5);
+        this.setRotateAngle(handleConnector, r, 0F, 0F);
+        this.handleConnector.render(f5);
+        this.setRotateAngle(handleHandle, r, 0F, 0F);
         this.handleHandle.render(f5);
         GL11.glPopMatrix();
     }
