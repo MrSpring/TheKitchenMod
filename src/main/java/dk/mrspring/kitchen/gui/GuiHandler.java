@@ -2,7 +2,7 @@ package dk.mrspring.kitchen.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import dk.mrspring.kitchen.gui.container.ContainerCraftingCabinet;
-import dk.mrspring.kitchen.gui.screen.GuiScreenBook;
+import dk.mrspring.kitchen.gui.screen.book.GuiScreenBook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 

@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.gui.screen;
+package dk.mrspring.kitchen.gui.screen.book;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

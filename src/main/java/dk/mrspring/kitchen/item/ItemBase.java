@@ -165,9 +165,11 @@ public class ItemBase extends Item
         registerItem(raw_meat_patty);
         registerItem(cooked_meat_patty);
         registerItem(lasagna_plate);
+        registerItem(ground_beef);
         registerItem(empty_muffin_cup);
         registerItem(raw_muffin);
         registerItem(cooked_muffin);
         registerItem(plate_mouth);
+        registerItem(grate_mouth);
     }
 }

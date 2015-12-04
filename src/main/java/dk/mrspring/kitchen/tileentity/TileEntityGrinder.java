@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.block.BlockContainerBase;
 import dk.mrspring.kitchen.recipe.GrinderRecipe;
+import dk.mrspring.kitchen.tileentity.grinder.GrateMouthHandler;
 import dk.mrspring.kitchen.tileentity.grinder.PlateMouthHandler;
 import dk.mrspring.kitchen.util.ItemUtils;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,7 @@ public class TileEntityGrinder extends TileEntityBase
     static
     {
         mouthHandlers.add(new PlateMouthHandler());
+        mouthHandlers.add(new GrateMouthHandler());
     }
 
     public interface IMouthHandler

@@ -3,8 +3,12 @@ package dk.mrspring.kitchen.tileentity.renderer;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.util.ItemUtils;
 import dk.mrspring.kitchen.util.RenderUtils;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Konrad on 22-11-2015.
@@ -14,7 +18,7 @@ public class ItemMouthRenderingHandler implements TileEntityGrinderRenderer.IMou
     @Override
     public boolean shouldUse(ItemStack mouth)
     {
-        return ItemUtils.item(mouth, KitchenItems.plate_mouth);
+        return true;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.gui.screen;
+package dk.mrspring.kitchen.gui.screen.book;
 
 import dk.mrspring.kitchen.api.book.IPageElement;
 

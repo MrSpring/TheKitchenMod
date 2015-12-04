@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.gui.screen;
+package dk.mrspring.kitchen.gui.screen.book;
 
 import java.util.ArrayList;
 import java.util.List;

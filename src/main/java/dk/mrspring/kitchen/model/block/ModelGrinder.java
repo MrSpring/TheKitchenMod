@@ -111,7 +111,7 @@ public class ModelGrinder extends ModelBase
         {
             degrees += f4 * 90F;
         }
-        float r = (float) Math.toRadians(degrees);
+        float r = (float) -Math.toRadians(degrees);
         this.setRotateAngle(handleMiddle, r, 0F, 0F);
         this.handleMiddle.render(f5);
         this.setRotateAngle(handleConnector, r, 0F, 0F);
