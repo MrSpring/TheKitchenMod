@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.item.render.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dk.mrspring.kitchen.ClientProxy;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.block.ModelOven;
 import net.minecraft.client.Minecraft;
@@ -22,16 +23,7 @@ public class ItemRenderOven implements IItemRenderer
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        switch (type)
-        {
-            case EQUIPPED:
-            case EQUIPPED_FIRST_PERSON:
-            case INVENTORY:
-            case ENTITY:
-                return true;
-            default:
-                return false;
-        }
+        return ClientProxy.clientConfig.oven_rendering.handleType(type);
     }
 
     @Override

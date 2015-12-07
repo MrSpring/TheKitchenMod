@@ -2,6 +2,7 @@ package dk.mrspring.kitchen.item.render.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dk.mrspring.kitchen.ClientProxy;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.block.ModelToaster;
 import net.minecraft.client.Minecraft;
@@ -22,16 +23,7 @@ public class ItemRenderToaster implements IItemRenderer
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type)
     {
-        switch (type)
-        {
-            case EQUIPPED:
-            case EQUIPPED_FIRST_PERSON:
-            case INVENTORY:
-            case ENTITY:
-                return true;
-            default:
-                return false;
-        }
+        return ClientProxy.clientConfig.toaster_rendering.handleType(type);
     }
 
     @Override
@@ -73,7 +65,7 @@ public class ItemRenderToaster implements IItemRenderer
                 break;
             case INVENTORY:
                 GL11.glRotatef(180, 0, 1, 0);
-                GL11.glTranslatef(0.035F,0,0);
+                GL11.glTranslatef(0.035F, 0, 0);
                 scale = 2F;
                 GL11.glScalef(scale, scale, scale);
                 GL11.glTranslatef(0F, 1.3F, 0F);

@@ -21,7 +21,6 @@ import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
@@ -48,7 +47,8 @@ public class Kitchen
         ModLogger.initializeLogger(event);
 
         // Loading the config files
-        ModConfig.load(event.getModConfigurationDirectory());
+        ModConfig.load(event.getModConfigurationDirectory(), event.getSide());
+        proxy.getConfigs();
 
         // Initializing the Creative Tab
         instance.tab = new CreativeTabs("tabKitchen")

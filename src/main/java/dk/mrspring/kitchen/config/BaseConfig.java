@@ -22,6 +22,7 @@ public class BaseConfig
 
     public BaseConfig(File location, String name)
     {
+        this();
         this.setLocation(location);
         this.setLabel(name);
     }
@@ -96,7 +97,6 @@ public class BaseConfig
 
     public void addDefaults()
     {
-
     }
 
 	/*public void readFromFile() throws IOException

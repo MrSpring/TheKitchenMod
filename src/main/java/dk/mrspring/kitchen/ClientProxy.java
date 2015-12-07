@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
+import dk.mrspring.kitchen.config.ClientConfig;
 import dk.mrspring.kitchen.entity.EntityDingFX;
 import dk.mrspring.kitchen.item.render.*;
 import dk.mrspring.kitchen.item.render.block.*;
@@ -13,6 +14,14 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy
 {
+    public static ClientConfig clientConfig;
+
+    public void getConfigs()
+    {
+        super.getConfigs();
+        clientConfig = ModConfig.getClientConfig();
+    }
+
     @Override
     public void registerRenderers()
     {
