@@ -45,7 +45,8 @@ public class Kitchen
         ModLogger.initializeLogger(event);
 
         // Loading the config files
-        ModConfig.load(event.getModConfigurationDirectory());
+        ModConfig.load(event.getModConfigurationDirectory(), event.getSide());
+        proxy.getConfigs();
 
         // Initializing the Creative Tab
         instance.tab = new CreativeTabs("tabKitchen")

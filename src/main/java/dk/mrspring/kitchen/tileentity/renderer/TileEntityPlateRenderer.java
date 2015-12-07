@@ -47,9 +47,9 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
 
         GL11.glRotatef(metadata * (45F), 0.0F, 1.0F, 0.0F);
 
-        double yItemOffset = 0;
+        renderItems(((TileEntityPlate) var1).getItemsAsArray());
 
-        for (ItemStack itemStack : ((TileEntityPlate) var1).getItemsAsArray())
+        /*for (ItemStack itemStack : ((TileEntityPlate) var1).getItemsAsArray())
         {
             if (itemStack != null)
             {
@@ -64,12 +64,32 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
                     yItemOffset -= 0.03;
                 }
             }
-        }
+        }*/
 
         GL11.glPopMatrix();
     }
 
-    private void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)
+    public static void renderItems(ItemStack[] items)
+    {
+        double yItemOffset = 0;
+        for (ItemStack itemStack : items)
+        {
+            if (itemStack != null)
+            {
+                if (itemStack.getItem() instanceof ItemSandwich)
+                {
+                    GL11.glTranslatef(0.0F, -0.1F, 0.0F);
+                    renderSadwich(itemStack);
+                } else
+                {
+                    renderItem(itemStack, 0, yItemOffset + 1.4, -0.225F);
+                    yItemOffset -= 0.03;
+                }
+            }
+        }
+    }
+
+    private static void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)
     {
         if (item != null)
         {
@@ -92,7 +112,7 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
         }
     }
 
-    private void renderSadwich(ItemStack item)
+    private static void renderSadwich(ItemStack item)
     {
         GL11.glPushMatrix();
         float scale = 1.0F;
