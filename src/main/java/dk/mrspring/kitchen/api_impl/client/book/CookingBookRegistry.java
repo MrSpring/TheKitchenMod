@@ -1,7 +1,7 @@
 package dk.mrspring.kitchen.api_impl.client.book;
 
 import dk.mrspring.kitchen.api.book.IChapterHandler;
-import dk.mrspring.kitchen.api.book.ICookingBookRegistry;
+import dk.mrspring.kitchen.api.book.IBookRegistry;
 import dk.mrspring.kitchen.api_impl.client.book.handler.*;
 
 import java.util.Collection;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created on 09-09-2015 for TheKitchenMod.
  */
-public class CookingBookRegistry implements ICookingBookRegistry
+public class CookingBookRegistry implements IBookRegistry
 {
     private static CookingBookRegistry ourInstance = new CookingBookRegistry();
 
@@ -20,7 +20,7 @@ public class CookingBookRegistry implements ICookingBookRegistry
         return ourInstance;
     }
 
-    private Map<String, IChapterHandler> registeredHandlers; // TODO: Replace with List
+    private Map<String, IChapterHandler> registeredHandlers;
 
     private CookingBookRegistry()
     {

@@ -90,6 +90,7 @@ public class KitchenItems
     public static final Item grate_mouth = new ItemBase("grate_mouth", true);
     public static final Item lasagna_plate = new ItemBase("lasagna_plate", Kitchen.instance.foodTab);
     public static final Item ground_beef = new ItemFoodBase("ground_beef", 2, true, Kitchen.instance.foodTab);
+    public static final Item manual = new ItemManual();
     public static ItemStack basic_sandwich;
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.
