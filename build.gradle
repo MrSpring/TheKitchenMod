@@ -48,10 +48,10 @@ repositories {
         name "mobius"
         url "http://mobiusstrip.eu/maven/"
     }
-    /*maven {
+    maven {
         name "mrspring"
         url "http://mrspring.dk/maven/"
-    }*/
+    }
 }
 
 configurations {
@@ -70,9 +70,8 @@ dependencies {
     compile "codechicken:NotEnoughItems:1.7.10-1.0.5.118:dev"
     compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
     //compile "dk.mrspring:web-api:0.1.0"
-    //compile "dk.mrspring:nbt-json:1.0.0:deobf"
-    compile files("libs/nbt-json-1.0.0-deobf.jar")
-    compile files("libs/web-api-0.1.0.jar")
+    releaseJars "dk.mrspring:NBTJson:1.0.2-1.7.10:deobf"
+    compile "dk.mrspring:NBTJson:1.0.2-1.7.10:deobf"
     compile files("libs/FurnitureMod-3.4.8_1.7.10.jar")
 
     //releaseJars "dk.mrspring:web-api:0.1.0"
@@ -109,13 +108,9 @@ processResources
         }
 
 jar {
-    from configurations.releaseJars.collect {
+    from(configurations.releaseJars.collect {
         it.isDirectory() ? it : zipTree(it)
-    }
-    exclude("com/**")
-    exclude("org/**")
-    exclude("licenses/**")
-    exclude("testFileCreation**")
+    }, sourceSets.main.output, sourceSets.api.output)
 }
 
 sourceSets {
@@ -127,22 +122,20 @@ sourceSets {
     }
 }
 
-jar() {
-    from(sourceSets.main.output, sourceSets.api.output)
-}
-
 task sourceJar(type: Jar) {
     from(sourceSets.main.java, sourceSets.api.output)
     classifier = "src"
 }
 
 task devJar(type: Jar) {
-    from (sourceSets.main.output, sourceSets.api.output)
+    from(configurations.releaseJars.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }, sourceSets.main.output, sourceSets.api.output)
     classifier = "deobf"
 }
 
 task apiJar(type: Jar) {
-    from (sourceSets.api.output)
+    from(sourceSets.api.output)
     classifier = "api"
 }
 
