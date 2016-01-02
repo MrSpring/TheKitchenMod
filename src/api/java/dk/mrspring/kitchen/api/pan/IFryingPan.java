@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 /**
  * Created by Konrad on 14-05-2015.
  */
-public interface IFryingPan extends ISpecialTagInfo, ICooking, ISpawner
+public interface IFryingPan extends ISpecialTagInfo, ICooking, ISpawner, ISoundPlayer
 {
     boolean rightClicked(ItemStack clicked, EntityPlayer player);
 

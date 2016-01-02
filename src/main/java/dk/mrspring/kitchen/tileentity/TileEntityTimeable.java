@@ -2,13 +2,13 @@ package dk.mrspring.kitchen.tileentity;
 
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.api.ISoundPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Created by MrSpring on 11-12-2014 for TheKitchenMod.
  */
-public abstract class TileEntityTimeable extends TileEntityBase
+public abstract class TileEntityTimeable extends TileEntityBase implements ISoundPlayer
 {
     private boolean hasDinged = false;
     private boolean hasTimer = false;
@@ -25,7 +25,7 @@ public abstract class TileEntityTimeable extends TileEntityBase
 
         if (!hasDinged && hasTimer && this.getTime() > this.getDoneTime())
         {
-            worldObj.playSound(xCoord, yCoord, zCoord, ModInfo.toTexture("ding"), 1, 1, false);
+            playSound(ModInfo.toTexture("sizzle"), 1F, 1F, false);
             if (worldObj.isRemote)
             {
                 float[] position = getTimerLocalPosition();
@@ -34,6 +34,12 @@ public abstract class TileEntityTimeable extends TileEntityBase
             hasDinged = true;
         } else if (this.getTime() < this.getDoneTime() && hasDinged && hasTimer)
             this.hasDinged = false;
+    }
+
+    @Override
+    public void playSound(String sound, float f1, float f2, boolean b1)
+    {
+        worldObj.playSoundEffect(0.5D + xCoord, 0.5D + yCoord, 0.5D + zCoord, sound, f1, f2);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.api_impl.common.pan;
 
+import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.recipe.FryingPanRecipes;
@@ -47,6 +48,7 @@ public class RecipeIngredient implements IIngredient
     @Override
     public void onAdded(IFryingPan pan, ItemStack input, EntityPlayer player)
     {
+        pan.playSound(ModInfo.toTexture("sizzle"), 1F, 1F, false);
         IRecipe recipe = FryingPanRecipes.instance().getRecipeFor(input);
         ItemStack output = recipe.getOutput(input).copy();
         NBTTagCompound compound = pan.getSpecialInfo();

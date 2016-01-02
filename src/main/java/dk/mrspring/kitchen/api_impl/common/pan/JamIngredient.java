@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.api_impl.common.pan;
 
 import dk.mrspring.kitchen.KitchenItems;
+import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.item.ItemJamJar;
@@ -47,6 +48,7 @@ public class JamIngredient implements IIngredient
     @Override
     public void onAdded(IFryingPan pan, ItemStack added, EntityPlayer player)
     {
+        pan.playSound(ModInfo.toTexture("sizzle"), 1F, 1F, false);
         String jamOutput = FryingPanJamRecipes.instance().getJamOutputFor(added);
         NBTTagCompound compound = pan.getSpecialInfo();
         NBTTagCompound inputCompound = new NBTTagCompound();

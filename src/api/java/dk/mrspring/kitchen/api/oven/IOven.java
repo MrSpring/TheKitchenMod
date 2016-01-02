@@ -1,6 +1,6 @@
 package dk.mrspring.kitchen.api.oven;
 
-import dk.mrspring.kitchen.api.ICooking;
+import dk.mrspring.kitchen.api.ISoundPlayer;
 import dk.mrspring.kitchen.api.ISpawner;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 /**
  * Created by Konrad on 21-06-2015.
  */
-public interface IOven extends ISpawner
+public interface IOven extends ISpawner, ISoundPlayer
 {
     boolean rightClicked(ItemStack clicked, EntityPlayer player);
 

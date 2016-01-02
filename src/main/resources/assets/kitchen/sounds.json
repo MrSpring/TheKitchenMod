@@ -1,10 +1,18 @@
 {
-  "ding":
-  {
+  "ding": {
     "category": "block",
     "sounds": [
       {
         "name": "ding",
+        "stream": false
+      }
+    ]
+  },
+  "sizzle": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sizzle",
         "stream": false
       }
     ]
