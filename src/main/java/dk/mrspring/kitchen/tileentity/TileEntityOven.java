@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class TileEntityOven extends TileEntityTimeable implements IOven
 {
-    public static final String FILLED_SLOTS = "FilledSlots"; // TODO: Store in OvenSlot
+    public static final String FILLED_SLOTS = "FilledSlots";
     public static final String IS_OPEN = "IsOpen";
     public static final String HAS_FUEL = "HasFuel";
     public static final String IS_COOKING = "IsCooking";

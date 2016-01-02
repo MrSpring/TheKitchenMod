@@ -21,7 +21,7 @@ public class SandwichableItemHandler implements IBoardItemHandler
     } // TODO: Fix for jam
 
     @Override
-    public boolean canAdd(ICuttingBoard tileEntityBoard, ItemStack adding, EntityPlayer player)
+    public boolean canAdd(ICuttingBoard tileEntityBoard, ItemStack adding, EntityPlayer player) // TODO: Set maximum layers. Maybe 20? 15? 10?
     {
         return true;
     }

@@ -27,7 +27,7 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
     private NBTTagCompound specialInfo = new NBTTagCompound();
 
     @Override
-    public boolean rightClicked(ItemStack clicked, EntityPlayer player) // TODO: Rewrite
+    public boolean rightClicked(ItemStack clicked, EntityPlayer player)
     {
         if (getIngredient() != null)
             if (getIngredient().onRightClicked(this, clicked, player))
@@ -45,13 +45,10 @@ public class TileEntityPan extends TileEntityTimeable implements IFryingPan
             }
         } else if (getIngredient() != null && this.isFinished())
         {
-            System.out.println("Removing");
             if (ingredient.canBeRemoved(this, player))
             {
-                System.out.println("Getting result");
                 ItemStack result = ingredient.onRemoved(this, null, player);
-                if (result != null)
-                    spawnItemInWorld(result);
+                if (result != null) spawnItemInWorld(result);
                 this.replaceIngredient(null);
                 return true;
             }

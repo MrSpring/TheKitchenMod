@@ -1,6 +1,5 @@
 package dk.mrspring.kitchen.api_impl.client.board;
 
-import dk.mrspring.kitchen.api_impl.common.board.KnifeItemHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.lwjgl.BufferUtils;
@@ -9,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import java.nio.DoubleBuffer;
 import java.util.List;
 
-import static dk.mrspring.kitchen.api_impl.common.board.KnifeItemHandler.*;
+import static dk.mrspring.kitchen.api_impl.common.board.KnifeItemHandler.SLICE_COUNT;
 
 /**
  * Created by Konrad on 13-05-2015.

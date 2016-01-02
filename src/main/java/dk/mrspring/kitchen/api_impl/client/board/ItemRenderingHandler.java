@@ -24,7 +24,7 @@ public class ItemRenderingHandler implements IBoardRenderingHandler
     public void render(List<ItemStack> layers, int indexInList, NBTTagCompound specialTagCompound, ItemStack rendering)
     {
         GL11.glPushMatrix();
-        GL11.glRotatef(90F, 0F, 1F, 0F);
+        GL11.glRotatef(0F, 0F, 1F, 0F);
         GL11.glTranslatef(.0F, -1.491F, -0.205F);
         RenderUtils.renderItem(rendering, 0D, 0D, 0D, ModConfig.getClientConfig().force_3d_item_rendering);
         GL11.glPopMatrix();

@@ -45,7 +45,7 @@ public class TileEntityBoard extends TileEntityBase implements ICuttingBoard
             if (itemHandler.canAdd(this, clicked, player))
             {
                 this.resetSpecialInfo();
-                this.addLayer/*layers.add*/(itemHandler.onAdded(this, clicked, player)); // TODO: Set maximum layers. Maybe 20? 15? 10? Do through SandwichableItemHandler
+                this.addLayer/*layers.add*/(itemHandler.onAdded(this, clicked, player));
                 return true;
             } else return false;
         } else if (player.isSneaking())
