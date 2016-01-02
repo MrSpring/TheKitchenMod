@@ -37,7 +37,7 @@ public class Kitchen
     public KnifeRecipes knifeRecipes;
     public FryingPanRecipes fryingPanRecipes;
     public FryingPanJamRecipes fryingPanJamRecipes;
-    public GrinderRecipeHandler grinderRecipes;
+//    public GrinderRecipeHandler grinderRecipes;
     private GuiHandler guiHandler = new GuiHandler();
 
     @EventHandler
@@ -79,7 +79,7 @@ public class Kitchen
         GameRegistry.registerTileEntity(TileEntityToaster.class, "kitchen.tileEntityToaster");
         GameRegistry.registerTileEntity(TileEntityCraftingCabinet.class, "kitchen.tileEntityCraftingCabinet");
         GameRegistry.registerTileEntity(TileEntityMuffinTray.class, "kitchen.muffinTray");
-        GameRegistry.registerTileEntity(TileEntityGrinder.class, "kitchen.grinder");
+//        GameRegistry.registerTileEntity(TileEntityGrinder.class, "kitchen.grinder");
 
 
         // Loading Blocks and Items
@@ -111,14 +111,14 @@ public class Kitchen
         instance.knifeRecipes = new KnifeRecipes();
         instance.fryingPanRecipes = new FryingPanRecipes();
         instance.fryingPanJamRecipes = new FryingPanJamRecipes();
-        instance.grinderRecipes = new GrinderRecipeHandler();
+//        instance.grinderRecipes = new GrinderRecipeHandler();
 
         instance.ovenRecipes.load();
         instance.toasterRecipes.load();
         instance.knifeRecipes.load();
         instance.fryingPanRecipes.load();
         instance.fryingPanJamRecipes.load();
-        instance.grinderRecipes.load();
+//        instance.grinderRecipes.load();
 
         TileEntityWaffleIron.load();
 

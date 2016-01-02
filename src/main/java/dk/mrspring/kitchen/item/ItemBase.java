@@ -170,7 +170,7 @@ public class ItemBase extends Item
         registerItem(empty_muffin_cup);
         registerItem(raw_muffin);
         registerItem(cooked_muffin);
-        registerItem(plate_mouth);
-        registerItem(grate_mouth);
+//        registerItem(plate_mouth);
+//        registerItem(grate_mouth);
     }
 }
