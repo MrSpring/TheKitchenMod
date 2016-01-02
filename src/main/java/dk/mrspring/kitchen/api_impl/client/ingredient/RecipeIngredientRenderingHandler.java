@@ -1,11 +1,13 @@
 package dk.mrspring.kitchen.api_impl.client.ingredient;
 
-import static dk.mrspring.kitchen.api_impl.common.pan.RecipeIngredient.*;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.pan.IFryingPan;
 import dk.mrspring.kitchen.api.pan.IIngredient;
 import dk.mrspring.kitchen.api.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.api_impl.common.pan.RecipeIngredient;
+import dk.mrspring.kitchen.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -14,9 +16,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.lwjgl.opengl.GL11;
 
+import static dk.mrspring.kitchen.api_impl.common.pan.RecipeIngredient.RECIPE_INPUT;
+import static dk.mrspring.kitchen.api_impl.common.pan.RecipeIngredient.RECIPE_OUTPUT;
+
 /**
  * Created by Konrad on 02-06-2015.
  */
+@SideOnly(Side.CLIENT)
 public class RecipeIngredientRenderingHandler implements IIngredientRenderingHandler
 {
     @Override
@@ -34,11 +40,12 @@ public class RecipeIngredientRenderingHandler implements IIngredientRenderingHan
         ItemStack rendering = ItemStack.loadItemStackFromNBT(itemCompound);
         rendering.stackSize = 1;
 
-        GL11.glTranslatef(0, -1.36F, -0.143F);
+        GL11.glTranslatef(0, -1.43F, -0.143F);
         float s = 0.7F;
         GL11.glScalef(s, s, s);
 
-        renderItem(rendering, 0, 0, 0);
+//        renderItem(rendering, 0, 0, 0);
+        RenderUtils.renderItem(rendering, 0D, 0D, 0D, ModConfig.getClientConfig().force_3d_item_rendering);
         GL11.glPopMatrix();
     }
 

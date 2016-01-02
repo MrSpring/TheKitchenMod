@@ -331,7 +331,7 @@ public class TileEntityOven extends TileEntityTimeable implements IOven
     }
 
     @Override
-    public EntityItem spawnItemInWorld(ItemStack stack)
+    public EntityItem spawnItemInWorld(ItemStack stack) // TODO: Make it fly slowly out of front
     {
         if (stack != null)
         {

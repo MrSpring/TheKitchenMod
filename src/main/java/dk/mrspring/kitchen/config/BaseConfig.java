@@ -50,7 +50,6 @@ public class BaseConfig
 
     public void writeToFile() throws IOException
     {
-        BufferedReader reader = new BufferedReader(new FileReader(this.location));
         GsonBuilder builder = new GsonBuilder().setPrettyPrinting().setExclusionStrategies(new ExclusionStrategy()
         {
             @Override

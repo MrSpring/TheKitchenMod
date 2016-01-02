@@ -51,7 +51,6 @@ public abstract class NEIKitchenCraftingHandler extends FurnaceRecipeHandler
 
     protected void loadRecipeFor(ItemStack output)
     {
-        System.out.println("Loading recipe for: "+ItemUtils.name(output));
         List<IRecipe> recipes = getRecipes();
         for (IRecipe iRecipe : recipes)
             if (iRecipe instanceof INEIRecipeHelper)

@@ -2,14 +2,17 @@ package dk.mrspring.kitchen.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.KitchenBlocks;
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
-import dk.mrspring.kitchen.ModLogger;
+import dk.mrspring.kitchen.config.KnifeConfig;
+import dk.mrspring.kitchen.config.wrapper.JsonCraftingRecipe;
 import dk.mrspring.kitchen.item.ItemMixingBowl;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -152,46 +155,11 @@ public class RecipeRegistry
         GameRegistry.addRecipe(new ItemStack(pestle), "S ", " S", valueOf('S'), stone);
 
         // Registers the Knife recipe based on the Config value
-        switch (ModConfig.getKnifeConfig().knife_recipe)
-        {
-            case 0:
-                GameRegistry.addRecipe(new ShapedOreRecipe(knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), iron_ingot));
-                break;
-            case 1:
-                GameRegistry.addRecipe(new ShapedOreRecipe(knife, "I", "S", valueOf('S'), "stickWood", valueOf('I'), iron_ingot));
-                break;
-            case 2:
-                GameRegistry.addRecipe(new ShapedOreRecipe(knife, "IS", valueOf('S'), "stickWood", valueOf('I'), iron_ingot));
-                break;
-            case 3:
-            {
-                ModLogger.print(ModLogger.INFO, "Registering custom Knife recipe...");
-
-                ArrayList<String> lines = new ArrayList<String>();
-
-                for (String line : ModConfig.getKnifeConfig().custom_knife_recipe)
-                {
-                    if (!line.equals("BBB"))
-                        lines.add(line);
-                }
-
-                ArrayList<Object> recipe = new ArrayList<Object>();
-
-                recipe.addAll(lines);
-                recipe.add(valueOf('I'));
-                recipe.add(iron_ingot);
-                recipe.add(valueOf('S'));
-                recipe.add("stickWood");
-
-                GameRegistry.addRecipe(new ShapedOreRecipe(knife, recipe.toArray()));
-
-                break;
-            }
-            //
-            default:
-                GameRegistry.addRecipe(new ShapedOreRecipe(knife, "I ", " S", valueOf('S'), "stickWood", valueOf('I'), iron_ingot));
-                break;
-        }
+        ItemStack knife = new ItemStack(KitchenItems.knife);
+        JsonCraftingRecipe jsonRecipe = ModConfig.getKnifeConfig().getKnifeRecipe();
+        ShapedRecipes recipe = jsonRecipe.toRecipe(knife);
+        if (recipe == null) recipe = KnifeConfig.getFallbackRecipe(knife);
+        GameRegistry.addRecipe(recipe);
 
         GameRegistry.addRecipe(new ItemStack(KitchenBlocks.plate, 1, 0), "CBC", " C ", valueOf('C'), clay_ball, valueOf('B'), new ItemStack(dye, 1, 15));
 
