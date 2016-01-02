@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.block.ModelPlate;
 import dk.mrspring.kitchen.tileentity.TileEntityPlate;
@@ -79,7 +80,7 @@ public class TileEntityPlateRenderer extends TileEntitySpecialRenderer
                     xOff = pos.xOffset * ratio;
                     zOff = pos.zOffset * ratio;
                 }
-                RenderUtils.renderItem(itemStack, xOff, yItemOffset + 1.4, -0.20F + zOff);
+                RenderUtils.renderItem(itemStack, xOff, yItemOffset + 1.4, -0.20F + zOff, ModConfig.getClientConfig().force_3d_item_rendering);
                 NBTTagCompound info = itemStack.getTagCompound().getCompoundTag(RENDERING_ON_PLATE);
                 if (info.hasKey(CUSTOM_HEIGHT, NBTType.DOUBLE.getId()))
                     yItemOffset -= info.getDouble(CUSTOM_HEIGHT);

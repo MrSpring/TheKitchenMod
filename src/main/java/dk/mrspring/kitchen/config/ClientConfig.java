@@ -21,6 +21,7 @@ public class ClientConfig extends BaseConfig
     public RenderConfig crafting_cabinet_rendering = new RenderConfig();
     public RenderConfig muffin_tray_rendering = new RenderConfig();
     public RenderConfig grinder_rendering = new RenderConfig();
+    public boolean force_3d_item_rendering = true;
 
     public ClientConfig()
     {
@@ -33,6 +34,7 @@ public class ClientConfig extends BaseConfig
         crafting_cabinet_rendering = new RenderConfig();
         muffin_tray_rendering = new RenderConfig();
         grinder_rendering = new RenderConfig();
+        force_3d_item_rendering = true;
     }
 
     public ClientConfig(File file, String name)

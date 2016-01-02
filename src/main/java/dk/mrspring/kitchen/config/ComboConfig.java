@@ -1,11 +1,7 @@
 package dk.mrspring.kitchen.config;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import dk.mrspring.kitchen.ModConfig;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.StatCollector;
 
 import java.io.File;
@@ -18,10 +14,10 @@ import static net.minecraft.item.EnumRarity.*;
 /**
  * Created by MrSpring on 04-11-2014 for TheKitchenMod.
  */
-public class ComboConfig extends BaseConfig
+public class ComboConfig extends BaseConfig // TODO: Fix...
 {
     public List<SandwichCombo> combos = new ArrayList<SandwichCombo>();
-    
+
     public ComboConfig()
     {
         combos = new ArrayList<SandwichCombo>();
@@ -30,7 +26,7 @@ public class ComboConfig extends BaseConfig
     public ComboConfig(File location, String name)
     {
         super(location, name);
-        
+
         final String ANY_BREAD = "all-bread";
 
         combos.add(new SandwichCombo("big_mac", rare, 2, "kitchen:bread_slice", "kitchen:cheese_slice", "kitchen:roast_beef", "kitchen:lettuce_leaf", "kitchen:bread_slice", "kitchen:roast_beef", "kitchen:lettuce_leaf", "kitchen:bread_slice").translateName());
