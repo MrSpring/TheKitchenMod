@@ -21,7 +21,7 @@ public class ModConfig
     public static void load(File baseFolder, Side side)
     {
         List<String> names = new ArrayList<String>();
-        Collections.addAll(names, "Kitchen", "Knife", "Oven", "Sandwichable", "Combo", "Toaster");
+        Collections.addAll(names, "Kitchen", "Knife", "Oven", "Sandwichable", "Combo");
         if (side.isClient()) names.add("Client");
         configs = new BaseConfig[names.size()];
         File configFolder = new File(baseFolder, "TheKitchenMod");

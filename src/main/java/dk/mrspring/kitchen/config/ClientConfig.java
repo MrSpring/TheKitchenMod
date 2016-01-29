@@ -14,25 +14,15 @@ public class ClientConfig extends BaseConfig
 {
     public RenderConfig oven_rendering = new RenderConfig();
     public RenderConfig pan_rendering = new RenderConfig();
-    public RenderConfig waffle_iron_rendering = new RenderConfig();
-    public RenderConfig toaster_rendering = new RenderConfig();
     public RenderConfig plate_rendering = new RenderConfig();
     public RenderConfig kitchen_cabinet_rendering = new RenderConfig();
-    public RenderConfig crafting_cabinet_rendering = new RenderConfig();
-    public RenderConfig muffin_tray_rendering = new RenderConfig();
-    public RenderConfig grinder_rendering = new RenderConfig();
 
     public ClientConfig()
     {
         oven_rendering = new RenderConfig();
         pan_rendering = new RenderConfig();
-        waffle_iron_rendering = new RenderConfig();
-        toaster_rendering = new RenderConfig();
         plate_rendering = new RenderConfig();
         kitchen_cabinet_rendering = new RenderConfig();
-        crafting_cabinet_rendering = new RenderConfig();
-        muffin_tray_rendering = new RenderConfig();
-        grinder_rendering = new RenderConfig();
     }
 
     public ClientConfig(File file, String name)
