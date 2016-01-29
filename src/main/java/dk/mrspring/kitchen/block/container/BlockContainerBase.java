@@ -1,11 +1,11 @@
 package dk.mrspring.kitchen.block.container;
 
-import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import java.lang.reflect.Constructor;
@@ -69,6 +69,13 @@ public class BlockContainerBase extends BlockContainer
     }
 
     @Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
+    {
+        this.setBlockBoundsBasedOnState(world, x, y, z);
+        return super.getCollisionBoundingBoxFromPool(world, x, y, z);
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
         try
@@ -95,6 +102,4 @@ public class BlockContainerBase extends BlockContainer
     {
         return tileEntityClass;
     }
-
-
 }
