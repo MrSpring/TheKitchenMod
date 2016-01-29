@@ -48,10 +48,6 @@ repositories {
         name "mobius"
         url "http://mobiusstrip.eu/maven/"
     }
-    maven {
-        name "mrspring"
-        url "http://mrspring.dk/maven/"
-    }
 }
 
 configurations {
@@ -70,8 +66,8 @@ dependencies {
     compile "codechicken:NotEnoughItems:1.7.10-1.0.5.118:dev"
     compile "mcp.mobius.waila:Waila:1.5.10_1.7.10"
     //compile "dk.mrspring:web-api:0.1.0"
-    releaseJars "dk.mrspring:NBTJson:1.0.2-1.7.10:deobf"
-    compile "dk.mrspring:NBTJson:1.0.2-1.7.10:deobf"
+    releaseJars files("libs/NBTJson-1.0.2-1.7.10-deobf.jar")
+    compile files("libs/NBTJson-1.0.2-1.7.10-deobf.jar")
     compile files("libs/FurnitureMod-3.4.8_1.7.10.jar")
 
     //releaseJars "dk.mrspring:web-api:0.1.0"
