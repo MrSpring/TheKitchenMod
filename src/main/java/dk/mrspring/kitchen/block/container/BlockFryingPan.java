@@ -2,11 +2,7 @@ package dk.mrspring.kitchen.block.container;
 
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.tileentity.TileEntityPan;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -27,23 +23,25 @@ public class BlockFryingPan extends BlockContainerBase
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
     {
-        int metadata = world.getBlockMetadata(x, y, z);
+        int metadata = world.getBlockMetadata(x, y - 1, z);
         float pixel = 0.06125F, height = 3 * pixel;
-        switch (metadata)
-        {
-            case 0:
-                this.setBlockBounds(2 * pixel, 0, 0, 0.5F + (2 * pixel), height, 0.5F);
-                break;
-            case 1:
-                this.setBlockBounds(0.5F + pixel, 0, 0, 1 + pixel, height, 0.5F);
-                break;
-            case 2:
-                this.setBlockBounds(0.5F + pixel, 0, 0.5F, 1 + pixel, height, 1);
-                break;
-            case 3:
-                this.setBlockBounds(2 * pixel, 0, 0.5F, 0.5F + (2 * pixel), height, 1);
-                break;
-        }
+        if (world.getBlock(x, y - 1, z) == KitchenBlocks.oven)
+            switch (metadata)
+            {
+                case 0:
+                    this.setBlockBounds(0.5F, 0, 2 * pixel, 1F, height, 10 * pixel);
+                    break;
+                case 1:
+                    this.setBlockBounds(6 * pixel, 0, 0.5F, 14 * pixel, height, 1);
+                    break;
+                case 2:
+                    this.setBlockBounds(0, 0, 6 * pixel, 0.5F, height, 14 * pixel);
+                    break;
+                case 3:
+                    this.setBlockBounds(2 * pixel, 0, 0, 10 * pixel, height, 0.5F);
+                    break;
+            }
+        else this.setBlockBounds(4 * pixel, 0, 4 * pixel, 12 * pixel, height, 12 * pixel);
     }
 
     @Override
@@ -51,38 +49,17 @@ public class BlockFryingPan extends BlockContainerBase
     {
         super.randomDisplayTick(world, x, y, z, random);
 
-        int metadata = world.getBlockMetadata(x, y, z);
-        float pixel = 0.06125F;
+        double pixel = 0.06125D;
         TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
+        this.setBlockBoundsBasedOnState(world, x, y, z);
 
         if (tileEntityPan.getCookTime() >= 400)
-            switch (metadata)
-            {
-                case 0:
-                    world.spawnParticle("smoke",
-                            x + 2 * pixel + (random.nextDouble() * (8 * pixel)),
-                            y + 2 * pixel,
-                            z + 0 + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
-                    break;
-                case 1:
-                    world.spawnParticle("smoke",
-                            x + 0.5F + pixel + (random.nextDouble() * (8 * pixel)),
-                            y + 2 * pixel,
-                            z + 0.5F - (random.nextDouble() * (8 * pixel)), 0, 0, 0);
-                    break;
-                case 2:
-                    world.spawnParticle("smoke",
-                            x + 0.5F + pixel + (random.nextDouble() * (8 * pixel)),
-                            y + 2 * pixel,
-                            z + 0.5F + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
-                    break;
-                case 3:
-                    world.spawnParticle("smoke",
-                            x + 2 * pixel + (random.nextDouble() * (8 * pixel)),
-                            y + 2 * pixel,
-                            z + 0.5F + (random.nextDouble() * (8 * pixel)), 0, 0, 0);
-                    break;
-            }
+        {
+            world.spawnParticle("smoke",
+                    x + (minX + random.nextDouble() * (maxX - minX)),
+                    y + 2.5D * pixel,
+                    z + (minZ + random.nextDouble() * (maxZ - minZ)), 0D, 0D, 0D);
+        }
     }
 
     @Override
@@ -113,15 +90,6 @@ public class BlockFryingPan extends BlockContainerBase
     public boolean canPlaceBlockAt(World world, int x, int y, int z)
     {
         return world.getBlock(x, y - 1, z) == KitchenBlocks.oven;
-    }
-
-    @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack placed)
-    {
-        int rotation = (MathHelper.floor_double((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3);
-        super.onBlockPlacedBy(world, x, y, z, placer, placed);
-
-        world.setBlockMetadataWithNotify(x, y, z, rotation, 0);
     }
 
     @Override
