@@ -5,6 +5,13 @@ tile.board.name=Schneidebrett
 tile.tomato_crop.name=Tomatenpflanze
 tile.lettuce_crop.name=Kopfsalat
 tile.oven.name=Ofen
+tile.plate.name=Platte
+tile.kitchen_cabinet.name=Küchenschrank
+tile.frying_pan.name=Bratpfanne
+tile.peanut_crop.name=Erdnusssamen
+tile.wild_peanut.name=Wilde Erdnuss
+tile.strawberry_crop.name=Erdbeersamen
+tile.wild_strawberry.name=Wilde Erdbeere
 
 item.knife.name=Messer
 item.bacon_raw.name=Roher Speck
@@ -30,6 +37,23 @@ item.chicken_leg.name=Hühnerbein
 item.cheese.name=Käse
 item.cheese_slice.name=Käsescheibe
 item.burnt_meat.name=Verbranntes Fleisch
+item.butter.name=Butter
+item.butter_knife.name=Buttermesser
+item.jam_jar.filled.name=Gefülltes Glas
+item.jam_jar.empty.name=Leeres Glas
+item.strawberry.name=Erdbeere
+item.apple_slice.name=Apfelstücke
+item.strawberry_slices.name=Erdbeerstücke
+item.peanut.name=Erdnuss
+item.sugared_strawberry_slices.name=Gezuckerte Erdbeerstücke
+
+jam.peanut.name=Erdnussbutter
+jam.apple.name=Apfelmarmelade
+jam.strawberry.name=Erdbeermarmelade
+
+option.show_is_sandwich_ready=Sandwich-Status auf dem Brett einsehen
+option.show_oven_contents=Ofen-Inhalte einsehen
+option.show_oven_status=Ofen-Status einsehen
 
 combo.big_mac.name=Es gibt nur einen!
 combo.blt.name=Der gute alte BLT
@@ -37,3 +61,9 @@ combo.only_bread.name=Etwas Langweilig...
 combo.rrb.name=Retro Roastbeef
 combo.smart_chicken.name=7-Smartes Hühnchen
 combo.veggie.name=Veggie Sandwich
+
+waila.oven_items=Ofen-Items
+waila.pan_making=Wird emacht
+waila.pan_done=Fertig!
+waila.true=Wahr
+waila.false=Falsch
