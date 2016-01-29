@@ -100,6 +100,7 @@ public class RecipeRegistry
         GameRegistry.addShapelessRecipe(new ItemStack(peanut, 2), new ItemStack(mortar_and_pestle, 1), new ItemStack(peanuts_in_shell, 1));
         GameRegistry.addShapelessRecipe(new ItemStack(crushed_vanilla, 2), new ItemStack(mortar_and_pestle, 1), new ItemStack(dried_vanilla, 1));
         GameRegistry.addShapelessRecipe(new ItemStack(crushed_ice, 2), new ItemStack(mortar_and_pestle, 1), new ItemStack(ice, 1));
+        GameRegistry.addShapelessRecipe(new ItemStack(cocoa_powder, 2), new ItemStack(mortar_and_pestle, 1), new ItemStack(dye, 1, 3));
 
         GameRegistry.addShapelessRecipe(new ItemStack(cheese, 2), new ItemStack(hand_mixer), new ItemStack(milk_bucket));
         GameRegistry.addShapelessRecipe(new ItemStack(jammable_strawberry), new ItemStack(cut_strawberry), new ItemStack(sugar));

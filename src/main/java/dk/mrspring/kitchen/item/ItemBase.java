@@ -165,8 +165,9 @@ public class ItemBase extends Item
         registerItem(scrambled_eggs);
         registerItem(raw_meat_patty);
         registerItem(cooked_meat_patty);
-        registerItem(lasagna_plate);
-        registerItem(ground_beef);
+//        registerItem(lasagna_plate);
+//        registerItem(ground_beef);
+        registerItem(cocoa_powder);
         registerItem(empty_muffin_cup);
         registerItem(raw_muffin);
         registerItem(cooked_muffin);

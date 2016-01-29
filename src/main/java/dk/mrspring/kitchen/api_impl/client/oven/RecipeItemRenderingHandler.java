@@ -1,9 +1,11 @@
 package dk.mrspring.kitchen.api_impl.client.oven;
 
+import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.api.oven.IOven;
 import dk.mrspring.kitchen.api.oven.IOvenItem;
 import dk.mrspring.kitchen.api.oven.IOvenItemRenderingHandler;
 import dk.mrspring.kitchen.api_impl.common.oven.RecipeOvenItem;
+import dk.mrspring.kitchen.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -40,25 +42,8 @@ public class RecipeItemRenderingHandler implements IOvenItemRenderingHandler
             GL11.glPushMatrix();
             float s = 0.7F;
             GL11.glScalef(s, s, s);
-            renderItem(rendering, 0, 0, 0);
-            GL11.glPopMatrix();
-        }
-    }
-
-    private void renderItem(ItemStack item, double xOffset, double yOffset, double zOffset)
-    {
-        if (item != null)
-        {
-            GL11.glPushMatrix();
-            GL11.glTranslated(xOffset, yOffset, zOffset);
-            EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, item);
-            itemEntity.hoverStart = 0.0F;
-            RenderItem.renderInFrame = true;
-            GL11.glRotatef(180, 0, 1, 1);
-            GL11.glRotatef(180, 0, 1, 0);
-            GL11.glTranslatef(0, 0, .1F);
-            RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-            RenderItem.renderInFrame = false;
+            GL11.glRotatef(90,1,0,0); // TODO: Place properly
+            RenderUtils.renderItem(rendering, 0, 0, 0, ModConfig.getClientConfig().force_3d_item_rendering);
             GL11.glPopMatrix();
         }
     }
