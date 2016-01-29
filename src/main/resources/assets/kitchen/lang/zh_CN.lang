@@ -1,12 +1,17 @@
 itemGroup.tabKitchen=Kitchen
 
-tile.tiles.name=Tiles
+tile.tiles.name=瓷砖
 tile.board.name=砧板
 tile.tomato_crop.name=番茄作物
 tile.lettuce_crop.name=生菜作物
 tile.oven.name=烤箱
 tile.plate.name=餐盘
 tile.kitchen_cabinet.name=餐具柜
+tile.frying_pan.name=煎锅
+tile.peanut_crop.name=花生作物
+tile.wild_peanut.name=野花生
+tile.strawberry_crop.name=草莓作物
+tile.wild_strawberry.name=野草莓
 
 item.knife.name=切菜刀
 item.bacon_raw.name=生培根
@@ -35,6 +40,15 @@ item.burnt_meat.name=烤焦肉
 item.creeper_slice.name=爬行者肉片
 item.butter.name=黄油
 item.sandwichable.sandwichable_msg=可用作三明治的食材
+item.jam_jar.filled.name=满罐
+item.jam_jar.empty.name=空罐
+item.jam_jar.uses_left_msg=剩余次数
+item.strawberry.name=草莓
+item.apple_slice.name=苹果切片
+item.strawberry_slices.name=草莓切片
+item.peanut.name=花生
+item.peanuts_in_shell.name=花生米
+item.sugared_strawberry_slices.name=糖腌草莓切片
 
 combo.big_mac.name=独一无二!
 combo.blt.name=美味的三明治
@@ -43,6 +57,10 @@ combo.rrb.name=复古的烤牛肉
 combo.smart_chicken.name=7只聪明的小鸡
 combo.veggie.name=素食三明治
 
+jam.peanut.name=花生酱
+jam.apple.name=苹果酱
+jam.strawberry.name=草莓酱
+
 option.show_is_sandwich_ready=显示三明治状态
 option.show_oven_contents=显示烤箱物品
 option.show_oven_status=显示烤箱状态
@@ -50,5 +68,7 @@ option.show_oven_status=显示烤箱状态
 waila.is_sandwich_ready=三明治已完成
 waila.oven_items=烤制物品
 waila.oven_has_coal=有燃料
+waila.pan_making=烹饪中
+waila.pan_done=完成!
 waila.true=是
 waila.false=否
