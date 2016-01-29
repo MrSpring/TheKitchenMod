@@ -1,0 +1,27 @@
+itemGroup.tabKitchen=Κουζίνα
+
+tile.tiles.name=Πλακάκια
+tile.board.name=Επιφάνεια κοπής
+tile.tomato_crop.name=Ντοματιά
+tile.lettuce_crop.name=Μαρουλιά
+tile.oven.name=Φούρνος
+tile.plate.name=Πιάτο
+tile.kitchen_cabinet.name=Ντουλάπι Κουζίνας
+tile.frying_pan.name=Τηγάνι
+tile.peanut_crop.name=Φιστίκι
+tile.wild_peanut.name=Άγριο Φυστίκι
+tile.strawberry_crop.name=Φράουλα
+tile.wild_strawberry.name=Άγρια Φράουλα
+
+item.knife.name=Μαχαίρι
+item.bacon_raw.name=Ωμό Μπέικον
+item.bread_slice.name=Φέτα Ψωμί
+item.sandwich.name=Σάντουιτς
+item.tomato.name=Ντομάτα
+item.lettuce.name=Μαρούλι
+item.lettuce_leaf.name=Φύλλα Μαρουλιού
+item.tomato_slice.name=Φέτα Ντομάτας
+item.bacon_cooked.name=Ψητό Μπέικον
+item.carrot_slice.name=Φέτα Καρότου
+item.potato_slice.name=Φέτα Πατάτας
+item.mortar.name=Γουδί
