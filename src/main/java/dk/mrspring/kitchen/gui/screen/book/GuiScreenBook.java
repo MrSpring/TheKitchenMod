@@ -44,8 +44,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
 
     public GuiScreenBook(List<IChapterHandler> chapterHandlers)
     {
-//        this.chapterHandlers = chapterHandlers;
-        this.chapterHandlers = new LinkedList<IChapterHandler>();
+        this.chapterHandlers = chapterHandlers;
     }
 
     public GuiScreenBook(List<IChapterHandler> handlers, ResourceLocation left, ResourceLocation right)
@@ -74,8 +73,8 @@ public class GuiScreenBook extends GuiScreen implements IBook
         this.buttonList.add(new GuiNoRenderButton(1, width / 2 + PAGE_WIDTH - BUTTON_SIZE, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
         this.buttonList.add(new GuiNoRenderButton(2, width / 2 + PAGE_WIDTH - BUTTON_SIZE - 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
 
-        this.chapterHandlers.clear();
-        this.chapterHandlers.add(new SimpleChapterHandler());
+//        this.chapterHandlers.clear();
+//        this.chapterHandlers.add(new SimpleChapterHandler());
 
         try
         {
