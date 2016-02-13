@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.api_impl.client.book.element;
 
 import dk.mrspring.kitchen.api.book.IPageElement;
 import dk.mrspring.kitchen.api.book.IPageElementContainer;
-import dk.mrspring.kitchen.api.book.ISplittable;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * Created on 10-09-2015 for TheKitchenMod.
  */
-public class TextElement implements IPageElement, ISplittable
+public class TextElement implements IPageElement
 {
     String raw;
     List<CachedLineRenderer> lines;
@@ -57,7 +56,8 @@ public class TextElement implements IPageElement, ISplittable
         while ((r = remaining.length()) > 0)
         {
             int y = i * font.FONT_HEIGHT, ay = (int) (y * getScaleFactor(container));
-            int width = getWidthAtHeight(y, container), x = getXOffsetAtHeight(y, container) + (int) (align.transform(width));
+            int width = (int) (getWidthAtHeight(y, container) / getScaleFactor(container));
+            int x = getXOffsetAtHeight(y, container) + (int) (align.transform(width));
             int fits = font.sizeStringToWidth(remaining, width);
             if (fits >= r)
             {
@@ -100,9 +100,15 @@ public class TextElement implements IPageElement, ISplittable
         return new TextElement(split, align, scaleFactor);
     }
 
+    @Override
+    public boolean canSplit(IPageElementContainer container)
+    {
+        return true;
+    }
+
     public int getWidthAtHeight(int y, IPageElementContainer container)
     {
-        return (int) (container.getAvailableWidth() / getScaleFactor(container));
+        return container.getAvailableWidth();
     }
 
     public int getXOffsetAtHeight(int y, IPageElementContainer container)

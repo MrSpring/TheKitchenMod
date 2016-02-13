@@ -3,9 +3,9 @@ package dk.mrspring.kitchen.gui.screen.book;
 
 import dk.mrspring.kitchen.api.book.*;
 import dk.mrspring.kitchen.api_impl.client.book.element.Alignment;
-import dk.mrspring.kitchen.api_impl.client.book.element.EndOfPageElement;
 import dk.mrspring.kitchen.api_impl.client.book.element.SpacerElement;
 import dk.mrspring.kitchen.api_impl.client.book.element.TextElement;
+import dk.mrspring.kitchen.api_impl.client.book.element.TextImageElement;
 import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -96,11 +96,12 @@ public class GuiScreenBook extends GuiScreen implements IBook
         @Override
         public void addElementsToChapter(IChapter chapter)
         {
-            chapter.addElement(new TextElement("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lectus nunc, congue ut odio vel, maximus varius velit. Aliquam posuere libero vitae neque consequat, sit amet efficitur ligula vulputate.", Alignment.LEFT));
-            chapter.addElement(new SpacerElement(5));
-            chapter.addElement(new TextElement("Cras id faucibus ex. Nulla imperdiet libero porttitor urna dictum, quis volutpat nunc mollis. Quisque elit arcu, sollicitudin quis condimentum a, sodales a lacus. Nullam convallis neque id nisl dictum lacinia.", Alignment.CENTER));
-            chapter.addElement(new SpacerElement(5));
-            chapter.addElement(new TextElement("Morbi vitae pellentesque sem. Nam risus eros, egestas id bibendum auctor, mattis eu justo. Nulla dapibus ullamcorper imperdiet. Integer vehicula mollis ligula in tincidunt.", Alignment.RIGHT));
+            chapter.addElement(new SpacerElement(2));
+            chapter.addElement(new TextImageElement("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lectus nunc, congue ut odio vel, maximus varius velit. Aliquam posuere libero vitae neque consequat, sit amet efficitur ligula vulputate.", Alignment.LEFT, 30, 30, 67, 16, new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), TextImageElement.ImageAlign.LEFT));
+            chapter.addElement(new SpacerElement(9));
+            chapter.addElement(new TextImageElement("Cras id faucibus ex. Nulla imperdiet libero porttitor urna dictum, quis volutpat nunc mollis. Quisque elit arcu, sollicitudin quis condimentum a, sodales a lacus. Nullam convallis neque id nisl dictum lacinia.", Alignment.CENTER, 30, 30, 67, 16, new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), TextImageElement.ImageAlign.LEFT));
+            chapter.addElement(new SpacerElement(9));
+            chapter.addElement(new TextImageElement("Morbi vitae pellentesque sem. Nam risus eros, egestas id bibendum auctor, mattis eu justo. Nulla dapibus ullamcorper imperdiet. Integer vehicula mollis ligula in tincidunt.", Alignment.RIGHT, 30, 30, 67, 16, new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), TextImageElement.ImageAlign.LEFT));
         }
 
         @Override
@@ -341,11 +342,11 @@ public class GuiScreenBook extends GuiScreen implements IBook
                 int height = element.getHeight(container);
                 if (height > container.getAvailableHeight())
                 {
-                    if (element instanceof ISplittable)
+                    if (element.canSplit(container))
                     {
-                        while (height > container.getAvailableHeight() && element instanceof ISplittable)
+                        while (height > container.getAvailableHeight() && element.canSplit(container))
                         {
-                            IPageElement split = ((ISplittable) element).createSplitElement(container);
+                            IPageElement split = element.createSplitElement(container);
                             currentPage.addElement(element);
                             pagedChapter.addPage(currentPage.copy());
                             currentPage = new Page(chapter);
