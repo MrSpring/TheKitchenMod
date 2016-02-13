@@ -28,7 +28,7 @@ public class CuttingBoardHandler implements IChapterHandler
     {
         this.addTitle(chapter);
         chapter.addElement(new SpacerElement(3).disableImage());
-        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft a Cutting Board, like so, to unlock this chapter!", Alignment.CENTER));
         chapter.addElement(new SpacerElement(20));
         chapter.addElement(new RecipeElement(new ItemStack(KitchenBlocks.board)));
     }

@@ -12,6 +12,7 @@ import net.minecraft.util.StatCollector;
 import java.util.Collections;
 import java.util.List;
 
+import static dk.mrspring.kitchen.GameRegisterer.registerBlock;
 import static dk.mrspring.kitchen.GameRegisterer.registerItem;
 import static dk.mrspring.kitchen.KitchenItems.*;
 
@@ -145,7 +146,7 @@ public class ItemBase extends Item
         registerItem(pancake);
         registerItem(timer);
         registerItem(cooking_book);
-        registerItem(manual);
+        registerItem(waffle_iron_manual);
         registerItem(raw_vanilla);
         registerItem(dried_vanilla);
         registerItem(crushed_vanilla);

@@ -2,7 +2,6 @@ package dk.mrspring.kitchen.api_impl.client.book;
 
 import dk.mrspring.kitchen.api.book.IBookRegistry;
 import dk.mrspring.kitchen.api.manual.IManualRegistry;
-import dk.mrspring.kitchen.api_impl.client.book.registry.GrinderType;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
@@ -22,15 +21,23 @@ public class ManualRegistry implements IManualRegistry
 
     private final Map<String, IBookRegistry> manuals = new HashMap<String, IBookRegistry>();
 
+    public final IBookRegistry WAFFLE_IRON = new BasicBookRegistry();
+
     private ManualRegistry()
     {
-        registerManual("grinder", new GrinderType());
+        registerManual("waffle_iron", WAFFLE_IRON);
     }
 
     @Override
-    public void registerManual(String identifier, IBookRegistry bookRegistry)
+    public void registerManual(String identifier, IBookRegistry manualRegistry)
     {
+        if (!manuals.containsKey(identifier)) manuals.put(identifier, manualRegistry);
+    }
 
+    @Override
+    public IBookRegistry getManual(String identifier)
+    {
+        return manuals.get(identifier);
     }
 
     @Override

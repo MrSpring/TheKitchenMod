@@ -1,20 +1,19 @@
-package dk.mrspring.kitchen.api_impl.client.book.registry;
+package dk.mrspring.kitchen.api_impl.client.book;
 
-import dk.mrspring.kitchen.api.book.IBookRegistry;
 import dk.mrspring.kitchen.api.book.IChapterHandler;
+import dk.mrspring.kitchen.api.book.IBookRegistry;
+import dk.mrspring.kitchen.api_impl.client.book.handler.*;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * Created on 06-12-2015 for TheKitchenMod.
+ * Created on 09-09-2015 for TheKitchenMod.
  */
-public class ManualTypeRegistry implements IBookRegistry
+public class BasicBookRegistry implements IBookRegistry
 {
     private Map<String, IChapterHandler> registeredHandlers;
 
-    public ManualTypeRegistry()
+    public BasicBookRegistry()
     {
         registeredHandlers = new LinkedHashMap<String, IChapterHandler>();
     }
@@ -22,7 +21,8 @@ public class ManualTypeRegistry implements IBookRegistry
     @Override
     public void registerChapterHandler(String id, IChapterHandler handler)
     {
-        registeredHandlers.put(id, handler);
+        if (!registeredHandlers.containsKey(id))
+            registeredHandlers.put(id, handler);
     }
 
     @Override
@@ -31,9 +31,8 @@ public class ManualTypeRegistry implements IBookRegistry
         return registeredHandlers.get(id);
     }
 
-    @Override
     public List<IChapterHandler> getRegisteredHandlers()
     {
-        return null;
+        return new LinkedList<IChapterHandler>(registeredHandlers.values());
     }
 }

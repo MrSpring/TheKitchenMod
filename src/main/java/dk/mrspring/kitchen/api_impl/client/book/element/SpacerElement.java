@@ -40,7 +40,7 @@ public class SpacerElement extends ImageElement implements ISplittable
     @Override
     public void render(IPageElementContainer container, int mouseX, int mouseY)
     {
-        if (doImage)
+        if (height > 9 && doImage)
         {
             float heightOffset = ((float) (height - 11)) / 2F;
             GL11.glTranslatef(0, heightOffset, 0);

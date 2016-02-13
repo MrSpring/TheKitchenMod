@@ -10,5 +10,7 @@ public interface IManualRegistry
 {
     void registerManual(String identifier, IBookRegistry bookRegistry);
 
+    IBookRegistry getManual(String identifier);
+
     ItemStack makeManualStack(String identifier);
 }

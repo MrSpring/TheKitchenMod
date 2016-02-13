@@ -1,0 +1,37 @@
+{
+  "title": "Waffle Iron",
+  "chapters": {
+    "placement": {
+      "toc_title": "Placement",
+      "show_in_toc": true,
+      "elements": [
+        {
+          "type": "text",
+          "text_scale": 2,
+          "text": "§l§nPlacement"
+        }, {
+          "type": "text",
+          "text_lines": [
+            "You place the §lWaffle Iron§r™ down like any other block. When placed it will face the player that placed it.",
+            "The §lWaffle Iron§r™ can also be placed diagonally, so it fits nicely into corners as well."
+          ]
+        }, {
+          "type": "text_with_image",
+          "image_align": "RIGHT",
+          "text_lines": [
+            "Once placed you can start to operate the apparatus. Right-clicking the §lWaffle Iron§r™ while sneaking will open and close the §lWaffle Iron§r™",
+            "Once placed you can start to operate the apparatus. Right-clicking the §lWaffle Iron§r™ while sneaking will open and close the §lWaffle Iron§r™",
+            "Once placed you can start to operate the apparatus. Right-clicking the §lWaffle Iron§r™ while sneaking will open and close the §lWaffle Iron§r™",
+            "Once placed you can start to operate the apparatus. Right-clicking the §lWaffle Iron§r™ while sneaking will open and close the §lWaffle Iron§r™",
+            "Once placed you can start to operate the apparatus. Right-clicking the §lWaffle Iron§r™ while sneaking will open and close the §lWaffle Iron§r™"
+          ],
+          "image_location": "kitchen:textures/gui/manual_widgets_01.png",
+          "image_uv": [0, 0],
+          "image_size": [54, 54]
+        }, {
+          "type": "end_page"
+        }
+      ]
+    }
+  }
+}
