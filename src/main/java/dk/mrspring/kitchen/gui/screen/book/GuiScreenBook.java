@@ -4,7 +4,6 @@ package dk.mrspring.kitchen.gui.screen.book;
 import dk.mrspring.kitchen.api.book.*;
 import dk.mrspring.kitchen.api_impl.client.book.element.Alignment;
 import dk.mrspring.kitchen.api_impl.client.book.element.SpacerElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.TextElement;
 import dk.mrspring.kitchen.api_impl.client.book.element.TextImageElement;
 import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.client.Minecraft;
@@ -39,6 +38,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
     List<HoverDraw> hovers = new ArrayList<HoverDraw>();
     int currentRenderMouseX = 0, currentRenderMouseY = 0;
     Map<String, ChapterMarker> tableOfContent = new LinkedHashMap<String, ChapterMarker>();
+    boolean enableTableOfContent = false;
 
     private int leftPageIndex = 0, rightPageIndex = leftPageIndex + 1;
 
@@ -73,8 +73,6 @@ public class GuiScreenBook extends GuiScreen implements IBook
         this.buttonList.add(new GuiNoRenderButton(0, width / 2 - PAGE_WIDTH, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
         this.buttonList.add(new GuiNoRenderButton(1, width / 2 + PAGE_WIDTH - BUTTON_SIZE, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
         this.buttonList.add(new GuiNoRenderButton(2, width / 2 + PAGE_WIDTH - BUTTON_SIZE - 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
-        this.buttonList.add(new GuiNoRenderButton(3, width / 2 - PAGE_WIDTH + 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
-        //BOOK_WIDTH - 14 - 24, -24, 23, 24
 
         this.chapterHandlers.clear();
         this.chapterHandlers.add(new SimpleChapterHandler());
@@ -84,6 +82,8 @@ public class GuiScreenBook extends GuiScreen implements IBook
             Chapter[] chapters = makeChapters(getHandlers());
             PagedChapter[] pagedChapters = initFromChapters(chapters);
             this.pages = createPages(pagedChapters);
+            if (this.enableTableOfContent = getTableOfContent().containsKey("tableofcontent"))
+                this.buttonList.add(new GuiNoRenderButton(3, width / 2 - PAGE_WIDTH + 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -244,10 +244,6 @@ public class GuiScreenBook extends GuiScreen implements IBook
         mc.getTextureManager().bindTexture(left);
         boolean hover = isMouseHovering(mouseX, mouseY, 0, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
         drawTexturedModalRect(0, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
-        ChapterMarker tocMarker = getTableOfContentMarker();
-//        int x = leftPageIndex != tocMarker.getPageIndex() && rightPageIndex != tocMarker.getPageIndex() ? 48 : 48 + 24;
-        int x = 48 + 24;
-        drawTexturedModalRect(15, -24, x, 180, 23, 24);
         if (canGoLeft()) drawTexturedModalRect(0, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
         mc.getTextureManager().bindTexture(right);
         hover = isMouseHovering(mouseX, mouseY, BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
@@ -255,9 +251,15 @@ public class GuiScreenBook extends GuiScreen implements IBook
         drawTexturedModalRect(BOOK_WIDTH - 14 - 24, -24, 48, 180, 23, 24);
         if (canGoRight())
             drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
-        if (isMouseHovering(mouseX, mouseY, 15, -24, 23, 24) && !(leftPageIndex == getTableOfContentMarker().getPageIndex()))
-            hovers.add(new HoverDraw(Collections.singletonList("Home"), mc.fontRenderer));
-        else if (isMouseHovering(mouseX, mouseY, BOOK_WIDTH - 14 - 24, -24, 23, 24))
+        if (enableTableOfContent)
+        {
+            ChapterMarker tocMarker = getTableOfContentMarker();
+            int x = leftPageIndex != tocMarker.getPageIndex() && rightPageIndex != tocMarker.getPageIndex() ? 48 : 48 + 24;
+            drawTexturedModalRect(15, -24, x, 180, 23, 24);
+            if (isMouseHovering(mouseX, mouseY, 15, -24, 23, 24) && !(leftPageIndex == getTableOfContentMarker().getPageIndex()))
+                hovers.add(new HoverDraw(Collections.singletonList("Home"), mc.fontRenderer));
+        }
+        if (isMouseHovering(mouseX, mouseY, BOOK_WIDTH - 14 - 24, -24, 23, 24))
             hovers.add(new HoverDraw(Collections.singletonList("Exit"), mc.fontRenderer));
     }
 
