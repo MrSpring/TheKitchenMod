@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class BasicBookRegistry implements IBookRegistry
 {
-    private Map<String, IChapterHandler> registeredHandlers;
+    Map<String, IChapterHandler> registeredHandlers;
 
     public BasicBookRegistry()
     {

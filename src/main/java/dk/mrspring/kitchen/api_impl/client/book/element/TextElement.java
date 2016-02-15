@@ -27,12 +27,24 @@ public class TextElement implements IPageElement
         this.scaleFactor = scaleFactor;
     }
 
-    public TextElement(String text, Alignment align, float scaleFactor)
+    public TextElement(String text, Alignment align, float scaleFactor, int textColor, boolean textShadow)
     {
         this.raw = text;
         this.align = align;
         this.scaleFactor = scaleFactor;
         this.lines = new LinkedList<CachedLineRenderer>();
+        this.textColor = textColor;
+        this.textShadow = textShadow;
+    }
+
+    public TextElement(String text, Alignment align, float scaleFactor, int textColor)
+    {
+        this(text, align, scaleFactor, textColor, false);
+    }
+
+    public TextElement(String text, Alignment align, float scaleFactor)
+    {
+        this(text, align, scaleFactor, 0x4C1C06);
     }
 
     public TextElement(String text, Alignment align)

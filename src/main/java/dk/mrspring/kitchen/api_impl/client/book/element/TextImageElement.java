@@ -15,6 +15,18 @@ public class TextImageElement extends TextElement
     int vPadding = 2, hPadding = 2;
     ImageAlign imageAlign = ImageAlign.RIGHT;
 
+    public TextImageElement(String text, Alignment align, float scaleFactor, int textColor, boolean textShadow, int width, int height, int u, int v, ResourceLocation image, ImageAlign imageAlign)
+    {
+        super(text, align, scaleFactor, textColor, textShadow);
+        this.setImageProperties(width, height, u, v, image, imageAlign);
+    }
+
+    public TextImageElement(String text, Alignment align, float scaleFactor, int textColor, int width, int height, int u, int v, ResourceLocation image, ImageAlign imageAlign)
+    {
+        super(text, align, scaleFactor, textColor);
+        this.setImageProperties(width, height, u, v, image, imageAlign);
+    }
+
     public TextImageElement(String text, Alignment align, float scaleFactor, int width, int height, int u, int v, ResourceLocation image, ImageAlign imageAlign)
     {
         super(text, align, scaleFactor);
@@ -83,10 +95,9 @@ public class TextImageElement extends TextElement
     @Override
     public boolean canSplit(IPageElementContainer container)
     {
-        return container.getAvailableHeight() >= this.height;
+        System.out.println("Can split: " + this.height + " <= " + container.getAvailableHeight());
+        return container.getAvailableHeight() >= this.height && super.canSplit(container);
     }
-
-    // TODO: Override split
 
     public enum ImageAlign
     {

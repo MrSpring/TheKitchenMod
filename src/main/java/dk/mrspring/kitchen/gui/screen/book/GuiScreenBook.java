@@ -28,7 +28,7 @@ public class GuiScreenBook extends GuiScreen implements IBook
 {
     final int PAGE_WIDTH = 140, BOOK_WIDTH = PAGE_WIDTH * 2, BOOK_HEIGHT = 180;
     final int BUTTON_SIZE = 24;
-    final int LEFT_PADDING = 16, RIGHT_PADDING = 12, TOP_PADDING = 13, BOTTOM_PADDING = 20;
+    final int LEFT_PADDING = 24, RIGHT_PADDING = 12, TOP_PADDING = 13, BOTTOM_PADDING = 20;
 
     ResourceLocation left = new ResourceLocation("kitchen", "textures/gui/cooking_book_left.png");
     ResourceLocation right = new ResourceLocation("kitchen", "textures/gui/cooking_book_right.png");
@@ -87,38 +87,6 @@ public class GuiScreenBook extends GuiScreen implements IBook
         {
             e.printStackTrace();
             mc.displayGuiScreen(null);
-        }
-    }
-
-    private class SimpleChapterHandler implements IChapterHandler
-    {
-        @Override
-        public void addElementsToChapter(IChapter chapter)
-        {
-            chapter.addElement(new SpacerElement(2));
-            chapter.addElement(new TextImageElement("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent lectus nunc, congue ut odio vel, maximus varius velit. Aliquam posuere libero vitae neque consequat, sit amet efficitur ligula vulputate.", Alignment.LEFT, 30, 30, 67, 16, new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), TextImageElement.ImageAlign.LEFT));
-            chapter.addElement(new SpacerElement(9));
-            chapter.addElement(new TextImageElement("Cras id faucibus ex. Nulla imperdiet libero porttitor urna dictum, quis volutpat nunc mollis. Quisque elit arcu, sollicitudin quis condimentum a, sodales a lacus. Nullam convallis neque id nisl dictum lacinia.", Alignment.CENTER, 30, 30, 67, 16, new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), TextImageElement.ImageAlign.LEFT));
-            chapter.addElement(new SpacerElement(9));
-            chapter.addElement(new TextImageElement("Morbi vitae pellentesque sem. Nam risus eros, egestas id bibendum auctor, mattis eu justo. Nulla dapibus ullamcorper imperdiet. Integer vehicula mollis ligula in tincidunt.", Alignment.RIGHT, 30, 30, 67, 16, new ResourceLocation("kitchen", "textures/gui/cooking_book.png"), TextImageElement.ImageAlign.LEFT));
-        }
-
-        @Override
-        public void addLockedElementsToChapter(IChapter chapter)
-        {
-
-        }
-
-        @Override
-        public String getId()
-        {
-            return null;
-        }
-
-        @Override
-        public String getUnlocalizedTitle()
-        {
-            return null;
         }
     }
 
