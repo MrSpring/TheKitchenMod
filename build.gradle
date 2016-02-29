@@ -31,7 +31,7 @@ archivesBaseName = "TheKitchenMod"
 }*/
 
 minecraft {
-    version = "1.7.10-10.13.3.1381-1.7.10"
+    version = "1.7.10-10.13.4.1614-1.7.10"
     assetDir = "eclipse/assets"
 }
 
