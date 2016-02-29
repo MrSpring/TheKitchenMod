@@ -26,6 +26,12 @@ import java.util.Map;
  */
 public class JsonBookRegistry extends BasicBookRegistry implements IResourceManagerReloadListener
 {
+    private static final String LEFT_PAGE_DEFAULT = "kitchen:textures/gui/cooking_book_left.png";
+    private static final String RIGHT_PAGE_DEFAULT = "kitchen:textures/gui/cooking_book_right.png";
+
+    private static final Rect PREV_PAGE_DEFAULT = new Rect(0, 156, 24, 24, 0, 180, 24, 180, 24, 180, 0, 204, LEFT_PAGE_DEFAULT);
+    private static final Rect NEXT_PAGE_DEFAULT = new Rect(336, 156, 24, 24, 0, 180, 24, 180, 24, 180, 0, 204, RIGHT_PAGE_DEFAULT);
+
     ResourceLocation location;
 
     public JsonBookRegistry(ResourceLocation location)
@@ -77,6 +83,64 @@ public class JsonBookRegistry extends BasicBookRegistry implements IResourceMana
     {
         String title = "null";
         Map<String, ChapterWrapper> chapters;
+        int left_page_width = 140, right_page_width = 140;
+        int left_page_height = 180, right_page_height = 180;
+        int[] left_page_uv = new int[2], right_page_uv = new int[2];
+        /**
+         * [0]: Top, [1]: Down, [2]: Left, [3]: Right.
+         */
+        int[] left_page_padding = new int[]{13, 20, 12, 16};
+        /**
+         * [0]: Top, [1]: Down, [2]: Left, [3]: Right.
+         */
+        int[] right_page_padding = new int[]{13, 20, 16, 12};
+        String left_page_background_location = LEFT_PAGE_DEFAULT;
+        String right_page_background_location = RIGHT_PAGE_DEFAULT;
+
+        boolean show_exit_button = true;
+        Rect exit_button_def = new Rect(242, -24, 24, 24, 48, 180, RIGHT_PAGE_DEFAULT);
+
+        boolean show_toc_button = true;
+        Rect toc_button_def = new Rect(15, -24, 24, 24, 48, 180, LEFT_PAGE_DEFAULT);
+
+        Rect prev_page_def = null;
+        Rect next_page_def = null;
+    }
+
+    private static class Rect
+    {
+        int[] position = new int[0];
+        int[] size = new int[0];
+        int[] idle_uv = new int[0];
+        int[] hover_uv = new int[0];
+        int[] click_uv = new int[0];
+        int[] locked_uv = new int[0];
+        String texture_location = null;
+
+        Rect()
+        {
+        }
+
+        Rect(int x, int y, int width, int height, int idleU, int idleV, int hoverU, int hoverV, int clickU, int clickV, int lockedU, int lockedV, String texture)
+        {
+            this.position = new int[]{x, y};
+            this.size = new int[]{width, height};
+            this.idle_uv = new int[]{idleU, idleV};
+            this.hover_uv = new int[]{hoverU, hoverV};
+            this.click_uv = new int[]{clickU, clickV};
+            this.locked_uv = new int[]{lockedU, lockedV};
+            this.texture_location = texture;
+        }
+
+        Rect(int x, int y, int width, int height, int u, int v, String texture)
+        {
+            this(x, y, width, height, u, v, u, v, u, v, u, v, texture);
+        }
+
+        Rect(int x, int y, int width, int height, int idleU, int idleV, int hoverU, int hoverV, String texture)
+        {
+            this(x, y, width, height, idleU, idleV, hoverU, hoverV, hoverU, hoverV, idleU, idleV, texture);
+        }
     }
 
     private static class ChapterWrapper
