@@ -3,7 +3,6 @@ package dk.mrspring.kitchen.api_impl.client.book.element;
 import dk.mrspring.kitchen.api.book.ChapterMarker;
 import dk.mrspring.kitchen.api.book.IPageElement;
 import dk.mrspring.kitchen.api.book.IPageElementContainer;
-import dk.mrspring.kitchen.api.book.ISplittable;
 import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
@@ -14,7 +13,7 @@ import java.util.Map;
 /**
  * Created on 11-09-2015 for TheKitchenMod.
  */
-public class TableOfContentElement implements IPageElement, ISplittable
+public class TableOfContentElement implements IPageElement
 {
     Map<String, ChapterMarker> markerMap;
     int fromIndex = -1, toIndex = -1;
@@ -66,6 +65,12 @@ public class TableOfContentElement implements IPageElement, ISplittable
             split.toIndex = markerMap.size();
             return split;
         } else return null;
+    }
+
+    @Override
+    public boolean canSplit(IPageElementContainer container)
+    {
+        return true;
     }
 
     @Override

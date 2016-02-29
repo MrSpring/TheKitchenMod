@@ -10,6 +10,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.api_impl.client.book.ManualRegistry;
 import dk.mrspring.kitchen.api_impl.common.registry.SandwichableRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.comp.nei.NEIKitchenConfig;
@@ -19,6 +20,8 @@ import dk.mrspring.kitchen.item.ItemBase;
 import dk.mrspring.kitchen.recipe.*;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
@@ -37,7 +40,7 @@ public class Kitchen
     public KnifeRecipes knifeRecipes;
     public FryingPanRecipes fryingPanRecipes;
     public FryingPanJamRecipes fryingPanJamRecipes;
-//    public GrinderRecipeHandler grinderRecipes;
+    //    public GrinderRecipeHandler grinderRecipes;
     private GuiHandler guiHandler = new GuiHandler();
 
     @EventHandler
@@ -88,6 +91,9 @@ public class Kitchen
 
         // Registering renderers
         proxy.registerRenderers();
+
+        IReloadableResourceManager manager = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
+        manager.registerReloadListener(ManualRegistry.getInstance());
     }
 
     @EventHandler

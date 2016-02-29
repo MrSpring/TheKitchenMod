@@ -46,4 +46,16 @@ public class EndOfPageElement implements IPageElement
     public void onUpdate(IPageElementContainer container)
     {
     }
+
+    @Override
+    public boolean canSplit(IPageElementContainer container)
+    {
+        return false;
+    }
+
+    @Override
+    public IPageElement createSplitElement(IPageElementContainer container)
+    {
+        return null;
+    }
 }

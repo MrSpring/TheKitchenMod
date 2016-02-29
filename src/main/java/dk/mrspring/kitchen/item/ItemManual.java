@@ -1,48 +1,29 @@
 package dk.mrspring.kitchen.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.KitchenItems;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import dk.mrspring.kitchen.Kitchen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
-
-import java.util.List;
+import net.minecraft.world.World;
 
 /**
  * Created on 04-12-2015 for TheKitchenMod.
  */
 public class ItemManual extends ItemBase
 {
-    @SideOnly(Side.CLIENT)
-    IIcon[] icons;
+    public String name;
+    public int guiId = -1;
 
-    public ItemManual()
+    public ItemManual(String manualName, int guiId)
     {
-        super("manual", true);
+        super("manual_" + manualName, true);
+        this.name = manualName;
+        this.guiId = guiId;
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, List list)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        ItemStack manual = new ItemStack(item);
-        ItemStack display = new ItemStack(KitchenBlocks.oven);
-        manual.setTagInfo("ManualType", display.writeToNBT(new NBTTagCompound()));
-        list.add(manual);
-    }
-
-    @Override
-    public boolean requiresMultipleRenderPasses()
-    {
-        return true;
-    }
-
-    @Override
-    public int getRenderPasses(int metadata)
-    {
-        return 2;
+        if (guiId != -1) player.openGui(Kitchen.instance, guiId, world, 0, 0, 0);
+        return super.onItemRightClick(stack, world, player);
     }
 }

@@ -14,4 +14,8 @@ public interface IPageElement
     void mouseClicked(IPageElementContainer container, int mouseX, int mouseY, int mouseButton);
 
     void onUpdate(IPageElementContainer container);
+
+    boolean canSplit(IPageElementContainer container);
+
+    IPageElement createSplitElement(IPageElementContainer container);
 }

@@ -2,7 +2,9 @@
 package dk.mrspring.kitchen.gui.screen.book;
 
 import dk.mrspring.kitchen.api.book.*;
-import dk.mrspring.kitchen.api_impl.client.book.CookingBookRegistry;
+import dk.mrspring.kitchen.api_impl.client.book.element.Alignment;
+import dk.mrspring.kitchen.api_impl.client.book.element.SpacerElement;
+import dk.mrspring.kitchen.api_impl.client.book.element.TextImageElement;
 import dk.mrspring.kitchen.entity.CookingBookUnlocksProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -26,16 +28,31 @@ public class GuiScreenBook extends GuiScreen implements IBook
 {
     final int PAGE_WIDTH = 140, BOOK_WIDTH = PAGE_WIDTH * 2, BOOK_HEIGHT = 180;
     final int BUTTON_SIZE = 24;
-    final int LEFT_PADDING = 16, RIGHT_PADDING = 12, TOP_PADDING = 13, BOTTOM_PADDING = 20;
-    final ResourceLocation LEFT = new ResourceLocation("kitchen", "textures/gui/cooking_book_left.png");
-    final ResourceLocation RIGHT = new ResourceLocation("kitchen", "textures/gui/cooking_book_right.png");
+    final int LEFT_PADDING = 24, RIGHT_PADDING = 12, TOP_PADDING = 13, BOTTOM_PADDING = 20;
 
+    ResourceLocation left = new ResourceLocation("kitchen", "textures/gui/cooking_book_left.png");
+    ResourceLocation right = new ResourceLocation("kitchen", "textures/gui/cooking_book_right.png");
+
+    List<IChapterHandler> chapterHandlers;
     Page[] pages;
     List<HoverDraw> hovers = new ArrayList<HoverDraw>();
     int currentRenderMouseX = 0, currentRenderMouseY = 0;
     Map<String, ChapterMarker> tableOfContent = new LinkedHashMap<String, ChapterMarker>();
+    boolean enableTableOfContent = false;
 
     private int leftPageIndex = 0, rightPageIndex = leftPageIndex + 1;
+
+    public GuiScreenBook(List<IChapterHandler> chapterHandlers)
+    {
+        this.chapterHandlers = chapterHandlers;
+    }
+
+    public GuiScreenBook(List<IChapterHandler> handlers, ResourceLocation left, ResourceLocation right)
+    {
+        this(handlers);
+        this.left = left;
+        this.right = right;
+    }
 
     static boolean isMouseHovering(int mouseX, int mouseY, int posX, int posY, int width, int height)
     {
@@ -55,20 +72,27 @@ public class GuiScreenBook extends GuiScreen implements IBook
         this.buttonList.add(new GuiNoRenderButton(0, width / 2 - PAGE_WIDTH, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
         this.buttonList.add(new GuiNoRenderButton(1, width / 2 + PAGE_WIDTH - BUTTON_SIZE, (height + BOOK_HEIGHT) / 2, BUTTON_SIZE, BUTTON_SIZE, ""));
         this.buttonList.add(new GuiNoRenderButton(2, width / 2 + PAGE_WIDTH - BUTTON_SIZE - 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
-        this.buttonList.add(new GuiNoRenderButton(3, width / 2 - PAGE_WIDTH + 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
-        //BOOK_WIDTH - 14 - 24, -24, 23, 24
+
+//        this.chapterHandlers.clear();
+//        this.chapterHandlers.add(new SimpleChapterHandler());
 
         try
         {
-            IChapterHandler[] handlers = CookingBookRegistry.getInstance().getRegisteredHandlers();
-            Chapter[] chapters = makeChapters(handlers);
+            Chapter[] chapters = makeChapters(getHandlers());
             PagedChapter[] pagedChapters = initFromChapters(chapters);
             this.pages = createPages(pagedChapters);
+            if (this.enableTableOfContent = getTableOfContent().containsKey("tableofcontent"))
+                this.buttonList.add(new GuiNoRenderButton(3, width / 2 - PAGE_WIDTH + 14, (height - BOOK_HEIGHT) / 2 - 24, BUTTON_SIZE, BUTTON_SIZE, ""));
         } catch (Exception e)
         {
             e.printStackTrace();
             mc.displayGuiScreen(null);
         }
+    }
+
+    private IChapterHandler[] getHandlers()
+    {
+        return chapterHandlers.toArray(new IChapterHandler[chapterHandlers.size()]);
     }
 
     @Override
@@ -184,22 +208,25 @@ public class GuiScreenBook extends GuiScreen implements IBook
 
     private void drawBook(int mouseX, int mouseY, float partial)
     {
-        mc.getTextureManager().bindTexture(LEFT);
+        mc.getTextureManager().bindTexture(left);
         boolean hover = isMouseHovering(mouseX, mouseY, 0, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
         drawTexturedModalRect(0, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
-        ChapterMarker tocMarker = getTableOfContentMarker();
-        int x = leftPageIndex != tocMarker.getPageIndex() && rightPageIndex != tocMarker.getPageIndex() ? 48 : 48 + 24;
-        drawTexturedModalRect(15, -24, x, 180, 23, 24);
         if (canGoLeft()) drawTexturedModalRect(0, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
-        mc.getTextureManager().bindTexture(RIGHT);
+        mc.getTextureManager().bindTexture(right);
         hover = isMouseHovering(mouseX, mouseY, BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, BUTTON_SIZE, BUTTON_SIZE);
         drawTexturedModalRect(PAGE_WIDTH, 0, 0, 0, PAGE_WIDTH, BOOK_HEIGHT);
         drawTexturedModalRect(BOOK_WIDTH - 14 - 24, -24, 48, 180, 23, 24);
         if (canGoRight())
             drawTexturedModalRect(BOOK_WIDTH - BUTTON_SIZE, BOOK_HEIGHT, hover ? 24 : 0, 180, BUTTON_SIZE, BUTTON_SIZE);
-        if (isMouseHovering(mouseX, mouseY, 15, -24, 23, 24) && !(leftPageIndex == getTableOfContentMarker().getPageIndex()))
-            hovers.add(new HoverDraw(Collections.singletonList("Home"), mc.fontRenderer));
-        else if (isMouseHovering(mouseX, mouseY, BOOK_WIDTH - 14 - 24, -24, 23, 24))
+        if (enableTableOfContent)
+        {
+            ChapterMarker tocMarker = getTableOfContentMarker();
+            int x = leftPageIndex != tocMarker.getPageIndex() && rightPageIndex != tocMarker.getPageIndex() ? 48 : 48 + 24;
+            drawTexturedModalRect(15, -24, x, 180, 23, 24);
+            if (isMouseHovering(mouseX, mouseY, 15, -24, 23, 24) && !(leftPageIndex == getTableOfContentMarker().getPageIndex()))
+                hovers.add(new HoverDraw(Collections.singletonList("Home"), mc.fontRenderer));
+        }
+        if (isMouseHovering(mouseX, mouseY, BOOK_WIDTH - 14 - 24, -24, 23, 24))
             hovers.add(new HoverDraw(Collections.singletonList("Exit"), mc.fontRenderer));
     }
 
@@ -284,17 +311,17 @@ public class GuiScreenBook extends GuiScreen implements IBook
                 int height = element.getHeight(container);
                 if (height > container.getAvailableHeight())
                 {
-                    if (element instanceof ISplittable)
+                    if (element.canSplit(container))
                     {
-                        while (height > container.getAvailableHeight() && element instanceof ISplittable)
+                        while (height > container.getAvailableHeight() && element.canSplit(container))
                         {
-                            IPageElement split = ((ISplittable) element).createSplitElement(container);
+                            IPageElement split = element.createSplitElement(container);
                             currentPage.addElement(element);
                             pagedChapter.addPage(currentPage.copy());
                             currentPage = new Page(chapter);
                             container.reset();
                             element = split;
-                            element.initElement(container);
+//                            element.initElement(container);
                             height = element.getHeight(container);
                         }
                     } else

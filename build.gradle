@@ -83,30 +83,32 @@ dependencies {
 
 }
 
-processResources
-        {
-            // this will ensure that this task is redone when the versions change.
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
 
-            // replace stuff in mcmod.info, nothing else
-            from(sourceSets.main.resources.srcDirs) {
-                include 'mcmod.info'
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
 
-                // replace version and mcversion
-                expand 'version': project.version, 'mcversion': project.minecraft.version
-            }
+        // replace version and mcversion
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
 
-            // copy everything else, thats not the mcmod.info
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
-        }
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
 
 jar {
     from(configurations.releaseJars.collect {
         it.isDirectory() ? it : zipTree(it)
     }, sourceSets.main.output, sourceSets.api.output)
+    manifest {
+        attributes "FMLAT": "kitchen_at.cfg"
+    }
 }
 
 sourceSets {
@@ -121,6 +123,9 @@ sourceSets {
 task sourceJar(type: Jar) {
     from(sourceSets.main.java, sourceSets.api.output)
     classifier = "src"
+    manifest {
+        attributes "FMLAT": "kitchen-deobf_at.cfg"
+    }
 }
 
 task devJar(type: Jar) {
@@ -128,6 +133,9 @@ task devJar(type: Jar) {
         it.isDirectory() ? it : zipTree(it)
     }, sourceSets.main.output, sourceSets.api.output)
     classifier = "deobf"
+    manifest {
+        attributes "FMLAT": "kitchen-deobf_at.cfg"
+    }
 }
 
 task apiJar(type: Jar) {

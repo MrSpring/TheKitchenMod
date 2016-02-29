@@ -2,10 +2,7 @@ package dk.mrspring.kitchen.api_impl.client.book.handler;
 
 import dk.mrspring.kitchen.api.book.IChapter;
 import dk.mrspring.kitchen.api.book.IChapterHandler;
-import dk.mrspring.kitchen.api_impl.client.book.element.EndOfPageElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.SpacerElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.TextElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.TitleElement;
+import dk.mrspring.kitchen.api_impl.client.book.element.*;
 import net.minecraft.util.StatCollector;
 
 /**
@@ -18,12 +15,12 @@ public class IntroductionHandler implements IChapterHandler
     {
         chapter.addElement(new TitleElement("Welcome"));
         chapter.addElement(new SpacerElement(20));
-        chapter.addElement(new TextElement(t("item.cooking_book.pages.introduction.text01"), true));
+        chapter.addElement(new TextElement(t("item.cooking_book.pages.introduction.text01"), Alignment.CENTER));
         chapter.addElement(new SpacerElement(5).disableImage());
-        chapter.addElement(new TextElement(t("item.cooking_book.pages.introduction.text02"), true));
+        chapter.addElement(new TextElement(t("item.cooking_book.pages.introduction.text02"), Alignment.CENTER));
 //        chapter.addElement(new SpacerElement(33).disableImage()/*new ImageElement(ModInfo.toResource("textures/gui/cooking_book_1.png"), 99, 160, 99, 33)*/);
         chapter.addElement(new EndOfPageElement(11));
-        chapter.addElement(new TextElement("- MrSpring", true));
+        chapter.addElement(new TextElement("- MrSpring", Alignment.CENTER));
     }
 
     private String t(String s)

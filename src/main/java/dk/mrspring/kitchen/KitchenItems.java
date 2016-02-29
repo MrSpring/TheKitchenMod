@@ -11,10 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import static dk.mrspring.kitchen.gui.GuiHandler.WAFFLE_IRON_MANUAL_ID;
+
 public class KitchenItems
 {
-
-
     // All the Item variables
     public static final Item knife = new ItemKnife().setMaxStackSize(1);
     public static final Item fork = new ItemBase("fork", true);
@@ -90,8 +90,8 @@ public class KitchenItems
     //    public static final Item grate_mouth = new ItemBase("grate_mouth", true);
     //    public static final Item lasagna_plate = new ItemBase("lasagna_plate", Kitchen.instance.foodTab);
     //    public static final Item ground_beef = new ItemFoodBase("ground_beef", 2, true, Kitchen.instance.foodTab);
-    public static final Item manual = new ItemManual();
     public static final Item cocoa_powder = new ItemBase("cocoa_powder", true);
+    public static final Item waffle_iron_manual = new ItemManual("waffle_iron", WAFFLE_IRON_MANUAL_ID);
     public static ItemStack basic_sandwich;
 
     // Pre-loads the sandwich ItemStack with some NBT-Data.

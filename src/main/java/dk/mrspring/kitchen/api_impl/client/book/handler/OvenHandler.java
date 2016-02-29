@@ -3,10 +3,7 @@ package dk.mrspring.kitchen.api_impl.client.book.handler;
 import dk.mrspring.kitchen.KitchenBlocks;
 import dk.mrspring.kitchen.api.book.IChapter;
 import dk.mrspring.kitchen.api.book.IChapterHandler;
-import dk.mrspring.kitchen.api_impl.client.book.element.RecipeElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.SpacerElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.TextElement;
-import dk.mrspring.kitchen.api_impl.client.book.element.TitleElement;
+import dk.mrspring.kitchen.api_impl.client.book.element.*;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -25,7 +22,7 @@ public class OvenHandler implements IChapterHandler
     {
         this.addTitle(chapter);
         chapter.addElement(new SpacerElement(3).disableImage());
-        chapter.addElement(new TextElement("Craft an Oven, like so, to unlock this chapter!", true));
+        chapter.addElement(new TextElement("Craft an Oven, like so, to unlock this chapter!", Alignment.CENTER));
         chapter.addElement(new SpacerElement(20));
         chapter.addElement(new RecipeElement(new ItemStack(KitchenBlocks.oven)));
     }

@@ -28,17 +28,47 @@ public class ModLogger
         switch (type)
         {
             case INFO:
-                logger.info(message);
+                info(message, error);
                 break;
             case WARNING:
-                logger.warn(message, error);
+                warn(message, error);
                 break;
             case ERROR:
-                logger.error(message, error);
+                error(message, error);
                 break;
             case DEBUG:
                 if (ModConfig.getKitchenConfig().show_console_debug) logger.info(message, error);
                 break;
         }
+    }
+
+    public static void info(String message)
+    {
+        info(message, null);
+    }
+
+    public static void info(String message, Throwable error)
+    {
+        logger.info(message, error);
+    }
+
+    public static void warn(String message)
+    {
+        warn(message, null);
+    }
+
+    public static void warn(String message, Throwable error)
+    {
+        logger.warn(message, error);
+    }
+
+    public static void error(String message)
+    {
+        error(message, null);
+    }
+
+    public static void error(String message, Throwable error)
+    {
+        logger.error(message, error);
     }
 }
