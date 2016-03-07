@@ -59,17 +59,24 @@ item.sandwichable.stats.heal_amount=Heal Amount
 item.sandwichable.stats.is_bread=Is Bread
 item.sandwichable.stats.show_info=Show Info
 item.sandwichable.stats.drop_item=Drops Item
-item.jam_jar.filled.name=filled Jar
-item.jam_jar.empty.name=Empty Jar
-item.jam_jar.uses_left_msg=Uses Left
+
 item.strawberry.name=Strawberry
 item.apple_slice.name=Apple Slices
 item.strawberry_slices.name=Strawberry Slices
 item.peanut.name=Peanut
 item.peanuts_in_shell.name=Shelled Peanuts
 item.sugared_strawberry_slices.name=Sugared Strawberry Slices
+
+item.jam_jar.empty.name=Empty Jar
+item.jam_jar.full.name=Filled Jar
+item.jam_jar.uses_left_msg=Uses Left: %s
+item.jam_jar.full.desc=Contains %s
+
 item.mixing_bowl.empty.name=Empty Mixing Bowl
-item.mixing_bowl.full.name=filled Mixing Bowl
+item.mixing_bowl.full.name=Filled Mixing Bowl
+item.mixing_bowl.uses_left_msg=Uses Left: %s
+item.mixing_bowl.full.desc=Contains %s
+
 item.waffle.name=Waffle
 item.burnt_waffle.name=Burnt Waffle
 item.timer.name=Timer

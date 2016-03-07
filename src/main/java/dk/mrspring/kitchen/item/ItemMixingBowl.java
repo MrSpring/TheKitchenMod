@@ -2,12 +2,13 @@ package dk.mrspring.kitchen.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.item.render.ItemRenderMixingBowl;
 import dk.mrspring.kitchen.util.ItemUtils;
+import dk.mrspring.kitchen.util.LangUtils;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,8 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +28,7 @@ import static dk.mrspring.kitchen.KitchenItems.mixing_bowl;
 public class ItemMixingBowl extends ItemBase
 {
     public static final String MIX_TYPE = "MixType";
+    public static final String MIX_FORMAT = "mix.%s.name";
 
     @SideOnly(Side.CLIENT)
     IIcon[] icons;
@@ -103,24 +103,26 @@ public class ItemMixingBowl extends ItemBase
     }
 
     @Override
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List information, boolean p_77624_4_)
+    public void addInformation(ItemStack stack, EntityPlayer player, List information, boolean b)
     {
-        super.addInformation(p_77624_1_, p_77624_2_, information, p_77624_4_);
-        if (p_77624_1_.getItemDamage() > 0)
-            information.add(StatCollector.translateToLocal("item.jam_jar.uses_left_msg") + ": " + p_77624_1_.getItemDamage());
+        super.addInformation(stack, player, information, b);
+        if (stack.hasTagCompound() && stack.getTagCompound().hasKey(MIX_TYPE))
+            information.add(LangUtils.deepFormat("item.mixing_bowl.full.desc", String.format(MIX_FORMAT, stack.getTagCompound().getString(MIX_TYPE))));
+        if (stack.getItemDamage() > 0)
+            information.add(I18n.format("item.mixing_bowl.uses_left_msg", stack.getItemDamage()));
     }
 
     @Override
-    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List list)
+    public void getSubItems(Item item, CreativeTabs tab, List items)
     {
-        super.getSubItems(p_150895_1_, p_150895_2_, list);
+        super.getSubItems(item, tab, items);
 
         if (ModConfig.getKitchenConfig().show_different_mixing_bowls_in_creative_tab)
             for (Map.Entry<String, Integer> entry : ItemRenderMixingBowl.COLOR_HANDLER.getColors().entrySet())
             {
-                ItemStack stack = new ItemStack(p_150895_1_, 1, 3);
+                ItemStack stack = new ItemStack(item, 1, 3);
                 stack.setTagInfo(MIX_TYPE, new NBTTagString(entry.getKey()));
-                list.add(stack);
+                items.add(stack);
             }
     }
 
@@ -141,12 +143,10 @@ public class ItemMixingBowl extends ItemBase
     @Override
     public String getItemStackDisplayName(ItemStack itemStack)
     {
-        if (itemStack.getItemDamage() == 0)
-            return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
-        else if (itemStack.getTagCompound() != null)
+        if (itemStack.getItemDamage() > 0 && itemStack.hasTagCompound())
             if (itemStack.getTagCompound().hasKey(MIX_TYPE))
-                return StatCollector.translateToLocal("mix." + getMixTypeFromStack(itemStack) + ".name") + " " + StatCollector.translateToLocal("item.mixing_bowl.full.name");
-        return StatCollector.translateToLocal("item.mixing_bowl.empty.name");
+                return I18n.format("item.mixing_bowl.full.name");
+        return I18n.format("item.mixing_bowl.empty.name");
     }
 
     @Override

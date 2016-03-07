@@ -5,6 +5,7 @@ import dk.mrspring.kitchen.api.book.IPageElement;
 import dk.mrspring.kitchen.api_impl.client.book.element.EndOfPageElement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -39,6 +40,12 @@ public class Chapter implements IChapter
     public void addElement(IPageElement element, int index)
     {
         this.elements.add(index, element);
+    }
+
+    @Override
+    public void addAllElements(Collection<IPageElement> elements)
+    {
+        this.elements.addAll(elements);
     }
 
     @Override

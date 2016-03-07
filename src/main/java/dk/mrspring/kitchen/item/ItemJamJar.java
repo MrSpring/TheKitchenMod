@@ -7,14 +7,15 @@ import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.item.render.ItemRenderJamJar;
 import dk.mrspring.kitchen.util.ItemUtils;
+import dk.mrspring.kitchen.util.LangUtils;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,8 @@ import java.util.Map;
  */
 public class ItemJamJar extends ItemBase
 {
-    public static String JAM_TYPE = "JamType";
+    public static final String JAM_TYPE = "JamType";
+    public static final String JAM_FORMAT = "jam.%s.name";
 
     @SideOnly(Side.CLIENT)
     IIcon[] jamIcon;
@@ -107,11 +109,12 @@ public class ItemJamJar extends ItemBase
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List list, boolean par4)
     {
+        if (stack.hasTagCompound() && stack.getTagCompound().hasKey(JAM_TYPE))
+            list.add(LangUtils.deepFormat("item.jam_jar.full.desc", String.format(JAM_FORMAT, stack.getTagCompound().getString(JAM_TYPE))));
         int usesLeft = stack.getItemDamage();
-        if (usesLeft > 0)
-            par3List.add(StatCollector.translateToLocal("item.jam_jar.uses_left_msg") + ": " + usesLeft);
+        if (usesLeft > 0) list.add(I18n.format("item.jam_jar.uses_left_msg", usesLeft));
     }
 
     @Override
@@ -140,8 +143,8 @@ public class ItemJamJar extends ItemBase
         {
             String jam = getJamFromStack(stack);
             if (jam != null)
-                return StatCollector.translateToLocal("jam." + jam.toLowerCase() + ".name") + " " + StatCollector.translateToLocal("item.jam_jar.filled.name");
+                return I18n.format("item.jam_jar.full.name");
         }
-        return StatCollector.translateToLocal("item.jam_jar.empty.name");
+        return I18n.format("item.jam_jar.empty.name");
     }
 }
