@@ -18,18 +18,20 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
     public final RenderContext BLOCK_CONTEXT = new RenderContext(); // TODO: Translate like block (TESR).
 
     public ResourceLocation texture;
-    List<ModelRenderer> parts = Lists.newLinkedList();
+    List<ModelPart> parts = Lists.newLinkedList();
     RenderContext context = DEFAULT_CONTEXT.copy();
+    ModelPart basePart;
 
-    public ModelBase(ResourceLocation texture, int textureWidth, int textureHeight, ModelRenderer... parts)
+    public ModelBase(ResourceLocation texture, int textureWidth, int textureHeight, ModelPart... parts)
     {
         this.texture = texture;
         this.textureWidth = textureWidth;
         this.textureHeight = textureHeight;
         Collections.addAll(this.parts, parts);
+        this.basePart = new ModelPart(this);
     }
 
-    public ModelBase(String texture, int textureWidth, int textureHeight, ModelRenderer... parts)
+    public ModelBase(String texture, int textureWidth, int textureHeight, ModelPart... parts)
     {
         this(new ResourceLocation(texture), textureWidth, textureHeight, parts);
     }
@@ -78,6 +80,7 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
         ClientUtils.push();
         ClientUtils.bind(this.texture);
         for (ModelRenderer renderer : parts) renderer.render(f5);
+        basePart.render(f5);
         renderExtras(entity, f, f1, f2, f3, f4, f5, context);
         ClientUtils.pop();
     }
@@ -120,22 +123,36 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
         return this.renderBox(u, v, 0F, 0F, 0F, width, height, depth, x, y, z, 0F, 0F, 0F, f5);
     }
 
-    public ModelBase addPart(ModelRenderer part)
+    public ModelBase addPart(ModelPart part)
     {
         this.parts.add(part);
         return this;
     }
 
-    public ModelBase addBox(int u, int v, float xOffset, float yOffset, float zOffset, int width, int height, int depth,
-                            float pivotX, float pivotY, float pivotZ)
+    public ModelPart addPart()
     {
-        return this.addPart(new ModelPart(this, u, v).addBox(xOffset, yOffset, zOffset, width, height, depth)
-                .setPivot(pivotX, pivotY, pivotZ).setTextureSize(textureWidth, textureHeight).setMirrored(true));
+        return this.addPart(0F, 0F, 0F);
+    }
+
+    public ModelPart addPart(float xPivot, float yPivot, float zPivot)
+    {
+        return this.addPart(null, xPivot, yPivot, zPivot);
+    }
+
+    public ModelPart addPart(String name, float xPivot, float yPivot, float zPivot)
+    {
+        ModelPart part = new ModelPart(this, name)
+                .setPivot(xPivot, yPivot, zPivot)
+                .setMirrored(true)
+                .setTextureSize(textureWidth, textureHeight);
+        parts.add(part);
+        return part;
     }
 
     public ModelBase addBox(int u, int v, float x, float y, float z, int width, int height, int depth)
     {
-        return this.addBox(u, v, 0F, 0F, 0F, width, height, depth, x, y, z);
+        this.basePart.addBox(u, v, x, y, z, width, height, depth);
+        return this;
     }
 
     public void setRotation(float x, float y, float z, int... indexes)

@@ -1,12 +1,10 @@
 package dk.mrspring.kitchen.client.model;
 
-import dk.mrspring.kitchen.ModInfo;
-
 public class ModelBaconRaw extends ModelBase
 {
     public ModelBaconRaw()
     {
-        super(ModInfo.toResource("textures/models/raw_bacon.png"), 64, 32);
+        super("raw_bacon", 64, 32);
 
         this.addBox(13, 21, 2.466667F, 23F, -4F, 3, 1, 2);
         this.addBox(13, 21, 2.466667F, 23F, -6F, 3, 1, 2);

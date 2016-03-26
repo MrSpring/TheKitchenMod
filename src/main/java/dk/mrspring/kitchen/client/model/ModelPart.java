@@ -1,6 +1,6 @@
 package dk.mrspring.kitchen.client.model;
 
-import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
 /**
@@ -8,32 +8,46 @@ import net.minecraft.client.model.ModelRenderer;
  */
 public class ModelPart extends ModelRenderer
 {
+    ModelBase parent;
+
     public ModelPart(ModelBase parent, String name)
     {
         super(parent, name);
+        this.parent = parent;
     }
 
     public ModelPart(ModelBase parent)
     {
         super(parent);
+        this.parent = parent;
     }
 
     public ModelPart(ModelBase parent, int u, int v)
     {
         super(parent, u, v);
+        this.parent = parent;
     }
 
     @Override
+    @Deprecated
     public ModelPart addBox(String name, float xOffset, float yOffset, float zOffset, int width, int height, int depth)
     {
-        super.addBox(name, xOffset, yOffset, zOffset, width, height, depth);
         return this;
     }
 
     @Override
+    @Deprecated
     public ModelPart addBox(float xOffset, float yOffset, float zOffset, int width, int height, int depth)
     {
-        super.addBox(xOffset, yOffset, zOffset, width, height, depth);
+        return this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public ModelPart addBox(int u, int v,
+                            float xOffset, float yOffset, float zOffset,
+                            int width, int height, int depth)
+    {
+        cubeList.add(new ModelBox(this, u, v, xOffset, yOffset, zOffset, width, height, depth, 0F));
         return this;
     }
 

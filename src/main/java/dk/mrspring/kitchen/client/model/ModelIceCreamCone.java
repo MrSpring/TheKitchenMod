@@ -1,12 +1,10 @@
 package dk.mrspring.kitchen.client.model;
 
-import dk.mrspring.kitchen.client.util.ClientUtils;
-
 public class ModelIceCreamCone extends ModelBase
 {
     public ModelIceCreamCone()
     {
-        super(ClientUtils.modelTexture("ice_cream_cone"), 32, 16);
+        super("ice_cream_cone", 32, 16);
 
         this.addBox(0, 8, 1.5F, 13F, -1.5F, 1, 3, 3);
         this.addBox(0, 0, -0.5F, 22F, -0.5F, 1, 2, 1);
