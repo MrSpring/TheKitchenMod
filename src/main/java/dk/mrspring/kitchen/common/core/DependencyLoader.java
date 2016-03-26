@@ -32,7 +32,7 @@ public class DependencyLoader implements IFMLCallHook
 {
     String repo = "mrspring.dk";
     String[] dependencies = new String[]{
-            "dk.mrspring:NBTUtils:1.0.0-1.7.10"
+            "dk.mrspring:NBTUtils:1.0.1B-1.7.10"
     };
     List<Artifact> found = new ArrayList<Artifact>();
     List<String> toDownload = new ArrayList<String>();
@@ -75,9 +75,10 @@ public class DependencyLoader implements IFMLCallHook
 
     private void scanFile(File file)
     {
+        JarFile jar = null;
         try
         {
-            JarFile jar = new JarFile(file);
+            jar = new JarFile(file);
             Manifest manifest = jar.getManifest();
             Attributes attributes = manifest.getMainAttributes();
             String artifactId = attributes.getValue("ArtifactID");
@@ -86,6 +87,14 @@ public class DependencyLoader implements IFMLCallHook
         {
             System.err.println("Failed to look at: " + file.toString());
             e.printStackTrace();
+        } finally
+        {
+            if (jar != null) try
+            {
+                jar.close();
+            } catch (Exception ignored)
+            {
+            }
         }
     }
 
@@ -104,7 +113,7 @@ public class DependencyLoader implements IFMLCallHook
             if (compared < 0)
             {
                 toDownload.add(artifact.artifactId);
-                //delete(a.file);
+                delete(a.file);
                 found.remove(a);
             }
             return;

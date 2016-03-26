@@ -26,7 +26,7 @@ public class LoadingPlugin implements IFMLLoadingPlugin
     @Override
     public String getSetupClass()
     {
-        return "dk.mrspring.kitchen.core.DependencyLoader";
+        return "dk.mrspring.kitchen.common.core.DependencyLoader";
     }
 
     @Override
