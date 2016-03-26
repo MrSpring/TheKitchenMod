@@ -49,6 +49,10 @@ item.strawberry_slices.name=Strawberry Slices
 item.peanut.name=Peanut
 item.peanuts_in_shell.name=Shelled Peanuts
 item.sugared_strawberry_slices.name=Sugared Strawberry Slices
+item.timer.name=Timer
+
+item.mixing_bowl.name=Mixing Bowl
+item.mixing_bowl.desc=Filled with %s
 
 combo.big_mac.name=There is Only One!
 combo.blt.name=The Good ol' BLT
