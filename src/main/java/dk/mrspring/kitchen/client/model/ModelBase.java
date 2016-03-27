@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.model.ModelBase
 {
-    public final RenderContext DEFAULT_CONTEXT = new RenderContext();
-    public final RenderContext BLOCK_CONTEXT = new RenderContext(); // TODO: Translate like block (TESR).
+//    public final RenderContext DEFAULT_CONTEXT = new RenderContext();
+//    public final RenderContext BLOCK_CONTEXT = new RenderContext(); // TODO: Translate like block (TESR).
 
     public ResourceLocation texture;
     List<ModelPart> parts = Lists.newLinkedList();
-    RenderContext context = DEFAULT_CONTEXT.copy();
+    //    RenderContext context = DEFAULT_CONTEXT.copy();
     ModelPart basePart;
 
     public ModelBase(ResourceLocation texture, int textureWidth, int textureHeight, ModelPart... parts)
@@ -36,29 +36,29 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
         this(new ResourceLocation(texture), textureWidth, textureHeight, parts);
     }
 
-    public ModelBase useBlockDefaults()
+    public T makeDefaultParameter()
     {
-        return this.setContext(BLOCK_CONTEXT.copy());
-    }
-
-    public ModelBase useDefaults()
-    {
-        return this.setContext(DEFAULT_CONTEXT.copy());
-    }
-
-    public ModelBase setContext(RenderContext context)
-    {
-        this.context = context;
-        return this;
+        return null;
     }
 
     public RenderContext makeContext()
     {
-        return this.context.copy();
+        return makeContext(0F);
     }
 
-    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, RenderContext context)
+    public RenderContext makeContext(float partial)
     {
+        return new RenderContext(makeDefaultParameter());
+    }
+
+    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,
+                          RenderContext context)
+    {
+    }
+
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float partial)
+    {
+        this.render(entity, f, f1, f2, f3, f4, f5, makeContext(partial));
     }
 
     @Override
@@ -67,26 +67,39 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
         this.render(entity, f, f1, f2, f3, f4, f5, makeContext());
     }
 
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, T parameters)
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float partial,
+                       T parameters)
     {
-        RenderContext context = makeContext();
+        RenderContext context = makeContext(partial);
         context.parameters = parameters;
         this.render(entity, f, f1, f2, f3, f4, f5, context);
+    }
+
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,
+                       T parameters)
+    {
+        render(entity, f, f1, f2, f3, f4, f5, 0F, parameters);
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, RenderContext context)
     {
         preRender(entity, f, f1, f2, f3, f4, f5, context);
         ClientUtils.push();
-        ClientUtils.bind(this.texture);
+        ClientUtils.bind(getTexture(context));
         for (ModelRenderer renderer : parts) renderer.render(f5);
         basePart.render(f5);
         renderExtras(entity, f, f1, f2, f3, f4, f5, context);
         ClientUtils.pop();
     }
 
-    public void renderExtras(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, RenderContext context)
+    public void renderExtras(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,
+                             RenderContext context)
     {
+    }
+
+    public ResourceLocation getTexture(RenderContext context)
+    {
+        return this.texture;
     }
 
     /**
@@ -201,17 +214,23 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
         public final float xOffset, yOffset, zOffset;
         public final float xRotation, yRotation, zRotation;
         public final float xScale, yScale, zScale;
+        public final float partial;
         public T parameters = null;
 
         public RenderContext()
         {
-            this(0F, 0F, 0F, 0F, 0F, 0F, 1F, 1F, 1F, null);
+            this(0F);
+        }
+
+        public RenderContext(float partial)
+        {
+            this(0F, 0F, 0F, 0F, 0F, 0F, 1F, 1F, 1F, partial, null);
         }
 
         public RenderContext(float xOffset, float yOffset, float zOffset,
                              float xRotation, float yRotation, float zRotation,
                              float xScale, float yScale, float zScale,
-                             T parameters)
+                             float partial, T parameters)
         {
             this.xOffset = xOffset;
             this.yOffset = yOffset;
@@ -222,19 +241,18 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
             this.xScale = xScale;
             this.yScale = yScale;
             this.zScale = zScale;
+            this.partial = partial;
             this.parameters = parameters;
         }
 
-        public RenderContext copy()
+        public RenderContext(T parameters)
         {
-            RenderContext context = new RenderContext(xOffset, yOffset, zOffset,
-                    xRotation, yRotation, zRotation,
-                    xScale, yScale, zScale, null);
+            this(0F, parameters);
+        }
 
-            if (this.parameters != null)
-                context.parameters = (T) this.parameters.copy();
-
-            return context;
+        public RenderContext(float partial, T parameters)
+        {
+            this(0F, 0F, 0F, 0F, 0F, 0F, 1F, 1F, 1F, partial, parameters);
         }
     }
 }

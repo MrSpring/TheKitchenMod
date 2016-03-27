@@ -5,5 +5,5 @@ package dk.mrspring.kitchen.client.model;
  */
 public interface IRenderParameter
 {
-    IRenderParameter copy();
+//    IRenderParameter copy();
 }

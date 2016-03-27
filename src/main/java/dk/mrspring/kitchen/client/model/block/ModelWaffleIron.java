@@ -1,15 +1,23 @@
 package dk.mrspring.kitchen.client.model.block;
 
+import dk.mrspring.kitchen.client.model.IRenderParameter;
 import dk.mrspring.kitchen.client.model.ModelBase;
 import dk.mrspring.kitchen.client.model.ModelPart;
+import dk.mrspring.kitchen.client.util.ClientUtils;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 
-public class ModelWaffleIron extends ModelBase
+public class ModelWaffleIron extends ModelBase<ModelWaffleIron.Parameters>
 {
     ModelPart top, base, waffle;
+    ResourceLocation on, off;
 
     public ModelWaffleIron()
     {
         super("waffle_iron", 64, 32);
+
+        this.off = super.texture;
+        this.on = ClientUtils.modelTexture("waffle_iron_on");
 
         top = addPart(0F, 19F, 5F)
                 .addBox(13, 12, -6F, 19F, 5F, 12, 2, 8)
@@ -37,6 +45,33 @@ public class ModelWaffleIron extends ModelBase
         waffle = addPart().addBox(0, 0, -5F, -19.75F, -3F, 10, 1, 6);
     }
 
+    @Override
+    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, RenderContext context)
+    {
+        super.preRender(entity, f, f1, f2, f3, f4, f5, context);
+        if (context.parameters == null) context.parameters = new Parameters();
+        top.setRotation(context.parameters.lidAngle + context.parameters.lidDirection * context.partial, 0F, 0F);
+    }
+
+    @Override
+    public Parameters makeDefaultParameter()
+    {
+        return new Parameters();
+    }
+
+    @Override
+    public ResourceLocation getTexture(RenderContext context)
+    {
+        if (context.parameters.on) return on;
+        else return off;
+    }
+
+    public static class Parameters implements IRenderParameter
+    {
+        float lidAngle = 0F, lidDirection = 0F;
+        boolean on = false;
+        float[] waffleColor = new float[]{0F, 0F, 0F};
+    }
 
 /*
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int lidAngle, int lidDirection, int waffleState, float[] doughColor, float partial)
