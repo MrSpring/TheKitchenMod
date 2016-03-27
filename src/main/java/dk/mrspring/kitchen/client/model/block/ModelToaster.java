@@ -28,7 +28,8 @@ public class ModelToaster extends ModelBase<ModelToaster.Parameters>
     }
 
     @Override
-    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, RenderContext context)
+    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,
+                          RenderContext context)
     {
         if (context.parameters.down) button.rotationPointY = 20F;
         else button.rotationPointY = 19F;

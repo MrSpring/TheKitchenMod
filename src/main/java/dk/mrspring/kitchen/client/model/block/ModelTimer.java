@@ -22,7 +22,8 @@ public class ModelTimer extends ModelBase<ModelTimer.Parameters>
     }
 
     @Override
-    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, RenderContext context)
+    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,
+                          RenderContext context)
     {
         super.preRender(entity, f, f1, f2, f3, f4, f5, context);
         arm.rotateAngleZ = context.parameters.progress * (float) Math.PI * 2F;

@@ -46,11 +46,11 @@ public class ModelWaffleIron extends ModelBase<ModelWaffleIron.Parameters>
     }
 
     @Override
-    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, RenderContext context)
+    public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,
+                          RenderContext context)
     {
         super.preRender(entity, f, f1, f2, f3, f4, f5, context);
-        if (context.parameters == null) context.parameters = new Parameters();
-        top.setRotation(context.parameters.lidAngle + context.parameters.lidDirection * context.partial, 0F, 0F);
+        top.rotateAngleX = context.parameters.lidAngle + context.parameters.lidDirection * context.partial;
     }
 
     @Override
@@ -72,82 +72,4 @@ public class ModelWaffleIron extends ModelBase<ModelWaffleIron.Parameters>
         boolean on = false;
         float[] waffleColor = new float[]{0F, 0F, 0F};
     }
-
-/*
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, int lidAngle, int lidDirection, int waffleState, float[] doughColor, float partial)
-    {
-        super.render(entity, f, f1, f2, f3, f4, f5);
-        setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-        bottomBase1.render(f5);
-        bottomBase2.render(f5);
-        bottomBase3.render(f5);
-        bottomBase4.render(f5);
-        bottomBase5.render(f5);
-        bottomBase6.render(f5);
-        bottomBase7.render(f5);
-        bottomBase8.render(f5);
-        bottomBase9.render(f5);
-        bottomBase10.render(f5);
-        bottomBase11.render(f5);
-        bottomBase12.render(f5);
-
-//        System.out.println(f + ", " + f1 + ", " + f2 + ", " + f3 + ", " + f4 + ", " + f5);
-
-        float rotation = -lidAngle;
-        rotation += (float) -lidDirection * partial;
-        rotation = Math.max(-15, Math.min(0, rotation));
-//        System.out.println(lidDirection);
-        rotation *= 0.12F;
-        topBase1.rotateAngleX = rotation;
-        topBase1.render(f5);
-
-        topBase2.rotateAngleX = rotation;
-        topBase2.render(f5);
-
-        topBase3.rotateAngleX = rotation;
-        topBase3.render(f5);
-
-        topBase4.rotateAngleX = rotation;
-        topBase4.render(f5);
-
-        topBase5.rotateAngleX = rotation;
-        topBase5.render(f5);
-
-        topBase6.rotateAngleX = rotation;
-        topBase6.render(f5);
-
-        topBase7.rotateAngleX = rotation;
-        topBase7.render(f5);
-
-        topBase8.rotateAngleX = rotation;
-        topBase8.render(f5);
-
-        if (waffleState > 0)
-        {
-            if (waffleState == 1)
-                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/raw_waffle.png")));
-            else if (waffleState == 2)
-                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/cooked_waffle.png")));
-            else
-                Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModInfo.toTexture("textures/models/burnt_waffle.png")));
-            GL11.glPushMatrix();
-            GL11.glColor4f(doughColor[0] / 255, doughColor[1] / 255, doughColor[2] / 255, 1);
-            waffleMesh.render(f5);
-            GL11.glPopMatrix();
-        }
-    }
-
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
-        model.rotateAngleX = x;
-        model.rotateAngleY = y;
-        model.rotateAngleZ = z;
-    }
-
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-    {
-        super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    }
-*/
-
 }
