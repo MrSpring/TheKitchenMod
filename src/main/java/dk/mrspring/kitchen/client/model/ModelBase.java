@@ -193,7 +193,18 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
 
     public ModelBase hideModel(int index)
     {
-        parts.get(index).isHidden = true;
+        return hideModel(parts.get(index));
+    }
+
+    public ModelBase hideModels(ModelPart... parts)
+    {
+        for (ModelPart part : parts) hideModel(part);
+        return this;
+    }
+
+    public ModelBase hideModel(ModelPart part)
+    {
+        part.isHidden = true;
         return this;
     }
 
@@ -206,6 +217,18 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
     public ModelBase showModel(int index)
     {
         parts.get(index).isHidden = false;
+        return this;
+    }
+
+    public ModelBase showModels(ModelPart... parts)
+    {
+        for (ModelPart part : parts) showModel(part);
+        return this;
+    }
+
+    public ModelBase showModel(ModelPart part)
+    {
+        part.isHidden = false;
         return this;
     }
 
