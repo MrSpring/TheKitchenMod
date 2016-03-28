@@ -27,15 +27,15 @@ public class Kitchen
         }
     };
 
-    public static final KitchenItems items = new KitchenItems();
-    public static final KitchenBlocks blocks = new KitchenBlocks();
-    public static final KitchenRecipes recipes = new KitchenRecipes();
-
     @Mod.Instance(MOD_ID)
     public static Kitchen instance;
 
     @SidedProxy(clientSide = CLIENT_PROXY, serverSide = COMMON_PROXY, modId = MOD_ID)
     public static CommonProxy proxy;
+
+    public static final KitchenItems items = new KitchenItems();
+    public static final KitchenBlocks blocks = new KitchenBlocks();
+    public static final KitchenRecipes recipes = new KitchenRecipes();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)

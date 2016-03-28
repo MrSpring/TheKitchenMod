@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.client.block.effect.IRandomTick;
+import dk.mrspring.kitchen.common.tileentity.TileEntityConstructor;
 import dk.mrspring.kitchen.common.tileentity.TileEntityInteractable;
 import dk.mrspring.kitchen.common.util.WorldUtils;
 import net.minecraft.block.BlockContainer;
@@ -25,14 +26,14 @@ import java.util.Random;
  */
 public class BlockContainerBase extends BlockContainer
 {
-    Class<? extends TileEntity> tileEntityClass;
+    TileEntityConstructor constructor;
     public int rotationAngles = 0;
 
     @SideOnly(Side.CLIENT)
     List<IRandomTick> randomTicks;
 
-    protected BlockContainerBase(Material material, String name, String textureName, boolean useCreativeTab,
-                                 Class<? extends TileEntity> tileEntityClass)
+    public BlockContainerBase(Material material, String name, String textureName, boolean useCreativeTab,
+                              TileEntityConstructor constructor)
     {
         super(material);
 
@@ -41,48 +42,47 @@ public class BlockContainerBase extends BlockContainer
 
         this.setHardness(4.0F);
 
-        this.tileEntityClass = tileEntityClass;
+        this.constructor = constructor;
 
         if (useCreativeTab)
             this.setCreativeTab(Kitchen.mainTab);
     }
 
-    protected BlockContainerBase(Material material, String name, boolean useCreativeTab,
-                                 Class<? extends TileEntity> tileEntityClass)
+    public BlockContainerBase(Material material, String name, boolean useCreativeTab,
+                              TileEntityConstructor constructor)
     {
-        this(material, name, ModInfo.toResource(name), useCreativeTab, tileEntityClass);
+        this(material, name, ModInfo.toResource(name), useCreativeTab, constructor);
     }
 
-    protected BlockContainerBase(Material material, String name, Class<? extends TileEntity> tileEntityClass)
+    public BlockContainerBase(Material material, String name, TileEntityConstructor constructor)
     {
-        this(material, name, true, tileEntityClass);
+        this(material, name, true, constructor);
     }
 
-    protected BlockContainerBase(String name, String textureName, boolean useCreativeTab,
-                                 Class<? extends TileEntity> tileEntityClass)
+    public BlockContainerBase(String name, String textureName, boolean useCreativeTab,
+                              TileEntityConstructor constructor)
     {
-        this(Material.iron, name, textureName, useCreativeTab, tileEntityClass);
+        this(Material.iron, name, textureName, useCreativeTab, constructor);
     }
 
-    protected BlockContainerBase(String name, boolean useCreativeTab, Class<? extends TileEntity> tileEntityClass)
+    public BlockContainerBase(String name, boolean useCreativeTab, TileEntityConstructor constructor)
     {
-        this(name, ModInfo.toResource(name), useCreativeTab, tileEntityClass);
+        this(name, ModInfo.toResource(name), useCreativeTab, constructor);
     }
 
-    protected BlockContainerBase(Material material, String name, String textureName,
-                                 Class<? extends TileEntity> tileEntityClass)
+    public BlockContainerBase(Material material, String name, String textureName, TileEntityConstructor constructor)
     {
-        this(material, name, textureName, true, tileEntityClass);
+        this(material, name, textureName, true, constructor);
     }
 
-    protected BlockContainerBase(String name, String textureName, Class<? extends TileEntity> tileEntityClass)
+    public BlockContainerBase(String name, String textureName, TileEntityConstructor constructor)
     {
-        this(name, textureName, true, tileEntityClass);
+        this(name, textureName, true, constructor);
     }
 
-    protected BlockContainerBase(String name, Class<? extends TileEntity> tileEntityClass)
+    public BlockContainerBase(String name, TileEntityConstructor constructor)
     {
-        this(name, true, tileEntityClass);
+        this(name, true, constructor);
     }
 
     @SideOnly(Side.CLIENT)
@@ -144,17 +144,7 @@ public class BlockContainerBase extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
-        try
-        {
-            return getTileEntityClass().newInstance();
-        } catch (InstantiationException e)
-        {
-            e.printStackTrace();
-        } catch (IllegalAccessException e)
-        {
-            e.printStackTrace();
-        }
-        return null;
+        return constructor.construct(world, metadata);
     }
 
     @Override
@@ -171,14 +161,27 @@ public class BlockContainerBase extends BlockContainer
             ((TileEntityInteractable) entity).placed((EntityPlayer) player);
     }
 
+    @Override
+    public int getRenderType()
+    {
+        return -1;
+    }
+
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock()
+    {
+        return false;
+    }
+
     public void setRotationWhenPlaced(World world, int x, int y, int z, EntityLivingBase player, ItemStack placed,
                                       int angle)
     {
         world.setBlockMetadataWithNotify(x, y, z, angle, 2);
-    }
-
-    public Class<? extends TileEntity> getTileEntityClass()
-    {
-        return tileEntityClass;
     }
 }
