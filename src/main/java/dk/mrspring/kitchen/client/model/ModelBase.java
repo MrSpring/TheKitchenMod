@@ -33,7 +33,7 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
 
     public ModelBase(String texture, int textureWidth, int textureHeight, ModelPart... parts)
     {
-        this(new ResourceLocation(texture), textureWidth, textureHeight, parts);
+        this(ClientUtils.modelTexture(texture), textureWidth, textureHeight, parts);
     }
 
     public T makeDefaultParameter()
@@ -54,6 +54,16 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
     public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,
                           RenderContext context)
     {
+    }
+
+    public void simpleRender(float partial)
+    {
+        this.render(null, 0F, 0F, 0F, 0F, 0F, 0.0625F, partial);
+    }
+
+    public void simpleRender(float partial, T parameters)
+    {
+        this.render(null, 0F, 0F, 0F, 0F, 0F, 0.0625F, partial, parameters);
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, float partial)
