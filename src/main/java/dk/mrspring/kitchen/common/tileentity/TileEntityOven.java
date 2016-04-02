@@ -16,7 +16,6 @@ public class TileEntityOven extends TileEntityInteractable
         if (player.isSneaking())
         {
             open = !open;
-//            System.out.println(open);
             markForUpdate();
         }
     }
