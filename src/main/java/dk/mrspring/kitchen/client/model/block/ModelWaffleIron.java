@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.client.model.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.model.IRenderParameter;
 import dk.mrspring.kitchen.client.model.ModelBase;
 import dk.mrspring.kitchen.client.model.ModelPart;
@@ -7,6 +9,7 @@ import dk.mrspring.kitchen.client.util.ClientUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
+@SideOnly(Side.CLIENT)
 public class ModelWaffleIron extends ModelBase<ModelWaffleIron.Parameters>
 {
     ModelPart top, base, waffle;

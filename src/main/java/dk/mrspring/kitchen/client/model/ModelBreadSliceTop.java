@@ -1,12 +1,14 @@
 package dk.mrspring.kitchen.client.model;
 
-import dk.mrspring.kitchen.ModInfo;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ModelBreadSliceTop extends ModelBase
 {
     public ModelBreadSliceTop()
     {
-        super(ModInfo.toResource("textures/models/bread_slice_top.png"), 64, 32);
+        super("bread_slice_top", 64, 32);
 
         this.addBox(0, 0, -4F, 21F, -5F, 8, 1, 10);
         this.addBox(0, 0, -4F, 22F, -5F, 8, 2, 10);

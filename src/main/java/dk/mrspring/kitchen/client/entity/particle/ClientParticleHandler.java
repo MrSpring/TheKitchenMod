@@ -1,6 +1,8 @@
 package dk.mrspring.kitchen.client.entity.particle;
 
 import com.google.common.collect.Lists;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.common.entity.particle.IParticleHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
@@ -11,6 +13,7 @@ import java.util.List;
 /**
  * Created on 23-03-2016 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public class ClientParticleHandler implements IParticleHandler
 {
     private final List<IParticleEffect> effects = Lists.newArrayList();

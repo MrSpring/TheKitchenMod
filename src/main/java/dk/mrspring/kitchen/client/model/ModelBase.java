@@ -1,6 +1,8 @@
 package dk.mrspring.kitchen.client.model;
 
 import com.google.common.collect.Lists;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.util.ClientUtils;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -14,14 +16,11 @@ import static dk.mrspring.kitchen.client.util.ClientUtils.*;
 /**
  * Created on 07-03-2016 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.model.ModelBase
 {
-//    public final RenderContext DEFAULT_CONTEXT = new RenderContext();
-//    public final RenderContext BLOCK_CONTEXT = new RenderContext(); // TODO: Translate like block (TESR).
-
     public ResourceLocation texture;
     List<ModelPart> parts = Lists.newLinkedList();
-    //    RenderContext context = DEFAULT_CONTEXT.copy();
     ModelPart basePart;
 
     public ModelBase(ResourceLocation texture, int textureWidth, int textureHeight, ModelPart... parts)

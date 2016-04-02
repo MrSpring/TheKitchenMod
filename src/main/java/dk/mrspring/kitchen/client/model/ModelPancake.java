@@ -1,5 +1,9 @@
 package dk.mrspring.kitchen.client.model;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class ModelPancake extends ModelBase
 {
     public ModelPancake(boolean cooked)

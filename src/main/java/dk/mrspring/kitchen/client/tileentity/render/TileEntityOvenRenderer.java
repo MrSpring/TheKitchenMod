@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.client.tileentity.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.model.block.ModelOven;
 import dk.mrspring.kitchen.client.tileentity.TileEntityClientOven;
 import net.minecraft.tileentity.TileEntity;
@@ -7,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * Created on 27-03-2016 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public class TileEntityOvenRenderer extends TileEntityRenderer
 {
     ModelOven oven = new ModelOven();

@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.client.model.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.model.IRenderParameter;
 import dk.mrspring.kitchen.client.model.ModelBase;
 import dk.mrspring.kitchen.client.model.ModelPart;
@@ -10,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 import static dk.mrspring.kitchen.client.util.ClientUtils.modelTexture;
 
+@SideOnly(Side.CLIENT)
 public class ModelOven extends ModelBase<ModelOven.Parameters>
 {
     ModelPart base, hatch;
@@ -49,11 +52,6 @@ public class ModelOven extends ModelBase<ModelOven.Parameters>
     {
         super.preRender(entity, f, f1, f2, f3, f4, f5, context);
         hatch.rotateAngleX = context.parameters.opening.getRadians(context.partial);
-                /*MathHelper.clamp_float(
-                context.parameters.hatchAngle + context.parameters.hatchDirection * context.partial,
-                context.parameters.minAngle,
-                context.parameters.maxAngle
-        ));*/
     }
 
     @Override
@@ -72,8 +70,6 @@ public class ModelOven extends ModelBase<ModelOven.Parameters>
     public static class Parameters implements IRenderParameter
     {
         public boolean on;
-        //        public float hatchAngle = 0F, hatchDirection = 0F;
-//        public float minAngle = 0F, maxAngle = 75F;
         public OpeningAnimation opening;
 
         public Parameters(TileEntityClientOven oven)

@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.client.tileentity.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 
@@ -8,6 +10,7 @@ import static dk.mrspring.kitchen.client.util.ClientUtils.*;
 /**
  * Created on 27-03-2016 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public abstract class TileEntityRenderer<T extends TileEntity> extends TileEntitySpecialRenderer
 {
     public void translateBlockModel(double x, double y, double z)

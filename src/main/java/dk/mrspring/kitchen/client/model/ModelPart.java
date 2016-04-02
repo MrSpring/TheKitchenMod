@@ -1,11 +1,14 @@
 package dk.mrspring.kitchen.client.model;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 
 /**
  * Created on 07-03-2016 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public class ModelPart extends ModelRenderer
 {
     ModelBase parent;

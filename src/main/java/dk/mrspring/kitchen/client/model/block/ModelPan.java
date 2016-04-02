@@ -1,7 +1,10 @@
 package dk.mrspring.kitchen.client.model.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.model.ModelBase;
 
+@SideOnly(Side.CLIENT)
 public class ModelPan extends ModelBase
 {
     public ModelPan()

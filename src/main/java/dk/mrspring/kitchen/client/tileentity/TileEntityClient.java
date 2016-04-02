@@ -1,5 +1,7 @@
 package dk.mrspring.kitchen.client.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -9,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 /**
  * Created on 27-03-2016 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public abstract class TileEntityClient extends TileEntity
 {
     @Override

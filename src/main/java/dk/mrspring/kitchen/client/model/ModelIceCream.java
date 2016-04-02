@@ -1,12 +1,14 @@
 package dk.mrspring.kitchen.client.model;
 
-import dk.mrspring.kitchen.client.util.ClientUtils;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ModelIceCream extends ModelBase
 {
     public ModelIceCream()
     {
-        super(ClientUtils.modelTexture("ice_cream"), 32, 32);
+        super("ice_cream", 32, 32);
 
         this.addBox(0, 0, -2.5F, 21F, -1F, 1, 3, 2);
         this.addBox(0, 0, -1F, 19.5F, -1F, 2, 1, 2);

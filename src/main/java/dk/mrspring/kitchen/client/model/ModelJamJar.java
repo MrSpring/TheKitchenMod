@@ -1,10 +1,13 @@
 package dk.mrspring.kitchen.client.model;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.util.ClientUtils;
 
 /**
  * Created by MrSpring on 25-09-2014 for ModJam4.
  */
+@SideOnly(Side.CLIENT)
 public class ModelJamJar extends ModelBase
 {
     public ModelJamJar()

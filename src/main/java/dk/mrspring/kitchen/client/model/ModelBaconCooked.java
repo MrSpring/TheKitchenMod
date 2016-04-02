@@ -1,12 +1,14 @@
 package dk.mrspring.kitchen.client.model;
 
-import dk.mrspring.kitchen.client.util.ClientUtils;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ModelBaconCooked extends ModelBase
 {
     public ModelBaconCooked()
     {
-        super(ClientUtils.modelTexture("cooked_bacon"), 64, 32);
+        super("cooked_bacon", 64, 32);
 
         this.addBox(13, 21, 2.466667F, 22F, -4F, 3, 1, 2);
         this.addBox(13, 21, 2.466667F, 23F, -6F, 3, 1, 2);

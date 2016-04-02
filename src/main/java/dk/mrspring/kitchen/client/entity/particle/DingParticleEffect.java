@@ -1,12 +1,13 @@
 package dk.mrspring.kitchen.client.entity.particle;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.common.entity.particle.IParticleHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
@@ -15,6 +16,7 @@ import static dk.mrspring.kitchen.client.util.ClientUtils.*;
 /**
  * Created on 23-03-2016 for TheKitchenMod.
  */
+@SideOnly(Side.CLIENT)
 public class DingParticleEffect implements IParticleEffect
 {
     @Override
