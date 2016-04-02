@@ -26,8 +26,6 @@ public class SidedConstructor extends TileEntityConstructor
     {
         try
         {
-            if (world.isRemote) System.out.println("Remote!");
-            else System.out.println("Not remote!");
             return world.isRemote ? clientClass.newInstance() : remoteClass.newInstance();
         } catch (InstantiationException e)
         {

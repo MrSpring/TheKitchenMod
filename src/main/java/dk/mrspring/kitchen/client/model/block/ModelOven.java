@@ -3,9 +3,11 @@ package dk.mrspring.kitchen.client.model.block;
 import dk.mrspring.kitchen.client.model.IRenderParameter;
 import dk.mrspring.kitchen.client.model.ModelBase;
 import dk.mrspring.kitchen.client.model.ModelPart;
-import dk.mrspring.kitchen.client.util.ClientUtils;
+import dk.mrspring.kitchen.client.tileentity.render.anim.OpeningAnimation;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+
+import static dk.mrspring.kitchen.client.util.ClientUtils.modelTexture;
 
 public class ModelOven extends ModelBase<ModelOven.Parameters>
 {
@@ -17,7 +19,7 @@ public class ModelOven extends ModelBase<ModelOven.Parameters>
         super("oven", 64, 64);
 
         off = super.texture;
-        on = ClientUtils.modelTexture("oven_active");
+        on = modelTexture("oven_active");
 
         base = addPart()
                 .addBox(0, 32, -8F, 20F, -5F, 16, 4, 13)
@@ -45,7 +47,12 @@ public class ModelOven extends ModelBase<ModelOven.Parameters>
                           RenderContext context)
     {
         super.preRender(entity, f, f1, f2, f3, f4, f5, context);
-        hatch.rotateAngleX = context.parameters.hatchAngle + context.parameters.hatchDirection * context.partial;
+        hatch.rotateAngleX = context.parameters.opening.getRadians(context.partial);
+                /*MathHelper.clamp_float(
+                context.parameters.hatchAngle + context.parameters.hatchDirection * context.partial,
+                context.parameters.minAngle,
+                context.parameters.maxAngle
+        ));*/
     }
 
     @Override
@@ -63,7 +70,20 @@ public class ModelOven extends ModelBase<ModelOven.Parameters>
 
     public static class Parameters implements IRenderParameter
     {
-        boolean on = false;
-        float hatchAngle = 0F, hatchDirection = 0F;
+        public boolean on;
+        //        public float hatchAngle = 0F, hatchDirection = 0F;
+//        public float minAngle = 0F, maxAngle = 75F;
+        public OpeningAnimation opening;
+
+        public Parameters(boolean state, OpeningAnimation opening)
+        {
+            this.on = state;
+            this.opening = opening;
+        }
+
+        public Parameters()
+        {
+            this(false, new OpeningAnimation(0, 65, 0, false));
+        }
     }
 }

@@ -29,7 +29,7 @@ public abstract class TileEntityBase extends TileEntity implements ISoundPlayer,
 
     public void markForUpdate()
     {
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
 
     @Override
@@ -37,6 +37,7 @@ public abstract class TileEntityBase extends TileEntity implements ISoundPlayer,
     {
         sound(worldObj, sound, 0.5D + xCoord, 0.5D + yCoord, 0.5D + zCoord, f1, f2);
     }
+
 
     @Override
     public Packet getDescriptionPacket()
@@ -53,11 +54,11 @@ public abstract class TileEntityBase extends TileEntity implements ISoundPlayer,
         return commonID + clientSuffix;
     }
 
-    @Override
+    /*@Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
         this.readFromNBT(pkt.func_148857_g());
-    }
+    }*/
 
     @Override
     public void writeToNBT(NBTTagCompound compound)
@@ -75,7 +76,6 @@ public abstract class TileEntityBase extends TileEntity implements ISoundPlayer,
 
     public void writeDataToClient(NBTTagCompound compound)
     {
-        this.writeToNBT(compound);
         this.writeDataToNBT(compound);
     }
 

@@ -68,4 +68,9 @@ public class ClientUtils
     {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
     }
+
+    public static float fromDegrees(float degrees)
+    {
+        return (float) Math.toRadians((double) degrees);
+    }
 }

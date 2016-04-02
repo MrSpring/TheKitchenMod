@@ -13,6 +13,12 @@ public class TileEntityOven extends TileEntityInteractable
     @Override
     public void activated(EntityPlayer player, int side, float clickX, float clickY, float clickZ)
     {
+        if (player.isSneaking())
+        {
+            open = !open;
+//            System.out.println(open);
+            markForUpdate();
+        }
     }
 
     @Override

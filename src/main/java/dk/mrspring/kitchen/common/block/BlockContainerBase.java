@@ -115,7 +115,10 @@ public class BlockContainerBase extends BlockContainer
     {
         TileEntity entity = world.getTileEntity(x, y, z);
         if (entity instanceof TileEntityInteractable)
+        {
+            System.out.println("Activating...");
             ((TileEntityInteractable) entity).activated(player, side, clickX, clickY, clickZ);
+        }
 
         return onRightClicked(world, x, y, z, player, side, clickX, clickY, clickZ);
     }

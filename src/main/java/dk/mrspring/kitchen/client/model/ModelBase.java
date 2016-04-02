@@ -50,7 +50,7 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
 
     public RenderContext makeContext(float partial)
     {
-        return new RenderContext(makeDefaultParameter());
+        return new RenderContext(partial, makeDefaultParameter());
     }
 
     public void preRender(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,

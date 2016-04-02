@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.client.tileentity.render;
 
 import dk.mrspring.kitchen.client.model.block.ModelOven;
+import dk.mrspring.kitchen.client.tileentity.TileEntityClientOven;
 import net.minecraft.tileentity.TileEntity;
 
 /**
@@ -14,6 +15,13 @@ public class TileEntityOvenRenderer extends TileEntityRenderer
     protected void renderModel(TileEntity entity, float partial)
     {
         rotateBasedOnMetadata(entity);
-        oven.simpleRender(partial);
+        TileEntityClientOven oven = (TileEntityClientOven) entity;
+        ModelOven.Parameters parameters = new ModelOven.Parameters(false, oven.openingAnimation);
+//        parameters.hatchAngle = oven.hatchAngle;
+//        parameters.hatchDirection = oven.hatchDirection;
+//        parameters.minAngle = TileEntityClientOven.MIN_HATCH_ANGLE;
+//        parameters.maxAngle = TileEntityClientOven.MAX_HATCH_ANGLE;
+        this.oven.simpleRender(partial, parameters);
+//        System.out.println(partial);
     }
 }
