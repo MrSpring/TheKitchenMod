@@ -3,6 +3,7 @@ package dk.mrspring.kitchen.client.model.block;
 import dk.mrspring.kitchen.client.model.IRenderParameter;
 import dk.mrspring.kitchen.client.model.ModelBase;
 import dk.mrspring.kitchen.client.model.ModelPart;
+import dk.mrspring.kitchen.client.tileentity.TileEntityClientOven;
 import dk.mrspring.kitchen.client.tileentity.render.anim.OpeningAnimation;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -74,6 +75,11 @@ public class ModelOven extends ModelBase<ModelOven.Parameters>
         //        public float hatchAngle = 0F, hatchDirection = 0F;
 //        public float minAngle = 0F, maxAngle = 75F;
         public OpeningAnimation opening;
+
+        public Parameters(TileEntityClientOven oven)
+        {
+            this(false, oven.openingAnimation);
+        }
 
         public Parameters(boolean state, OpeningAnimation opening)
         {

@@ -16,12 +16,7 @@ public class TileEntityOvenRenderer extends TileEntityRenderer
     {
         rotateBasedOnMetadata(entity);
         TileEntityClientOven oven = (TileEntityClientOven) entity;
-        ModelOven.Parameters parameters = new ModelOven.Parameters(false, oven.openingAnimation);
-//        parameters.hatchAngle = oven.hatchAngle;
-//        parameters.hatchDirection = oven.hatchDirection;
-//        parameters.minAngle = TileEntityClientOven.MIN_HATCH_ANGLE;
-//        parameters.maxAngle = TileEntityClientOven.MAX_HATCH_ANGLE;
+        ModelOven.Parameters parameters = new ModelOven.Parameters(oven);
         this.oven.simpleRender(partial, parameters);
-//        System.out.println(partial);
     }
 }
