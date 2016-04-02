@@ -9,6 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import java.util.Collections;
 import java.util.List;
 
+import static dk.mrspring.kitchen.client.util.ClientUtils.*;
+
 /**
  * Created on 07-03-2016 for TheKitchenMod.
  */
@@ -94,12 +96,13 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5, RenderContext context)
     {
         preRender(entity, f, f1, f2, f3, f4, f5, context);
-        ClientUtils.push();
-        ClientUtils.bind(getTexture(context));
+        push();
+        bind(getTexture(context));
+        enableTextures();
         for (ModelRenderer renderer : parts) renderer.render(f5);
         basePart.render(f5);
         renderExtras(entity, f, f1, f2, f3, f4, f5, context);
-        ClientUtils.pop();
+        pop();
     }
 
     public void renderExtras(Entity entity, float f, float f1, float f2, float f3, float f4, float f5,

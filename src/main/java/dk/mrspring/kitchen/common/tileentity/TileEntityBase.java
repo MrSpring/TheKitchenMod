@@ -18,6 +18,9 @@ import static dk.mrspring.kitchen.common.util.WorldUtils.sound;
  */
 public abstract class TileEntityBase extends TileEntity implements ISoundPlayer, ISpawner
 {
+    boolean hasSpecialClient = true;
+    String clientSuffix = "-c";
+
     @Override
     public EntityItem spawnItem(ItemStack stack)
     {
@@ -39,8 +42,15 @@ public abstract class TileEntityBase extends TileEntity implements ISoundPlayer,
     public Packet getDescriptionPacket()
     {
         NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
+        super.writeToNBT(compound);
+        this.writeDataToClient(compound);
+        if (hasSpecialClient) compound.setString("id", getClientID(compound.getString("id")));
         return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+    }
+
+    public String getClientID(String commonID)
+    {
+        return commonID + clientSuffix;
     }
 
     @Override
@@ -61,6 +71,12 @@ public abstract class TileEntityBase extends TileEntity implements ISoundPlayer,
     {
         super.readFromNBT(compound);
         this.readDataFromNBT(compound);
+    }
+
+    public void writeDataToClient(NBTTagCompound compound)
+    {
+        this.writeToNBT(compound);
+        this.writeDataToNBT(compound);
     }
 
     public abstract void writeDataToNBT(NBTTagCompound compound);

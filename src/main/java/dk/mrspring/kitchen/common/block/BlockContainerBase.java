@@ -6,8 +6,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.client.block.effect.IRandomTick;
-import dk.mrspring.kitchen.common.tileentity.TileEntityConstructor;
 import dk.mrspring.kitchen.common.tileentity.TileEntityInteractable;
+import dk.mrspring.kitchen.common.tileentity.constructor.TileEntityConstructor;
 import dk.mrspring.kitchen.common.util.WorldUtils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -26,14 +26,15 @@ import java.util.Random;
  */
 public class BlockContainerBase extends BlockContainer
 {
-    TileEntityConstructor constructor;
+    //    TileEntityConstructor constructor;
+    String constructor;
     public int rotationAngles = 0;
 
     @SideOnly(Side.CLIENT)
     List<IRandomTick> randomTicks;
 
     public BlockContainerBase(Material material, String name, String textureName, boolean useCreativeTab,
-                              TileEntityConstructor constructor)
+                              String constructor)
     {
         super(material);
 
@@ -48,39 +49,37 @@ public class BlockContainerBase extends BlockContainer
             this.setCreativeTab(Kitchen.mainTab);
     }
 
-    public BlockContainerBase(Material material, String name, boolean useCreativeTab,
-                              TileEntityConstructor constructor)
+    public BlockContainerBase(Material material, String name, boolean useCreativeTab, String constructor)
     {
         this(material, name, ModInfo.toResource(name), useCreativeTab, constructor);
     }
 
-    public BlockContainerBase(Material material, String name, TileEntityConstructor constructor)
+    public BlockContainerBase(Material material, String name, String constructor)
     {
         this(material, name, true, constructor);
     }
 
-    public BlockContainerBase(String name, String textureName, boolean useCreativeTab,
-                              TileEntityConstructor constructor)
+    public BlockContainerBase(String name, String textureName, boolean useCreativeTab, String constructor)
     {
         this(Material.iron, name, textureName, useCreativeTab, constructor);
     }
 
-    public BlockContainerBase(String name, boolean useCreativeTab, TileEntityConstructor constructor)
+    public BlockContainerBase(String name, boolean useCreativeTab, String constructor)
     {
         this(name, ModInfo.toResource(name), useCreativeTab, constructor);
     }
 
-    public BlockContainerBase(Material material, String name, String textureName, TileEntityConstructor constructor)
+    public BlockContainerBase(Material material, String name, String textureName, String constructor)
     {
         this(material, name, textureName, true, constructor);
     }
 
-    public BlockContainerBase(String name, String textureName, TileEntityConstructor constructor)
+    public BlockContainerBase(String name, String textureName, String constructor)
     {
         this(name, textureName, true, constructor);
     }
 
-    public BlockContainerBase(String name, TileEntityConstructor constructor)
+    public BlockContainerBase(String name, String constructor)
     {
         this(name, true, constructor);
     }
@@ -144,7 +143,12 @@ public class BlockContainerBase extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
-        return constructor.construct(world, metadata);
+        return getConstructor(world, metadata).construct(world, metadata);
+    }
+
+    public TileEntityConstructor getConstructor(World world, int metadata)
+    {
+        return Kitchen.proxy.getConstructor(this.constructor);
     }
 
     @Override
@@ -183,5 +187,11 @@ public class BlockContainerBase extends BlockContainer
                                       int angle)
     {
         world.setBlockMetadataWithNotify(x, y, z, angle, 2);
+    }
+
+    public BlockContainerBase setRotationAngles(int rotationAngles)
+    {
+        this.rotationAngles = rotationAngles;
+        return this;
     }
 }

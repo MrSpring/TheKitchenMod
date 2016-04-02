@@ -4,11 +4,12 @@ import com.google.common.collect.Maps;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.common.entity.particle.IParticleHandler;
 import dk.mrspring.kitchen.common.tileentity.TileEntityOven;
-import net.minecraft.tileentity.TileEntity;
+import dk.mrspring.kitchen.common.tileentity.constructor.BasicConstructor;
+import dk.mrspring.kitchen.common.tileentity.constructor.NullConstructor;
+import dk.mrspring.kitchen.common.tileentity.constructor.TileEntityConstructor;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -27,7 +28,8 @@ public class CommonProxy
         {
         }
     };
-    public Map<String, Class<? extends TileEntity>> tileEntities = Maps.newHashMap();
+    public Map<String, TileEntityConstructor> tileEntities = Maps.newHashMap();
+    private final TileEntityConstructor NULL = new NullConstructor();
 
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -40,16 +42,22 @@ public class CommonProxy
     public void init(FMLInitializationEvent event)
     {
         registerTileEntities();
-        for (Map.Entry<String, Class<? extends TileEntity>> entry : tileEntities.entrySet())
-            GameRegistry.registerTileEntity(entry.getValue(), entry.getKey());
+        for (Map.Entry<String, TileEntityConstructor> entry : tileEntities.entrySet())
+            entry.getValue().register(entry.getKey());
     }
 
     public void registerTileEntities()
     {
-        tileEntities.put("oven", TileEntityOven.class);
+        tileEntities.put("oven", new BasicConstructor(TileEntityOven.class));
     }
 
     public void postInit(FMLPostInitializationEvent event)
     {
+    }
+
+    public TileEntityConstructor getConstructor(String name)
+    {
+        if (tileEntities.containsKey(name)) return tileEntities.get(name);
+        else return NULL;
     }
 }

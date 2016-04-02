@@ -13,6 +13,7 @@ public class TileEntityOvenRenderer extends TileEntityRenderer
     @Override
     protected void renderModel(TileEntity entity, float partial)
     {
+        rotateBasedOnMetadata(entity);
         oven.simpleRender(partial);
     }
 }

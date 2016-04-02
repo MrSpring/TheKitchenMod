@@ -38,6 +38,17 @@ public class ClientUtils
         GL11.glRotatef(angle, x, y, z);
     }
 
+    public static void rotate(int angle)
+    {
+        rotate(4, angle);
+    }
+
+    public static void rotate(int angles, int angle)
+    {
+        float degrees = (float) angle / (float) angles;
+        rotate(360F * degrees, 0F, 1F, 0F);
+    }
+
     public static void scale(float x, float y, float z)
     {
         GL11.glScalef(x, y, z);
@@ -51,5 +62,10 @@ public class ClientUtils
     public static ResourceLocation modelTexture(String name)
     {
         return ModInfo.toLocation(String.format("textures/models/%s.png", name));
+    }
+
+    public static void enableTextures()
+    {
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
     }
 }

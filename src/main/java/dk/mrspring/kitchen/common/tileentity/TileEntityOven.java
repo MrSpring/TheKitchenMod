@@ -8,6 +8,8 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class TileEntityOven extends TileEntityInteractable
 {
+    boolean open = false;
+
     @Override
     public void activated(EntityPlayer player, int side, float clickX, float clickY, float clickZ)
     {
@@ -24,12 +26,20 @@ public class TileEntityOven extends TileEntityInteractable
     }
 
     @Override
+    public void writeDataToClient(NBTTagCompound compound)
+    {
+        compound.setBoolean("IsOpen", open);
+    }
+
+    @Override
     public void writeDataToNBT(NBTTagCompound compound)
     {
+        compound.setBoolean("IsOpen", open);
     }
 
     @Override
     public void readDataFromNBT(NBTTagCompound compound)
     {
+        open = compound.getBoolean("IsOpen");
     }
 }

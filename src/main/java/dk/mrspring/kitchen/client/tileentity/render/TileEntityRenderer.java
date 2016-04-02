@@ -16,6 +16,16 @@ public abstract class TileEntityRenderer<T extends TileEntity> extends TileEntit
         rotate(180F, 0F, 0F, 1F);
     }
 
+    public void rotateBasedOnMetadata(TileEntity entity)
+    {
+        this.rotateBasedOnMetadata(entity, 4);
+    }
+
+    public void rotateBasedOnMetadata(TileEntity entity, int angles)
+    {
+        rotate(angles, entity.getBlockMetadata());
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float partial)
