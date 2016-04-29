@@ -17,13 +17,24 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.4.0-1.7.10"
-group = "dk.mrspring.kitchen" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+String mc_version = "1.7.10"
+String mod_version = "1.4.0-PRE"
+boolean isDrone = System.getenv("DRONE") == "true";
+version = "${mod_version}-${mc_version}"
+String commit, buildNumber, branch;
+if (isDrone) {
+    commit = System.getenv("DRONE_COMMIT").take(7)
+    buildNumber = System.getenv("DRONE_BUILD_NUMBER")
+    branch = System.getenv("DRONE_BRANCH")
+    version += "-${commit}-${buildNumber}-${branch}"
+}
+group = "dk.mrspring" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "TheKitchenMod"
 
 minecraft {
     version = "1.7.10-10.13.4.1566-1.7.10"
     assetDir = "eclipse/assets"
+    replace '{$version}', mod_version
 }
 
 repositories {
@@ -71,6 +82,33 @@ task sourceJar(type: Jar) {
 task devJar(type: Jar) {
     from(sourceSets.main.output)
     classifier = "deobf"
+}
+
+import groovy.json.JsonOutput
+
+task buildInfo << {
+    String jsonCode = JsonOutput.toJson(new BuildInformation(
+            commit: commit,
+            build_number: Integer.valueOf(buildNumber),
+            branch: branch,
+            mod_version: mod_version,
+            mc_version: mc_version,
+            commit_full: System.getenv("DRONE_COMMIT"),
+            build_time: System.currentTimeMillis() / 1000L,
+            files: ["deobf", "src"]));
+    File infoFile = new File("build/libs/${archivesBaseName}-${project.version}.json")
+    println(infoFile.toString());
+    infoFile.createNewFile()
+    infoFile.setText(jsonCode)
+}
+buildInfo.enabled = isDrone;
+build.finalizedBy buildInfo
+
+class BuildInformation {
+    String commit, branch, mod_version, mc_version, commit_full;
+    String[] files;
+    int build_number;
+    long build_time;
 }
 
 artifacts {
