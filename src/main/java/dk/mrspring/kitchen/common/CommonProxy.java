@@ -37,6 +37,8 @@ public class CommonProxy
 
         Kitchen.blocks.register();
         Kitchen.items.register();
+        Kitchen.ovenItems.register();
+        Kitchen.ovenRecipes.register();
     }
 
     public void init(FMLInitializationEvent event)

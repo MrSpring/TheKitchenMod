@@ -17,21 +17,21 @@ public class ItemContainerBase extends ItemNoLogic implements IComparable
     public final String TYPE_TAG;
     public String containsKey = null, typeFormat = null;
 
-    public ItemContainerBase(String typeTag, String name, String textureName, CreativeTabs tab, String... lore)
+    public ItemContainerBase(String typeTag, String name, String textureName, CreativeTabs tab)
     {
-        super(name, textureName, tab, lore);
+        super(name, textureName, tab);
         this.TYPE_TAG = typeTag;
     }
 
-    public ItemContainerBase(String typeTag, String name, CreativeTabs tab, String... lore)
+    public ItemContainerBase(String typeTag, String name, CreativeTabs tab)
     {
-        super(name, tab, lore);
+        super(name, tab);
         this.TYPE_TAG = typeTag;
     }
 
-    public ItemContainerBase(String typeTag, String name, String... lore)
+    public ItemContainerBase(String typeTag, String name)
     {
-        super(name, lore);
+        super(name);
         this.TYPE_TAG = typeTag;
     }
 

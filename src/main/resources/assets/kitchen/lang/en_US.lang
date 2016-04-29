@@ -50,6 +50,9 @@ item.peanut.name=Peanut
 item.peanuts_in_shell.name=Shelled Peanuts
 item.sugared_strawberry_slices.name=Sugared Strawberry Slices
 item.timer.name=Timer
+item.raw_burger_bun.name=Uncooked Burger Bun
+item.cooked_burger_bun.name=Burger Bun
+item.cut_burger_bun.name=Sliced Burger Bun
 
 item.mixing_bowl.name=Mixing Bowl
 item.mixing_bowl.desc=Filled with %s

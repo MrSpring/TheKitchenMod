@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.common.recipe;
+package dk.mrspring.kitchen.common.api.recipe;
 
 import net.minecraft.item.ItemStack;
 

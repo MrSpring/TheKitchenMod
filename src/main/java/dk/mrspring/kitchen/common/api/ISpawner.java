@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.api;
+package dk.mrspring.kitchen.common.api;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;

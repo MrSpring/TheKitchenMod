@@ -18,16 +18,18 @@ public class ItemUtils
     public static final int END = 0, BYTE = 1, SHORT = 2, INT = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, BYTE_ARRAY = 7,
             STRING = 8, LIST = 9, COMPOUND = 10, INT_ARRAY = 11;
 
-    public static boolean notEmpty(ItemStack stack)
-    {
-        return stack != null && stack.getItem() != null && stack.stackSize > 0;
-    }
-
-    public static boolean areStacksEqual(ItemStack stack1, ItemStack stack2, boolean checkTag)
+    public static boolean equalStacks(ItemStack stack1, ItemStack stack2)
     {
         if (stack1.getItem() instanceof IComparable)
             return ((IComparable) stack1.getItem()).compareStacks(stack1, stack2);
-        return !checkTag || ItemStack.areItemStackTagsEqual(stack1, stack2);
+        else if (stack2.getItem() instanceof IComparable)
+            return ((IComparable) stack2.getItem()).compareStacks(stack2, stack1);
+        else return item(stack1, stack2) && equalDamage(stack1, stack2) && equalTags(stack1, stack2);
+    }
+
+    public static boolean notEmpty(ItemStack stack)
+    {
+        return stack != null && stack.getItem() != null && stack.stackSize > 0;
     }
 
     public static boolean areContainerStacksEqual(ItemStack stack1, ItemStack stack2, Item item, String tag)
@@ -37,17 +39,17 @@ public class ItemUtils
         return !(type1 == null || type2 == null) && type1.equals(type2);
     }
 
-    public static boolean canDrop(ItemStack stack) // TODO: Get rid of item comparison
+    public static boolean equalDamage(ItemStack stack1, ItemStack stack2)
     {
-        if (item(stack, Kitchen.items.mixing_bowl)) return false;
-        if (item(stack, Kitchen.items.jam_jar)) return false;
-        return true;
+        return stack1 != null && stack2 != null && stack1.getItemDamage() == stack2.getItemDamage();
     }
 
-    public static boolean equalStacks(ItemStack stack1, ItemStack stack2)
+    public static boolean equalTags(ItemStack stack1, ItemStack stack2)
     {
-        return !(stack1 == null || stack2 == null) && stack1.getItem() == stack2.getItem() &&
-                stack1.getItemDamage() == stack2.getItemDamage();
+        if (stack1.hasTagCompound() && stack2.hasTagCompound())
+        {
+            return stack1.getTagCompound().equals(stack2.getTagCompound());
+        } else return !stack1.hasTagCompound() && !stack2.hasTagCompound();
     }
 
     public static boolean item(ItemStack stack, Block block)
@@ -60,9 +62,31 @@ public class ItemUtils
         return stack != null && stack.getItem() == item;
     }
 
+    public static boolean item(ItemStack stack1, ItemStack stack2)
+    {
+        return stack1 != null && stack2 != null && stack1.getItem() == stack2.getItem();
+    }
+
     public static boolean items(Item item, ItemStack... stacks)
     {
         for (ItemStack stack : stacks) if (!item(stack, item)) return false;
+        return true;
+    }
+
+    public static boolean itemDict(ItemStack stack, String oreDictionaryName)
+    {
+        if (stack != null)
+        {
+            int[] idsForStack = OreDictionary.getOreIDs(stack);
+            int idForName = OreDictionary.getOreID(oreDictionaryName);
+            return ArrayUtils.contains(idsForStack, idForName);
+        } else return oreDictionaryName == null; // If stack and ore dict. name are both null, they are equal.
+    }
+
+    public static boolean canDrop(ItemStack stack) // TODO: Get rid of item comparison
+    {
+        if (item(stack, Kitchen.items.mixing_bowl)) return false;
+        if (item(stack, Kitchen.items.jam_jar)) return false;
         return true;
     }
 
@@ -74,16 +98,6 @@ public class ItemUtils
     public static String name(ItemStack stack)
     {
         return name(stack, "null");
-    }
-
-    public static boolean itemDict(ItemStack stack, String oreDictionaryName)
-    {
-        if (stack != null)
-        {
-            int[] idsForStack = OreDictionary.getOreIDs(stack);
-            int idForName = OreDictionary.getOreID(oreDictionaryName);
-            return ArrayUtils.contains(idsForStack, idForName);
-        } else return oreDictionaryName == null; // If stack and ore dict. name are both null, they are equal.
     }
 
     public static void decrDamage(ItemStack stack, int amount)

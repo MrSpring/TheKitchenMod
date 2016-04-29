@@ -12,10 +12,10 @@ import net.minecraft.tileentity.TileEntity;
  * Created on 27-03-2016 for TheKitchenMod.
  */
 @SideOnly(Side.CLIENT)
-public abstract class TileEntityClient extends TileEntity
+public abstract class TileEntityClientBase extends TileEntity
 {
     @Override
-    public Packet getDescriptionPacket()
+    public final Packet getDescriptionPacket()
     {
         return super.getDescriptionPacket();
     }

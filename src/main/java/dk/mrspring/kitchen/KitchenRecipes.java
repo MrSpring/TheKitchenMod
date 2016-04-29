@@ -1,6 +1,6 @@
 package dk.mrspring.kitchen;
 
-import dk.mrspring.kitchen.common.recipe.RecipeHandler;
+import dk.mrspring.kitchen.common.api.recipe.RecipeHandler;
 
 /**
  * Created on 09-03-2016 for TheKitchenMod.

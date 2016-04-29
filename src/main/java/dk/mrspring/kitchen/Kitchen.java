@@ -6,6 +6,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import dk.mrspring.kitchen.common.CommonProxy;
+import dk.mrspring.kitchen.common.api.oven.recipe.OvenRecipeHandler;
+import dk.mrspring.kitchen.common.api.oven.item.OvenItemRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -36,6 +38,9 @@ public class Kitchen
     public static final KitchenItems items = new KitchenItems();
     public static final KitchenBlocks blocks = new KitchenBlocks();
     public static final KitchenRecipes recipes = new KitchenRecipes();
+
+    public static final OvenItemRegistry ovenItems = new OvenItemRegistry();
+    public static final OvenRecipeHandler ovenRecipes = new OvenRecipeHandler();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)

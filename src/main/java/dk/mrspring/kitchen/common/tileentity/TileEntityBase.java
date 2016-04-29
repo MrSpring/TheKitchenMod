@@ -1,12 +1,12 @@
 package dk.mrspring.kitchen.common.tileentity;
 
-import dk.mrspring.kitchen.api.ISoundPlayer;
-import dk.mrspring.kitchen.api.ISpawner;
+import dk.mrspring.kitchen.common.api.ISoundPlayer;
+import dk.mrspring.kitchen.common.api.ISpawner;
+import dk.mrspring.kitchen.common.api.IUpdatable;
 import dk.mrspring.kitchen.common.util.WorldUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -16,7 +16,7 @@ import static dk.mrspring.kitchen.common.util.WorldUtils.sound;
 /**
  * Created on 07-03-2016 for TheKitchenMod.
  */
-public abstract class TileEntityBase extends TileEntity implements ISoundPlayer, ISpawner
+public abstract class TileEntityBase extends TileEntity implements ISoundPlayer, ISpawner, IUpdatable
 {
     boolean hasSpecialClient = true;
     String clientSuffix = "-c";
@@ -30,6 +30,7 @@ public abstract class TileEntityBase extends TileEntity implements ISoundPlayer,
     public void markForUpdate()
     {
         worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+        markDirty();
     }
 
     @Override
@@ -54,22 +55,18 @@ public abstract class TileEntityBase extends TileEntity implements ISoundPlayer,
         return commonID + clientSuffix;
     }
 
-    /*@Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
-    }*/
-
     @Override
     public void writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
         this.writeDataToNBT(compound);
+        System.out.println("Tile Entity Writing: " + compound);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound)
     {
+        System.out.println("Tile Entity Reading: " + compound.toString());
         super.readFromNBT(compound);
         this.readDataFromNBT(compound);
     }

@@ -9,8 +9,7 @@ import net.minecraftforge.event.world.BlockEvent;
 
 import java.util.Random;
 
-import static dk.mrspring.kitchen.common.util.ItemUtils.copy;
-import static dk.mrspring.kitchen.common.util.ItemUtils.notEmpty;
+import static dk.mrspring.kitchen.common.util.ItemUtils.*;
 
 /**
  * Created on 23-03-2016 for TheKitchenMod.
@@ -24,6 +23,7 @@ public class WorldUtils
 
     public static EntityItem spawnItemAt(ItemStack stack, World world, int x, int y, int z)
     {
+        System.out.println("Spawning: " + name(stack));
         if (notEmpty(stack))
         {
             Random rand = new Random();

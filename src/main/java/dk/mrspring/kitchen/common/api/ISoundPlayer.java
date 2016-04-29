@@ -1,4 +1,4 @@
-package dk.mrspring.kitchen.api;
+package dk.mrspring.kitchen.common.api;
 
 /**
  * Created on 07-03-2016 for TheKitchenMod.

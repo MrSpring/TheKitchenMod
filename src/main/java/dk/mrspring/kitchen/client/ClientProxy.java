@@ -4,6 +4,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dk.mrspring.kitchen.client.api.render.oven.OvenItemRendererRegistry;
 import dk.mrspring.kitchen.client.entity.particle.ClientParticleHandler;
 import dk.mrspring.kitchen.client.tileentity.TileEntityClientOven;
 import dk.mrspring.kitchen.client.tileentity.render.TileEntityOvenRenderer;
@@ -19,12 +20,16 @@ import net.minecraftforge.common.MinecraftForge;
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy
 {
+    public static final OvenItemRendererRegistry ovenRenderers = new OvenItemRendererRegistry();
+
     private ClientEventHandler clientHandler = new ClientEventHandler();
 
     @Override
     public void preInit(FMLPreInitializationEvent event)
     {
         super.preInit(event);
+
+        ovenRenderers.register();
 
         MinecraftForge.EVENT_BUS.register(clientHandler);
 
@@ -48,6 +53,5 @@ public class ClientProxy extends CommonProxy
     private void bind(String name, TileEntitySpecialRenderer renderer)
     {
         getConstructor(name).bindRenderer(renderer);
-//        ClientRegistry.bindTileEntitySpecialRenderer(tileEntities.get(tileEntity), renderer);
     }
 }
