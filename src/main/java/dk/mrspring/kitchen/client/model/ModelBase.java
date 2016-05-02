@@ -168,7 +168,6 @@ public class ModelBase<T extends IRenderParameter> extends net.minecraft.client.
     {
         ModelPart part = new ModelPart(this, name)
                 .setPivot(xPivot, yPivot, zPivot)
-                .setMirrored(true)
                 .setTextureSize(textureWidth, textureHeight);
         parts.add(part);
         return part;

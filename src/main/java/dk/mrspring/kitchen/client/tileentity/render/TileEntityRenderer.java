@@ -13,9 +13,9 @@ import static dk.mrspring.kitchen.client.util.ClientUtils.*;
 @SideOnly(Side.CLIENT)
 public abstract class TileEntityRenderer<T extends TileEntity> extends TileEntitySpecialRenderer
 {
-    public void translateBlockModel(double x, double y, double z)
+    public void translateBlockModel()
     {
-        translate((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
+        translate(0.5F, 1.5F, 0.5F);
         rotate(180F, 0F, 0F, 1F);
     }
 
@@ -26,7 +26,9 @@ public abstract class TileEntityRenderer<T extends TileEntity> extends TileEntit
 
     public void rotateBasedOnMetadata(TileEntity entity, int angles)
     {
+        translate(0.5F, 0.5F, 0.5F);
         rotate(angles, entity.getBlockMetadata());
+        translate(-0.5F, -0.5F, -0.5F);
     }
 
     @Override
@@ -34,10 +36,8 @@ public abstract class TileEntityRenderer<T extends TileEntity> extends TileEntit
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float partial)
     {
         push();
-        translateBlockModel(x, y, z);
-        push();
+        translate(x, y, z);
         renderModel((T) entity, partial);
-        pop();
         pop();
     }
 

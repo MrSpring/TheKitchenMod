@@ -11,5 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 @SideOnly(Side.CLIENT)
 public abstract class OvenItemRendererFactory implements IRenderFactory<OvenItemRenderer, NBTTagCompound>
 {
+    public final String RENDER_AS = "RenderAs";
+
     public abstract OvenItemRenderer make(NBTTagCompound compound);
 }

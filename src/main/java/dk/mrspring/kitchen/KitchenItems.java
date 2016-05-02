@@ -20,7 +20,7 @@ public class KitchenItems
     public final ItemContainerBase mixing_bowl = new ItemContainerBase("MixType", "mixing_bowl")
             .setContainsFormat("item.mixing_bowl.desc", "mix.%s.name");
     public final ItemContainerBase jam_jar = new ItemContainerBase("JamType", "jam_jar");
-    public final Item raw_burger_bun = new ItemNoLogic("uncooked_burger_bun", "burger_bun");
+    public final Item raw_burger_bun = new ItemNoLogic("uncooked_burger_bun");
     public final Item cooked_burger_bun = new ItemNoLogic("cooked_burger_bun");
     public final Item sliced_burger_bun = new ItemNoLogic("sliced_burger_bun");
     public final Item burnt_bread = new ItemNoLogic("burnt_bread", "chicken_leg");

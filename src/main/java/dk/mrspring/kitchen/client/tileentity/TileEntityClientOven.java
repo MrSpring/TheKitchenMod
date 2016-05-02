@@ -40,7 +40,7 @@ public class TileEntityClientOven extends TileEntityClientBase
             for (int i = 0; i < list.tagCount(); i++)
             {
                 NBTTagCompound slotCompound = list.getCompoundTagAt(i);
-                if (!slotCompound.hasKey("Slot", INT))
+                if (slotCompound.hasKey("Slot", INT))
                 {
                     OvenItemRenderer renderer = ClientProxy.ovenRenderers.getFrom(slotCompound);
                     if (renderer != null)
