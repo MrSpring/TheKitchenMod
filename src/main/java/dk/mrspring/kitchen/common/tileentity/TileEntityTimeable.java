@@ -23,11 +23,13 @@ public abstract class TileEntityTimeable extends TileEntityInteractable
     }
 
     @Override
-    public void activated(EntityPlayer player, int side, float clickX, float clickY, float clickZ)
+    @SuppressWarnings("SimplifiableIfStatement")
+    public boolean activated(EntityPlayer player, int side, float clickX, float clickY, float clickZ)
     {
         ItemStack stack = player.getCurrentEquippedItem();
         if (!notEmpty(stack) && item(stack, Kitchen.items.timer))
-            activatedWithTimer(player, stack, side, clickX, clickY, clickZ);
+            return activatedWithTimer(player, stack, side, clickX, clickY, clickZ);
+        else return false;
     }
 
     @Override
@@ -36,12 +38,16 @@ public abstract class TileEntityTimeable extends TileEntityInteractable
 
     }
 
-    public void activatedWithTimer(EntityPlayer player, ItemStack timer, int side,
-                                   float clickX, float clickY, float clickZ)
+    public boolean activatedWithTimer(EntityPlayer player, ItemStack timer, int side,
+                                      float clickX, float clickY, float clickZ)
     {
-        setHasTimer(true);
-        decrSize(timer, 1);
-        markForUpdate();
+        if (!getHasTimer())
+        {
+            setHasTimer(true);
+            decrSize(timer, 1);
+            markForUpdate();
+            return true;
+        } else return false;
     }
 
     public void dropTimer(EntityPlayer player, int side)

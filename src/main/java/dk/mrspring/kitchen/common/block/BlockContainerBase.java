@@ -26,7 +26,6 @@ import java.util.Random;
  */
 public class BlockContainerBase extends BlockContainer
 {
-    //    TileEntityConstructor constructor;
     String constructor;
     public int rotationAngles = 0;
 
@@ -115,10 +114,7 @@ public class BlockContainerBase extends BlockContainer
     {
         TileEntity entity = world.getTileEntity(x, y, z);
         if (entity instanceof TileEntityInteractable)
-        {
-            System.out.println("Activating...");
-            ((TileEntityInteractable) entity).activated(player, side, clickX, clickY, clickZ);
-        }
+            return ((TileEntityInteractable) entity).activated(player, side, clickX, clickY, clickZ);
 
         return onRightClicked(world, x, y, z, player, side, clickX, clickY, clickZ);
     }

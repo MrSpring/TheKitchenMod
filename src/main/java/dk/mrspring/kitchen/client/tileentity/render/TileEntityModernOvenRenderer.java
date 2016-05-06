@@ -3,8 +3,8 @@ package dk.mrspring.kitchen.client.tileentity.render;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.api.render.oven.OvenItemRenderer;
-import dk.mrspring.kitchen.client.model.block.ModelOven;
-import dk.mrspring.kitchen.client.tileentity.TileEntityClientOven;
+import dk.mrspring.kitchen.client.model.block.ModelModernOven;
+import dk.mrspring.kitchen.client.tileentity.TileEntityClientOpenableOven;
 
 import static dk.mrspring.kitchen.client.util.ClientUtils.*;
 
@@ -12,18 +12,18 @@ import static dk.mrspring.kitchen.client.util.ClientUtils.*;
  * Created on 27-03-2016 for TheKitchenMod.
  */
 @SideOnly(Side.CLIENT)
-public class TileEntityOvenRenderer extends TileEntityRenderer<TileEntityClientOven>
+public class TileEntityModernOvenRenderer extends TileEntityRenderer<TileEntityClientOpenableOven>
 {
-    ModelOven oven = new ModelOven();
+    ModelModernOven oven = new ModelModernOven();
 
     @Override
-    protected void renderModel(TileEntityClientOven oven, float partial)
+    protected void renderModel(TileEntityClientOpenableOven oven, float partial)
     {
         rotateBasedOnMetadata(oven);
 
         push();
         translateBlockModel();
-        ModelOven.Parameters parameters = new ModelOven.Parameters(oven);
+        ModelModernOven.Parameters parameters = new ModelModernOven.Parameters(oven);
         this.oven.simpleRender(partial, parameters);
         pop();
 

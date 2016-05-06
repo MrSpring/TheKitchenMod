@@ -6,10 +6,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.api.render.oven.OvenItemRendererRegistry;
 import dk.mrspring.kitchen.client.entity.particle.ClientParticleHandler;
-import dk.mrspring.kitchen.client.tileentity.TileEntityClientOven;
-import dk.mrspring.kitchen.client.tileentity.render.TileEntityOvenRenderer;
+import dk.mrspring.kitchen.client.tileentity.TileEntityClientOpenableOven;
+import dk.mrspring.kitchen.client.tileentity.render.TileEntityModernOvenRenderer;
 import dk.mrspring.kitchen.common.CommonProxy;
-import dk.mrspring.kitchen.common.tileentity.TileEntityOven;
+import dk.mrspring.kitchen.common.tileentity.TileEntityModernOven;
 import dk.mrspring.kitchen.common.tileentity.constructor.SidedConstructor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraftforge.common.MinecraftForge;
@@ -39,7 +39,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerTileEntities()
     {
-        tileEntities.put("oven", new SidedConstructor(TileEntityOven.class, TileEntityClientOven.class));
+        tileEntities.put("oven", new SidedConstructor(TileEntityModernOven.class, TileEntityClientOpenableOven.class));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ClientProxy extends CommonProxy
     {
         super.init(event);
 
-        bind("oven", new TileEntityOvenRenderer());
+        bind("oven", new TileEntityModernOvenRenderer());
     }
 
     private void bind(String name, TileEntitySpecialRenderer renderer)

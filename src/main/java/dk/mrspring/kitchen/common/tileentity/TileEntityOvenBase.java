@@ -13,17 +13,18 @@ import java.util.Collection;
 /**
  * Created on 27-03-2016 for TheKitchenMod.
  */
-public class TileEntityOven extends TileEntityInteractable implements IOven
+public abstract class TileEntityOvenBase extends TileEntityInteractable implements IOven
 {
-    boolean open = false;
-    OvenSlot[] slots = new OvenSlot[4];
+    OvenSlot[] slots;// = new OvenSlot[4];
 
-    public TileEntityOven()
+    public TileEntityOvenBase()
     {
-        slots[0] = new OvenSlot(3, 1);
-        slots[1] = new OvenSlot(0, 2);
-        slots[2] = new OvenSlot(1, 3);
-        slots[3] = new OvenSlot(2, 0);
+        int slots = getSlotCount();
+        if (slots <= 0) throw new IllegalArgumentException("An oven must have at least one slot!");
+        this.slots = new OvenSlot[slots];
+
+        for (int i = 0; i < slots; i++)
+            this.slots[i] = new OvenSlot(i, slots);
     }
 
     private class OvenSlot
@@ -31,10 +32,12 @@ public class TileEntityOven extends TileEntityInteractable implements IOven
         OvenItemStack item;
         int next, prev;
 
-        OvenSlot(int prev, int next)
+        OvenSlot(int index, int slotCount)
         {
-            this.next = next;
-            this.prev = prev;
+            this.next = index + 1;
+            if (next >= slotCount) this.next = 0;
+            this.prev = index - 1;
+            if (prev < 0) prev = slotCount - 1;
         }
 
         void setCopy(OvenItemStack stack)
@@ -51,7 +54,7 @@ public class TileEntityOven extends TileEntityInteractable implements IOven
         {
             int i = 0, n = 0;
             OvenSlot s = this;
-            while (s.isEmpty() && i < 4)
+            while (s.isEmpty() && i < getSlotCount())
             {
                 n++;
                 s = slots[s.next];
@@ -64,12 +67,6 @@ public class TileEntityOven extends TileEntityInteractable implements IOven
         {
             item = null;
         }
-    }
-
-    @Override
-    public int getSlotCount()
-    {
-        return slots.length;
     }
 
     @Override
@@ -94,33 +91,24 @@ public class TileEntityOven extends TileEntityInteractable implements IOven
     }
 
     @Override
-    public void activated(EntityPlayer player, int side, float clickX, float clickY, float clickZ)
+    public boolean activated(EntityPlayer player, int side, float clickX, float clickY, float clickZ)
     {
-        if (player.isSneaking())
+        int count = getSlotCount();
+        for (int i = 0; i < count; i++)
         {
-            if (player.getCurrentEquippedItem() == null)
+            OvenSlot slot = slots[i];
+            if (slot.isEmpty())
             {
-                open = !open;
-                markForUpdate();
-            }
-        } else
-        {
-            int count = getSlotCount();
-            for (int i = 0; i < count; i++)
-            {
-                OvenSlot slot = slots[i];
-                if (slot.isEmpty())
+                int[] slots = getConcurrentEmptySlots(i);
+                if (onEmptySlot(slots, player))
                 {
-                    int[] slots = getConcurrentEmptySlots(i);
-                    if (onEmptySlot(slots, player))
-                    {
-                        markForUpdate();
-                        break;
-                    } else i += slots.length - 1;
-                } else if (slot.item.getItem().onItemRightClick(player, this, slot.item, i))
-                    break;
-            }
+                    markForUpdate();
+                    return true;
+                } else i += slots.length - 1;
+            } else if (slot.item.getItem().onItemRightClick(player, this, slot.item, i))
+                return true;
         }
+        return false;
     }
 
     private boolean onEmptySlot(int[] slots, EntityPlayer player)
@@ -143,8 +131,7 @@ public class TileEntityOven extends TileEntityInteractable implements IOven
     @Override
     public void writeDataToClient(NBTTagCompound compound)
     {
-        compound.setInteger("SlotCount", 4);
-        compound.setBoolean("IsOpen", open);
+        compound.setInteger("SlotCount", getSlotCount());
         NBTTagList list = new NBTTagList();
         int count = getSlotCount();
         for (int i = 0; i < count; i++)
@@ -164,8 +151,6 @@ public class TileEntityOven extends TileEntityInteractable implements IOven
     @Override
     public void writeDataToNBT(NBTTagCompound compound)
     {
-        compound.setBoolean("IsOpen", open);
-        System.out.println("Writing!");
         NBTTagList list = new NBTTagList();
         int count = getSlotCount();
         for (int i = 0; i < count; i++)
@@ -185,8 +170,6 @@ public class TileEntityOven extends TileEntityInteractable implements IOven
     @Override
     public void readDataFromNBT(NBTTagCompound compound)
     {
-        System.out.println(compound.toString());
-        open = compound.getBoolean("IsOpen");
         NBTTagList list = compound.getTagList("Items", 10);
         for (int i = 0; i < list.tagCount(); i++)
         {

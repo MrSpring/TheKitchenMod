@@ -4,10 +4,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * Created on 03-04-2016 for TheKitchenMod.
+ * Created on 02-05-2016 for TheKitchenMod.
  */
 @SideOnly(Side.CLIENT)
-public abstract class OvenItemRenderer
+public interface IClientOven
 {
-    public abstract void render(IClientOven oven);
+    void translateToSlot(int slot);
+
+    int getSlotCount();
 }

@@ -1,39 +1,38 @@
 package dk.mrspring.kitchen.client.tileentity;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.ClientProxy;
+import dk.mrspring.kitchen.client.api.render.oven.IClientOven;
 import dk.mrspring.kitchen.client.api.render.oven.OvenItemRenderer;
-import dk.mrspring.kitchen.client.tileentity.render.anim.OpeningAnimation;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import static dk.mrspring.kitchen.common.util.ItemUtils.*;
 
 /**
- * Created on 27-03-2016 for TheKitchenMod.
+ * Created on 02-05-2016 for TheKitchenMod.
  */
-@SideOnly(Side.CLIENT)
-public class TileEntityClientOven extends TileEntityClientBase
+public class TileEntityClientModernOven extends TileEntityClientBase implements IClientOven
 {
-    private final int MIN_ANGLE = 0, MAX_ANGLE = 65, ANGLE_STEP = 10;
-
-    boolean isOpen = false;
-    public OpeningAnimation openingAnimation = new OpeningAnimation(MIN_ANGLE, MAX_ANGLE, ANGLE_STEP, isOpen);
-    public OvenItemRenderer[] renderers = new OvenItemRenderer[4];
+    int slotCount = 0;
+    public OvenItemRenderer[] renderers = new OvenItemRenderer[slotCount];
 
     @Override
-    public void updateEntity()
+    public void translateToSlot(int slot)
     {
-        super.updateEntity();
-        openingAnimation.update(isOpen);
+        // TODO: Translate
+    }
+
+    @Override
+    public int getSlotCount()
+    {
+        return slotCount;
     }
 
     @Override
     public void readDataFromNBT(NBTTagCompound compound)
     {
-        this.renderers = new OvenItemRenderer[compound.getInteger("SlotCount")];
-        this.isOpen = compound.getBoolean("IsOpen");
+        this.slotCount = compound.getInteger("SlotCount");
+        this.renderers = new OvenItemRenderer[slotCount];
         if (compound.hasKey("RenderInfo", LIST))
         {
             NBTTagList list = compound.getTagList("RenderInfo", COMPOUND);

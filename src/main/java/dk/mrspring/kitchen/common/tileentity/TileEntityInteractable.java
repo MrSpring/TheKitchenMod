@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
  */
 public abstract class TileEntityInteractable extends TileEntityBase
 {
-    public abstract void activated(EntityPlayer player, int side, float clickX, float clickY, float clickZ);
+    public abstract boolean activated(EntityPlayer player, int side, float clickX, float clickY, float clickZ);
 
     public abstract void placed(EntityPlayer player);
 

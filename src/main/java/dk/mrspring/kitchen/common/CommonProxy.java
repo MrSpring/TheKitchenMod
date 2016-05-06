@@ -6,7 +6,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.common.entity.particle.IParticleHandler;
-import dk.mrspring.kitchen.common.tileentity.TileEntityOven;
+import dk.mrspring.kitchen.common.tileentity.TileEntityCampFire;
+import dk.mrspring.kitchen.common.tileentity.TileEntityModernOven;
 import dk.mrspring.kitchen.common.tileentity.constructor.BasicConstructor;
 import dk.mrspring.kitchen.common.tileentity.constructor.NullConstructor;
 import dk.mrspring.kitchen.common.tileentity.constructor.TileEntityConstructor;
@@ -50,7 +51,7 @@ public class CommonProxy
 
     public void registerTileEntities()
     {
-        tileEntities.put("oven", new BasicConstructor(TileEntityOven.class));
+        tileEntities.put("oven", new BasicConstructor(TileEntityModernOven.class));
     }
 
     public void postInit(FMLPostInitializationEvent event)

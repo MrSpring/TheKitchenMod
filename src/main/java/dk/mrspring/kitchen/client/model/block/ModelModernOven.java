@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.client.model.IRenderParameter;
 import dk.mrspring.kitchen.client.model.ModelBase;
 import dk.mrspring.kitchen.client.model.ModelPart;
-import dk.mrspring.kitchen.client.tileentity.TileEntityClientOven;
+import dk.mrspring.kitchen.client.tileentity.TileEntityClientOpenableOven;
 import dk.mrspring.kitchen.client.tileentity.render.anim.OpeningAnimation;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -13,12 +13,12 @@ import net.minecraft.util.ResourceLocation;
 import static dk.mrspring.kitchen.client.util.ClientUtils.modelTexture;
 
 @SideOnly(Side.CLIENT)
-public class ModelOven extends ModelBase<ModelOven.Parameters>
+public class ModelModernOven extends ModelBase<ModelModernOven.Parameters>
 {
     ModelPart base, hatch;
     ResourceLocation on, off;
 
-    public ModelOven()
+    public ModelModernOven()
     {
         super("oven", 64, 64);
 
@@ -72,7 +72,7 @@ public class ModelOven extends ModelBase<ModelOven.Parameters>
         public boolean on;
         public OpeningAnimation opening;
 
-        public Parameters(TileEntityClientOven oven)
+        public Parameters(TileEntityClientOpenableOven oven)
         {
             this(false, oven.openingAnimation);
         }

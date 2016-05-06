@@ -2,16 +2,14 @@ package dk.mrspring.kitchen.client.api.render.oven.builtin;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dk.mrspring.kitchen.client.api.render.oven.IClientOven;
 import dk.mrspring.kitchen.client.api.render.oven.OvenItemRenderer;
 import dk.mrspring.kitchen.client.api.render.oven.OvenItemRendererFactory;
-import dk.mrspring.kitchen.client.tileentity.TileEntityClientOven;
 import dk.mrspring.kitchen.common.util.ItemUtils;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import org.lwjgl.opengl.GL11;
 
-import static dk.mrspring.kitchen.client.util.ClientUtils.*;
+import static dk.mrspring.kitchen.client.util.ClientUtils.renderItemStack;
 
 /**
  * Created on 29-04-2016 for TheKitchenMod.
@@ -43,7 +41,7 @@ public class BasicItemRendererFactory extends OvenItemRendererFactory
         float xScale = 1F, yScale = 1F, zScale = 1F;
 
         @Override
-        public void render(TileEntityClientOven oven)
+        public void render(IClientOven oven)
         {
             renderItemStack(rendering);
         }

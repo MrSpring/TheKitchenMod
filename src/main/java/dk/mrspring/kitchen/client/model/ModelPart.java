@@ -45,12 +45,19 @@ public class ModelPart extends ModelRenderer
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     public ModelPart addBox(int u, int v,
                             float xOffset, float yOffset, float zOffset,
                             int width, int height, int depth)
     {
-        cubeList.add(new ModelBox(this, u, v, xOffset, yOffset, zOffset, width, height, depth, 0F));
+        return this.addBox(u, v, xOffset, yOffset, zOffset, width, height, depth, 0F);
+    }
+
+    @SuppressWarnings("unchecked")
+    public ModelPart addBox(int u, int v,
+                            float xOffset, float yOffset, float zOffset,
+                            int width, int height, int depth, float scale)
+    {
+        cubeList.add(new ModelBox(this, u, v, xOffset, yOffset, zOffset, width, height, depth, scale));
         return this;
     }
 

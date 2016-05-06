@@ -27,6 +27,11 @@ public class ItemUtils
         else return item(stack1, stack2) && equalDamage(stack1, stack2) && equalTags(stack1, stack2);
     }
 
+    public static boolean empty(ItemStack stack)
+    {
+        return !notEmpty(stack);
+    }
+
     public static boolean notEmpty(ItemStack stack)
     {
         return stack != null && stack.getItem() != null && stack.stackSize > 0;
