@@ -102,7 +102,7 @@ public class SandwichRender
             @Override
             public double getModelHeight(ItemStack[] itemStacks, int indexInList, NBTTagCompound specialTagInfo)
             {
-                return 0.0625;
+                return 0.05;
             }
         });
     }
