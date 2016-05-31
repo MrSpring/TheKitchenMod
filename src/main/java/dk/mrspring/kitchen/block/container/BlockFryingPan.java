@@ -24,7 +24,7 @@ public class BlockFryingPan extends BlockContainerBase
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
     {
         int metadata = world.getBlockMetadata(x, y - 1, z);
-        float pixel = 0.06125F, height = 3 * pixel;
+        float pixel = 0.0625F, height = 2 * pixel;
         if (world.getBlock(x, y - 1, z) == KitchenBlocks.oven)
             switch (metadata)
             {

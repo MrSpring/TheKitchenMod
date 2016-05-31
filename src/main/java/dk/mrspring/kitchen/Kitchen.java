@@ -20,7 +20,6 @@ import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.recipe.RecipeRegistry;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -93,7 +92,7 @@ public class Kitchen
 
         FMLInterModComms.sendMessage("Waila", "register", "dk.mrspring.kitchen.comp.waila.WailaDataProvider.callbackRegister");
         FMLInterModComms.sendRuntimeMessage(ModInfo.modid, "VersionChecker", "addVersionCheck", "http://www.mrspring.dk/mods/kitchen/vchecker.json");
-        FMLInterModComms.sendMessage("cfm","register","dk.mrspring.kitchen.comp.furniture.CrayfishFurnitureRegister.registerRecipes");
+        FMLInterModComms.sendMessage("cfm", "register", "dk.mrspring.kitchen.comp.furniture.CrayfishFurnitureRegister.registerRecipes");
 
         MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
 
@@ -108,33 +107,20 @@ public class Kitchen
         Ingredient.registerIngredient(new Ingredient("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}), "peanut"));
         Ingredient.registerIngredient(new Ingredient("bacon", new IIngredientRenderingHandler()
         {
-            ModelBase rawBaconModel = new ModelBaconRaw();
-            ModelBase cookedBaconModel = new ModelBaconCooked();
+            ModelBaconRaw rawBaconModel = new ModelBaconRaw();
+            ModelBaconCooked cookedBaconModel = new ModelBaconCooked();
 
             @Override
-            public ModelBase getModel(int boilTime, Ingredient ingredient)
-            {
-                if (boilTime >= 400)
-                    return cookedBaconModel;
-                else return rawBaconModel;
-            }
-
-            @Override
-            public boolean useColorModifier(int boilTime, Ingredient ingredient)
-            {
-                return false;
-            }
-
-            @Override
-            public float[] getColorModifier(int boilTime, Ingredient ingredient)
-            {
-                return new float[0];
-            }
-
-            @Override
-            public boolean scaleOnPan(int boilTime, Ingredient ingredient)
+            public boolean translateModel(int cookTime, Ingredient ingredient)
             {
                 return true;
+            }
+
+            @Override
+            public void render(int cookTime, Ingredient ingredient)
+            {
+                if (cookTime >= 300) cookedBaconModel.simpleRender(0F);
+                else rawBaconModel.simpleRender(0F);
             }
         }, new ItemStack(KitchenItems.bacon, 1)));
         Ingredient.registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));

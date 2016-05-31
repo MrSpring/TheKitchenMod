@@ -1,46 +1,34 @@
 package dk.mrspring.kitchen.pan;
 
-import dk.mrspring.kitchen.model.ModelItemBase;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
+
+import static dk.mrspring.kitchen.ClientUtils.*;
 
 /**
  * Created by MrSpring on 04-11-2014.
  */
 public class ItemBaseRenderingHandler implements IIngredientRenderingHandler
 {
-    ModelBase preFried;
-    ModelBase postFried;
+    ItemStack preFried, postFried;
 
     public ItemBaseRenderingHandler(ItemStack pre, ItemStack post)
     {
-        this.preFried = new ModelItemBase(pre);
-        this.postFried = new ModelItemBase(post);
+        this.preFried = pre.copy();
+        this.postFried = post.copy();
     }
 
     @Override
-    public ModelBase getModel(int boilTime, Ingredient ingredient)
-    {
-        if (boilTime >= 300)
-            return postFried;
-        else return preFried;
-    }
-
-    @Override
-    public boolean useColorModifier(int boilTime, Ingredient ingredient)
+    public boolean translateModel(int cookTime, Ingredient ingredient)
     {
         return false;
     }
 
     @Override
-    public float[] getColorModifier(int boilTime, Ingredient ingredient)
+    public void render(int cookTime, Ingredient ingredient)
     {
-        return new float[0];
-    }
-
-    @Override
-    public boolean scaleOnPan(int boilTime, Ingredient ingredient)
-    {
-        return false;
+        translate(0.5F, 0.075F, 0.5F);
+        rotate(90F, 1F, 0F, 0F);
+        scale(0.74F);
+        renderItemStack(cookTime >= 300 ? postFried : preFried);
     }
 }

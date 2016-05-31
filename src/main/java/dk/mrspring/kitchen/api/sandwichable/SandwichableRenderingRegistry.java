@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,6 +17,20 @@ import java.util.Map;
 public class SandwichableRenderingRegistry
 {
     static Map<String, ISandwichableRenderingHandler> renderers = new HashMap<String, ISandwichableRenderingHandler>();
+    private static final ISandwichableRenderingHandler FALLBACK_HANDLER = new ISandwichableRenderingHandler()
+    {
+        @Override
+        public ModelBase getModel(ItemStack[] itemStacks, int indexInList, NBTTagCompound specialTagInfo)
+        {
+            return null;
+        }
+
+        @Override
+        public double getModelHeight(ItemStack[] itemStacks, int indexInList, NBTTagCompound specialTagInfo)
+        {
+            return ClientUtils.ITEM_PIXEL;
+        }
+    };
 
     /**
      * @param itemName The UniqueIdentifier for the item.
@@ -27,20 +40,7 @@ public class SandwichableRenderingRegistry
     {
         if (renderers.containsKey(itemName))
             return renderers.get(itemName);
-        else return new ISandwichableRenderingHandler()
-        {
-            @Override
-            public ModelBase getModel(ItemStack[] itemStacks, int indexInList, NBTTagCompound compound)
-            {
-                return null;
-            }
-
-            @Override
-            public double getModelHeight(ItemStack[] itemStacks, int indexInList, NBTTagCompound compound)
-            {
-                return ClientUtils.ITEM_PIXEL;
-            }
-        };
+        else return FALLBACK_HANDLER;
     }
 
     /**

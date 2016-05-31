@@ -19,7 +19,7 @@ public class ModelItemBase extends ModelBase
 
     public ModelItemBase(ItemStack toRender)
     {
-        this.rendering=toRender;
+        this.rendering = toRender;
     }
 
     public ModelItemBase(Item toRender)
@@ -32,15 +32,15 @@ public class ModelItemBase extends ModelBase
     {
         GL11.glPushMatrix();
 
-        GL11.glTranslatef(0,2.822F,0);
-        float s=0.8F;
-        GL11.glScalef(s,1,s);
+        GL11.glTranslatef(0, 2.822F, 0);
+        float s = 0.8F;
+        GL11.glScalef(s, 1, s);
 
         EntityItem itemEntity = new EntityItem(Minecraft.getMinecraft().thePlayer.getEntityWorld(), 0D, 0D, 0D, rendering);
         itemEntity.hoverStart = 0.0F;
         RenderItem.renderInFrame = true;
         GL11.glRotatef(180, 0, 1, 1);
-        GL11.glTranslatef(.0F,-.2F,-1.395F);
+        GL11.glTranslatef(.0F, -.2F, -1.395F);
         RenderManager.instance.renderEntityWithPosYaw(itemEntity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
         RenderItem.renderInFrame = false;
 
