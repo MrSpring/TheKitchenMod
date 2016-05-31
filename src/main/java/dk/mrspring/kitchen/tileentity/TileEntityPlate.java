@@ -79,11 +79,6 @@ public class TileEntityPlate extends TileEntity
 			return null;
 	}
 
-	public ItemStack[] getItemsAsArray()
-	{
-		return this.items.toArray(new ItemStack[1]);
-	}
-
 	@Override
 	public void writeToNBT(NBTTagCompound compound)
 	{
@@ -143,5 +138,10 @@ public class TileEntityPlate extends TileEntity
 		NBTTagCompound compound = new NBTTagCompound();
 		this.writeToNBT(compound);
 		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+	}
+
+	public ArrayList<ItemStack> getItems()
+	{
+		return items;
 	}
 }

@@ -12,16 +12,16 @@ import java.util.List;
 public interface ISandwichableRenderingHandler
 {
 	/***
-	 * @param itemStackList The list of items. Used by Bread Slice, to get separate top and bottom models.
+	 * @param itemStacks The list of items. Used by Bread Slice, to get separate top and bottom models.
 	 * @param indexInList The index of the item the model is coming from. Used by Bread Slice, to get separate top and bottom models.
 	 * @return Returns the model associated with the rendering handler.
 	 */
-	public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound specialTagInfo);
+	ModelBase getModel(ItemStack[] itemStacks, int indexInList, NBTTagCompound specialTagInfo);
 
 	/***
-	 * @param itemStackList The list of items. Used by Bread Slice, to get separate top and bottom model heights.
+	 * @param itemStacks The list of items. Used by Bread Slice, to get separate top and bottom model heights.
 	 * @param indexInList The index of the item the model is coming from. Used by Bread Slice, to get separate top and bottom model heights.
 	 * @return Returns the height of the model.
 	 */
-	public double getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound specialTagInfo);
+	double getModelHeight(ItemStack[] itemStacks, int indexInList, NBTTagCompound specialTagInfo);
 }

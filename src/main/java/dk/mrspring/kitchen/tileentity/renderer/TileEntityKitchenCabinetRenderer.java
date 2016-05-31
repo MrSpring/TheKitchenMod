@@ -1,20 +1,29 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
-import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelKitchenCabinet;
 import dk.mrspring.kitchen.tileentity.TileEntityKitchenCabinet;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
+
+import static dk.mrspring.kitchen.ClientUtils.pop;
+import static dk.mrspring.kitchen.ClientUtils.push;
 
 /**
  * Created by MrSpring on 29-09-2014 for TheKitchenMod.
  */
-public class TileEntityKitchenCabinetRenderer extends TileEntitySpecialRenderer
+public class TileEntityKitchenCabinetRenderer extends TileEntityRenderer<TileEntityKitchenCabinet>
 {
-	ModelKitchenCabinet model;
+    ModelKitchenCabinet cabinet = new ModelKitchenCabinet();
+
+    @Override
+    protected void renderModel(TileEntityKitchenCabinet entity, float partial)
+    {
+        rotateBasedOnMetadata(entity.getBlockMetadata() / 2, 4);
+        push();
+        translateBlockModel();
+        cabinet.simpleRender(partial, new ModelKitchenCabinet.Parameters(entity));
+        pop();
+    }
+/*
+    ModelKitchenCabinet model;
 	ResourceLocation texture;
 
 	public TileEntityKitchenCabinetRenderer()
@@ -59,4 +68,5 @@ public class TileEntityKitchenCabinetRenderer extends TileEntitySpecialRenderer
 
 		GL11.glPopMatrix();
 	}
+*/
 }

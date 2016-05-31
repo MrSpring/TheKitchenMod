@@ -7,8 +7,11 @@ import net.minecraft.client.model.ModelBase;
  */
 public interface IIngredientRenderingHandler
 {
-    public ModelBase getModel(int boilTime, Ingredient ingredient);
-    public boolean useColorModifier(int boilTime,Ingredient ingredient);
-    public float[] getColorModifier(int boilTime,Ingredient ingredient);
-	public boolean scaleOnPan(int boilTime, Ingredient ingredient);
+    ModelBase getModel(int boilTime, Ingredient ingredient);
+
+    boolean useColorModifier(int boilTime, Ingredient ingredient);
+
+    float[] getColorModifier(int boilTime, Ingredient ingredient);
+
+    boolean scaleOnPan(int boilTime, Ingredient ingredient);
 }

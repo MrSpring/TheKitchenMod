@@ -4,21 +4,24 @@ import dk.mrspring.kitchen.Kitchen;
 import dk.mrspring.kitchen.ModInfo;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
 
 /**
  * Created by MrSpring on 29-09-2014 for TheKitchenMod.
  */
 public class BlockContainerBase extends BlockContainer
 {
-    Class tileEntityClass;
+    Class<? extends TileEntity> tileEntityClass;
 
-    protected BlockContainerBase(Material material, String name, String textureName, boolean useCreativeTab, Class tileEntityClass)
+    protected BlockContainerBase(Material material, String name, String textureName, boolean useCreativeTab, Class<? extends TileEntity> tileEntityClass)
     {
         super(material);
 
@@ -80,8 +83,8 @@ public class BlockContainerBase extends BlockContainer
     {
         try
         {
-            Constructor constructor = tileEntityClass.getConstructor();
-            return (TileEntity) constructor.newInstance();
+            Constructor<? extends TileEntity> constructor = tileEntityClass.getConstructor();
+            return constructor.newInstance();
         } catch (NoSuchMethodException e)
         {
             e.printStackTrace();
@@ -96,6 +99,26 @@ public class BlockContainerBase extends BlockContainer
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void spawnItem(ItemStack item, World world, int x, int y, int z)
+    {
+        if (item != null)
+        {
+            Random random = new Random();
+
+            float xRandPos = random.nextFloat() * 0.8F + 0.1F;
+            float yRandPos = random.nextFloat() * 0.8F + 0.1F;
+            float zRandPos = random.nextFloat() * 0.8F + 0.1F;
+
+            EntityItem entityItem = new EntityItem(world, x + xRandPos, y + yRandPos, z + zRandPos, item);
+
+            entityItem.motionX = random.nextGaussian() * 0.05F;
+            entityItem.motionY = random.nextGaussian() * 0.05F + 0.2F;
+            entityItem.motionZ = random.nextGaussian() * 0.05F;
+
+            world.spawnEntityInWorld(entityItem);
+        }
     }
 
     public Class getTileEntityClass()

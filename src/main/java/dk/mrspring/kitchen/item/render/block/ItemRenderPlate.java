@@ -2,24 +2,39 @@ package dk.mrspring.kitchen.item.render.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dk.mrspring.kitchen.ClientProxy;
-import dk.mrspring.kitchen.ModInfo;
+import dk.mrspring.kitchen.ModConfig;
+import dk.mrspring.kitchen.config.ClientConfig;
+import dk.mrspring.kitchen.item.render.ItemRenderer;
+import dk.mrspring.kitchen.item.render.PlateRender;
 import dk.mrspring.kitchen.model.ModelPlate;
-import dk.mrspring.kitchen.tileentity.renderer.TileEntityPlateRenderer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.IItemRenderer;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Created on 15-11-2015 for TheKitchenMod.
  */
 @SideOnly(Side.CLIENT)
-public class ItemRenderPlate implements IItemRenderer
+public class ItemRenderPlate extends ItemRenderer
 {
+    ModelPlate plate = new ModelPlate();
+
+    public ItemRenderPlate()
+    {
+        this.renderLikeBlock();
+    }
+
+    @Override
+    public void renderAnyTypes(ItemStack item, Object... data)
+    {
+        plate.simpleRender(0F);
+        PlateRender.renderPlateContents(new PlateRender.Plate(item));
+    }
+
+    @Override
+    public ClientConfig.RenderConfig getRenderConfig()
+    {
+        return ModConfig.getClientConfig().plate_rendering;
+    }
+/*
     ModelPlate model = new ModelPlate();
     ResourceLocation texture = new ResourceLocation(ModInfo.modid + ":textures/models/plate.png");
 
@@ -84,7 +99,7 @@ public class ItemRenderPlate implements IItemRenderer
 
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
         Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
-        this.model.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        this.model.simpleRender(0F);
         GL11.glPopMatrix();
     }
 
@@ -119,4 +134,5 @@ public class ItemRenderPlate implements IItemRenderer
             }
         }
     }
+*/
 }

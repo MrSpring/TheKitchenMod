@@ -7,7 +7,6 @@ import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.api.event.IOnAddedToBoardEvent;
 import dk.mrspring.kitchen.api.event.IOnBoardRightClickedEvent;
 import dk.mrspring.kitchen.api.event.ITopItemEvent;
-import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -106,12 +105,19 @@ public class TileEntityBoard extends TileEntity
         return layers;
     }
 
+    public ItemStack getBottom()
+    {
+        return layers.size() > 0 ? layers.get(0) : null;
+    }
+
+    public ItemStack getTop()
+    {
+        return layers.size() > 0 ? layers.get(this.layers.size() - 1) : null;
+    }
+
     public ItemStack finishSandwich()
     {
-        if (this.layers.size()<1)
-            return null;
-
-        if (!(ModConfig.getSandwichConfig().isBread(this.layers.get(0)) && ModConfig.getSandwichConfig().isBread(this.layers.get(this.layers.size() - 1))) || this.layers.size() < 2)
+        if (this.layers.size() < 2 || !(ModConfig.getSandwichConfig().isBread(getTop()) && ModConfig.getSandwichConfig().isBread(getBottom())))
             return null;
 
         NBTTagList layersList = new NBTTagList();
@@ -125,17 +131,6 @@ public class TileEntityBoard extends TileEntity
         }
 
         sandwich.setTagInfo("SandwichLayers", layersList);
-
-
-        NBTTagCompound comboCompound = new NBTTagCompound();
-        ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getComboMatching(sandwich);
-        String comboName="none";
-
-        if (combo!=null)
-            comboName=combo.getUnlocalizedName();
-
-        comboCompound.setString("ComboName", comboName);
-        sandwich.setTagInfo("Combo", comboCompound);
 
         this.resetLayers();
 

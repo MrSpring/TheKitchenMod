@@ -21,7 +21,7 @@ public class ItemBaseRenderingHandler implements IIngredientRenderingHandler
     @Override
     public ModelBase getModel(int boilTime, Ingredient ingredient)
     {
-        if (boilTime>=400)
+        if (boilTime >= 300)
             return postFried;
         else return preFried;
     }

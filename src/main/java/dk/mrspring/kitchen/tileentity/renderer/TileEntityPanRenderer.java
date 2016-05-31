@@ -1,23 +1,57 @@
 package dk.mrspring.kitchen.tileentity.renderer;
 
-import dk.mrspring.kitchen.KitchenBlocks;
-import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.model.ModelPan;
 import dk.mrspring.kitchen.pan.IIngredientRenderingHandler;
 import dk.mrspring.kitchen.pan.Ingredient;
 import dk.mrspring.kitchen.tileentity.TileEntityPan;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+
+import static dk.mrspring.kitchen.ClientUtils.*;
 
 /**
  * Created by MrSpring on 24-10-2014 for TheKitchenMod.
  */
-public class TileEntityPanRenderer extends TileEntitySpecialRenderer
+public class TileEntityPanRenderer extends TileEntityRenderer<TileEntityPan>
 {
+    ModelPan pan = new ModelPan();
+
+    @Override
+    protected void renderModel(TileEntityPan entity, float partial)
+    {
+        if (entity.isOnOven())
+        {
+            float p = 0.0625F;
+            rotateBasedOnMetadata(entity.getAngle(), 4);
+            translate(4 * p, 0, -(2 * p));
+        }
+        push();
+        translateBlockModel();
+        pan.simpleRender(partial);
+
+        Ingredient ingredient = entity.getIngredient();
+        if (ingredient != null)
+            if (ingredient != Ingredient.getIngredient("empty"))
+            {
+                IIngredientRenderingHandler renderingHandler = ingredient.getRenderingHandler();
+                ModelBase ingredientModel = renderingHandler.getModel(entity.getCookTime(), ingredient);
+                if (renderingHandler.useColorModifier(entity.getCookTime(), ingredient))
+                {
+                    float[] colors = renderingHandler.getColorModifier(entity.getCookTime(), ingredient);
+                    GL11.glColor4f(colors[0] / 255, colors[1] / 255, colors[2] / 255, 1F);
+                }
+                if (renderingHandler.scaleOnPan(entity.getCookTime(), ingredient))
+                {
+                    GL11.glTranslatef(0.0F, 0.835F, 0.0F);
+                    GL11.glScalef(0.4F, 0.4F, 0.4F);
+                }
+                ingredientModel.render(null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+            }
+
+        pop();
+    }
+
+/*
     protected ModelPan model;
     protected ResourceLocation textureLocation;
 
@@ -77,4 +111,5 @@ public class TileEntityPanRenderer extends TileEntitySpecialRenderer
 
         GL11.glPopMatrix();
     }
+*/
 }

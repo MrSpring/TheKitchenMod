@@ -1,7 +1,11 @@
 package dk.mrspring.kitchen.tileentity;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
+import dk.mrspring.kitchen.tileentity.renderer.OpeningAnimation;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -27,7 +31,14 @@ public class TileEntityOven extends TileEntity
     protected boolean isOpen = false;
     protected boolean hasCoal = false;
 
-    protected float lidAngle = 0;
+    @SideOnly(Side.CLIENT)
+    OpeningAnimation openingAnimation;
+
+    public TileEntityOven()
+    {
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+            openingAnimation = new OpeningAnimation(0, 65, 10, isOpen());
+    }
 
     public boolean addItemStack(ItemStack itemStack)
     {
@@ -93,15 +104,8 @@ public class TileEntityOven extends TileEntity
     @Override
     public void updateEntity()
     {
-        if (this.isOpen())
-        {
-            if (this.lidAngle + 0.1F < 1.0)
-                this.lidAngle += 0.1F;
-        } else
-        {
-            if (this.lidAngle - 0.1F > 0.0)
-                this.lidAngle -= 0.1F;
-        }
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+            openingAnimation.update(isOpen());
 
         if (!this.isOpen() && this.hasCoal)
             if (!this.isCooking)
@@ -136,6 +140,12 @@ public class TileEntityOven extends TileEntity
         }
     }
 
+    @SideOnly(Side.CLIENT)
+    public OpeningAnimation getOpeningAnimation()
+    {
+        return openingAnimation;
+    }
+
     public boolean isOpen()
     {
         return isOpen;
@@ -154,11 +164,6 @@ public class TileEntityOven extends TileEntity
     public ItemStack[] getOvenItems()
     {
         return ovenItems;
-    }
-
-    public float getLidAngle()
-    {
-        return this.lidAngle;
     }
 
     public boolean canCookItems()
@@ -319,5 +324,10 @@ public class TileEntityOven extends TileEntity
             if (slot >= 0 && slot < this.ovenItems.length)
                 this.ovenItems[slot] = ItemStack.loadItemStackFromNBT(itemCompound);
         }
+    }
+
+    public boolean isCooking()
+    {
+        return isCooking;
     }
 }

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dk.mrspring.kitchen.api.KitchenRegistry;
-import dk.mrspring.kitchen.config.ComboConfig;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import dk.mrspring.kitchen.pan.Ingredient;
 import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
@@ -31,22 +30,6 @@ public class IMCHandler
             handlePanRecipeMessage(message);
         else if (message.key.equalsIgnoreCase("addJam"))
             handleJamMessage(message);
-        else if (message.key.equalsIgnoreCase("addSandwichCombo"))
-            handleComboMessage(message);
-    }
-
-    public static void handleComboMessage(FMLInterModComms.IMCMessage message)
-    {
-        if (message.isStringMessage())
-        {
-            String jsonCode = message.getStringValue();
-
-            Gson gson = new Gson();
-            ComboConfig.SandwichCombo combo = gson.fromJson(jsonCode, ComboConfig.SandwichCombo.class);
-
-            if (combo != null)
-                ModConfig.getComboConfig().registerCombo(combo);
-        }
     }
 
     public static void handleLinkMessage(FMLInterModComms.IMCMessage message)
@@ -265,7 +248,7 @@ public class IMCHandler
             float green = ((color >> 8) & 0xFF);
             float blue = (color & 0xFF);
 
-            Jam jam = new Jam(jamName,color,jamItemName);
+            Jam jam = new Jam(jamName, color, jamItemName);
             Jam.registerJam(jam);
 
             String ingredientName = inputItemName + "-" + "jam_" + jamName;

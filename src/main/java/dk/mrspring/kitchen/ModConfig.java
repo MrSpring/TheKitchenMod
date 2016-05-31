@@ -21,7 +21,7 @@ public class ModConfig
     public static void load(File baseFolder, Side side)
     {
         List<String> names = new ArrayList<String>();
-        Collections.addAll(names, "Kitchen", "Knife", "Oven", "Sandwichable", "Combo");
+        Collections.addAll(names, "Kitchen", "Knife", "Oven", "Sandwichable");
         if (side.isClient()) names.add("Client");
         configs = new BaseConfig[names.size()];
         File configFolder = new File(baseFolder, "TheKitchenMod");
@@ -78,11 +78,6 @@ public class ModConfig
     public static SandwichableConfig getSandwichConfig()
     {
         return (SandwichableConfig) configs[3];
-    }
-
-    public static ComboConfig getComboConfig()
-    {
-        return (ComboConfig) configs[4];
     }
 
     @SideOnly(Side.CLIENT)

@@ -53,7 +53,7 @@ public class BlockFryingPan extends BlockContainerBase
         TileEntityPan tileEntityPan = (TileEntityPan) world.getTileEntity(x, y, z);
         this.setBlockBoundsBasedOnState(world, x, y, z);
 
-        if (tileEntityPan.getCookTime() >= 400)
+        if (tileEntityPan.isFinished())
         {
             world.spawnParticle("smoke",
                     x + (minX + random.nextDouble() * (maxX - minX)),

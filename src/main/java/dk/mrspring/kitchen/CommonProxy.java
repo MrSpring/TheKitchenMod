@@ -8,7 +8,6 @@ public class CommonProxy
 	public static KnifeConfig knifeConfig;
 	public static OvenConfig ovenConfig;
 	public static SandwichableConfig sandwichableConfig;
-	public static ComboConfig comboConfig;
 
 	public void getConfigs()
 	{
@@ -16,7 +15,6 @@ public class CommonProxy
 		knifeConfig = ModConfig.getKnifeConfig();
 		ovenConfig = ModConfig.getOvenConfig();
 		sandwichableConfig= ModConfig.getSandwichConfig();
-		comboConfig = ModConfig.getComboConfig();
 	}
 
 	public void registerRenderers()

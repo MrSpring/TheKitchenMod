@@ -22,6 +22,7 @@ public class TileEntityPan extends TileEntity
     Ingredient ingredient = Ingredient.getIngredient("empty");
     int cookTime = 0;
     boolean isFunctional = true, firstRun = true;
+    final int FINISH_TIME = 300;
 
     /**
      * Handles the block being right-clicked. Adds the item if the pan is
@@ -35,7 +36,7 @@ public class TileEntityPan extends TileEntity
     {
         if (clicked != null)
         {
-            if (this.cookTime >= 400 && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam() && clicked.getItemDamage() == 0)
+            if (isFinished() && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam() && clicked.getItemDamage() == 0)
             {
                 this.finishItem(clicked);
                 return true;
@@ -45,7 +46,7 @@ public class TileEntityPan extends TileEntity
             }
         } else
         {
-            if (this.cookTime >= 400)
+            if (isFinished())
             {
                 this.finishItem(null);
                 return false;
@@ -53,45 +54,11 @@ public class TileEntityPan extends TileEntity
         }
 
         return false;
-
-        /*if (this.getCookTime() >= 400 && this.ingredient != null)
-        {
-            if (clicked != null)
-            {
-                if (clicked.getItem() == KitchenItems.jam_jar && clicked.getItemDamage() == 0 && this.ingredient.isJam())
-                {
-                    Jam result = this.ingredient.getJamResult();
-                    ItemStack jar = Kitchen.getJamJarItemStack(result, 6);
-                    worldObj.spawnEntityInWorld(new EntityItem(worldObj, this.xCoord, this.yCoord, this.zCoord, jar));
-                    this.ingredient = Ingredient.getIngredient("empty");
-                    this.cookTime = 0;
-                    worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-                    return true;
-                }
-            } else if (!this.ingredient.isJam())
-            {
-                ItemStack result = this.ingredient.getItemResult();
-                worldObj.spawnEntityInWorld(new EntityItem(worldObj, this.xCoord, this.yCoord, this.zCoord, result));
-                this.ingredient = Ingredient.getIngredient("empty");
-                this.cookTime = 0;
-                worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-                return false;
-            }
-        } else if (this.getCookTime() == 0 && clicked != null)
-        {
-            Ingredient ingredientFromItem = KitchenItems.valueOf(clicked.getItem());
-            if (ingredientFromItem != null)
-            {
-                this.ingredient = ingredientFromItem;
-                return true;
-            }else return false;
-        }
-        return false;*/
     }
 
     private void finishItem(ItemStack clicked)
     {
-        if (this.cookTime >= 400)
+        if (isFinished())
         {
             ItemStack result = null;
             if (clicked != null && clicked.getItem() == KitchenItems.jam_jar && this.ingredient.isJam())
@@ -142,9 +109,9 @@ public class TileEntityPan extends TileEntity
             this.firstRun = false;
         }
 
-        if (this.getIngredient() != Ingredient.getIngredient("empty") && isFunctional/* && this.worldObj.getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven*/)
+        if (this.getIngredient() != Ingredient.getIngredient("empty") && isFunctional)
         {
-            if (this.cookTime < 410)
+            if (this.cookTime <= FINISH_TIME)
                 this.cookTime++;
         } else this.cookTime = 0;
     }
@@ -215,5 +182,20 @@ public class TileEntityPan extends TileEntity
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
         this.readFromNBT(pkt.func_148857_g());
+    }
+
+    public int getAngle()
+    {
+        return getWorldObj().getBlockMetadata(xCoord, yCoord - 1, zCoord);
+    }
+
+    public boolean isOnOven()
+    {
+        return getWorldObj().getBlock(xCoord, yCoord - 1, zCoord) == KitchenBlocks.oven;
+    }
+
+    public boolean isFinished()
+    {
+        return getCookTime() >= FINISH_TIME;
     }
 }

@@ -20,7 +20,7 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
 
     public JamBaseRenderingHandler(float[] colors)
     {
-        this.baseColor=colors;
+        this.baseColor = colors;
         modelJam0 = new ModelJam0();
         modelJam1 = new ModelJam1();
         modelJam2 = new ModelJam2();
@@ -30,12 +30,9 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
     @Override
     public ModelBase getModel(int boilTime, Ingredient ingredient)
     {
-        if (boilTime>=400)
-            return modelJam3;
-        else if (boilTime>300)
-            return modelJam2;
-        else if (boilTime>150)
-            return modelJam1;
+        if (boilTime >= 300) return modelJam3;
+        else if (boilTime > 200) return modelJam2;
+        else if (boilTime > 100) return modelJam1;
         else return modelJam0;
     }
 
@@ -51,9 +48,9 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
         return baseColor;
     }
 
-	@Override
-	public boolean scaleOnPan(int boilTime, Ingredient ingredient)
-	{
-		return false;
-	}
+    @Override
+    public boolean scaleOnPan(int boilTime, Ingredient ingredient)
+    {
+        return false;
+    }
 }

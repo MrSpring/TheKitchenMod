@@ -1,6 +1,7 @@
 package dk.mrspring.kitchen.api.sandwichable;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import dk.mrspring.kitchen.ClientUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.Item;
@@ -29,15 +30,15 @@ public class SandwichableRenderingRegistry
         else return new ISandwichableRenderingHandler()
         {
             @Override
-            public ModelBase getModel(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
+            public ModelBase getModel(ItemStack[] itemStacks, int indexInList, NBTTagCompound compound)
             {
                 return null;
             }
 
             @Override
-            public double getModelHeight(List<ItemStack> itemStackList, int indexInList, NBTTagCompound compound)
+            public double getModelHeight(ItemStack[] itemStacks, int indexInList, NBTTagCompound compound)
             {
-                return 0.0325 * 1.4;
+                return ClientUtils.ITEM_PIXEL;
             }
         };
     }

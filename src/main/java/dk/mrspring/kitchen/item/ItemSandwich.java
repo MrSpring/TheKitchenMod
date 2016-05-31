@@ -3,9 +3,7 @@ package dk.mrspring.kitchen.item;
 import com.google.common.collect.Lists;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.ModInfo;
-import dk.mrspring.kitchen.config.ComboConfig;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,27 +24,8 @@ public class ItemSandwich extends ItemFood
         this.setTextureName(ModInfo.modid + ":sandwich");
 
         this.setCreativeTab(null);
-    }
 
-    @Override
-    public EnumRarity getRarity(ItemStack par1ItemStack)
-    {
-        if (par1ItemStack.getTagCompound() != null)
-        {
-            NBTTagCompound comboCompound = par1ItemStack.getTagCompound().getCompoundTag("Combo");
-            if (comboCompound != null)
-            {
-                String comboName = comboCompound.getString("ComboName");
-
-                if (!comboName.equals("none"))
-                {
-                    ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getCombo(comboName);
-                    if (combo != null)
-                        return combo.getRarity();
-                }
-            }
-        }
-        return EnumRarity.common;
+        this.setAlwaysEdible();
     }
 
     @Override
@@ -66,15 +45,6 @@ public class ItemSandwich extends ItemFood
                         NBTTagCompound layerCompound = layersList.getCompoundTagAt(i);
                         healAmount += ModConfig.getSandwichConfig().getHealAmount(ItemStack.loadItemStackFromNBT(layerCompound));
                     }
-
-                    String comboName = item.getTagCompound().getCompoundTag("Combo").getString("ComboName");
-
-                    if (!comboName.equals("none"))
-                    {
-                        ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getCombo(comboName);
-                        if (combo != null)
-                            healAmount += combo.getExtraHealth();
-                    }
                 }
             }
 
@@ -82,14 +52,14 @@ public class ItemSandwich extends ItemFood
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
     {
-        List information = new ArrayList();
-        if (par1ItemStack.getTagCompound() != null)
+        List<String> information = new ArrayList<String>();
+        if (stack.getTagCompound() != null)
         {
-            if (par1ItemStack.getTagCompound().hasKey("SandwichLayers"))
+            if (stack.getTagCompound().hasKey("SandwichLayers"))
             {
-                NBTTagList layersList = par1ItemStack.getTagCompound().getTagList("SandwichLayers", 10);
+                NBTTagList layersList = stack.getTagCompound().getTagList("SandwichLayers", 10);
 
                 if (layersList != null)
                 {
@@ -100,22 +70,10 @@ public class ItemSandwich extends ItemFood
                     }
 
                     information = Lists.reverse(information);
-                    par3List.addAll(information);
-
-                    String comboName = par1ItemStack.getTagCompound().getCompoundTag("Combo").getString("ComboName");
-
-                    if (!comboName.equals("none"))
-                    {
-                        ComboConfig.SandwichCombo combo = ModConfig.getComboConfig().getCombo(comboName);
-                        if (combo != null)
-                        {
-                            par3List.add("");
-                            par3List.add(combo.getLocalizedName());
-                        }
-                    }
+                    list.addAll(information);
                 }
-            } else
-                super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-        } else super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+            }
+        }
+        super.addInformation(stack, player, list, par4);
     }
 }

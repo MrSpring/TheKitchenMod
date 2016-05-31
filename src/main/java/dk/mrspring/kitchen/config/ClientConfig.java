@@ -16,6 +16,7 @@ public class ClientConfig extends BaseConfig
     public RenderConfig pan_rendering = new RenderConfig();
     public RenderConfig plate_rendering = new RenderConfig();
     public RenderConfig kitchen_cabinet_rendering = new RenderConfig();
+    public RenderConfig sandwich_rendering = new RenderConfig();
 
     public ClientConfig()
     {
@@ -23,6 +24,7 @@ public class ClientConfig extends BaseConfig
         pan_rendering = new RenderConfig();
         plate_rendering = new RenderConfig();
         kitchen_cabinet_rendering = new RenderConfig();
+        sandwich_rendering = new RenderConfig();
     }
 
     public ClientConfig(File file, String name)
