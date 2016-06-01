@@ -134,8 +134,6 @@ public class TileEntityBoard extends TileEntityBase
     @Override
     public void readDataFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         this.resetLayers();
         NBTTagList list = compound.getTagList("Items", 10);
 
@@ -153,8 +151,6 @@ public class TileEntityBoard extends TileEntityBase
     @Override
     public void writeDataToNBT(NBTTagCompound compound)
     {
-        super.writeToNBT(compound);
-
         NBTTagList list = new NBTTagList();
         for (ItemStack layer : this.layers)
         {
