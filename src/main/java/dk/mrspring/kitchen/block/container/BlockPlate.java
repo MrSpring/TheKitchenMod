@@ -39,13 +39,13 @@ public class BlockPlate extends BlockContainerBase
     {
         TileEntityPlate plate = (TileEntityPlate) world.getTileEntity(x, y, z);
 
+        ItemStack playerStack = player.getCurrentEquippedItem();
         if (!world.isRemote)
             if (!player.isSneaking())
             {
-                ItemStack playerStack = player.getCurrentEquippedItem();
                 if (plate.clicked(playerStack))
                 {
-                    playerStack.stackSize--;
+                    if (playerStack != null) playerStack.stackSize--;
                     return true;
                 } else return false;
             } else
@@ -54,7 +54,7 @@ public class BlockPlate extends BlockContainerBase
                 world.setBlockToAir(x, y, z);
                 return true;
             }
-        else return player.isSneaking() || !plate.isEmpty();
+        else return playerStack != null || player.isSneaking() || !plate.isEmpty();
     }
 
     @Override

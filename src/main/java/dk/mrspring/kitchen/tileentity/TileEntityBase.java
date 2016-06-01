@@ -27,7 +27,8 @@ public abstract class TileEntityBase extends TileEntity
 
     public void spawn(ItemStack stack)
     {
-        getWorldObj().spawnEntityInWorld(new EntityItem(getWorldObj(), xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, stack));
+        if (stack != null && stack.stackSize > 0)
+            getWorldObj().spawnEntityInWorld(new EntityItem(getWorldObj(), xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, stack));
     }
 
     public void warnNBTLevelChange(int oldLevel, int newLevel)
