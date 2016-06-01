@@ -120,16 +120,6 @@ public class BlockOven extends BlockContainerBase
         }
     }
 
-    public void updateBlockState(World world, int x, int y, int z)
-    {
-        TileEntityOven tileEntityOven = (TileEntityOven) world.getTileEntity(x, y, z);
-
-        if (tileEntityOven.isOpen())
-            tileEntityOven.setClosed();
-        else
-            tileEntityOven.setOpen();
-    }
-
     @Override
     public boolean renderAsNormalBlock()
     {
