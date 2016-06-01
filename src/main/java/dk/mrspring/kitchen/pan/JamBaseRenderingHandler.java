@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.pan;
 
+import dk.mrspring.kitchen.ClientUtils;
 import dk.mrspring.kitchen.model.jam.ModelJam0;
 import dk.mrspring.kitchen.model.jam.ModelJam1;
 import dk.mrspring.kitchen.model.jam.ModelJam2;
@@ -22,6 +23,11 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
     public JamBaseRenderingHandler(float[] colors)
     {
         this.baseColor = colors;
+    }
+
+    public JamBaseRenderingHandler(int color)
+    {
+        this(ClientUtils.toRGB(color));
     }
 
     @Override

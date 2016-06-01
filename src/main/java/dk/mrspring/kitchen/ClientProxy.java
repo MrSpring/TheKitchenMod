@@ -52,9 +52,9 @@ public class ClientProxy extends CommonProxy
 
         SandwichRender.loadRenderingHandlers();
 
-        Ingredient.bindRenderingHandler("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}));
-        Ingredient.bindRenderingHandler("apple", new JamBaseRenderingHandler(new float[]{224, 255, 163}));
-        Ingredient.bindRenderingHandler("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}));
+        Ingredient.bindRenderingHandler("strawberry", new JamBaseRenderingHandler(0xFF3C35));
+        Ingredient.bindRenderingHandler("apple", new JamBaseRenderingHandler(0xE0FFA3));
+        Ingredient.bindRenderingHandler("peanut", new JamBaseRenderingHandler(0x936529));
         Ingredient.bindRenderingHandler("bacon", new IIngredientRenderingHandler()
         {
             ModelBaconRaw rawBaconModel = new ModelBaconRaw();
