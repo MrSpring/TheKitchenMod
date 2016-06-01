@@ -11,15 +11,11 @@ import dk.mrspring.kitchen.config.SandwichableConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityBoard extends TileEntity
+public class TileEntityBoard extends TileEntityBase
 {
     private List<ItemStack> layers = new ArrayList<ItemStack>();
     private NBTTagCompound specialInfo = new NBTTagCompound();
@@ -33,7 +29,7 @@ public class TileEntityBoard extends TileEntity
         if (toAdd != null)
         {
             IOnAddedToBoardEvent onAddedToBoardEvent = (IOnAddedToBoardEvent) BoardEventRegistry.getOnAddedToBoardEventFor(toAdd.getItem());
-            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTopItem());
+            ITopItemEvent topItemEvent = (ITopItemEvent) BoardEventRegistry.getTopItemEventFor(this.getTop());
 
             if (!callEvents)
             {
@@ -65,13 +61,6 @@ public class TileEntityBoard extends TileEntity
             }
         }
         return false;
-    }
-
-    public ItemStack getTopItem()
-    {
-        if (this.getLayers().size() > 0)
-            return this.getLayers().get(this.getLayers().size() - 1);
-        else return null;
     }
 
     public NBTTagCompound getSpecialInfo()
@@ -143,7 +132,7 @@ public class TileEntityBoard extends TileEntity
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readDataFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
 
@@ -162,7 +151,7 @@ public class TileEntityBoard extends TileEntity
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public void writeDataToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
 
@@ -182,16 +171,15 @@ public class TileEntityBoard extends TileEntity
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public int getNBTLevel()
     {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
+        return 1;
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    public void readDataFromOldNBT(int oldLevel, int newLevel, NBTTagCompound compound)
     {
-        this.readFromNBT(pkt.func_148857_g());
+        warnNBTLevelChange(oldLevel, newLevel);
+        readDataFromNBT(compound);
     }
 }
