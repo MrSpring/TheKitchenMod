@@ -3,7 +3,6 @@ package dk.mrspring.kitchen.item.render;
 import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.config.ClientConfig;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.IItemRenderer;
 
 import static dk.mrspring.kitchen.ClientUtils.*;
 
@@ -45,7 +44,7 @@ public class ItemRenderSandwich extends ItemRenderer
     @Override
     public void renderEntity(ItemRenderType type, ItemStack stack, Object... data)
     {
-        translate(0F,-0.175F,0F);
+        translate(0F, -0.175F, 0F);
         scale(2F);
 
         super.renderEntity(type, stack, data);
