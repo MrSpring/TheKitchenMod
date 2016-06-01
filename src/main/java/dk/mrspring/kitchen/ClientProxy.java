@@ -9,15 +9,25 @@ import dk.mrspring.kitchen.item.render.block.ItemRenderFryingPan;
 import dk.mrspring.kitchen.item.render.block.ItemRenderKitchenCabinet;
 import dk.mrspring.kitchen.item.render.block.ItemRenderOven;
 import dk.mrspring.kitchen.item.render.block.ItemRenderPlate;
+import dk.mrspring.kitchen.model.ModelBaconCooked;
+import dk.mrspring.kitchen.model.ModelBaconRaw;
+import dk.mrspring.kitchen.pan.IIngredientRenderingHandler;
+import dk.mrspring.kitchen.pan.Ingredient;
+import dk.mrspring.kitchen.pan.ItemBaseRenderingHandler;
+import dk.mrspring.kitchen.pan.JamBaseRenderingHandler;
 import dk.mrspring.kitchen.tileentity.*;
 import dk.mrspring.kitchen.tileentity.renderer.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 
+import static dk.mrspring.kitchen.ClientUtils.scale;
+import static dk.mrspring.kitchen.ClientUtils.translate;
+
 public class ClientProxy extends CommonProxy
 {
     public static ClientConfig clientConfig;
 
+    @Override
     public void getConfigs()
     {
         super.getConfigs();
@@ -41,5 +51,31 @@ public class ClientProxy extends CommonProxy
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(GameRegisterer.findBlock("kitchen_cabinet")), new ItemRenderKitchenCabinet());
 
         SandwichRender.loadRenderingHandlers();
+
+        Ingredient.bindRenderingHandler("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}));
+        Ingredient.bindRenderingHandler("apple", new JamBaseRenderingHandler(new float[]{224, 255, 163}));
+        Ingredient.bindRenderingHandler("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}));
+        Ingredient.bindRenderingHandler("bacon", new IIngredientRenderingHandler()
+        {
+            ModelBaconRaw rawBaconModel = new ModelBaconRaw();
+            ModelBaconCooked cookedBaconModel = new ModelBaconCooked();
+
+            @Override
+            public boolean translateModel(int cookTime, Ingredient ingredient)
+            {
+                return true;
+            }
+
+            @Override
+            public void render(int cookTime, Ingredient ingredient)
+            {
+                float s = 0.4F;
+                translate(0F, (1F - s) * 1.5F, 0F);
+                scale(s);
+                if (cookTime >= 300) cookedBaconModel.simpleRender(0F);
+                else rawBaconModel.simpleRender(0F);
+            }
+        });
+        Ingredient.bindRenderingHandler("chicken_fillet", new ItemBaseRenderingHandler(KitchenItems.raw_chicken_fillet, KitchenItems.chicken_fillet));
     }
 }

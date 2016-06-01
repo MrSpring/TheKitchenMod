@@ -25,10 +25,13 @@ public abstract class TileEntityBase extends TileEntity
 
     public abstract void readDataFromOldNBT(int oldLevel, int newLevel, NBTTagCompound compound);
 
-    public void spawn(ItemStack stack)
+    public void spawn(ItemStack... stacks)
     {
-        if (stack != null && stack.stackSize > 0)
-            getWorldObj().spawnEntityInWorld(new EntityItem(getWorldObj(), xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, stack));
+        for (ItemStack stack : stacks)
+            if (stack != null && stack.stackSize > 0)
+                getWorldObj().spawnEntityInWorld(
+                        new EntityItem(getWorldObj(), xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, stack)
+                );
     }
 
     public void warnNBTLevelChange(int oldLevel, int newLevel)

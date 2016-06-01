@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.pan;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import static dk.mrspring.kitchen.ClientUtils.*;
@@ -15,6 +16,11 @@ public class ItemBaseRenderingHandler implements IIngredientRenderingHandler
     {
         this.preFried = pre.copy();
         this.postFried = post.copy();
+    }
+
+    public ItemBaseRenderingHandler(Item pre, Item post)
+    {
+        this(new ItemStack(pre), new ItemStack(post));
     }
 
     @Override

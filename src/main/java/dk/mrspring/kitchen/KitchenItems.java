@@ -118,7 +118,7 @@ public class KitchenItems
     {
         if (ingredientRelations.containsKey(itemName))
             return Ingredient.getIngredient(ingredientRelations.get(itemName));
-        else return Ingredient.getIngredient("empty");
+        else return Ingredient.EMPTY;
     }
 
     public static Ingredient valueOf(Item item)

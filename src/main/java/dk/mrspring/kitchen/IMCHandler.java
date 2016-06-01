@@ -1,8 +1,10 @@
 package dk.mrspring.kitchen;
 
 import com.google.gson.Gson;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 import dk.mrspring.kitchen.api.KitchenRegistry;
 import dk.mrspring.kitchen.config.SandwichableConfig;
 import dk.mrspring.kitchen.pan.Ingredient;
@@ -186,7 +188,10 @@ public class IMCHandler
 
             String ingredientName = GameRegistry.findUniqueIdentifierFor(input.getItem()).toString() + "-" + GameRegistry.findUniqueIdentifierFor(output.getItem()).toString();
 
-            Ingredient.registerIngredient(new Ingredient(ingredientName, new ItemBaseRenderingHandler(input, output), output));
+            Ingredient ingredient = new Ingredient(ingredientName, "ingredient." + ingredientName + ".name", output);
+            Ingredient.registerIngredient(ingredient);
+            if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+                ingredient.setRenderingHandler(new ItemBaseRenderingHandler(input, output));
             KitchenItems.linkToIngredient(input.getItem(), ingredientName);
         } else if (message.isStringMessage())
         {
@@ -204,7 +209,10 @@ public class IMCHandler
 
                 String ingredientName = GameRegistry.findUniqueIdentifierFor(input.getItem()).toString() + "-" + GameRegistry.findUniqueIdentifierFor(output.getItem()).toString();
 
-                Ingredient.registerIngredient(new Ingredient(ingredientName, new ItemBaseRenderingHandler(input, output), output));
+                Ingredient ingredient = new Ingredient(ingredientName, /*new ItemBaseRenderingHandler(input, output),*/ "ingredient." + ingredientName + ".name", output);
+                Ingredient.registerIngredient(ingredient);
+                if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+                    ingredient.setRenderingHandler(new ItemBaseRenderingHandler(input, output));
                 KitchenItems.linkToIngredient(input.getItem(), ingredientName);
             }
         }
@@ -252,8 +260,10 @@ public class IMCHandler
             Jam.registerJam(jam);
 
             String ingredientName = inputItemName + "-" + "jam_" + jamName;
-            Ingredient ingredient = new Ingredient(ingredientName, new JamBaseRenderingHandler(new float[]{(red * 255), (green * 255), (blue * 255)}), jamName);
+            Ingredient ingredient = new Ingredient(ingredientName, "ingredient.jam." + ingredientName + ".name", jamName);
             Ingredient.registerIngredient(ingredient);
+            if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+                ingredient.setRenderingHandler(new JamBaseRenderingHandler(new float[]{(red * 255), (green * 255), (blue * 255)}));
 
             KitchenItems.linkToIngredient(inputItemName, ingredientName);
         }

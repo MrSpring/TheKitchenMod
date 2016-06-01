@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.item;
 
+import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.ModInfo;
 import dk.mrspring.kitchen.pan.Jam;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,6 +24,51 @@ public class ItemJamJar extends ItemBase
     {
         super(name, true);
         this.setMaxStackSize(1);
+    }
+
+    public static ItemStack getJamJarItemStack(String jam, int usesLeft)
+    {
+        return getJamJarItemStack(Jam.getJam(jam), usesLeft);
+    }
+
+    public static ItemStack getJamJarItemStack(Jam jam, int usesLeft)
+    {
+        ItemStack jamStack = new ItemStack(KitchenItems.jam_jar, 1, 1);
+
+        if (jam == Jam.EMPTY)
+        {
+            jamStack.setItemDamage(0);
+            return jamStack;
+        } else
+        {
+            String jamName = jam.getName();
+            NBTTagCompound compound = new NBTTagCompound();
+            compound.setString("JamType", jamName);
+            compound.setInteger("UsesLeft", usesLeft);
+
+            jamStack.setTagInfo("JamInfo", compound);
+            return jamStack;
+        }
+    }
+
+    public static boolean isJar(ItemStack stack)
+    {
+        return stack != null && stack.getItem() == KitchenItems.jam_jar;
+    }
+
+    public static boolean isEmptyJar(ItemStack stack)
+    {
+        return isJar(stack) && getJam(stack) == Jam.EMPTY;
+    }
+
+    public static Jam getJam(ItemStack stack)
+    {
+        if (stack.hasTagCompound() && stack.getTagCompound().hasKey("JamInfo", 10))
+        {
+            String type = stack.getTagCompound().getCompoundTag("JamInfo").getString("JamType");
+            if (type != null && type.isEmpty()) return Jam.getJam(type);
+        }
+        return Jam.EMPTY;
     }
 
     @Override

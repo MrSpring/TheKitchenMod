@@ -5,7 +5,7 @@ import dk.mrspring.kitchen.model.jam.ModelJam1;
 import dk.mrspring.kitchen.model.jam.ModelJam2;
 import dk.mrspring.kitchen.model.jam.ModelJam3;
 
-import static dk.mrspring.kitchen.ClientUtils.colorRGB;
+import static dk.mrspring.kitchen.ClientUtils.*;
 
 /**
  * Created by MrSpring on 27-10-2014 for TheKitchenMod.
@@ -34,6 +34,9 @@ public class JamBaseRenderingHandler implements IIngredientRenderingHandler
     public void render(int cookTime, Ingredient ingredient)
     {
         colorRGB(baseColor);
+
+        rotate(180, 0, 0, 1);
+        translate(-0.5F, -1.5F, 0.5F);
 
         if (cookTime >= 300) modelJam3.simpleRender(0F);
         else if (cookTime > 200) modelJam2.simpleRender(0F);

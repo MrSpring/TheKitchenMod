@@ -13,9 +13,8 @@ import dk.mrspring.kitchen.api.event.BoardEventRegistry;
 import dk.mrspring.kitchen.block.BlockBase;
 import dk.mrspring.kitchen.event.SandwichableTooltipEvent;
 import dk.mrspring.kitchen.item.ItemBase;
-import dk.mrspring.kitchen.model.ModelBaconCooked;
-import dk.mrspring.kitchen.model.ModelBaconRaw;
-import dk.mrspring.kitchen.pan.*;
+import dk.mrspring.kitchen.pan.Ingredient;
+import dk.mrspring.kitchen.pan.Jam;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.recipe.RecipeRegistry;
 import dk.mrspring.kitchen.tileentity.*;
@@ -23,7 +22,6 @@ import dk.mrspring.kitchen.world.gen.WorldGenWildPlants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = ModInfo.modid, name = ModInfo.name, version = ModInfo.version)
@@ -68,9 +66,6 @@ public class Kitchen
         // Loading Blocks and Items
         ItemBase.load();
         BlockBase.load();
-
-        // Registering renderers
-        proxy.registerRenderers();
         // Registers the default Board events
         BoardEventRegistry.registerDefaultEvents();
     }
@@ -96,50 +91,30 @@ public class Kitchen
 
         MinecraftForge.EVENT_BUS.register(new SandwichableTooltipEvent());
 
-        Jam.registerJam(new Jam("empty", 000000, "null"));
         Jam.registerJam(new Jam("strawberry", 16196364, "kitchen:strawberry_jam"));
         Jam.registerJam(new Jam("apple", 14415786, "kitchen:apple_jam"));
         Jam.registerJam(new Jam("peanut", 9659689, "kitchen:peanut_jam"));
 
-        Ingredient.registerIngredient(new Ingredient("empty", new JamBaseRenderingHandler(new float[]{0, 0, 0}), "empty"));
-        Ingredient.registerIngredient(new Ingredient("strawberry", new JamBaseRenderingHandler(new float[]{255F, 60, 53}), "strawberry"));
-        Ingredient.registerIngredient(new Ingredient("apple", new JamBaseRenderingHandler(new float[]{224, 255, 163}), "apple"));
-        Ingredient.registerIngredient(new Ingredient("peanut", new JamBaseRenderingHandler(new float[]{147, 101, 41}), "peanut"));
-        Ingredient.registerIngredient(new Ingredient("bacon", new IIngredientRenderingHandler()
-        {
-            ModelBaconRaw rawBaconModel = new ModelBaconRaw();
-            ModelBaconCooked cookedBaconModel = new ModelBaconCooked();
-
-            @Override
-            public boolean translateModel(int cookTime, Ingredient ingredient)
-            {
-                return true;
-            }
-
-            @Override
-            public void render(int cookTime, Ingredient ingredient)
-            {
-                if (cookTime >= 300) cookedBaconModel.simpleRender(0F);
-                else rawBaconModel.simpleRender(0F);
-            }
-        }, new ItemStack(KitchenItems.bacon, 1)));
-        Ingredient.registerIngredient(new Ingredient("chicken_fillet", new ItemBaseRenderingHandler(new ItemStack(KitchenItems.raw_chicken_fillet), new ItemStack(KitchenItems.chicken_fillet)), new ItemStack(KitchenItems.chicken_fillet)));
+        Ingredient.registerIngredient(new Ingredient("strawberry", "jam.strawberry.name", "strawberry"));
+        Ingredient.registerIngredient(new Ingredient("apple", "jam.apple.name", "apple"));
+        Ingredient.registerIngredient(new Ingredient("peanut", "jam.peanut.name", "peanut"));
+        Ingredient.registerIngredient(new Ingredient("bacon", "ingredient.bacon.name", new ItemStack(KitchenItems.bacon, 1)));
+        Ingredient.registerIngredient(new Ingredient("chicken_fillet", "ingredient.chicken_fillet.name", KitchenItems.chicken_fillet));
 
         KitchenItems.linkToIngredient(KitchenItems.jammable_strawberry, "strawberry");
         KitchenItems.linkToIngredient(KitchenItems.cut_apple, "apple");
         KitchenItems.linkToIngredient(KitchenItems.raw_bacon, "bacon");
         KitchenItems.linkToIngredient(KitchenItems.peanut, "peanut");
         KitchenItems.linkToIngredient(KitchenItems.raw_chicken_fillet, "chicken_fillet");
-
-		/*JamRecipeRegistry.registerRecipe(Jam.STRAWBERRY, 2, new IngredientStack(Ingredient.STRAWBERRY, 2),Ingredient.SUGAR);
-        JamRecipeRegistry.registerRecipe(Jam.APPLE, 2, new IngredientStack(Ingredient.APPLE, 3),Ingredient.SUGAR);*/
-
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
         OvenRecipes.addFoodRecipes();
+
+        // Registering renderers
+        proxy.registerRenderers();
     }
 
     @EventHandler
@@ -148,25 +123,5 @@ public class Kitchen
         for (FMLInterModComms.IMCMessage message : event.getMessages())
             if (message != null)
                 IMCHandler.handleMessage(message);
-    }
-
-    public static ItemStack getJamJarItemStack(Jam jam, int usesLeft)
-    {
-        ItemStack jamStack = new ItemStack(KitchenItems.jam_jar, 1, 1);
-
-        if (jam == Jam.getJam("empty"))
-        {
-            jamStack.setItemDamage(0);
-            return jamStack;
-        } else
-        {
-            String jamName = jam.getName();
-            NBTTagCompound compound = new NBTTagCompound();
-            compound.setString("JamType", jamName);
-            compound.setInteger("UsesLeft", usesLeft);
-
-            jamStack.setTagInfo("JamInfo", compound);
-            return jamStack;
-        }
     }
 }

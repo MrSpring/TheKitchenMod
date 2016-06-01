@@ -12,6 +12,12 @@ import java.util.Map;
 public class Jam
 {
     public static Map<String, Jam> jams = new HashMap<String, Jam>();
+    public static final Jam EMPTY = new Jam("empty", 0x000000, "null");
+
+    static
+    {
+        jams.put("empty", EMPTY);
+    }
 
     final String name;
     final int color;
@@ -56,6 +62,6 @@ public class Jam
         if (name != null)
             if (jams.containsKey(name))
                 return jams.get(name);
-        return jams.get("empty");
+        return EMPTY;
     }
 }

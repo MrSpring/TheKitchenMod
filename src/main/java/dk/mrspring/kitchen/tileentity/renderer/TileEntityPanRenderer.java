@@ -29,20 +29,19 @@ public class TileEntityPanRenderer extends TileEntityRenderer<TileEntityPan>
         pop();
 
         Ingredient ingredient = entity.getIngredient();
-        if (ingredient != null)
-            if (ingredient != Ingredient.getIngredient("empty"))
+        if (ingredient != Ingredient.EMPTY)
+        {
+            push();
+            IIngredientRenderingHandler renderingHandler = ingredient.getRenderingHandler();
+            if (renderingHandler.translateModel(entity.getCookTime(), ingredient))
             {
-                push();
-                IIngredientRenderingHandler renderingHandler = ingredient.getRenderingHandler();
-                if (renderingHandler.translateModel(entity.getCookTime(), ingredient))
-                {
-                    translate(0.5F, 0.075F, 0.5F);
-                    scale(0.4F);
-                    translate(-0.5F, 0.0F, -0.5F);
-                    translateBlockModel();
-                }
-                renderingHandler.render(entity.getCookTime(), ingredient);
-                pop();
+//                translate(0.5F, 0.075F, 0.5F);
+//                translate(-0.5F, 0.0F, -0.5F);
+                translate(0F, 0.075F, 0F);
+                translateBlockModel();
             }
+            renderingHandler.render(entity.getCookTime(), ingredient);
+            pop();
+        }
     }
 }
