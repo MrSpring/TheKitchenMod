@@ -38,7 +38,7 @@ public class WailaBoardDataProvider implements IWailaDataProvider
         if (config.getConfig("show_is_sandwich_ready",true)&&tileEntity.getLayers().size()>1)
         {
             String toAdd = StatCollector.translateToLocal("waila.is_sandwich_ready")+": ";
-            if (ModConfig.getSandwichConfig().isBread(tileEntity.getTopItem()) && ModConfig.getSandwichConfig().isBread(tileEntity.getLayers().get(0)))
+            if (ModConfig.getSandwichConfig().isBread(tileEntity.getTop()) && ModConfig.getSandwichConfig().isBread(tileEntity.getLayers().get(0)))
                 toAdd += StatCollector.translateToLocal("waila.true");
             else toAdd += StatCollector.translateToLocal("waila.false");
             strings.add(toAdd);
