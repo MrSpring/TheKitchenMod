@@ -4,7 +4,6 @@ import dk.mrspring.kitchen.tileentity.TileEntityPlate;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,47 +35,26 @@ public class BlockPlate extends BlockContainerBase
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float clickX, float clickY, float clickZ)
     {
-        TileEntityPlate tileEntityPlate = (TileEntityPlate) world.getTileEntity(x, y, z);
-
-        world.markBlockForUpdate(x, y, z);
+        TileEntityPlate plate = (TileEntityPlate) world.getTileEntity(x, y, z);
 
         if (!world.isRemote)
-            if (!activator.isSneaking())
-                if (activator.getCurrentEquippedItem() != null)
-                    if (activator.getCurrentEquippedItem().getItem() != null)
-                        if (tileEntityPlate.addItem(activator.getCurrentEquippedItem()))
-                        {
-                            --activator.getCurrentEquippedItem().stackSize;
-                            return true;
-                        } else
-                            return false;
-                    else
-                        return false;
-                else
-                {
-                    ItemStack itemStack = tileEntityPlate.removeTopItem();
-
-                    if (itemStack != null)
-                    {
-                        world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, itemStack));
-                        return true;
-                    } else
-                        return true;
-                }
-            else
+            if (!player.isSneaking())
             {
-                ItemStack item = new ItemStack(this, 1, 0);
-                NBTTagCompound plateCompound = new NBTTagCompound();
-                tileEntityPlate.writeItemsToNBT(plateCompound);
-                item.setTagInfo("PlateData", plateCompound);
+                ItemStack playerStack = player.getCurrentEquippedItem();
+                if (plate.clicked(playerStack))
+                {
+                    playerStack.stackSize--;
+                    return true;
+                } else return false;
+            } else
+            {
+                plate.spawn(plate.toItemStack());
                 world.setBlockToAir(x, y, z);
-                world.spawnEntityInWorld(new EntityItem(world, x, y, z, item));
                 return true;
             }
-        else
-            return true;
+        else return player.isSneaking() || !plate.isEmpty();
     }
 
     @Override
