@@ -57,7 +57,6 @@ public class ItemRenderSandwich extends ItemRenderer
         {
             rotate(-90, 1, 0, 0);
             translate(0F, -0.05F, 0.255F);
-            scale(2F);
         }
         SandwichRender.renderSandwich(new SandwichRender.Sandwich(item));
     }
