@@ -18,7 +18,6 @@ public class BlockPeanutCrop extends BlockCropBase
     @Override
     public Item getItemDropped(int metadata, Random random, int p_149650_3_)
     {
-        System.out.println("Returning, metadata: " + metadata);
         if (metadata == 7) return KitchenItems.peanuts_in_shell;
         else return KitchenItems.peanut;
     }

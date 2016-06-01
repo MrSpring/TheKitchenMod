@@ -65,11 +65,7 @@ public class Ingredient
     {
         if (!pan.isFinished()) return false;
         if (ItemJamJar.isJar(result))
-        {
-            boolean isEmpty = ItemJamJar.isEmptyJar(clicked);
-            System.out.println(isEmpty);
-            return isEmpty;
-        }
+            return ItemJamJar.isEmptyJar(clicked);
         else return clicked == null;
     }
 
