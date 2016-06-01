@@ -4,9 +4,7 @@ import dk.mrspring.kitchen.ModConfig;
 import dk.mrspring.kitchen.config.ClientConfig;
 import net.minecraft.item.ItemStack;
 
-import static dk.mrspring.kitchen.ClientUtils.rotate;
-import static dk.mrspring.kitchen.ClientUtils.scale;
-import static dk.mrspring.kitchen.ClientUtils.translate;
+import static dk.mrspring.kitchen.ClientUtils.*;
 
 public class ItemRenderSandwich extends ItemRenderer
 {
@@ -28,6 +26,19 @@ public class ItemRenderSandwich extends ItemRenderer
         translate(0.5F, 0.3F, 0F);
         rotate(90F, 0F, 1F, 0F);
         super.renderEquippedFirstPerson(type, stack, data);
+    }
+
+    @Override
+    public void renderEquipped(ItemRenderType type, ItemStack stack, Object... data)
+    {
+        rotate(11, 0, 1, 0);
+        rotate(15, 0, 0, 1);
+        rotate(-70, 1, 0, 0);
+
+        translate(0.42F, -0.1F, 0.35F);
+        scale(1.5F);
+
+        super.renderEquipped(type, stack, data);
     }
 
     @Override
