@@ -4,7 +4,6 @@ import dk.mrspring.kitchen.tileentity.TileEntityOven;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
@@ -26,92 +25,31 @@ public class BlockOven extends BlockContainerBase
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_)
     {
-        TileEntityOven tileEntityBoard = (TileEntityOven) world.getTileEntity(x, y, z);
+        TileEntityOven oven = (TileEntityOven) world.getTileEntity(x, y, z);
 
-        if (tileEntityBoard != null)
+        if (oven != null)
         {
-            ItemStack[] stacks = tileEntityBoard.getOvenItems();
-
-            for (ItemStack item : stacks)
-            {
-                if (item != null)
-                {
-                    Random random = new Random();
-
-                    float xRandPos = random.nextFloat() * 0.8F + 0.1F;
-                    float yRandPos = 1.2F;
-                    float zRandPos = random.nextFloat() * 0.8F + 0.1F;
-
-                    EntityItem entityItem = new EntityItem(world, x + xRandPos, y + 1, z + zRandPos, item);
-
-                    entityItem.motionX = random.nextGaussian() * 0.005F;
-                    entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
-                    entityItem.motionZ = random.nextGaussian() * 0.005F;
-
-                    world.spawnEntityInWorld(entityItem);
-                }
-            }
+            ItemStack[] stacks = oven.getOvenItems();
+            oven.spawn(stacks);
         }
 
         super.breakBlock(world, x, y, z, block, p_149749_6_);
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer activator, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_)
     {
-        world.markBlockForUpdate(x, y, z);
-
+        TileEntityOven oven = (TileEntityOven) world.getTileEntity(x, y, z);
         if (!world.isRemote)
-        {
-            TileEntityOven tileEntity = (TileEntityOven) world.getTileEntity(x, y, z);
-
-            if (!activator.isSneaking())
-                if (tileEntity.isOpen())
-                    if (activator.getCurrentEquippedItem() != null)
-                        return tileEntity.addItemStack(activator.getCurrentEquippedItem());
-                    else
-                    {
-                        ItemStack removed = tileEntity.removeTopItem();
-
-                        if (removed != null)
-                            if (removed.getItem() != null)
-                            {
-                                Random random = new Random();
-
-                                float xRandPos = random.nextFloat() * 0.8F + 0.1F;
-                                float yRandPos = 1.2F;
-                                float zRandPos = random.nextFloat() * 0.8F + 0.1F;
-
-                                EntityItem entityItem = new EntityItem(world, x + xRandPos, y + 1, z + zRandPos, removed);
-
-                                entityItem.motionX = random.nextGaussian() * 0.005F;
-                                entityItem.motionY = random.nextGaussian() * 0.005F + 0.2F;
-                                entityItem.motionZ = random.nextGaussian() * 0.005F;
-
-                                world.spawnEntityInWorld(entityItem);
-                                return true;
-                            } else
-                                return false;
-                        else
-                            return false;
-                    }
-                else
-                    return false;
-            else
-            {
-                this.updateBlockState(world, x, y, z);
-                return true;
-            }
-        } else
-            return true;
+            return oven.rightClicked(player.getCurrentEquippedItem(), player.isSneaking());
+        else return oven.isOpen() || player.isSneaking();
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack)
     {
-        int rotation = (MathHelper.floor_double((double) (p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3);
-        super.onBlockPlacedBy(world, x, y, z, p_149689_5_, p_149689_6_);
-
+        int rotation = (MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3);
+        super.onBlockPlacedBy(world, x, y, z, player, stack);
         world.setBlockMetadataWithNotify(x, y, z, rotation, 0);
     }
 

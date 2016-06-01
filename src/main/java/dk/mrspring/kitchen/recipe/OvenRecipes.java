@@ -56,8 +56,8 @@ public class OvenRecipes
         for (Map.Entry<ItemStack, ItemStack> entry : smeltingRecipes.entrySet())
             if (entry.getValue().getItem() instanceof ItemFood)
             {
-                ItemStack input=entry.getKey();
-                if (input.getItemDamage()>1000)
+                ItemStack input = entry.getKey();
+                if (input.getItemDamage() > 1000)
                     input.setItemDamage(0);
                 customOvenRecipes.put(input, entry.getValue());
             }
@@ -87,8 +87,12 @@ public class OvenRecipes
         {
             ItemStack input2 = entry.getKey();
             if (input1.isItemEqual(input2))
-                return entry.getValue();
+                return entry.getValue().copy();
         }
+
+        ItemStack furnaceOutput = FurnaceRecipes.smelting().getSmeltingResult(input1);
+        if (furnaceOutput != null && furnaceOutput.getItem() instanceof ItemFood)
+            furnaceOutput.copy();
 
         /*for (int i = 0; i < customOvenRecipes[0].size(); i++)
         {

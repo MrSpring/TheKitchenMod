@@ -7,29 +7,23 @@ import dk.mrspring.kitchen.KitchenItems;
 import dk.mrspring.kitchen.recipe.OvenRecipes;
 import dk.mrspring.kitchen.tileentity.renderer.OpeningAnimation;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityOven extends TileEntity
+public class TileEntityOven extends TileEntityBase
 {
-    protected ItemStack[] ovenItems = new ItemStack[4];
-    protected int burnTime = 0;
-    protected int itemState = 0;
-    protected boolean isCooking = false;
+    ItemStack[] ovenItems = new ItemStack[4];
+    int burnTime = 0;
+    int itemState = 0;
+    boolean isCooking = false;
 
     public static final int RAW = 0;
     public static final int COOKED = 1;
     public static final int BURNT = 2;
 
-    protected boolean isOpen = false;
-    protected boolean hasCoal = false;
+    boolean isOpen = false;
+    boolean hasCoal = false;
 
     @SideOnly(Side.CLIENT)
     OpeningAnimation openingAnimation;
@@ -40,36 +34,40 @@ public class TileEntityOven extends TileEntity
             openingAnimation = new OpeningAnimation(0, 65, 10, isOpen());
     }
 
-    public boolean addItemStack(ItemStack itemStack)
+    public boolean rightClicked(ItemStack itemStack, boolean alt)
     {
-        if (!worldObj.isRemote)
-            worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
-
         if (itemStack != null)
-            if (itemStack.getItem() != null)
+        {
+            if (isOpen())
             {
-                if (FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null)
-                    if (FurnaceRecipes.smelting().getSmeltingResult(itemStack).getItem() instanceof ItemFood)
-                        return this.forceAddItemStack(itemStack);
-
                 if (OvenRecipes.getCookingResult(itemStack) != null)
-                    return this.forceAddItemStack(itemStack);
+                    return this.addItemStack(itemStack);
 
                 if (itemStack.getItem() == Items.coal && !this.hasCoal)
                 {
                     this.hasCoal = true;
                     itemStack.stackSize--;
+                    mark();
                     return true;
                 }
+            }
 
-                return false;
-            } else
-                return false;
-        else
             return false;
+        } else
+        {
+            if (alt) toggleOpen();
+            else if (isOpen()) spawn(removeFirstItem());
+            return true;
+        }
     }
 
-    private boolean forceAddItemStack(ItemStack itemStack)
+    @Override
+    public void spawn(double x, double y, double z, ItemStack... stacks)
+    {
+        super.spawn(x, y + 1D, z, stacks);
+    }
+
+    private boolean addItemStack(ItemStack itemStack)
     {
         // TODO OreDictionary support
 
@@ -86,6 +84,7 @@ public class TileEntityOven extends TileEntity
                 {
                     ++this.ovenItems[i].stackSize;
                     --itemStack.stackSize;
+                    mark();
                     return true;
                 }
             } else
@@ -94,6 +93,7 @@ public class TileEntityOven extends TileEntity
                 this.ovenItems[i] = itemStack.copy();
                 this.ovenItems[i].stackSize = 1;
                 --itemStack.stackSize;
+                mark();
                 return true;
             }
         }
@@ -128,15 +128,15 @@ public class TileEntityOven extends TileEntity
         if (this.burnTime == 400)
         {
             this.itemState = COOKED;
-            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             this.cookItems();
+            mark();
         }
 
         if (this.burnTime == 600)
         {
             this.itemState = BURNT;
-            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             this.burnItems();
+            mark();
         }
     }
 
@@ -178,17 +178,25 @@ public class TileEntityOven extends TileEntity
         return foundCompatible;
     }
 
+    public void toggleOpen()
+    {
+        if (isOpen()) setClosed();
+        else setOpen();
+    }
+
     public void setOpen()
     {
         this.isOpen = true;
         this.hasCoal = false;
         this.isCooking = false;
+        mark();
     }
 
     public void setClosed()
     {
         this.isOpen = false;
         this.burnTime = 0;
+        mark();
     }
 
     public void cookItems()
@@ -197,88 +205,45 @@ public class TileEntityOven extends TileEntity
         {
             if (this.ovenItems[i] != null)
             {
-                if (this.ovenItems[i].getItem() != null)
+                if (OvenRecipes.getCookingResult(this.ovenItems[i]) != null)
                 {
-                    /*if (FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]) != null)
-                    {
-                        int stackSize = this.ovenItems[i].stackSize;
-                        this.ovenItems[i] = FurnaceRecipes.smelting().getSmeltingResult(this.ovenItems[i]);
-                        this.ovenItems[i].stackSize = stackSize;
-                    }*/
-
-                    if (OvenRecipes.getCookingResult(this.ovenItems[i]) != null)
-                    {
-                        int stackSize = this.ovenItems[i].stackSize;
-                        this.ovenItems[i] = OvenRecipes.getCookingResult(this.ovenItems[i]);
-                        this.ovenItems[i].stackSize = stackSize;
-                    }
+                    int stackSize = this.ovenItems[i].stackSize;
+                    this.ovenItems[i] = OvenRecipes.getCookingResult(this.ovenItems[i]);
+                    this.ovenItems[i].stackSize *= stackSize;
                 }
             }
         }
-    }
-
-    public ItemStack removeTopItem()
-    {
-        int i;
-        ItemStack itemStack = null;
-
-        for (i = 3; i >= 0; --i)
-        {
-            if (this.ovenItems[i] != null)
-                if (this.ovenItems[i].getItem() != null)
-                {
-                    itemStack = this.ovenItems[i].copy();
-                    this.ovenItems[i] = null;
-                    break;
-                }
-        }
-
-
-        if (itemStack != null)
-            return itemStack;
-        else
-            return null;
     }
 
     public void burnItems()
     {
         for (int i = 0; i < this.ovenItems.length; ++i)
-        {
             if (this.ovenItems[i] != null)
             {
-                if (this.ovenItems[i].getItem() != null)
-                {
-                    int stackSize = this.ovenItems[i].stackSize;
-                    this.ovenItems[i] = new ItemStack(KitchenItems.burnt_meat, stackSize);
-                }
+                int stackSize = this.ovenItems[i].stackSize;
+                this.ovenItems[i] = new ItemStack(KitchenItems.burnt_meat, stackSize);
+            }
+    }
+
+    public ItemStack removeFirstItem()
+    {
+        for (int i = 0; i < ovenItems.length; i++)
+        {
+            ItemStack stack = ovenItems[i];
+            if (stack != null)
+            {
+                ItemStack copy = stack.copy();
+                ovenItems[i] = null;
+                mark();
+                return copy;
             }
         }
-    }
-
-    public int getBurnTime()
-    {
-        return burnTime;
+        return null;
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public void writeDataToNBT(NBTTagCompound compound)
     {
-        NBTTagCompound compound = new NBTTagCompound();
-        this.writeToNBT(compound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, compound);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound compound)
-    {
-        super.writeToNBT(compound);
-
         compound.setShort("CookTime", (short) this.burnTime);
         compound.setBoolean("IsOpen", this.isOpen());
         compound.setBoolean("HasCoal", this.hasCoal);
@@ -302,10 +267,8 @@ public class TileEntityOven extends TileEntity
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readDataFromNBT(NBTTagCompound compound)
     {
-        super.readFromNBT(compound);
-
         this.burnTime = compound.getShort("CookTime");
         this.isOpen = compound.getBoolean("IsOpen");
         this.hasCoal = compound.getBoolean("HasCoal");
@@ -324,6 +287,19 @@ public class TileEntityOven extends TileEntity
             if (slot >= 0 && slot < this.ovenItems.length)
                 this.ovenItems[slot] = ItemStack.loadItemStackFromNBT(itemCompound);
         }
+    }
+
+    @Override
+    public int getNBTLevel()
+    {
+        return 1;
+    }
+
+    @Override
+    public void readDataFromOldNBT(int oldLevel, int newLevel, NBTTagCompound compound)
+    {
+        warnNBTLevelChange(oldLevel, newLevel);
+        readDataFromNBT(compound);
     }
 
     public boolean isCooking()
