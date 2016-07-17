@@ -1,5 +1,6 @@
 package dk.mrspring.kitchen.config;
 
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 
@@ -80,7 +81,7 @@ public class SandwichableConfig extends BaseConfig
 
     public SandwichableEntry findEntry(ItemStack stack)
     {
-        if (stack != null)
+        if (stack != null && GameData.getItemRegistry().getNameForObject(stack.getItem()) != null)
         {
             GameRegistry.UniqueIdentifier identifier = GameRegistry.findUniqueIdentifierFor(stack.getItem());
             if (identifier != null)
