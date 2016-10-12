@@ -64,6 +64,7 @@ public class TileEntityPan extends TileEntityBase
             {
                 cookTime = 0;
                 this.ingredient = ingredientFromItem;
+                clicked.stackSize--;
                 mark();
                 return true;
             }
