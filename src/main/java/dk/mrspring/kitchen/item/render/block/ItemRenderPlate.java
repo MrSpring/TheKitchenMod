@@ -8,6 +8,8 @@ import dk.mrspring.kitchen.item.render.ItemRenderer;
 import dk.mrspring.kitchen.item.render.PlateRender;
 import dk.mrspring.kitchen.model.ModelPlate;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 /**
  * Created on 15-11-2015 for TheKitchenMod.
@@ -27,6 +29,7 @@ public class ItemRenderPlate extends ItemRenderer
     {
         plate.simpleRender(0F);
         PlateRender.renderPlateContents(new PlateRender.Plate(item));
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
     }
 
     @Override
