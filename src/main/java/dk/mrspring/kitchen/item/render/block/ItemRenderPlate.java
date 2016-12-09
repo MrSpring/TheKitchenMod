@@ -28,6 +28,20 @@ public class ItemRenderPlate extends ItemRenderer
     }
 
     @Override
+    public void renderEquipped(ItemRenderType type, ItemStack stack, Object... data)
+    {
+        super.renderEquipped(type, stack, data);
+        translate(0F, -0.4F, 0F);
+    }
+
+    @Override
+    public void renderEquippedFirstPerson(ItemRenderType type, ItemStack stack, Object... data)
+    {
+        super.renderEquippedFirstPerson(type, stack, data);
+        translate(0F, -0.4F, 0F);
+    }
+
+    @Override
     public void renderAnyTypes(ItemStack item, Object... data)
     {
         plate.simpleRender(0F);
