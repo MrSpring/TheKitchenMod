@@ -51,6 +51,7 @@ public class BlockPlate extends BlockContainerBase
             } else
             {
                 plate.spawn(plate.toItemStack());
+                plate.clear();
                 world.setBlockToAir(x, y, z);
                 return true;
             }

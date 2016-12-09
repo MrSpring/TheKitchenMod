@@ -66,6 +66,11 @@ public class TileEntityPlate extends TileEntityBase
         return getItems().size() == 0;
     }
 
+    public void clear()
+    {
+        getItems().clear();
+    }
+
     @Override
     public void writeDataToNBT(NBTTagCompound compound)
     {
