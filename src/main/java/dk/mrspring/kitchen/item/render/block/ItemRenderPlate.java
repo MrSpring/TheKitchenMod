@@ -11,6 +11,9 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import static dk.mrspring.kitchen.ClientUtils.rotate;
+import static dk.mrspring.kitchen.ClientUtils.translate;
+
 /**
  * Created on 15-11-2015 for TheKitchenMod.
  */
@@ -28,6 +31,10 @@ public class ItemRenderPlate extends ItemRenderer
     public void renderAnyTypes(ItemStack item, Object... data)
     {
         plate.simpleRender(0F);
+
+        rotate(180F, 0F, 0F, 1F);
+        translate(0F, -1.39F, 0F);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
         PlateRender.renderPlateContents(new PlateRender.Plate(item));
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
     }
