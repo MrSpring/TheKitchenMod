@@ -157,13 +157,18 @@ public class SandwichRender
 
         public Sandwich(ItemStack itemStack)
         {
-            NBTTagList list = itemStack.getTagCompound().getTagList("SandwichLayers", 10);
-            if (list.tagCount() > 0)
+            if (!itemStack.hasTagCompound())
+                items = new ItemStack[0];
+            else
             {
-                items = new ItemStack[list.tagCount()];
-                for (int i = 0; i < list.tagCount(); i++)
-                    items[i] = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
-            } else items = new ItemStack[0];
+                NBTTagList list = itemStack.getTagCompound().getTagList("SandwichLayers", 10);
+                if (list.tagCount() > 0)
+                {
+                    items = new ItemStack[list.tagCount()];
+                    for (int i = 0; i < list.tagCount(); i++)
+                        items[i] = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
+                } else items = new ItemStack[0];
+            }
         }
 
         public Sandwich(List<ItemStack> items, NBTTagCompound compound)
